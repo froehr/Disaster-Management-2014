@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Disaster Management</title>
+		<link href='http://fonts.googleapis.com/css?family=Tauri' rel='stylesheet' type='text/css'>
+		<link href="css/style.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+		<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+		<script src="js/lib/jquery/jquery-2.1.0.min.js"></script>
+	</head>
+	<body>
+		<div id="page">
+			<header>
+				<h1>Disaster Management</h1>
+				<nav>
+					<ul>
+						<li><a href="#" class="header-buttons" id="emergency">Emergency</a></li>
+						<li><a href="#" class="header-buttons" id="need-support">Need support</a></li>
+						<li><a href="#" class="header-buttons" id="offer-support">Offer support</a></li>
+						<li><a href="#" class="header-buttons" id="message">Message</a></li>
+					</ul>
+				</nav>
+			</header>
+			<div id="message-bar">
+				<div id="message-form">
+					<div id="x">&#10006;</div>
+					<h1 id="message-form-head"></h1>
+					<p>Title</p>
+					<input type="text" name="title" />
+					<p>Description</p>
+					<textarea name="description"></textarea>
+					<p>Category</p>
+					<select name="category">
+						<option value="food">Food</option>
+						<option value="water">Water</option>
+						<option value="...">What ever ...</option>
+					</select>
+					<p>Start date and time</p>
+					<input type="date" name="startdate" class="date" />
+					<input type="time" name="starttime" class="time" />
+					<div class="submit"><input type="submit" value="Submit &nbsp; &#9658;" /></div>
+				</div>
+				<div class="message" id="message-1">
+					<h1>Dikebreak</h1>
+					<div class="time">2014-04-17, 14:30</div>
+					<p>Students in Santa Clara Valley and Gunlock are being held at school after hours due to dikebreak. <a href="#" id="more-1">more <span>&#9658;</span></a></p>
+					<div class="details" id="details-1">
+						<table border="0">
+							<tr>
+								<td class="first">Sender:</td>
+								<td>Peter Miller</td>
+							</tr>
+							<tr>
+								<td class="first">Tags:</td>
+								<td><a href="#">flood</a>, <a href="#">dikebreak</a>, <a href="#">school</a></td>
+							</tr>
+						</table>
+						<div class="image-box"><img src="img/message-image-example-1.jpg" alt="Dikebreak" class="image" /></div>
+						<div class="less" id="less-1"><a href="#"><span>&#9668;</span> less</a></div>
+					</div>
+					<div class="category">Category: Flood</div>
+					<div class="location-voting"><div class="downvote"><a href="#" id="downvote-1">&#9660;</a></div><div class="upvote"><a href="#" id="upvote-1">&#9650;</a></div>Santa Clara Valley</div>
+				</div>
+				<div class="message" id="message-2">
+					<h1>Smoke Alarm Recall</h1>
+					<div class="time">2014-04-17, 14:26</div>
+					<p>The U.S. Consumer Product Safety Commission (CPSC) in cooperation with Walter Kidde Portable Equipment Inc., of Mebane, N.C. has issued a voluntary recall of about 94,000 Dual Sensor Smoke Alarms. <a href="#" id="more-2">more <span>&#9658;</span></a></p>
+					<div class="details" id="details-2">
+						<table border="0">
+							<tr>
+								<td class="first">Sender:</td>
+								<td>Santa Clara County Fire Department</td>
+							</tr>
+							<tr>
+								<td class="first">Tags:</td>
+								<td><a href="#">fire</a>, <a href="#">alarm</a>, <a href="#">smoke</a></td>
+							</tr>
+						</table>
+						<div class="image-box"><img src="img/message-image-example-2.jpg" alt="Dikebreak" class="image" /></div>
+						<div class="less" id="less-2"><a href="#"><span>&#9668;</span> less</a></div>
+					</div>
+					<div class="category">Category: Fire</div>
+					<div class="location-voting"><div class="downvote"><a href="#" id="downvote-2">&#9660;</a></div><div class="upvote"><a href="#" id="upvote-2">&#9650;</a></div>Santa Clara Valley</div>
+				</div>
+			</div>
+			<div id="map"></div>
+			<script src="js/map.js"></script>
+			<footer>
+				<a href="#">Hotlines</a>
+				<a href="#">Help</a>
+				<a href="#">About</a>
+			</footer>
+		</div>
+		<script src="js/ui.js"></script>
+	</body>
+</html>

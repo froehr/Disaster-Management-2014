@@ -1,0 +1,386 @@
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Noto Sans'), local('NotoSans'), url(fonts/noto-sans.woff) format('woff');
+}
+
+html {
+	height: 100%;
+	margin: 0px;
+}
+
+body {
+	background-color: #6A8F8E;
+	font-family: 'Noto Sans', Arial, sans-serif;
+	font-size: 15px;
+	height: 100%;
+	width: 100%;
+	margin: 0px;
+}
+
+#page {
+	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.55);
+	margin: 8px;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+}
+
+header {
+	background-color: #323D35;
+	padding: 5px 40px;
+	height: 75px;
+	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
+	position: relative;
+	z-index: 2;
+}
+
+header h1 {
+	font-size: 32px;
+	color: #FFFFFF;
+	float: left;
+}
+
+header nav {
+	width: 1100px;
+	position: relative;
+	top: 43px;
+	left: 50px;
+}
+
+header nav ul {
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+
+header nav ul li {
+	float: left;
+	color: #000000;
+	margin-left: 20px;
+}
+
+header nav ul li a {
+	display: block;
+	text-decoration: none;
+	color: #FFFFFF;
+	padding: 10px 20px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	height: 17px;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+header nav ul li a:hover {
+	display: block;
+	text-decoration: none;
+	height: 25px;
+}
+
+header nav ul li #emergency {
+	background-color: #A50026;
+}
+
+header nav ul li #emergency:hover {
+	background-color: #e50036;
+}
+
+header nav ul li #emergency:active {
+	background-color: #ff003c;
+}
+
+header nav ul li #need-support {
+	background-color: #eba259;
+}
+
+header nav ul li #need-support:hover {
+	background-color: #ffb061;
+}
+
+header nav ul li #need-support:active {
+	background-color: #ffc891;
+}
+
+header nav ul li #offer-support {
+	background-color: #468f5c;
+}
+
+header nav ul li #offer-support:hover {
+	background-color: #82b090;
+}
+
+header nav ul li #offer-support:active {
+	background-color: #9dd4ad;
+}
+
+header nav ul li #message {
+	background-color: #45544a;
+}
+
+header nav ul li #message:hover {
+	background-color: #6f8775;
+}
+
+header nav ul li #message:active {
+	background-color: #92b39b;
+}
+
+#message-bar {
+	box-shadow: 3px 0px 10px rgba(0, 0, 0, 0.55);
+	background-color: #FFFFFF;
+	width: 300px;
+	position: absolute;
+	top: 85px;
+	bottom: 28px;
+	z-index: 1;
+	overflow: auto;
+}
+
+#message-bar #message-form {
+	background-color: #FFFFFF;
+	box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.7);
+	padding: 12px;
+	min-height: 70px;
+	margin-bottom: 17px;
+	display: none;
+}
+
+#message-bar #message-form #x {
+	float: right;
+	cursor: pointer;
+	display: inline;
+	background-color: #DEDEDE;
+	width: 18px;
+	height: 18px;
+	text-align: center;
+	font-size: 13px;
+}
+
+#message-bar #message-form #x:hover {
+	background-color: #CCCCCC;
+	color: #555555;
+}
+
+#message-bar #message-form h1 {
+	font-size: 15px;
+	width: 250px;
+	margin: 0px;
+}
+
+#message-bar #message-form p {
+	margin: 5px 0px;
+}
+
+#message-bar #message-form input, select, textarea {
+	border: 1px solid #a9a9a9;
+	background-color: #FFFFFF;
+	font-family: 'Noto Sans', Arial, sans-serif;
+	width: 233px;
+	padding: 5px 15px;
+}
+
+#message-bar #message-form input:hover, select:hover, textarea:hover {
+	border: 1px solid #5f5f5f;
+}
+
+#message-bar #message-form input.date {
+	width: 100px;
+	margin-right: 10px;
+}
+
+#message-bar #message-form input.time {
+	width: 88px;
+}
+
+#message-bar #message-form div.submit {
+	text-align: right;
+	margin: 8px 10px;
+}
+
+#message-bar #message-form div.submit input {
+	width: 100px;
+	cursor: pointer;
+	background-color: #EEEEEE;
+}
+
+#message-bar #message-form select {
+	width: 265px;
+}
+
+#message-bar #message-form textarea {
+	height: 100px;
+}
+
+#message-bar .message {
+	background-color: #FFFFFF;
+	box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.55);
+	padding: 12px;
+	min-height: 70px;
+	margin-bottom: 5px;
+	cursor: pointer;
+}
+
+#message-bar .message:hover {
+	background-color: #F9F9F9;
+}
+
+#message-bar .message h1 {
+	font-size: 15px;
+	margin-bottom: 6px;
+}
+
+#message-bar .message .time {
+	color: #959595;
+	font-style: italic;
+	position: relative;
+	top: -24px;
+	margin-bottom: -20px;
+	text-align: right;
+	font-size: 13px;
+}
+
+#message-bar .message p {
+	margin-top: 0px;
+	margin-bottom: 5px;
+	text-align: justify;
+	font-size: 13px;
+	line-height: 20px;
+}
+
+#message-bar .message .less {
+	text-align: right;
+	display: none;
+}
+
+#message-bar .message a {
+	color: #3697f2;
+	text-decoration: none;
+}
+
+#message-bar .message a:hover {
+	color: #77bdff;
+}
+
+#message-bar .message a span {
+	font-size: 11px;
+}
+
+#message-bar .message .details {
+	display: none;
+	font-size: 13px;
+	margin-bottom: 8px;
+	line-height: 20px;
+}
+
+#message-bar .message .details table {
+	width: 100%;
+}
+
+#message-bar .message .details table tr td.first {
+	width: 60px;
+	vertical-align: top;
+}
+
+#message-bar .message .details .image-box {
+	text-align: center;
+	margin: 15px 0px;
+}
+
+#message-bar .message .details .image {
+	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.55);
+}
+
+#message-bar .message div.category {
+	color: #959595;
+	font-style: italic;
+	font-size: 13px;
+}
+
+#message-bar .message div.location-voting  {
+	float: right;
+	color: #959595;
+	font-style: italic;
+	font-size: 13px;
+	position: relative;
+	top: -17px;
+}
+
+#message-bar .message div.location-voting div.upvote {
+	margin-left: 15px;
+	float: right;
+	-webkit-transform:scale(2.0,1.0);
+    -moz-transform:scale(2.0, 1.0);
+    -ms-transform:scale(2.0, 1.0);
+    -o-transform:scale(2.0, 1.0);
+    transform:scale(2.0,1.0);
+}
+
+#message-bar .message div.location-voting div.upvote a {
+	color: #959595;
+	text-decoration: none;
+}
+
+#message-bar .message div.location-voting div.upvote a:hover {
+	color: #468f5c;
+}
+
+#message-bar .message div.location-voting div.downvote {
+	color: #959595;
+	float: right;
+	margin-left: 3px;
+	-webkit-transform:scale(2.0,1.0);
+    -moz-transform:scale(2.0, 1.0);
+    -ms-transform:scale(2.0, 1.0);
+    -o-transform:scale(2.0, 1.0);
+    transform:scale(2.0,1.0);
+}
+
+#message-bar .message div.location-voting div.downvote a {
+	color: #959595;
+	text-decoration: none;
+}
+
+#message-bar .message div.location-voting div.downvote a:hover {
+	color: #A50026;
+}
+
+#map {
+	min-height: 0%;
+	position: absolute;
+	top: 85px;
+	bottom: 28px;
+	right: 0px;
+	left: 300px;
+}
+
+footer {
+	background-color: #323D35;
+	padding: 4px 40px;
+	height: 20px;
+	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	z-index: 1;
+	text-align: right;
+	vertical-align: middle;
+}
+
+footer a {
+	color: #FFFFFF;
+	text-decoration: none;
+	letter-spacing: 1px;
+	padding-left: 20px;
+	text-transform: uppercase;
+	font-size: 13px;
+}
+
+footer a:hover {
+	color: #A6A6A6;
+	text-decoration: none;
+}
