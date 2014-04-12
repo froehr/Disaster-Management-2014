@@ -24,25 +24,47 @@
 			</header>
 			<div id="message-bar">
 				<div id="message-form">
-					<div id="x">&#10006;</div>
+					<div class="x" id="x-form">&#10006;</div>
 					<h1 id="message-form-head"></h1>
-					<p>Title</p>
+					<input type="hidden" name="issue" id="issue" />
+					<p>Title *</p>
 					<input type="text" name="title" />
-					<p>Description</p>
+					<p>Description *</p>
 					<textarea name="description"></textarea>
-					<p>Category</p>
+					<p>Category *</p>
 					<select name="category">
 						<option value="food">Food</option>
 						<option value="water">Water</option>
+						<option value="food">Flood</option>
+						<option value="water">Fire</option>
 						<option value="...">What ever ...</option>
 					</select>
-					<p>Start date and time</p>
-					<input type="date" name="startdate" class="date" />
-					<input type="time" name="starttime" class="time" />
+					<p>Start date and time *</p>
+					<input type="date" name="startdate" id="startdate" class="date" />
+					<input type="time" name="starttime" id="starttime" class="time" />
+					<div id="details-form">
+						<p>End date and time</p>
+						<input type="date" name="enddate" id="enddate" class="date" />
+						<input type="time" name="endtime" id="endtime" class="time" />
+						<p>Location</p>
+						<p class="small">Drag this marker to the location.</p>
+						<p class="marker-image"><img src="img/icons/marker-medium.png" /></p>
+						<p>Sender</p>
+						<input type="text" name="sender" />
+						<p>Tags <span class="small">(separate with commas)</span></p>
+						<input type="text" name="tags" />
+						<p>Image</p>
+						<input type="file" name="image" class="file" />
+					</div>
+					<div class="more">
+						<p class="small">* mandatory fields</p>
+						<a href="#" id="more-form">more fields <span>&#9658;</span></a>
+						<a href="#" id="less-form"><span>&#9668;</span> less fields</a>
+					</div>
 					<div class="submit"><input type="submit" value="Submit &nbsp; &#9658;" /></div>
 				</div>
 				<div class="message" id="message-1">
-					<h1>Dikebreak</h1>
+					<h1 class="emergency">Dikebreak</h1>
 					<div class="time">2014-04-17, 14:30</div>
 					<p>Students in Santa Clara Valley and Gunlock are being held at school after hours due to dikebreak. <a href="#" id="more-1">more <span>&#9658;</span></a></p>
 					<div class="details" id="details-1">
@@ -63,7 +85,7 @@
 					<div class="location-voting"><div class="downvote"><a href="#" id="downvote-1">&#9660;</a></div><div class="upvote"><a href="#" id="upvote-1">&#9650;</a></div>Santa Clara Valley</div>
 				</div>
 				<div class="message" id="message-2">
-					<h1>Smoke Alarm Recall</h1>
+					<h1 class="head-message">Smoke Alarm Recall</h1>
 					<div class="time">2014-04-17, 14:26</div>
 					<p>The U.S. Consumer Product Safety Commission (CPSC) in cooperation with Walter Kidde Portable Equipment Inc., of Mebane, N.C. has issued a voluntary recall of about 94,000 Dual Sensor Smoke Alarms. <a href="#" id="more-2">more <span>&#9658;</span></a></p>
 					<div class="details" id="details-2">
@@ -86,10 +108,13 @@
 			</div>
 			<div id="map"></div>
 			<script src="js/map.js"></script>
+			<div id="popup">
+				<div class="x" id="x-popup">&#10006;</div>
+			</div>
 			<footer>
-				<a href="#">Hotlines</a>
-				<a href="#">Help</a>
-				<a href="#">About</a>
+				<a href="#" id="hotlines">Hotlines</a>
+				<a href="#" id="help">Help</a>
+				<a href="#" id="about">About</a>
 			</footer>
 		</div>
 		<script src="js/ui.js"></script>

@@ -3,38 +3,90 @@ function setElementDisplay(elementId, newDisplay) {
 	element.style.display = newDisplay;
 }
 
-$('.header-buttons').click(function() {
-	setElementDisplay('message-form', 'block');
-});
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth() + 1;
+var h = today.getHours();
+var m = today.getMinutes();
+var yyyy = today.getFullYear();
+if ( dd < 10 ) {
+	dd = '0' + dd;
+}
+if ( mm < 10 ) {
+	mm = '0' + mm;
+}
+if ( h < 10 ) {
+	h = '0' + h;
+}
+if ( m < 10 ) {
+	m = '0' + m;
+}
+today = yyyy + '-' + mm + '-' + dd;   
 
-$('#emergency').click(function() {
+var now = h + ':' + m;
+
+$('#startdate').val(today);
+$('#starttime').val(now);
+
+function setHeaderButtonClickFunctions(tag, color, title) {
+	$('#' + tag).click(function() {
+		if ( $('#message-form').css('display') == 'none' ) {
+			setFormTitle(tag, color, title);
+			$('#message-form').slideDown('slow', 'linear');
+		}
+		else {
+			$('#message-form').fadeOut(500);
+			setTimeout(function (){
+				setFormTitle(tag, color, title);
+				 $('#message-form').fadeIn();
+			 }, 500);
+		}
+	});
+}
+
+function setFormTitle(tag, color, title) {
 	var messageFormHead = document.getElementById('message-form-head');
-	messageFormHead.style.color = '#A50026';
-	messageFormHead.innerHTML = 'Submit Emergency Issue';
+	messageFormHead.style.color = color;
+	messageFormHead.innerHTML = title;
+	document.getElementById('issue').value = tag;
+}
+
+setHeaderButtonClickFunctions('emergency', '#A50026', 'Submit Emergency Issue');
+setHeaderButtonClickFunctions('need-support', '#eba259', 'Submit Support Request');
+setHeaderButtonClickFunctions('offer-support', '#468f5c', 'Submit Support Offer');
+setHeaderButtonClickFunctions('message', '#45544a', 'Submit Message');
+
+$('#x-form').click(function() {
+	$('#message-form').slideUp('slow', 'linear');
 });
 
-$('#need-support').click(function() {
-	var messageFormHead = document.getElementById('message-form-head');
-	messageFormHead.style.color = '#eba259';
-	messageFormHead.innerHTML = 'Submit Support Request';
+$('#hotlines').click(function() {
+	$('#popup').fadeIn();
 });
 
-$('#offer-support').click(function() {
-	var messageFormHead = document.getElementById('message-form-head');
-	messageFormHead.style.color = '#468f5c';
-	messageFormHead.innerHTML = 'Submit Support Offer';
+$('#help').click(function() {
+	$('#popup').fadeIn();
 });
 
-$('#message').click(function() {
-	var messageFormHead = document.getElementById('message-form-head');
-	messageFormHead.style.color = '#45544a';
-	messageFormHead.innerHTML = 'Submit Message';
+$('#about').click(function() {
+	$('#popup').fadeIn();
 });
 
-$('#x').click(function() {
-	setElementDisplay('message-form', 'none');
+$('#x-popup').click(function() {
+	$('#popup').fadeOut();
 });
 
+$('#more-form').click(function() {
+	setElementDisplay('more-form', 'none');
+	setElementDisplay('less-form', 'block');
+	$('#details-form').slideDown('slow', 'linear');
+});
+
+$('#less-form').click(function() {
+	setElementDisplay('more-form', 'inline');
+	setElementDisplay('less-form', 'none');
+	$('#details-form').slideUp('slow', 'linear');
+});
 
 function setMessageClickFunctions(messageId, lat, lon, zoom) {
 	$('#message-' + messageId).click(function() {
@@ -44,13 +96,13 @@ function setMessageClickFunctions(messageId, lat, lon, zoom) {
 	$('#more-' + messageId).click(function() {
 		setElementDisplay('more-' + messageId, 'none');
 		setElementDisplay('less-' + messageId, 'block');
-		setElementDisplay('details-' + messageId, 'block');
+		$('#details-' + messageId).slideDown('fast', 'linear');
 	});
 
 	$('#less-' + messageId).click(function() {
 		setElementDisplay('more-' + messageId, 'inline');
 		setElementDisplay('less-' + messageId, 'none');
-		setElementDisplay('details-' + messageId, 'none');
+		$('#details-' + messageId).slideUp('fast', 'linear');
 	});
 
 	$('#downvote-' + messageId).click(function() {

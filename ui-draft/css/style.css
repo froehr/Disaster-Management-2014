@@ -149,7 +149,7 @@ header nav ul li #message:active {
 	display: none;
 }
 
-#message-bar #message-form #x {
+.x {
 	float: right;
 	cursor: pointer;
 	display: inline;
@@ -160,7 +160,13 @@ header nav ul li #message:active {
 	font-size: 13px;
 }
 
-#message-bar #message-form #x:hover {
+#message-bar #message-form .x {
+	float: left;
+	position: relative;
+	left: 240px;
+}
+
+.x:hover {
 	background-color: #CCCCCC;
 	color: #555555;
 }
@@ -169,6 +175,8 @@ header nav ul li #message:active {
 	font-size: 15px;
 	width: 250px;
 	margin: 0px;
+	position: relative;
+	left: -18px;
 }
 
 #message-bar #message-form p {
@@ -179,7 +187,7 @@ header nav ul li #message:active {
 	border: 1px solid #a9a9a9;
 	background-color: #FFFFFF;
 	font-family: 'Noto Sans', Arial, sans-serif;
-	width: 233px;
+	width: 225px;
 	padding: 5px 15px;
 }
 
@@ -188,17 +196,23 @@ header nav ul li #message:active {
 }
 
 #message-bar #message-form input.date {
-	width: 100px;
+	width: 118px;
 	margin-right: 10px;
+	padding: 5px 5px;
 }
 
 #message-bar #message-form input.time {
-	width: 88px;
+	width: 80px;
+}
+
+#message-bar #message-form input.file {
+	border: none;
 }
 
 #message-bar #message-form div.submit {
-	text-align: right;
-	margin: 8px 10px;
+	margin-top: -24px;
+	margin-left: 156px;
+	margin-bottom: 13px;
 }
 
 #message-bar #message-form div.submit input {
@@ -208,11 +222,53 @@ header nav ul li #message:active {
 }
 
 #message-bar #message-form select {
-	width: 265px;
+	width: 257px;
 }
 
 #message-bar #message-form textarea {
 	height: 100px;
+	max-width: 225px;
+}
+
+#message-bar #message-form #details-form {
+	display: none;
+}
+
+#message-bar #message-form #less-form {
+	display: none;
+}
+
+#message-bar #message-form a {
+	color: #3697f2;
+	text-decoration: none;
+}
+
+#message-bar #message-form a span {
+	font-size: 13px;
+}
+
+#message-bar #message-form a:hover {
+	color: #77bdff;
+}
+
+#message-bar #message-form div.more {
+	position: relative;
+	top: 15px;
+	left: 10px;
+	width: 120px;
+}
+
+#message-bar #message-form .small {
+	font-size: 13px;
+}
+
+#message-bar #message-form .marker-image {
+	text-align: center;
+}
+
+#message-bar #message-form .marker-image img {
+	margin: 10px;
+	cursor: pointer;
 }
 
 #message-bar .message {
@@ -231,6 +287,22 @@ header nav ul li #message:active {
 #message-bar .message h1 {
 	font-size: 15px;
 	margin-bottom: 6px;
+}
+
+#message-bar .message h1.emergency {
+	color: #A50026;
+}
+
+#message-bar .message h1.need-support {
+	color: #eba259;
+}
+
+#message-bar .message h1.offer-support {
+	color: #468f5c;
+}
+
+#message-bar .message h1.head-message {
+	color: #45544a;
 }
 
 #message-bar .message .time {
@@ -355,6 +427,20 @@ header nav ul li #message:active {
 	bottom: 28px;
 	right: 0px;
 	left: 300px;
+}
+
+#popup {
+	position: relative;
+	top: 80px;
+	margin: auto;
+	height: 50%;
+	width: 800px;
+	min-height: 300px;
+	background-color: #FFFFFF;
+	box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.55);
+	z-index: 3;
+	padding: 15px;
+	display: none;
 }
 
 footer {
