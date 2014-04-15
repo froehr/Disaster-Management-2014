@@ -88,6 +88,32 @@ $('#less-form').click(function() {
 	$('#details-form').slideUp('slow', 'linear');
 });
 
+$('#hide-message-bar').mouseover(function() {
+	$('#hide-message-bar').animate({width: 18}, 200);
+});
+
+$('#hide-message-bar').mouseout(function() {
+	$('#hide-message-bar').animate({width: 10}, 200);
+});
+
+var messageBarStatus = true;
+$('#hide-message-bar').click(function() {
+	$('#message-bar').animate({width: 'toggle'});
+	$('#message-search').animate({width: 'toggle'});
+	if ( messageBarStatus ) {
+		$('#hide-message-bar-container').animate({left: 0});
+		$('#hide-message-bar').css('background-image', 'url(img/icons/show-message-bar.png)');
+		$('.leaflet-left').animate({left: 0});
+		messageBarStatus = false;
+	}
+	else {
+		$('#hide-message-bar-container').animate({left: 301});
+		$('#hide-message-bar').css('background-image', 'url(img/icons/hide-message-bar.png)');
+		$('.leaflet-left').animate({left: 300});
+		messageBarStatus = true;
+	}
+});
+
 function setMessageClickFunctions(messageId, lat, lon, zoom) {
 	function switchMessageDetails(messageId) {
 		if ( ! messages[messageId][3] ) {
@@ -95,6 +121,15 @@ function setMessageClickFunctions(messageId, lat, lon, zoom) {
 			setElementDisplay('less-' + messageId, 'block');
 			$('#details-' + messageId).slideDown('fast', 'linear');
 			messages[messageId][3] = true;
+			
+			for ( var i = 0; i < messages.length; i++ ) {
+				if ( i != messageId && messages[i][3] ) {
+					setElementDisplay('more-' + i, 'inline');
+					setElementDisplay('less-' + i, 'none');
+					$('#details-' + i).slideUp('fast', 'linear');
+					messages[i][3] = false;
+				}
+			}
 		}
 		else {
 			setElementDisplay('more-' + messageId, 'inline');
