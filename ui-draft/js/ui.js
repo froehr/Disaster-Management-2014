@@ -89,20 +89,24 @@ $('#less-form').click(function() {
 });
 
 function setMessageClickFunctions(messageId, lat, lon, zoom) {
+	function switchMessageDetails(messageId) {
+		if ( ! messages[messageId][3] ) {
+			setElementDisplay('more-' + messageId, 'none');
+			setElementDisplay('less-' + messageId, 'block');
+			$('#details-' + messageId).slideDown('fast', 'linear');
+			messages[messageId][3] = true;
+		}
+		else {
+			setElementDisplay('more-' + messageId, 'inline');
+			setElementDisplay('less-' + messageId, 'none');
+			$('#details-' + messageId).slideUp('fast', 'linear');
+			messages[messageId][3] = false;
+		}
+	}
+	
 	$('#message-' + messageId).click(function() {
 		map.setView(new L.LatLng(lat, lon), zoom);
-	});
-
-	$('#more-' + messageId).click(function() {
-		setElementDisplay('more-' + messageId, 'none');
-		setElementDisplay('less-' + messageId, 'block');
-		$('#details-' + messageId).slideDown('fast', 'linear');
-	});
-
-	$('#less-' + messageId).click(function() {
-		setElementDisplay('more-' + messageId, 'inline');
-		setElementDisplay('less-' + messageId, 'none');
-		$('#details-' + messageId).slideUp('fast', 'linear');
+		switchMessageDetails(messageId);
 	});
 
 	$('#downvote-' + messageId).click(function() {
@@ -116,5 +120,11 @@ function setMessageClickFunctions(messageId, lat, lon, zoom) {
 	});
 }
 
-setMessageClickFunctions(1, 37.246994, -121.840744, 12);
-setMessageClickFunctions(2, 37.253192, -121.966156, 16);
+var messages = [
+	[37.246994, -121.840744, 12, false],
+	[37.253192, -121.966156, 16, false]
+];
+
+for ( var i = 0; i < messages.length; i++ ) {
+	setMessageClickFunctions(i, messages[i][0], messages[i][1], messages[i][2]);
+}

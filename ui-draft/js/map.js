@@ -149,6 +149,6 @@ var locater = L.control.locate({
 // new Geoseach Bar			
 new L.Control.GeoSearch({
 	provider: new L.GeoSearch.Provider.Google(),
-	position: 'topcenter',
+	position: 'topleft',
 	showMarker: true
 }).addTo(map);

@@ -35,19 +35,19 @@
 					<div class="x" id="x-form">&#10006;</div>
 					<h1 id="message-form-head"></h1>
 					<input type="hidden" name="issue" id="issue" />
-					<p>Title *</p>
+					<p>Title <span class="mandatory">*</span></p>
 					<input type="text" name="title" />
-					<p>Description *</p>
+					<p>Description <span class="mandatory">*</span></p>
 					<textarea name="description"></textarea>
-					<p>Category *</p>
+					<p>Category <span class="mandatory">*</span></p>
 					<select name="category">
 						<option value="food">Food</option>
 						<option value="water">Water</option>
-						<option value="food">Flood</option>
-						<option value="water">Fire</option>
+						<option value="flood">Flood</option>
+						<option value="fire">Fire</option>
 						<option value="...">What ever ...</option>
 					</select>
-					<p>Start date and time *</p>
+					<p>Start date and time <span class="mandatory">*</span></p>
 					<input type="date" name="startdate" id="startdate" class="date" />
 					<input type="time" name="starttime" id="starttime" class="time" />
 					<div id="details-form">
@@ -65,17 +65,17 @@
 						<input type="file" name="image" class="file" />
 					</div>
 					<div class="more">
-						<p class="small">* mandatory fields</p>
+						<p class="small"><span class="mandatory"><b>*</b></span> mandatory fields</p>
 						<a href="#" id="more-form">more fields <span>&#9658;</span></a>
 						<a href="#" id="less-form"><span>&#9668;</span> less fields</a>
 					</div>
 					<div class="submit"><input type="submit" value="Submit &nbsp; &#9658;" /></div>
 				</div>
-				<div class="message" id="message-1">
+				<div class="message" id="message-0">
 					<h1 class="emergency">Dikebreak</h1>
 					<div class="time">2014-04-17, 14:30</div>
-					<p>Students in Santa Clara Valley and Gunlock are being held at school after hours due to dikebreak. <a href="#" id="more-1">more <span>&#9658;</span></a></p>
-					<div class="details" id="details-1">
+					<p>Students in Santa Clara Valley and Gunlock are being held at school after hours due to dikebreak. <a href="#" id="more-0">more <span>&#9658;</span></a></p>
+					<div class="details" id="details-0">
 						<table border="0">
 							<tr>
 								<td class="first">Sender:</td>
@@ -86,17 +86,17 @@
 								<td><a href="#">flood</a>, <a href="#">dikebreak</a>, <a href="#">school</a></td>
 							</tr>
 						</table>
-						<div class="image-box"><img src="img/message-image-example-1.jpg" alt="Dikebreak" class="image" /></div>
-						<div class="less" id="less-1"><a href="#"><span>&#9668;</span> less</a></div>
+						<div class="image-box"><img src="img/message-image-example-0.jpg" alt="Dikebreak" class="image" /></div>
+						<div class="less" id="less-0"><a href="#"><span>&#9668;</span> less</a></div>
 					</div>
 					<div class="category">Category: Flood</div>
-					<div class="location-voting"><div class="downvote"><a href="#" id="downvote-1">&#9660;</a></div><div class="upvote"><a href="#" id="upvote-1">&#9650;</a></div>Santa Clara Valley</div>
+					<div class="location-voting"><div class="downvote"><a href="#" id="downvote-0">&#9660;</a></div><div class="upvote"><a href="#" id="upvote-0">&#9650;</a></div>Santa Clara Valley</div>
 				</div>
-				<div class="message" id="message-2">
+				<div class="message" id="message-1">
 					<h1 class="head-message">Smoke Alarm Recall</h1>
 					<div class="time">2014-04-17, 14:26</div>
-					<p>The U.S. Consumer Product Safety Commission (CPSC) in cooperation with Walter Kidde Portable Equipment Inc., of Mebane, N.C. has issued a voluntary recall of about 94,000 Dual Sensor Smoke Alarms. <a href="#" id="more-2">more <span>&#9658;</span></a></p>
-					<div class="details" id="details-2">
+					<p>The U.S. Consumer Product Safety Commission (CPSC) in cooperation with Walter Kidde Portable Equipment Inc., of Mebane, N.C. has issued a voluntary recall of about 94,000 Dual Sensor Smoke Alarms. <a href="#" id="more-1">more <span>&#9658;</span></a></p>
+					<div class="details" id="details-1">
 						<table border="0">
 							<tr>
 								<td class="first">Sender:</td>
@@ -107,11 +107,11 @@
 								<td><a href="#">fire</a>, <a href="#">alarm</a>, <a href="#">smoke</a></td>
 							</tr>
 						</table>
-						<div class="image-box"><img src="img/message-image-example-2.jpg" alt="Dikebreak" class="image" /></div>
-						<div class="less" id="less-2"><a href="#"><span>&#9668;</span> less</a></div>
+						<div class="image-box"><img src="img/message-image-example-1.jpg" alt="Dikebreak" class="image" /></div>
+						<div class="less" id="less-1"><a href="#"><span>&#9668;</span> less</a></div>
 					</div>
 					<div class="category">Category: Fire</div>
-					<div class="location-voting"><div class="downvote"><a href="#" id="downvote-2">&#9660;</a></div><div class="upvote"><a href="#" id="upvote-2">&#9650;</a></div>Santa Clara Valley</div>
+					<div class="location-voting"><div class="downvote"><a href="#" id="downvote-1">&#9660;</a></div><div class="upvote"><a href="#" id="upvote-1">&#9650;</a></div>Santa Clara Valley</div>
 				</div>
 			</div>
 			<div id="map"></div>
