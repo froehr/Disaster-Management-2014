@@ -68,22 +68,66 @@ var rain = new L.tileLayer('http://{s}.tile.openweathermap.org/map/rain/{z}/{x}/
 });
 
 
-//Basemap Toggler
+ //Pegelonline wms layers - For more information: https://www.pegelonline.wsv.de/webservice/wmsAktuell
+var pp = new L.TileLayer.WMS("http://www.pegelonline.wsv.de/webservices/gis/wms/aktuell/mnwmhw", {
+    layers: 'Pegelpunkte',
+    format: 'image/png',
+    //crs: L.CRS.EPSG4326,
+    version: '1.1.1',
+    transparent: false,
+    opacity: 0.6
+});
+
+var pn = new L.TileLayer.WMS("http://www.pegelonline.wsv.de/webservices/gis/wms/aktuell/mnwmhw", {
+    layers: 'Pegelnamen',
+    format: 'image/png',
+    //crs: L.CRS.EPSG4326,
+    version: '1.1.1',
+    transparent: false,
+    opacity: 0.6
+});
+
+var pw = new L.TileLayer.WMS("http://www.pegelonline.wsv.de/webservices/gis/wms/aktuell/mnwmhw", {
+    layers: 'Pegelwasserstand',
+    format: 'image/png',
+    //crs: L.CRS.EPSG4326,
+    version: '1.1.1',
+    transparent: false,
+    opacity: 0.6
+});
+
+var pt = new L.TileLayer.WMS("http://www.pegelonline.wsv.de/webservices/gis/wms/aktuell/mnwmhw", {
+    layers: 'TendenzWasserstand',
+    format: 'image/png',
+    //crs: L.CRS.EPSG4326,
+    version: '1.1.1',
+    transparent: false,
+    opacity: 0.6
+});
+
+
+
 baseLayers = {
-	'OSM': osm,
-	'Aerial View': layerOrtho,
-	'No Basemap': " ", //works, but produces an error
+    'OSM': osm,
+    'Aerial View': layerOrtho,
+    'No Basemap': " ", //works, but produces an error
 };
 
 groupedOverLayers = {
-	"Map Layers": {
-		'DGK5': layerDGK5,
-		'DTK10': layerDTK10,
-	},
-	"Weather Layers": {
-		'Rain': rain,
-		'Flooding Areas': flood,
-	},
+    "Map Layers": {
+        'DGK5': layerDGK5,
+        'DTK10': layerDTK10,
+    },
+    "Weather Layers": {
+        'Rain': rain,
+        'Flooding Areas': flood,
+    },
+    "Pegel Online Layers": {
+        'Flodmarker': pp,
+        'Floodmarker Name': pn,
+        'Trend Water Gauge': pt,
+        'Water Gauge': pw
+    },
 };
 
 
