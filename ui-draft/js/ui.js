@@ -96,6 +96,32 @@ $('#hide-message-bar').mouseout(function() {
 	$('#hide-message-bar').animate({width: 10}, 200);
 });
 
+$('#filter').mouseover(function() {
+	$('#filter').attr("src", 'img/icons/filter-hover.png');
+});
+
+$('#filter').mouseout(function() {
+	$('#filter').attr("src", 'img/icons/filter.png');
+});
+
+$('#filter').click(function() {
+	$('#filter-form').animate({height: 'toggle'});
+	$('#sort-form').animate({height: 'hide'});
+});
+
+$('#sort').mouseover(function() {
+	$('#sort').attr("src", 'img/icons/sort-hover.png');
+});
+
+$('#sort').mouseout(function() {
+	$('#sort').attr("src", 'img/icons/sort.png');
+});
+
+$('#sort').click(function() {
+	$('#sort-form').animate({height: 'toggle'});
+	$('#filter-form').animate({height: 'hide'});
+});
+
 var messageBarStatus = true;
 $('#hide-message-bar').click(function() {
 	$('#message-bar').animate({width: 'toggle'});

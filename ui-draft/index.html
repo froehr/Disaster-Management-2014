@@ -87,6 +87,37 @@
 							</tr>
 						</table>
 						<div class="image-box"><img src="img/message-image-example-0.jpg" alt="Dikebreak" class="image" /></div>
+						<div class="comments">
+							<h1>Comments (2)</h1>
+							<div class="comment">
+								<table border="0">
+									<tr>
+										<td><b>Peter Miller</b></td>
+										<td class="right">2014-04-17, 14:35</td>
+									</tr>
+									<tr>
+										<td colspan="2" class="justify">Thanks for the information. It was very useful.</td>
+									</tr>
+								</table>
+							</div>
+							<div class="comment">
+								<table border="0">
+									<tr>
+										<td><b>Susan Smith</b></td>
+										<td class="right">2014-04-17, 14:37</td>
+									</tr>
+									<tr>
+										<td colspan="2" class="justify">Warning! This information is wrong.</td>
+									</tr>
+								</table>
+							</div>
+							<div class="new-comment">
+								<p><b>New comment</b></p>
+								<input type="text" name="name" placeholder="Your name" />
+								<textarea name="description" placeholder="Your comment"></textarea>
+								<div class="submit"><input type="submit" value="Submit &nbsp; &#9658;" /></div>
+							</div>
+						</div>
 						<div class="less" id="less-0"><a href="#"><span>&#9668;</span> less</a></div>
 					</div>
 					<div class="category">Category: Flood</div>
@@ -108,14 +139,38 @@
 							</tr>
 						</table>
 						<div class="image-box"><img src="img/message-image-example-1.jpg" alt="Dikebreak" class="image" /></div>
+						<div class="comments">
+							<h1>Comments (0)</h1>
+							<div class="new-comment">
+								<p><b>New comment</b></p>
+								<input type="text" name="name" placeholder="Your name" />
+								<textarea name="description" placeholder="Your comment"></textarea>
+								<div class="submit"><input type="submit" value="Submit &nbsp; &#9658;" /></div>
+							</div>
+						</div>
 						<div class="less" id="less-1"><a href="#"><span>&#9668;</span> less</a></div>
 					</div>
 					<div class="category">Category: Fire</div>
 					<div class="location-voting"><div class="downvote"><a href="#" id="downvote-1">&#9660;</a></div><div class="upvote"><a href="#" id="upvote-1">&#9650;</a></div>Santa Clara Valley</div>
 				</div>
 			</div>
+			<div id="sort-form" class="form">
+				<p>Sort messages</p>
+			</div>
+			<div id="filter-form" class="form">
+				<p>Filter messages by category:</p>
+				<select name="category">
+					<option value="food">Food</option>
+					<option value="water">Water</option>
+					<option value="flood">Flood</option>
+					<option value="fire">Fire</option>
+					<option value="...">What ever ...</option>
+				</select>
+			</div>
 			<div id="message-search">
 				<input type="text" name="message-search" placeholder="Search for message ..." />
+				<img src="img/icons/sort.png" id="sort" title="Sort messages" />
+				<img src="img/icons/filter.png" id="filter" title="Filter messages by category" />
 			</div>
 			<div id="hide-message-bar-container"><div id="hide-message-bar" title="Hide message bar"></div></div>
 			<div id="map"></div>
