@@ -226,6 +226,11 @@ header nav ul li #message:active {
 	width: 80px;
 }
 
+/* Message form small input field */
+#message-bar #message-form input.small {
+	width: 52px;
+}
+
 /* Message form file input field */
 #message-bar #message-form input.file {
 	border: none;
@@ -255,10 +260,9 @@ header nav ul li #message:active {
 	max-width: 225px;
 }
 
-#message-bar #message-form #details-form {
-	display: none;
-}
-
+#message-bar #message-form #details-message,
+#message-bar #message-form #details-offer-support ,
+#message-bar #message-form #details-emergency-need-support,
 #message-bar #message-form #less-form {
 	display: none;
 }

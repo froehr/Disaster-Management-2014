@@ -34,25 +34,66 @@ $('#starttime').val(now);
 function setHeaderButtonClickFunctions(tag, color, title) {
 	$('#' + tag).click(function() {
 		if ( $('#message-form').css('display') == 'none' ) {
-			setFormTitle(tag, color, title);
+			changeMessageForm(tag, color, title);
 			$('#message-form').slideDown('slow', 'linear');
 		}
 		else {
 			$('#message-form').fadeOut(500);
 			setTimeout(function (){
-				setFormTitle(tag, color, title);
+				changeMessageForm(tag, color, title);
 				 $('#message-form').fadeIn();
 			 }, 500);
 		}
 	});
 }
 
-// setting the style of form title
-function setFormTitle(tag, color, title) {
+var issueTag = '';
+
+// change the style and content of form
+function changeMessageForm(tag, color, title) {
+	issueTag = tag;
+	
+	// message form head color and content
 	var messageFormHead = document.getElementById('message-form-head');
 	messageFormHead.style.color = color;
 	messageFormHead.innerHTML = title;
+	
+	setElementDisplay('more-form', 'inline');
+	setElementDisplay('less-form', 'none');
+	
+	// hidden field value
 	document.getElementById('issue').value = tag;
+	
+	function addMandatoryStars(fields) {
+		for ( var i = 0; i < fields.length; i++ ) {
+			$('#head-' + fields[i] + '-mandatory').remove();
+			$('#head-' + fields[i]).append(' <span class="mandatory" id="head-' + fields[i] + '-mandatory">*</span>');
+		}
+	}
+	
+	// show the mandatory fields
+	switch ( tag ) {
+		case 'emergency':
+		case 'need-support':
+			setElementDisplay('details-message', 'block');
+			setElementDisplay('details-offer-support', 'block');
+			setElementDisplay('details-emergency-need-support', 'none');
+			
+			addMandatoryStars(['category', 'person-contact', 'location']);
+			break;
+		case 'offer-support':
+			setElementDisplay('details-message', 'block');
+			setElementDisplay('details-offer-support', 'none');
+			setElementDisplay('details-emergency-need-support', 'none');
+			
+			addMandatoryStars(['category', 'person-contact']);
+			break;
+		case 'message':
+			setElementDisplay('details-message', 'none');
+			setElementDisplay('details-offer-support', 'none');
+			setElementDisplay('details-emergency-need-support', 'none');
+			break;
+	}
 }
 
 setHeaderButtonClickFunctions('emergency', '#A50026', 'Submit Emergency Issue');
@@ -86,13 +127,37 @@ $('#x-popup').click(function() {
 $('#more-form').click(function() {
 	setElementDisplay('more-form', 'none');
 	setElementDisplay('less-form', 'block');
-	$('#details-form').slideDown('slow', 'linear');
+	
+	switch ( issueTag ) {
+		case 'emergency':
+		case 'need-support':
+			$('#details-emergency-need-support').slideDown('fast', 'linear');
+			break;
+		case 'offer-support':
+			$('#details-emergency-need-support').slideDown('fast', 'linear').promise().done(function() { $('#details-offer-support').slideDown('fast', 'linear'); });
+			break;
+		case 'message':
+			$('#details-emergency-need-support').slideDown('fast', 'linear').promise().done(function() { $('#details-offer-support').slideDown('fast', 'linear'); }).promise().done(function() { $('#details-message').slideDown('fast', 'linear'); });
+			break;
+	}
 });
 
 $('#less-form').click(function() {
 	setElementDisplay('more-form', 'inline');
 	setElementDisplay('less-form', 'none');
-	$('#details-form').slideUp('slow', 'linear');
+
+	switch ( issueTag ) {
+		case 'emergency':
+		case 'need-support':
+			$('#details-emergency-need-support').slideUp('fast', 'linear');
+			break;
+		case 'offer-support':
+			$('#details-emergency-need-support').slideUp('fast', 'linear').promise().done(function() { $('#details-offer-support').slideUp('fast', 'linear'); });
+			break;
+		case 'message':
+			$('#details-emergency-need-support').slideUp('fast', 'linear').promise().done(function() { $('#details-offer-support').slideUp('fast', 'linear'); }).promise().done(function() { $('#details-message').slideUp('fast', 'linear'); });
+			break;
+	}
 });
 
 // animations for the message-bar-toggler 
