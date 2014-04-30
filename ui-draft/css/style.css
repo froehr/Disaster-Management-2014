@@ -19,6 +19,7 @@ body {
 	margin: 0px;
 }
 
+/* Border for the whole web page */
 #page {
 	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.55);
 	margin: 8px;
@@ -38,12 +39,14 @@ header {
 	z-index: 2;
 }
 
+/* Page title */
 header h1 {
 	font-size: 32px;
 	color: #FFFFFF;
 	float: left;
 }
 
+/* Buttons in the header */
 header nav {
 	width: 1100px;
 	position: relative;
@@ -81,6 +84,7 @@ header nav ul li a:hover {
 	height: 25px;
 }
 
+/* Header Emergency Button */
 header nav ul li #emergency {
 	background-color: #A50026;
 }
@@ -93,6 +97,7 @@ header nav ul li #emergency:active {
 	background-color: #ff003c;
 }
 
+/* Header Need Support Button */
 header nav ul li #need-support {
 	background-color: #eba259;
 }
@@ -105,6 +110,7 @@ header nav ul li #need-support:active {
 	background-color: #ffc891;
 }
 
+/* Header Offer Support Button */
 header nav ul li #offer-support {
 	background-color: #468f5c;
 }
@@ -117,6 +123,7 @@ header nav ul li #offer-support:active {
 	background-color: #9dd4ad;
 }
 
+/* Header Message Button */
 header nav ul li #message {
 	background-color: #45544a;
 }
@@ -129,6 +136,7 @@ header nav ul li #message:active {
 	background-color: #92b39b;
 }
 
+/* Left Side bar for messages*/
 #message-bar {
 	box-shadow: 3px 0px 10px rgba(0, 0, 0, 0.55);
 	background-color: #FFFFFF;
@@ -141,6 +149,7 @@ header nav ul li #message:active {
 	padding-bottom: 20px;
 }
 
+/* Form to submit a new message */
 #message-bar #message-form {
 	background-color: #FFFFFF;
 	box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.7);
@@ -150,6 +159,7 @@ header nav ul li #message:active {
 	display: none;
 }
 
+/* Cross for closing the message form */
 .x {
 	float: right;
 	cursor: pointer;
@@ -172,6 +182,7 @@ header nav ul li #message:active {
 	color: #555555;
 }
 
+/* Message form headline */
 #message-bar #message-form h1 {
 	font-size: 15px;
 	width: 250px;
@@ -180,14 +191,17 @@ header nav ul li #message:active {
 	left: -18px;
 }
 
+/* Message form input field labels */
 #message-bar #message-form p {
 	margin: 5px 0px;
 }
 
+/* Message form mandatory star (*) */
 #message-bar #message-form p .mandatory {
 	color: #A50026;
 }
 
+/* Message form input fields */
 #message-bar #message-form input, select, textarea {
 	border: 1px solid #a9a9a9;
 	background-color: #FFFFFF;
@@ -200,20 +214,24 @@ header nav ul li #message:active {
 	border: 1px solid #5f5f5f;
 }
 
+/* Message form date input field */
 #message-bar #message-form input.date {
 	width: 118px;
 	margin-right: 10px;
 	padding: 5px 5px;
 }
 
+/* Message form time input field */
 #message-bar #message-form input.time {
 	width: 80px;
 }
 
+/* Message form file input field */
 #message-bar #message-form input.file {
 	border: none;
 }
 
+/* Message form submit button */
 #message-bar #message-form div.submit {
 	margin-top: -24px;
 	margin-left: 156px;
@@ -226,10 +244,12 @@ header nav ul li #message:active {
 	background-color: #EEEEEE;
 }
 
+/* Message form dropdown field */
 #message-bar #message-form select {
 	width: 257px;
 }
 
+/* Message form text area */
 #message-bar #message-form textarea {
 	height: 100px;
 	max-width: 225px;
@@ -248,7 +268,8 @@ header nav ul li #message:active {
 	text-decoration: none;
 }
 
-#message-bar #message-form a span {
+/* Message form arrows for more- and less-links */
+#message-bar #message-form a span.arrow {
 	font-size: 13px;
 }
 
@@ -256,6 +277,7 @@ header nav ul li #message:active {
 	color: #77bdff;
 }
 
+/* Message form more-link */
 #message-bar #message-form div.more {
 	position: relative;
 	top: 15px;
@@ -267,6 +289,7 @@ header nav ul li #message:active {
 	font-size: 13px;
 }
 
+/* Message form marker image */
 #message-bar #message-form .marker-image {
 	text-align: center;
 }
@@ -276,6 +299,34 @@ header nav ul li #message:active {
 	cursor: pointer;
 }
 
+/* Emergency message field */
+#message-bar .message-emergency {
+	background-color: #ffebed !important;
+}
+
+#message-bar .message-emergency:hover {
+	background-color: #fff5f7 !important;
+}
+
+/* Need support message field */
+#message-bar .message-need-support {
+	background-color: #feefdf !important;
+}
+
+#message-bar .message-need-support:hover {
+	background-color: #fef6ed !important;
+}
+
+/* Offer support message field */
+#message-bar .message-offer-support {
+	background-color: #e8fff1 !important;
+}
+
+#message-bar .message-offer-support:hover {
+	background-color: #f4fff8 !important;
+}
+
+/* Message field */
 #message-bar .message {
 	background-color: #FFFFFF;
 	box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.55);
@@ -289,27 +340,33 @@ header nav ul li #message:active {
 	background-color: #F3F3F3;
 }
 
+/* Message field headline */
 #message-bar .message h1 {
 	font-size: 15px;
 	margin-bottom: 6px;
 }
 
-#message-bar .message h1.emergency {
+/* Message field emergency headline */
+#message-bar .message h1.emergency-head {
 	color: #A50026;
 }
 
-#message-bar .message h1.need-support {
+/* Message field need support headline */
+#message-bar .message h1.need-support-head {
 	color: #eba259;
 }
 
-#message-bar .message h1.offer-support {
+/* Message field offer support headline */
+#message-bar .message h1.offer-support-head {
 	color: #468f5c;
 }
 
-#message-bar .message h1.head-message {
+/* Message field message headline */
+#message-bar .message h1.message-head {
 	color: #45544a;
 }
 
+/* Message field date and time */
 #message-bar .message .time {
 	color: #959595;
 	font-style: italic;
@@ -320,6 +377,7 @@ header nav ul li #message:active {
 	font-size: 13px;
 }
 
+/* Message field text */
 #message-bar .message p {
 	margin-top: 0px;
 	margin-bottom: 5px;
@@ -328,6 +386,7 @@ header nav ul li #message:active {
 	line-height: 20px;
 }
 
+/* Message field less-link */
 #message-bar .message .less {
 	text-align: right;
 	display: none;
@@ -342,10 +401,12 @@ header nav ul li #message:active {
 	color: #77bdff;
 }
 
-#message-bar .message a span {
+/* Message field arrows for more- and less-links */
+#message-bar .message a span.arrow {
 	font-size: 11px;
 }
 
+/* Message field details */
 #message-bar .message .details {
 	display: none;
 	font-size: 13px;
@@ -353,6 +414,7 @@ header nav ul li #message:active {
 	line-height: 20px;
 }
 
+/* Message field details table */
 #message-bar .message .details table {
 	width: 100%;
 }
@@ -362,6 +424,7 @@ header nav ul li #message:active {
 	vertical-align: top;
 }
 
+/* Message field image */
 #message-bar .message .details .image-box {
 	text-align: center;
 	margin: 15px 0px;
@@ -371,6 +434,7 @@ header nav ul li #message:active {
 	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.55);
 }
 
+/* Message field comments headline */
 #message-bar .message div.comments h1 {
 	color: #959595;
 	font-style: italic;
@@ -378,6 +442,7 @@ header nav ul li #message:active {
 	font-weight: normal;
 }
 
+/* Message field comment headline */
 #message-bar .message div.comment {
 	padding: 2px;
 }
@@ -392,10 +457,12 @@ header nav ul li #message:active {
 	text-align: justify;
 }
 
+/* Message field new comment form */
 #message-bar .message div.new-comment {
 	padding: 4px;
 }
 
+/* Message field new comment form fields */
 #message-bar .message div.new-comment input, textarea {
 	border: 1px solid #a9a9a9;
 	background-color: #FFFFFF;
@@ -408,6 +475,12 @@ header nav ul li #message:active {
 	border: 1px solid #5f5f5f;
 }
 
+/* Message field new comment form text area */
+#message-bar .message div.new-comment textarea {
+	max-width: 225px;
+}
+
+/* Message field new comment form submit button */
 #message-bar .message div.new-comment div.submit {
 	margin-left: 156px;
 	margin-bottom: 13px;
@@ -419,12 +492,14 @@ header nav ul li #message:active {
 	background-color: #EEEEEE;
 }
 
+/* Message field category */
 #message-bar .message div.category {
 	color: #959595;
 	font-style: italic;
 	font-size: 13px;
 }
 
+/* Message field location and up/down-vote */
 #message-bar .message div.location-voting  {
 	float: right;
 	color: #959595;
@@ -434,6 +509,7 @@ header nav ul li #message:active {
 	top: -17px;
 }
 
+/* Message field upvote arrow */
 #message-bar .message div.location-voting div.upvote {
 	margin-left: 15px;
 	float: right;
@@ -453,6 +529,7 @@ header nav ul li #message:active {
 	color: #468f5c;
 }
 
+/* Message field downvote arrow */
 #message-bar .message div.location-voting div.downvote {
 	color: #959595;
 	float: right;
@@ -473,7 +550,8 @@ header nav ul li #message:active {
 	color: #A50026;
 }
 
-.form {
+/* Form for sorting and filtering messages */
+.utility-form {
 	background-color: #FFFFFF;
 	box-shadow: 3px 0px 10px rgba(0, 0, 0, 0.55);
 	position: absolute;
@@ -487,12 +565,13 @@ header nav ul li #message:active {
 	padding: 10px;
 }
 
-.form p {
+.utility-form p {
 	margin: 0px;
 	font-size: 13px;
 }
 
-.form select {
+/* Dropdown for category filtering */
+.utility-form select {
 	margin: 5px 0px;
 	border: 1px solid #a9a9a9;
 	background-color: #FFFFFF;
@@ -501,10 +580,11 @@ header nav ul li #message:active {
 	padding: 5px 15px;
 }
 
-.form select:hover {
+.utility-form select:hover {
 	border: 1px solid #5f5f5f;
 }
 
+/* Message search box */
 #message-search {
 	background-color: #FFFFFF;
 	box-shadow: 3px 0px 10px rgba(0, 0, 0, 0.55);
@@ -516,6 +596,8 @@ header nav ul li #message:active {
 	height: 32px;
 	z-index: 3;
 }
+
+/* Message search field */
 #message-search input {
 	width: 238px;
 	height: 32px;
@@ -526,6 +608,7 @@ header nav ul li #message:active {
 	display: inline;
 }
 
+/* Message filtering and sorting icons */
 #message-search img {
 	position: absolute;
 	display: inline;
@@ -538,6 +621,7 @@ header nav ul li #message:active {
 	right: 34px;
 }
 
+/* Map */
 #map {
 	min-height: 0%;
 	position: absolute;
@@ -547,10 +631,12 @@ header nav ul li #message:active {
 	left: 0px;
 }
 
+/* Leaflet zoom and location finder controls */
 #map .leaflet-left {
 	left: 300px;
 }
 
+/* Leaflet geosearch plugin */
 #map .leaflet-control-geosearch {
 	position: absolute !important;
 	margin: 0px !important;
@@ -576,6 +662,7 @@ header nav ul li #message:active {
 	background-color: #F6F6F6;
 }
 
+/* Leaflet layer toggler */
 #map .leaflet-control-layers-toggle {
 	cursor: pointer;
 }
@@ -589,6 +676,7 @@ header nav ul li #message:active {
 	background-color: #EEEEEE;
 }
 
+/* Message bar toggler */
 #hide-message-bar-container {
 	position: absolute;
 	left: 301px;
@@ -615,6 +703,7 @@ header nav ul li #message:active {
 	border-bottom-right-radius: 4px;
 }
 
+/* Popup for further content pages */
 #popup {
 	position: relative;
 	top: 80px;

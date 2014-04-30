@@ -3,16 +3,17 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Disaster Management</title>
-		<link href='http://fonts.googleapis.com/css?family=Tauri' rel='stylesheet' type='text/css'>
-		<link href="css/style.css" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+		
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<link href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css"rel="stylesheet" type="text/css" />
+		<link href="js/lib/Leaflet.locator/L.Control.Locate.css" rel="stylesheet" type="text/css" />
+		<link href="js/lib/Leaflet.minimap/Control.MiniMap.css" rel="stylesheet" type="text/css" />
+		<link href="js/lib/Leaflet.geosearch/l.geosearch.css" rel="stylesheet" type="text/css" />
+		
 		<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
-		<link href="js/lib/Leaflet.minimap/Control.MiniMap.css" rel="stylesheet">
 		<script src="js/lib/Leaflet.minimap/Control.MiniMap.js"></script>
-		<link href="js/lib/Leaflet.geosearch/l.geosearch.css" rel="stylesheet">
 		<script src="js/lib/Leaflet.geosearch/l.control.geosearch.js"></script>
 		<script src="js/lib/Leaflet.geosearch/l.geosearch.provider.google.js"></script>
-		<link href="js/lib/Leaflet.locator/L.Control.Locate.css" rel="stylesheet">
 		<script src="js/lib/Leaflet.locator/L.Control.Locate.js"></script>
 		<script src="js/lib/Leaflet.groupedlayercontrol/leaflet.groupedlayercontrol.js"></script>
    		<script src="js/lib/jquery/jquery-2.1.0.min.js"></script>
@@ -66,98 +67,17 @@
 					</div>
 					<div class="more">
 						<p class="small"><span class="mandatory"><b>*</b></span> mandatory fields</p>
-						<a href="#" id="more-form">more fields <span>&#9658;</span></a>
-						<a href="#" id="less-form"><span>&#9668;</span> less fields</a>
+						<a href="#" id="more-form">more fields <span class="arrow">&#9658;</span></a>
+						<a href="#" id="less-form"><span class="arrow">&#9668;</span> less fields</a>
 					</div>
 					<div class="submit"><input type="submit" value="Submit &nbsp; &#9658;" /></div>
 				</div>
-				<div class="message" id="message-0">
-					<h1 class="emergency">Dikebreak</h1>
-					<div class="time">2014-04-17, 14:30</div>
-					<p>Students in Santa Clara Valley and Gunlock are being held at school after hours due to dikebreak. <a href="#" id="more-0">more <span>&#9658;</span></a></p>
-					<div class="details" id="details-0">
-						<table border="0">
-							<tr>
-								<td class="first">Sender:</td>
-								<td>Peter Miller</td>
-							</tr>
-							<tr>
-								<td class="first">Tags:</td>
-								<td><a href="#">flood</a>, <a href="#">dikebreak</a>, <a href="#">school</a></td>
-							</tr>
-						</table>
-						<div class="image-box"><img src="img/message-image-example-0.jpg" alt="Dikebreak" class="image" /></div>
-						<div class="comments">
-							<h1>Comments (2)</h1>
-							<div class="comment">
-								<table border="0">
-									<tr>
-										<td><b>Peter Miller</b></td>
-										<td class="right">2014-04-17, 14:35</td>
-									</tr>
-									<tr>
-										<td colspan="2" class="justify">Thanks for the information. It was very useful.</td>
-									</tr>
-								</table>
-							</div>
-							<div class="comment">
-								<table border="0">
-									<tr>
-										<td><b>Susan Smith</b></td>
-										<td class="right">2014-04-17, 14:37</td>
-									</tr>
-									<tr>
-										<td colspan="2" class="justify">Warning! This information is wrong.</td>
-									</tr>
-								</table>
-							</div>
-							<div class="new-comment">
-								<p><b>New comment</b></p>
-								<input type="text" name="name" placeholder="Your name" />
-								<textarea name="description" placeholder="Your comment"></textarea>
-								<div class="submit"><input type="submit" value="Submit &nbsp; &#9658;" /></div>
-							</div>
-						</div>
-						<div class="less" id="less-0"><a href="#"><span>&#9668;</span> less</a></div>
-					</div>
-					<div class="category">Category: Flood</div>
-					<div class="location-voting"><div class="downvote"><a href="#" id="downvote-0">&#9660;</a></div><div class="upvote"><a href="#" id="upvote-0">&#9650;</a></div>Santa Clara Valley</div>
-				</div>
-				<div class="message" id="message-1">
-					<h1 class="head-message">Smoke Alarm Recall</h1>
-					<div class="time">2014-04-17, 14:26</div>
-					<p>The U.S. Consumer Product Safety Commission (CPSC) in cooperation with Walter Kidde Portable Equipment Inc., of Mebane, N.C. has issued a voluntary recall of about 94,000 Dual Sensor Smoke Alarms. <a href="#" id="more-1">more <span>&#9658;</span></a></p>
-					<div class="details" id="details-1">
-						<table border="0">
-							<tr>
-								<td class="first">Sender:</td>
-								<td>Santa Clara County Fire Department</td>
-							</tr>
-							<tr>
-								<td class="first">Tags:</td>
-								<td><a href="#">fire</a>, <a href="#">alarm</a>, <a href="#">smoke</a></td>
-							</tr>
-						</table>
-						<div class="image-box"><img src="img/message-image-example-1.jpg" alt="Dikebreak" class="image" /></div>
-						<div class="comments">
-							<h1>Comments (0)</h1>
-							<div class="new-comment">
-								<p><b>New comment</b></p>
-								<input type="text" name="name" placeholder="Your name" />
-								<textarea name="description" placeholder="Your comment"></textarea>
-								<div class="submit"><input type="submit" value="Submit &nbsp; &#9658;" /></div>
-							</div>
-						</div>
-						<div class="less" id="less-1"><a href="#"><span>&#9668;</span> less</a></div>
-					</div>
-					<div class="category">Category: Fire</div>
-					<div class="location-voting"><div class="downvote"><a href="#" id="downvote-1">&#9660;</a></div><div class="upvote"><a href="#" id="upvote-1">&#9650;</a></div>Santa Clara Valley</div>
-				</div>
+				<div id="messages"></div>
 			</div>
-			<div id="sort-form" class="form">
+			<div id="sort-form" class="utility-form">
 				<p>Sort messages</p>
 			</div>
-			<div id="filter-form" class="form">
+			<div id="filter-form" class="utility-form">
 				<p>Filter messages by category:</p>
 				<select name="category">
 					<option value="food">Food</option>
@@ -174,7 +94,6 @@
 			</div>
 			<div id="hide-message-bar-container"><div id="hide-message-bar" title="Hide message bar"></div></div>
 			<div id="map"></div>
-			<script src="js/map.js"></script>
 			<div id="popup">
 				<div class="x" id="x-popup">&#10006;</div>
 			</div>
@@ -184,6 +103,9 @@
 				<a href="#" id="about">About</a>
 			</footer>
 		</div>
+		
+		<script src="js/message.js"></script>
 		<script src="js/ui.js"></script>
+		<script src="js/map.js"></script>
 	</body>
 </html>
