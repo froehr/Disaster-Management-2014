@@ -4,6 +4,7 @@ DROP TABLE message;
 CREATE TABLE message(
 message_id INT NOT NULL,
 message_type TEXT NOT NULL,
+title TEXT,
 location GEOMETRY,
 time_start TIMESTAMP NOT NULL,
 time_stop TIMESTAMP NOT NULL,
