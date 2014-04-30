@@ -28,8 +28,9 @@ PRIMARY KEY (message_id)
 CREATE TABLE comment(
 comment_id INT NOT NULL,
 message TEXT NOT NULL,
-time TIMESTAMP NOT NULL,
+date_time TIMESTAMP NOT NULL,
 file BYTEA,
+name TEXT,
 message_id INT NOT NULL,
 PRIMARY KEY (comment_id),
 FOREIGN KEY (message_id) REFERENCES message
