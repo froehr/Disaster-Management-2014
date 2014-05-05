@@ -65,8 +65,11 @@ function changeMessageForm(tag, color, title) {
 	document.getElementById('issue').value = tag;
 	
 	function addMandatoryStars(fields) {
+		$('#head-category-mandatory').remove();
+		$('#head-person-contact-mandatory').remove();
+		$('#head-location-mandatory').remove();
+		
 		for ( var i = 0; i < fields.length; i++ ) {
-			$('#head-' + fields[i] + '-mandatory').remove();
 			$('#head-' + fields[i]).append(' <span class="mandatory" id="head-' + fields[i] + '-mandatory">*</span>');
 		}
 	}
@@ -92,6 +95,8 @@ function changeMessageForm(tag, color, title) {
 			setElementDisplay('details-message', 'none');
 			setElementDisplay('details-offer-support', 'none');
 			setElementDisplay('details-emergency-need-support', 'none');
+			
+			addMandatoryStars([]);
 			break;
 	}
 }
