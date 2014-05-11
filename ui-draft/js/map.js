@@ -185,11 +185,11 @@ var LlocationFilter = new L.LocationFilter({
 	enable: false, //Set to true to enable the filter as soon as it is added to the map. Defaults to false.
 	buttonPosition: 'topleft', //Set to position the associated buttons on the map. Defaults to 'topleft'.
 	enableButton: {
-		enableText: "Select area",
-		disableText: "Remove selection"
+		enableText: "",
+		disableText: ""
     },
 	adjustButton: {
-		text: "Select area within current zoom"
+		text: ""
 	}
 }).addTo(map);
 

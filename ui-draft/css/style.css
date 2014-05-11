@@ -637,7 +637,7 @@ header nav ul li #message:active {
 
 /* Leaflet zoom and location finder controls */
 #map .leaflet-left {
-	left: 300px;
+	left: 310px;
 }
 
 /* Leaflet geosearch plugin */
@@ -693,6 +693,14 @@ header nav ul li #message:active {
 
 #map .leaflet-control-layers-group label {
 	padding-left: .5em;
+}
+
+/* Leaflet Scale */
+#map .leaflet-control-scale {
+    margin-bottom: 5px !important;
+    position: relative !important;
+    right: 170px !important;
+    bottom: -160px !important;
 }
 
 

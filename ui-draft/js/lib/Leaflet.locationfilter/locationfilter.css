@@ -12,20 +12,35 @@ div.location-filter.button-container {
     background: rgba(0, 0, 0, 0.25);
     -moz-border-radius: 7px;
     -webkit-border-radius: 7px;
-    border-radius: 7px;
-    padding: 5px;
+	box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+	border-radius: 4px;
+    padding: 0px;
+	height: 28px;
+	width: 28px;
+	border-radius: 7px;
 }
+div.location-filter.button-container.enabled {
+    background: #bfbfbf;
+    background: rgba(0, 0, 0, 0.25);
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    border-radius: 7px;
+    padding: 0px;
+	height: 30px;
+	width: 59px;
+}
+
 .leaflet-container div.location-filter.button-container a {
     display: inline-block;
     color: #0F2416;
     font-size: 11px;
     font-weight: normal;
-    text-shadow: #A1BB9C 0 1px;
+    text-shadow: #FFFFFF 0 1px;
     padding: 6px 7px;
-    border: 1px solid #9CC5A4;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
+    border: 1px solid rgba(183, 187, 184, 0.99);
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
     -webkit-box-shadow: inset rgba(255,255,255,0.75) 0 1px 1px;
     -moz-box-shadow: inset rgba(255,255,255,0.75) 0 1px 1px;
     box-shadow: inset rgba(255,255,255,0.75) 0 1px 1px;    
@@ -51,28 +66,26 @@ div.location-filter.button-container {
 }
 
 .leaflet-container div.location-filter.button-container a.enable-button {
-    padding: 6px 7px 6px 25px;
-    background-image: url( img/filter-icon.png ), -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(218, 252, 205, 0.9)), color-stop(100%, rgba(173, 226, 176, 0.9)));
-    background-image: url( img/filter-icon.png ), -webkit-linear-gradient(top, rgba(218, 252, 205, 0.9) 0%, rgba(173, 226, 176, 0.9) 100%);
-    background-image: url( img/filter-icon.png ), -moz-linear-gradient(top, rgba(218, 252, 205, 0.9) 0%, rgba(173, 226, 176, 0.9) 100%);
-    background-image: url( img/filter-icon.png ), -ms-linear-gradient(top, rgba(218, 252, 205, 0.9) 0%, rgba(173, 226, 176, 0.9) 100%);
-    background-image: url( img/filter-icon.png ), -o-linear-gradient(top, rgba(218, 252, 205, 0.9) 0%, rgba(173, 226, 176, 0.9) 100%);
-    background-image: url( img/filter-icon.png ), linear-gradient(top, rgba(218, 252, 205, 0.9) 0%, rgba(173, 226, 176, 0.9) 100%);
+    padding: 26px 0px 0px 26px;
+    background-image: url( img/filter-icon.png );
+	background-color: white;
     background-repeat: no-repeat;
     background-position: left center;
+	margin-right: 2px;
+	border-radius: 5px;
 }
 .leaflet-container div.location-filter.button-container a.enable-button:hover,
 .leaflet-container div.location-filter.button-container.enabled a.enable-button {
-    background-image: url( img/filter-icon.png ), -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(245, 255, 240, 0.9)), color-stop(100%, rgba(203, 228, 205, 0.9)));
-    background-image: url( img/filter-icon.png ), -webkit-linear-gradient(top, rgba(245, 255, 240, 0.9) 0%, rgba(203, 228, 205, 0.9) 100%);
-    background-image: url( img/filter-icon.png ), -moz-linear-gradient(top, rgba(245, 255, 240, 0.9) 0%, rgba(203, 228, 205, 0.9) 100%);
-    background-image: url( img/filter-icon.png ), -ms-linear-gradient(top, rgba(245, 255, 240, 0.9) 0%, rgba(203, 228, 205, 0.9) 100%);
-    background-image: url( img/filter-icon.png ), -o-linear-gradient(top, rgba(245, 255, 240, 0.9) 0%, rgba(203, 228, 205, 0.9) 100%);
-    background-image: url( img/filter-icon.png ), linear-gradient(top, rgba(245, 255, 240, 0.9) 0%, rgba(203, 228, 205, 0.9) 100%);
+    background-image: url( img/filter-icon.png );
+	background-color: #f4f4f4;
     background-repeat: no-repeat;
     background-position: left center;
 }
 
 .leaflet-container div.location-filter.button-container a.adjust-button {
-    margin-left: 2px;
+    padding: 26px 0px 0px 26px;
+    background-image: url( img/filter_zoom.png );
+	background-color: yellow;
+    background-repeat: no-repeat;
+    background-position: left center;
 }
