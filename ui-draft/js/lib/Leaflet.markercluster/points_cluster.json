@@ -1,0 +1,101 @@
+{
+   "type":"FeatureCollection",
+   "features":[
+      {
+         "type":"Feature",
+         "id":"1",
+         "properties":{
+            "address":"22B",
+            "time":"2014-05-08 11:04:59+01",
+			"title": "Disaster 1"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               7.6045,
+               51.9356
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "id":"2",
+         "properties":{
+            "address":"22A",
+            "time":"2014-05-08 11:06:59+01",
+			"title": "Disaster 2"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               7.6159,
+               51.9156
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "id":"3",
+         "properties":{
+            "address":"151",
+            "time":"2014-05-08 11:08:59+01",
+			"title": "Disaster 3"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               7.6222,
+               51.9416
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "id":"4",
+         "properties":{
+            "address":"21C",
+            "time":"2014-05-08 11:10:59+01",
+			"title": "Disaster 4"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               7.6336,
+               51.9503
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "id":"5",
+         "properties":{
+            "address":"14A",
+            "time":"2014-05-08 11:12:59+01",
+			"title": "Disaster 5"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               7.6196,
+               51.9631
+            ]
+         }
+      },
+      {
+         "type":"Feature",
+         "id":"6",
+         "properties":{
+            "address":"38B",
+            "time":"2014-05-08 11:14:59+01",
+			"title": "Disaster 6"
+         },
+         "geometry":{
+            "type":"Point",
+            "coordinates":[
+               7.6284,
+               51.9448
+            ]
+         }
+      }
+   ]
+}

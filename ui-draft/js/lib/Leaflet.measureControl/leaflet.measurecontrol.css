@@ -1,0 +1,18 @@
+.leaflet-control-draw-measure {
+    background-image: url(images/measure-control.png);
+}
+
+
+.leaflet-control-draw-measure a {
+	font-size: 1.4em;
+	margin-left: 1px;
+    color: #444;
+}
+
+.leaflet-control-draw-measure.active a {
+	color: #265B86;
+}
+
+.leaflet-control-draw-measure.active.following a {
+	color: #FC8428;
+}

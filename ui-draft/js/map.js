@@ -14,15 +14,15 @@ var map = new L.Map('map', {
 	closePopupOnClick: true,
 	scale: true
 });
-	
-//Basemaps
+
+// Basemaps
 // add an OpenStreetMap tile layer
-var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+var osm = new L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-//Orthophoto layer
-var layerOrtho = L.tileLayer.wms('http://www.wms.nrw.de/geobasis/wms_nw_dop40', {
+// Orthophoto layer
+var layerOrtho = new L.tileLayer.wms('http://www.wms.nrw.de/geobasis/wms_nw_dop40', {
 	layers: 'WMS_NW_DOP40',
 	format: 'image/png',
 	version: '1.3.0',
@@ -30,16 +30,16 @@ var layerOrtho = L.tileLayer.wms('http://www.wms.nrw.de/geobasis/wms_nw_dop40', 
 	opacity: 0.4
 });
 
-//Layers of Geobasis NRW: http://www.bezreg-koeln.nrw.de/brk_internet/organisation/abteilung07/produkte/nrwatlas/index.html 
-//						  (website which provides different Web Map Service (WMS)-URLs)
-var layerDGK5 = L.tileLayer.wms('http://www.wms.nrw.de/geobasis/wms_nw_dgk5', {
+// Layers of Geobasis NRW: http://www.bezreg-koeln.nrw.de/brk_internet/organisation/abteilung07/produkte/nrwatlas/index.html 
+// (website which provides different Web Map Service (WMS)-URLs)
+var layerDGK5 = new L.tileLayer.wms('http://www.wms.nrw.de/geobasis/wms_nw_dgk5', {
 	attribution: '| &copy Geobasis NRW 2013',
 	layers: 'WMS_NW_DGK5',
 	format: 'image/png',
 	transparent: true,
 	opacity: 0.5
 });
-var layerDTK10 = L.tileLayer.wms('http://www.wms.nrw.de/geobasis/wms_nw_dtk10', {
+var layerDTK10 = new L.tileLayer.wms('http://www.wms.nrw.de/geobasis/wms_nw_dtk10', {
 	attribution: '| &copy Geobasis NRW 2013',
 	layers: 'nw_dtk10_pan,nw_dtk10_res,NW_DTK10_col,WMS_NW_DTK10',
 	format: 'image/png',
@@ -67,86 +67,51 @@ var rain = new L.tileLayer('http://{s}.tile.openweathermap.org/map/rain/{z}/{x}/
 	opacity: 0.5
 });
 
-
- //Pegelonline wms layers - For more information: https://www.pegelonline.wsv.de/webservice/wmsAktuell
+//Pegelonline wms layers - For more information: https://www.pegelonline.wsv.de/webservice/wmsAktuell
 var pp = new L.TileLayer.WMS("http://www.pegelonline.wsv.de/webservices/gis/wms/aktuell/mnwmhw", {
-    layers: 'Pegelpunkte',
-    format: 'image/png',
-    //crs: L.CRS.EPSG4326,
-    version: '1.1.1',
-    transparent: false,
-    opacity: 0.6
+	layers: 'Pegelpunkte',
+	format: 'image/png',
+	//crs: L.CRS.EPSG4326,
+	version: '1.1.1',
+	transparent: false,
+	opacity: 0.6
 });
 
 var pn = new L.TileLayer.WMS("http://www.pegelonline.wsv.de/webservices/gis/wms/aktuell/mnwmhw", {
-    layers: 'Pegelnamen',
-    format: 'image/png',
-    //crs: L.CRS.EPSG4326,
-    version: '1.1.1',
-    transparent: false,
-    opacity: 0.6
+	layers: 'Pegelnamen',
+	format: 'image/png',
+	//crs: L.CRS.EPSG4326,
+	version: '1.1.1',
+	transparent: false,
+	opacity: 0.6
 });
 
 var pw = new L.TileLayer.WMS("http://www.pegelonline.wsv.de/webservices/gis/wms/aktuell/mnwmhw", {
-    layers: 'Pegelwasserstand',
-    format: 'image/png',
-    //crs: L.CRS.EPSG4326,
-    version: '1.1.1',
-    transparent: false,
-    opacity: 0.6
+	layers: 'Pegelwasserstand',
+	format: 'image/png',
+	//crs: L.CRS.EPSG4326,
+	version: '1.1.1',
+	transparent: false,
+	opacity: 0.6
 });
 
 var pt = new L.TileLayer.WMS("http://www.pegelonline.wsv.de/webservices/gis/wms/aktuell/mnwmhw", {
-    layers: 'TendenzWasserstand',
-    format: 'image/png',
-    //crs: L.CRS.EPSG4326,
-    version: '1.1.1',
-    transparent: false,
-    opacity: 0.6
+	layers: 'TendenzWasserstand',
+	format: 'image/png',
+	//crs: L.CRS.EPSG4326,
+	version: '1.1.1',
+	transparent: false,
+	opacity: 0.6
 });
 
-
-
-baseLayers = {
-    'OSM': osm,
-    'Aerial View': layerOrtho,
-    'No Basemap': " ", //works, but produces an error
-};
-
-groupedOverLayers = {
-    "Map Layers": {
-        'DGK5': layerDGK5,
-        'DTK10': layerDTK10,
-    },
-    "Weather Layers": {
-        'Rain': rain,
-        'Flooding Areas': flood,
-    },
-    "Pegel Online Layers": {
-        'Flodmarker': pp,
-        'Floodmarker Name': pn,
-        'Trend Water Gauge': pt,
-        'Water Gauge': pw
-    },
-};
-
-
-//Map control: Layer switcher		
-var LayerSwitcher = L.control.groupedLayers(
-	baseLayers, groupedOverLayers, {
-		position: 'topright'
-	}
-).addTo(map);
-
-// New minimap
-// Plugin magic goes here! Note that you cannot use the same layer object again, as that will confuse the two map controls
-var overviewMap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+// New minimap - Plugin magic goes here! Note that you cannot use the same layer object again, as that will confuse the two map controls
+var overviewMap = new L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 	maxZoom: 18,
 	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap<\/a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA<\/a>, Imagery © <a href="http://cloudmade.com">CloudMade<\/a>'
 });
 
-//Minimap
-var miniMap = new L.Control.MiniMap(overviewMap, {
+// Minimap
+var LminiMap = new L.Control.MiniMap(overviewMap, {
 	toggleDisplay: true,
 	mapOptions: {
 		panControl: false,
@@ -155,15 +120,15 @@ var miniMap = new L.Control.MiniMap(overviewMap, {
 	}
 }).addTo(map);
 
-//Scalebar
-var scalebar = L.control.scale({
-	position: 'bottomleft',
+// Scalebar
+var Lscalebar = new L.control.scale({
+	position: 'bottomright',
 	metric: true,
 	imperial: false
 }).addTo(map)
 
-//new Geolocation tool
-var locater = L.control.locate({
+// new Geolocation tool
+var Llocater = new L.control.locate({
 	position: 'topleft', // set the location of the control
 	drawCircle: true, // controls whether a circle is drawn that shows the uncertainty about the location
 	follow: true, // follow the location if `watch` and `setView` are set to true in locateOptions
@@ -191,8 +156,182 @@ var locater = L.control.locate({
 }).addTo(map);
 
 // new Geoseach Bar			
-new L.Control.GeoSearch({
+var Lgeosearch = new L.Control.GeoSearch({
 	provider: new L.GeoSearch.Provider.Google(),
 	position: 'topleft',
 	showMarker: true
 }).addTo(map);
+
+// new interactive coordinates display
+var LcoordinateDisplay = new L.control.coordinates({
+	position: "bottomleft", //optional default "bottomright"
+	decimals: 4, //optional default 4
+	decimalSeperator: ".", //optional default "."
+	labelTemplateLat: "Latitude: {y}", //optional default "Lat: {y}"
+	labelTemplateLng: "Longitude: {x}", //optional default "Lng: {x}"
+	enableUserInput: true, //optional default true
+	useDMS: false, //optional default false
+	useLatLngOrder: true //ordering of labels, default false-> lng-lat
+}).addTo(map);
+
+/*
+Has to be extended and restyled later on, so that the created markers (which are stored in the database) got visualized depending on the bounding box. 
+The messages in the MessageBoard should be synchronized with the Bounding Box.
+Check github repository for more information: https://github.com/kajic/leaflet-locationfilter/
+An example could be found here: http://tripbirds.com/hotels/new-york/?budget=on&mid=on&high=on&sort=social&bounds=40.721,-73.992,40.75,-73.969
+*/
+var LlocationFilter = new L.LocationFilter({
+	//bounds: (optional): The initial bounds for the location filter. Defaults to the maps own bounds.
+	enable: false, //Set to true to enable the filter as soon as it is added to the map. Defaults to false.
+	buttonPosition: 'topleft', //Set to position the associated buttons on the map. Defaults to 'topleft'.
+	enableButton: {
+		enableText: "Select area",
+		disableText: "Remove selection"
+    },
+	adjustButton: {
+		text: "Select area within current zoom"
+	}
+}).addTo(map);
+
+/*
+For now, the time information is used of a local json file.
+Demo of temporal data and slidercontrol
+*/
+$.getJSON("js/lib/Leaflet.slidercontrol/points_time.json", function (json) {
+	timepoints = L.geoJson(json),
+		sliderControl = new L.control.sliderControl({
+			position: "topright",
+			layer: timepoints,
+			range: false // change to true, to give the possibility of using an interval
+		});
+	//Make sure to add the slider to the map ;-)
+	map.addControl(sliderControl);
+	//And initialize the slider
+	sliderControl.startSlider();
+});
+
+/*
+For now, the time information is used of a local json file.
+Demo of data-clustering
+*/
+$.getJSON("js/lib/Leaflet.markercluster/points_cluster.json", function (json) {
+	geoJsonLayer = L.geoJson(json, {
+		onEachFeature: function (feature, layer) {
+			layer.bindPopup(feature.properties.title);
+		}
+	});
+	clusterpoints.addLayer(geoJsonLayer);
+	// map.fitBounds(markers.getBounds()); // deactivated, because of a high delay of map load
+});
+var clusterpoints = L.markerClusterGroup();
+//Uncomment to show Clusterlayer directly after the site has loaded. For now it's loaded by using the LayerControl
+//map.addLayer(clusterpoints);
+
+// Measure Control
+var LmeasureControl = new L.Control.measureControl({
+	position: "topleft"
+}).addTo(map);
+
+// Drawing Tool
+// Initialise the FeatureGroup to store editable layers
+var drawnItems = new L.FeatureGroup();
+map.addLayer(drawnItems);
+
+// Initialise the draw control and pass it the FeatureGroup of editable layers
+var drawControl = new L.Control.Draw({
+	position: 'topleft',
+	draw: {
+		polyline: {
+			metric: true
+		},
+		polygon: {
+			allowIntersection: false,
+			showArea: true,
+			drawError: {
+				color: '#b00b00',
+				timeout: 1000
+			},
+			shapeOptions: {
+				color: '#bada55'
+			}
+		},
+		circle: {
+			shapeOptions: {
+				color: '#662d91'
+			}
+		},
+		marker: true
+	},
+	edit: {
+		featureGroup: drawnItems,
+		remove: true
+	}
+});
+map.addControl(drawControl);
+
+
+map.on('draw:created', function (e) {
+	var type = e.layerType,
+		layer = e.layer;
+
+	if (type === 'marker') {
+		// Do marker specific actions
+	}
+// Do whatever else you need to. (save to db, add to map etc)
+	map.addLayer(layer);
+});
+
+// Search for specific features depending on their categroy. Json can be used.
+// Should be discussed if we want to do the filtering using a plugin or using the frontend itself
+/*
+var LfuseSearch = new L.control.fuseSearch({
+	position: "topleft",
+	title: "Search for category",
+	placeholder: "Search",
+	maxResultLength: null, //number of features displayed in the result list, default is null and all features found by Fuse are displayed
+	showInvisibleFeatures: true, // display the matching features even if their layer is invisible, default true
+	//function to display a feature returned by the search, parameters are the feature and an HTML container.
+    showResultFct: function(feature, container) { 
+        props = feature.properties;
+        var name = L.DomUtil.create('b', null, container);
+        name.innerHTML = props.name;
+        container.appendChild(L.DomUtil.create('br', null, container));
+        container.appendChild(document.createTextNode(props.details));
+    }
+}).addTo(map);
+*/
+
+
+baseLayers = {
+	'OSM': osm,
+	'Aerial View': layerOrtho,
+	'No Basemap': " ", //works, but produces an error
+};
+
+groupedOverLayers = {
+	"Map Layers": {
+		'DGK5': layerDGK5,
+		'DTK10': layerDTK10,
+	},
+	"Weather Layers": {
+		'Rain': rain,
+		'Flooding Areas': flood,
+	},
+	"Pegel Online Layers": {
+		'Flodmarker': pp,
+		'Floodmarker Name': pn,
+		'Trend Water Gauge': pt,
+		'Water Gauge': pw,
+		'Test': clusterpoints
+	},
+	"Demo Layer": {
+		'Clustering': clusterpoints
+	}
+};
+
+//Map control: Layer switcher		
+var LlayerSwitcher = new L.control.groupedLayers(
+	baseLayers, groupedOverLayers, {
+		position: 'topright'
+	}
+).addTo(map);
