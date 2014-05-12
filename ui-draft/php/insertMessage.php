@@ -17,7 +17,7 @@ $dbconn = pg_connect("host=giv-disastermanagement.uni-muenster.de port=5432 dbna
 	$tags = $_POST['Tags'];
 	$priority = 10;
 	echo $startdate;
-	$query=pg_query($dbconn,"Insert into \"message\" values (3,'".$issue."','".$title."','POINT(10 20)',TIMESTAMP '".$startdate."',TIMESTAMP '".$startdate."',TIMESTAMP '".$enddate."',TIMESTAMP '".$enddate."','".$description."',".$people_need.",".$people_attending.",'bla',".$priority.",'".$category."',0,0,'Upcoming','".$person_name."','".$person_contact."','delete?','delete?');");
+	$query=pg_query($dbconn,"Insert into \"message\" values (DEFAULT,'".$issue."','".$title."','POINT(10 20)',TIMESTAMP '".$startdate."',TIMESTAMP '".$startdate."',TIMESTAMP '".$enddate."',TIMESTAMP '".$enddate."','".$description."',".$people_need.",".$people_attending.",'bla',".$priority.",'".$category."',0,0,'Upcoming','".$person_name."','".$person_contact."','delete?');");
 	
 	
 	
