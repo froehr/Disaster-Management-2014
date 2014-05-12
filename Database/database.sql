@@ -2,7 +2,7 @@ DROP TABLE comment;
 DROP TABLE message;
 
 CREATE TABLE message(
-message_id INT NOT NULL,
+message_id SERIAL NOT NULL,
 message_type TEXT NOT NULL,
 title TEXT,
 location GEOMETRY,
@@ -21,13 +21,12 @@ downvotes INT,
 status TEXT,
 person_name TEXT,
 person_contact TEXT,
-person_telefon TEXT,
 person_email TEXT,
 PRIMARY KEY (message_id)
 );
 
 CREATE TABLE comment(
-comment_id INT NOT NULL,
+comment_id SERIAL NOT NULL,
 message TEXT NOT NULL,
 date_time TIMESTAMP NOT NULL,
 file BYTEA,
