@@ -371,7 +371,7 @@ if (document.getElementById('map').addEventListener) {
 		e.preventDefault();
 	}, false);
 	
-	document.getElementById('map').addEventListener('right-click', function(e) {
+	document.getElementById('map').addEventListener('click', function(e) {
 		var evt = e ? e : window.event;
 		
 		if ( ! (evt.clientX > popUpLeft && evt.clientX < popUpLeft + popUpWidth && evt.clientY > popUpTop && event.clientY < popUpTop + popUpHeight) ) {
