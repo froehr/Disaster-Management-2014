@@ -348,8 +348,6 @@ if (document.getElementById('map').addEventListener) {
 	var rightOffset = ($('#page').css('margin')).replace("px","");
 	var bottomOffset = parseInt(($('#map').css('bottom')).replace("px","")) + parseInt(($('#page').css('margin')).replace("px",""));
 	
-	console.log(bottomOffset);
-	
 	document.getElementById('map').addEventListener('contextmenu', function(e) {
 		var evt = e ? e : window.event;
 		
@@ -382,35 +380,6 @@ if (document.getElementById('map').addEventListener) {
 		
 		e.preventDefault();
 	}, false);
-} else {
-	document.getElementById('map').attachEvent('oncontextmenu', function() {
-		alert("You've tried to open context menu");
-		window.event.returnValue = false;
-	});
-}
-
-
-	
-if (document.getElementById('page').addEventListener) {
-	
-	document.getElementById('page').addEventListener('contextmenu', function(e) {
-		var evt = e ? e : window.event;
-		
-		console.log(" ");
-		console.log("clientY: " + evt.clientY);
-		console.log("WindowHight: " + $(window).height());
-		console.log("bottomOffset: " + bottomOffset);
-		console.log("PopupHeight: " + popUpHeight);
-		var bla = bottomOffset + popUpHeight
-		console.log("MinOffset: " + bla);
-		var bla2 = $(window).height() - (bottomOffset);
-		console.log("Window: " + bla2)
-		var bla3 =(evt.clientY + popUpHeight);
-		console.log("realOffset: " + bla2)
-		
-		e.preventDefault();
-	}, false);
-	
 } else {
 	document.getElementById('map').attachEvent('oncontextmenu', function() {
 		alert("You've tried to open context menu");
