@@ -345,9 +345,10 @@ if (document.getElementById('map').addEventListener) {
 	var popUpLeft = $('#map-right-click-menu').offset().left;
 	
 	// Nobody knows, why it is these numbers, but trust me, it works!!!
-	var rightOffset = 40;
-	var bottomOffset = 70;
-	var popUpPositionOffset = 29;
+	var rightOffset = ($('#page').css('margin')).replace("px","");
+	var bottomOffset = parseInt(($('#map').css('bottom')).replace("px","")) + parseInt(($('#page').css('margin')).replace("px",""));
+	
+	console.log(bottomOffset);
 	
 	document.getElementById('map').addEventListener('contextmenu', function(e) {
 		var evt = e ? e : window.event;
@@ -355,11 +356,12 @@ if (document.getElementById('map').addEventListener) {
 		var x = evt.clientX;
 		var y = evt.clientY;
 		
-		if ( $(window).width() - rightOffset < (evt.clientX + popUpWidth) ) {
-			x -= popUpWidth + popUpPositionOffset;
+		if ($(window).width() - rightOffset < (evt.clientX + popUpWidth) ) {
+			x -= popUpWidth;
 		}
-		if ( $(window).height() - bottomOffset < (evt.clientY + popUpHeight) ) {
-			y -= popUpHeight + popUpPositionOffset;
+		// + parseInt(($('#page').css('margin')).replace("px",""))
+		if (($(window).height() - evt.clientY - bottomOffset - 2) < popUpHeight) {
+			y -= (popUpHeight + 2);
 		}
 		
 		$('#map-right-click-menu').fadeOut(100, function() {
@@ -380,6 +382,35 @@ if (document.getElementById('map').addEventListener) {
 		
 		e.preventDefault();
 	}, false);
+} else {
+	document.getElementById('map').attachEvent('oncontextmenu', function() {
+		alert("You've tried to open context menu");
+		window.event.returnValue = false;
+	});
+}
+
+
+	
+if (document.getElementById('page').addEventListener) {
+	
+	document.getElementById('page').addEventListener('contextmenu', function(e) {
+		var evt = e ? e : window.event;
+		
+		console.log(" ");
+		console.log("clientY: " + evt.clientY);
+		console.log("WindowHight: " + $(window).height());
+		console.log("bottomOffset: " + bottomOffset);
+		console.log("PopupHeight: " + popUpHeight);
+		var bla = bottomOffset + popUpHeight
+		console.log("MinOffset: " + bla);
+		var bla2 = $(window).height() - (bottomOffset);
+		console.log("Window: " + bla2)
+		var bla3 =(evt.clientY + popUpHeight);
+		console.log("realOffset: " + bla2)
+		
+		e.preventDefault();
+	}, false);
+	
 } else {
 	document.getElementById('map').attachEvent('oncontextmenu', function() {
 		alert("You've tried to open context menu");
