@@ -221,3 +221,7 @@ $('#sort').click(function() {
 	$('#sort-form').animate({height: 'toggle'});
 	$('#filter-form').animate({height: 'hide'});
 });
+
+$('#sort-messages-distance').click(function() {
+	console.log('test');
+});

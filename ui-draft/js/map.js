@@ -329,9 +329,60 @@ groupedOverLayers = {
 	}
 };
 
-//Map control: Layer switcher		
+// Map control: Layer switcher		
 var LlayerSwitcher = new L.control.groupedLayers(
 	baseLayers, groupedOverLayers, {
 		position: 'topright'
 	}
 ).addTo(map);
+
+// Right click menubar
+if (document.getElementById('map').addEventListener) {
+	var popUpWidth = $('#map-right-click-menu').width();
+	var popUpTop = $('#map-right-click-menu').offset().top;
+	
+	var popUpHeight = $('#map-right-click-menu').height();
+	var popUpLeft = $('#map-right-click-menu').offset().left;
+	
+	// Nobody knows, why it is these numbers, but trust me, it works!!!
+	var rightOffset = 40;
+	var bottomOffset = 70;
+	var popUpPositionOffset = 29;
+	
+	document.getElementById('map').addEventListener('contextmenu', function(e) {
+		var evt = e ? e : window.event;
+		
+		var x = evt.clientX;
+		var y = evt.clientY;
+		
+		if ( $(window).width() - rightOffset < (evt.clientX + popUpWidth) ) {
+			x -= popUpWidth + popUpPositionOffset;
+		}
+		if ( $(window).height() - bottomOffset < (evt.clientY + popUpHeight) ) {
+			y -= popUpHeight + popUpPositionOffset;
+		}
+		
+		$('#map-right-click-menu').fadeOut(100, function() {
+			document.getElementById('map-right-click-menu').style.left = x + 'px';
+			document.getElementById('map-right-click-menu').style.top = y + 'px';
+			$('#map-right-click-menu').fadeIn(200);
+		});
+		
+		e.preventDefault();
+	}, false);
+	
+	document.getElementById('map').addEventListener('click', function(e) {
+		var evt = e ? e : window.event;
+		
+		if ( ! (evt.clientX > popUpLeft && evt.clientX < popUpLeft + popUpWidth && evt.clientY > popUpTop && event.clientY < popUpTop + popUpHeight) ) {
+			$('#map-right-click-menu').fadeOut(200);
+		}
+		
+		e.preventDefault();
+	}, false);
+} else {
+	document.getElementById('map').attachEvent('oncontextmenu', function() {
+		alert("You've tried to open context menu");
+		window.event.returnValue = false;
+	});
+}
