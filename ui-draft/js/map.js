@@ -239,21 +239,22 @@ map.addLayer(drawnItems);
 
 // Initialise the draw control and pass it the FeatureGroup of editable layers
 var drawControl = new L.Control.Draw({
-	position: 'topleft',
 	draw: {
-		polyline: {
-			metric: true
-		},
+		position: 'topleft',
 		polygon: {
+			title: 'Draw a sexy polygon!',
 			allowIntersection: false,
-			showArea: true,
 			drawError: {
 				color: '#b00b00',
 				timeout: 1000
 			},
 			shapeOptions: {
 				color: '#bada55'
-			}
+			},
+			showArea: true
+		},
+		polyline: {
+			metric: true
 		},
 		circle: {
 			shapeOptions: {
@@ -264,21 +265,22 @@ var drawControl = new L.Control.Draw({
 	},
 	edit: {
 		featureGroup: drawnItems,
-		remove: true
+		remove: true 
 	}
 });
 map.addControl(drawControl);
-
 
 map.on('draw:created', function (e) {
 	var type = e.layerType,
 		layer = e.layer;
 
 	if (type === 'marker') {
+		layer.bindPopup('A popup!');
 		// Do marker specific actions
 	}
-// Do whatever else you need to. (save to db, add to map etc)
-	map.addLayer(layer);
+	// Do whatever elso you want to do. For example save all created items from Layer drawnItems to database.
+	// First step would be to convert the Layer to geoJson by e.g. toDb = drawnItems.togeoJSON();
+	drawnItems.addLayer(layer);
 });
 
 // Search for specific features depending on their categroy. Json can be used.
