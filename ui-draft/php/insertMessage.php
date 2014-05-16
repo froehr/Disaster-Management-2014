@@ -1,5 +1,5 @@
 <?php
-$dbconn = pg_connect("host=giv-disastermanagement.uni-muenster.de port=5432 dbname=disaster_management user=postgres password=3rux4sNtZZkDV")
+$dbconn = pg_connect("host=database port=5432 dbname=disaster_management user=user password=password")
     or die('Verbindungsaufbau fehlgeschlagen: ' . pg_last_error());
 	
 	$issue = $_POST['Issue'];
