@@ -1,8 +1,6 @@
 	
 <?php
-$db_connection = pg_connect("host=giv-disastermanagement.uni-muenster.de port=5432 dbname=disaster_management user=postgres password=XKMSbJE9xd5f")
-
-	//$db_connection = pg_connect("host=localhost port=5432 dbname=dbProject user=postgres password=pgadmin")
+$db_connection = pg_connect("host=hostname port=5432 dbname=disaster_management user=user password=password")
 	or die('Error in Connection');
 
 //get the filter type and values or[arguments] for the query  ...will be edit later 'filters'
@@ -61,41 +59,3 @@ $db_connection = pg_connect("host=giv-disastermanagement.uni-muenster.de port=54
  
  
  
- /*
-	
-
-    if( !isset($_POST['functionname']) ) { $aResult['error'] = 'No function name!'; }
-
-    if( !isset($_POST['arguments']) ) { $aResult['error'] = 'No function arguments!'; }
-
-    if( !isset($aResult['error']) ) {
-
-        switch($_POST['functionname']) {
-            case 'readData':
-               if( !is_array($_POST['arguments']) ) {
-                   $aResult['error'] = 'Error in arguments!';
-               }
-               else {
-                   	
-					
-					
-                   $result = pg_query($db_connection, $_POST['arguments']);
-				   while($row =pg_fetch_assoc($result)){
-				   		echo $row['lastupdate'];
-				   }
-				   
-		*/		   
-				   
-				   
-				   
-				   
-				   
-				   
-			/*	   
-               }
-               break;
-
-            default:
-               $aResult['error'] = 'Not found function '.$_POST['functionname'].'!';
-               break;
-    */	
