@@ -15,6 +15,31 @@ var map = new L.Map('map', {
 	scale: true
 });
 
+L.layerJSON({
+	
+	//url: 'http://www.pegelonline.wsv.de/webservices/rest-api/v2/stations.json?latitude=51.9544&longitude=7.627&radius=800',
+	url: 'http://www.pegelonline.wsv.de/webservices/rest-api/v2/stations.json?latitude=51.9544&longitude=7.627&radius=800&includeTimeseries=true',
+	//propertyItems: 'timeseries',
+	propertyTitle: 'shortname',
+	propertyLoc: ['latitude','longitude'],
+	
+	//infolink: "http://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/BONN/W/measurements.png?start=P15D&width=925&height=220",
+	
+	buildIcon: function(data, shortname) {
+			return new L.Icon({
+				iconUrl:'pegel.png',
+				iconSize: new L.Point(32, 37),
+				iconAnchor: new L.Point(18, 37),
+				popupAnchor: new L.Point(0, -37)
+			});
+		},
+		
+	buildPopup: function(data, marker) {
+		return (data.shortname +"<br />") || null;
+	}
+	 
+}).addTo(map);
+
 // Basemaps
 // add an OpenStreetMap tile layer
 var osm = new L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
