@@ -373,6 +373,7 @@ if (document.getElementById('map').addEventListener) {
 		e.preventDefault();
 	}, false);
 	
+	
 	document.getElementById('map').addEventListener('click', function(e) {
 		var evt = e ? e : window.event;
 		
@@ -380,8 +381,11 @@ if (document.getElementById('map').addEventListener) {
 			$('#map-right-click-menu').fadeOut(200);
 		}
 		
-		e.preventDefault();
+		if ( $('.leaflet-control-layers-list').css('display') == 'none' ) {
+			e.preventDefault();
+		}
 	}, false);
+	
 } else {
 	document.getElementById('map').attachEvent('oncontextmenu', function() {
 		alert("You've tried to open context menu");

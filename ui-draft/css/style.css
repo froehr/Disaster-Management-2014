@@ -145,7 +145,7 @@ header nav ul li #message:active {
 	top: 85px;
 	bottom: 58px;
 	z-index: 3;
-	overflow: auto;
+	overflow-y: scroll;
 	padding-bottom: 20px;
 }
 
@@ -587,29 +587,106 @@ header nav ul li #message:active {
 	left: 0px;
 	right: 0px;
 	width: 280px;
-	height: 60px;
 	z-index: 3;
 	display: none;
 	padding: 10px;
 }
 
+.filter {
+	height: 250px;
+}
+
+.sort {
+	height: 125px;
+}
+
+.utility-form h1 {
+	font-size: 15px;
+}
+
 .utility-form p {
-	margin: 0px;
+	margin: 4px 0px;
 	font-size: 13px;
 }
 
 /* Dropdown for category filtering */
-.utility-form select {
+.utility-form select.select-filter {
 	margin: 5px 0px;
+	margin-right: 5px;
+	border: 1px solid #a9a9a9;
+	background-color: #FFFFFF;
+	font-family: 'Noto Sans', Arial, sans-serif;
+	width: 133px;
+	padding: 3px 5px;
+	font-size: 11px;
+}
+
+.utility-form select.select-sorting {
+	margin: 5px 0px;
+	margin-right: 5px;
 	border: 1px solid #a9a9a9;
 	background-color: #FFFFFF;
 	font-family: 'Noto Sans', Arial, sans-serif;
 	width: 280px;
 	padding: 5px 15px;
+	font-size: 13px;
 }
 
-.utility-form select:hover {
+.utility-form select.select-filter:hover {
 	border: 1px solid #5f5f5f;
+}
+
+.utility-form select.select-sorting:hover {
+	border: 1px solid #5f5f5f;
+}
+
+.utility-form input.date {
+	padding: 3px 5px;
+	width: 160px;
+	border: 1px solid #a9a9a9;
+}
+
+.utility-form input.time {
+	padding: 3px 5px;
+	width: 87px;
+	border: 1px solid #a9a9a9;
+}
+
+.utility-form input.date:hover {
+	border: 1px solid #5f5f5f;
+}
+
+.utility-form input.time:hover {
+	border: 1px solid #5f5f5f;
+}
+
+.utility-form input.button {
+	float: right;
+	margin-top: 5px;
+	margin-right: 5px;
+	cursor: pointer;
+	background-color: #EEEEEE;
+	border: 1px solid #a9a9a9;
+	font-family: 'Noto Sans', Arial, sans-serif;
+	padding: 3px 15px;
+	font-size: 13px;
+}
+
+.utility-form input.button:hover {
+	border: 1px solid #5f5f5f;
+}
+
+.utility-form p.sorting-radio {
+	text-align: center;
+	margin-top: 10px;
+}
+
+.utility-form p span.sorting-radio-pointer {
+	cursor: pointer;
+}
+
+.utility-form p input {
+	cursor: pointer;
 }
 
 /* Message search box */

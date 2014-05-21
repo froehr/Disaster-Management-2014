@@ -98,17 +98,44 @@
 				</div>
 				<div id="messages"></div>
 			</div>
-			<div id="sort-form" class="utility-form">
-				<p>Sort messages</p>
-			</div>
-			<div id="filter-form" class="utility-form">
-				<p>Filter messages by category:</p>
-				<select name="category">
-					<option value="cat-1">Category 1</option>
-					<option value="cat-2">Category 2</option>
-					<option value="cat-3">Category 3</option>
-					<option value="...">...</option>
+			<div id="sort-form" class="utility-form sort">
+				<h1>Sort messages by</h1>
+				<select name="sort-message" class="select-sorting">
+					<option value="ratio-voting">Voting ratio</option>
+					<option value="upvotes">Up votes</option>
+					<option value="downvotes">Down votes</option>
+					<option value="start-time">Start date and time</option>
+					<option value="end-time">End date and time</option>
+					<option value="message-time">Message submission time</option>
+					<option value="message-change-time">Message edit time</option>
 				</select>
+				<p class="sorting-radio">
+					<span class="sorting-radio-pointer" id="desc"><input type="radio" name="sorting-method" value="desc" id="radio-desc" checked="checked" /> Descending</span>
+					<span class="sorting-radio-pointer" id="asc"><input type="radio" name="sorting-method" value="asc" id="radio-asc" /> Ascending</span>
+				</p>
+			</div>
+			<div id="filter-form" class="utility-form filter">
+				<h1>Message filter</h1>
+				<p>Category</p>
+				<select name="filter-issue" class="select-filter">
+					<option value="emergency">Emergency</option>
+					<option value="need-support">Need support</option>
+					<option value="offer-support">Offer support</option>
+					<option value="message">Message</option>
+				</select>
+				<select name="filter-category" class="select-filter">
+					<option value="cat-1">Food and Water</option>
+					<option value="cat-2">Sand bags</option>
+					<option value="cat-3">Cloth</option>
+					<option value="cat-4">Fuel</option>
+				</select>
+				<p>Start date and time</p>
+				<input type="date" name="filter-startdate" id="filter-startdate" class="date" />
+				<input type="time" name="filter-starttime" id="filter-starttime" class="time" />
+				<p>End date and time</p>
+				<input type="date" name="filter-enddate" id="filter-enddate" class="date" />
+				<input type="time" name="filter-endtime" id="filter-endtime" class="time" />
+				<input type="button" value="Apply filter &nbsp; &#9658;" class="button" />
 			</div>
 			<div id="message-search">
 				<input type="text" name="message-search" placeholder="Search for message ..." />

@@ -182,7 +182,7 @@ $('#hide-message-bar').click(function() {
 	if ( messageBarStatus ) {
 		$('#hide-message-bar-container').animate({left: 0});
 		$('#hide-message-bar').css('background-image', 'url(img/icons/show-message-bar.png)');
-		$('.leaflet-left').animate({left: 0});
+		$('.leaflet-left').animate({left: 10});
 		$('#sort-form').animate({width: 'hide'}, 350);
 		$('#filter-form').animate({width: 'hide'}, 350);
 		messageBarStatus = false;
@@ -190,7 +190,7 @@ $('#hide-message-bar').click(function() {
 	else {
 		$('#hide-message-bar-container').animate({left: 301});
 		$('#hide-message-bar').css('background-image', 'url(img/icons/hide-message-bar.png)');
-		$('.leaflet-left').animate({left: 300});
+		$('.leaflet-left').animate({left: 310});
 		messageBarStatus = true;
 	}
 });
@@ -222,6 +222,17 @@ $('#sort').click(function() {
 	$('#filter-form').animate({height: 'hide'});
 });
 
+$('#desc').click(function() {
+	document.getElementById('radio-desc').checked = true;
+	document.getElementById('radio-asc').checked = false;
+});
+
+$('#asc').click(function() {
+	document.getElementById('radio-desc').checked = false;
+	document.getElementById('radio-asc').checked = true;
+});
+
 $('#sort-messages-distance').click(function() {
-	console.log('test');
+	// Connection to the database
+	// Ajax call for sorting messages by distance
 });
