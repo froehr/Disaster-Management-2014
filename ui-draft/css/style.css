@@ -644,12 +644,14 @@ header nav ul li #message:active {
 	padding: 3px 5px;
 	width: 160px;
 	border: 1px solid #a9a9a9;
+	font-family: 'Noto Sans', Arial, sans-serif;
 }
 
 .utility-form input.time {
 	padding: 3px 5px;
 	width: 87px;
 	border: 1px solid #a9a9a9;
+	font-family: 'Noto Sans', Arial, sans-serif;
 }
 
 .utility-form input.date:hover {
