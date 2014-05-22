@@ -14,6 +14,8 @@ var map = new L.Map('map', {
 		closePopupOnClick : true,
 		scale : true
 	});
+// global variable for position of weatherforcast
+var latlng;
 
 // Waterlevel measurement data (Pegel Online Restservice is used)
 var waterMeasurementData = L.layerJSON({
@@ -393,7 +395,7 @@ if (document.getElementById('map').addEventListener) {
 	
 	//Getting lat long at rightclick
 	function onMapClick(e) {
-    latlong = e.latlng;
+    	latlng = e.latlng;
 	}
 	map.on('contextmenu', onMapClick);
 
@@ -403,7 +405,7 @@ if (document.getElementById('map').addEventListener) {
 		var x = evt.clientX;
 		var y = evt.clientY;
 		
-		console.log(latlong);
+		console.log(latlng);
 
 		if ($(window).width() - rightOffset < (evt.clientX + popUpWidth)) {
 			x -= popUpWidth;

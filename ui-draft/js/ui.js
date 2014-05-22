@@ -117,9 +117,12 @@ $('#hotlines').click(function() {
 });
 
 $('#weatherforcast').click(function() {
-	$('#popup').fadeIn();
-	$('#map-right-click-menu').fadeOut();
-	
+	var content = $.ajax({url:"http://api.openweathermap.org/data/2.5/forecast/daily?lat="+latlng.lat+"&lon="+latlng.lng+"&cnt=7&mode=json",success:function(result){
+	   console.log(result);
+	   $('#popup-content').html(result);
+	   $('#map-right-click-menu').fadeOut();
+	   $('#popup').fadeIn();
+	   }});
 });
 
 $('#help').click(function() {
