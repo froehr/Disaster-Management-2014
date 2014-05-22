@@ -177,6 +177,11 @@ header nav ul li #message:active {
 	left: 240px;
 }
 
+#sort-form .x, #filter-form .x {
+	position: relative;
+	top: 10px;
+}
+
 .x:hover {
 	background-color: #CCCCCC;
 	color: #555555;

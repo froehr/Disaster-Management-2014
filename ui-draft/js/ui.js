@@ -220,6 +220,10 @@ $('#filter').click(function() {
 	$('#sort-form').animate({height: 'hide'});
 });
 
+$('#x-filter').click(function() {
+	$('#filter-form').animate({height: 'toggle'});
+});
+
 $('#sort').mouseover(function() {
 	$('#sort').attr("src", 'img/icons/sort-hover.png');
 });
@@ -231,6 +235,10 @@ $('#sort').mouseout(function() {
 $('#sort').click(function() {
 	$('#sort-form').animate({height: 'toggle'});
 	$('#filter-form').animate({height: 'hide'});
+});
+
+$('#x-sort').click(function() {
+	$('#sort-form').animate({height: 'toggle'});
 });
 
 $('#desc').click(function() {

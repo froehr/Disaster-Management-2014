@@ -100,6 +100,7 @@
 				<div id="messages"></div>
 			</div>
 			<div id="sort-form" class="utility-form sort">
+				<div class="x" id="x-sort">&#10006;</div>
 				<h1>Sort messages by</h1>
 				<select name="sort-message" class="select-sorting">
 					<option value="ratio-voting">Voting ratio</option>
@@ -116,6 +117,7 @@
 				</p>
 			</div>
 			<div id="filter-form" class="utility-form filter">
+				<div class="x" id="x-filter">&#10006;</div>
 				<h1>Message filter</h1>
 				<p>Category</p>
 				<select name="filter-issue" class="select-filter">
@@ -129,6 +131,9 @@
 					<option value="cat-2">Sand bags</option>
 					<option value="cat-3">Cloth</option>
 					<option value="cat-4">Fuel</option>
+					<option value="cat-5">Flood</option>
+					<option value="cat-6">Fire</option>
+					<option value="cat-7">...</option>
 				</select>
 				<p>Start date and time</p>
 				<input type="date" name="filter-startdate" id="filter-startdate" class="date" />
