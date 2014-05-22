@@ -111,9 +111,15 @@ $('#x-form').click(function() {
 	$('#message-form').slideUp('slow', 'linear');
 });
 
-// click functions to open "hotlines", "help" and "about" popups
+// click functions to open "hotlines", "help", "about" and "weatherforcast" popups
 $('#hotlines').click(function() {
 	$('#popup').fadeIn();
+});
+
+$('#weatherforcast').click(function() {
+	$('#popup').fadeIn();
+	$('#map-right-click-menu').fadeOut();
+	
 });
 
 $('#help').click(function() {

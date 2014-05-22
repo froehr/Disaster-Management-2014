@@ -390,12 +390,20 @@ if (document.getElementById('map').addEventListener) {
 	// Nobody knows, why it is these numbers, but trust me, it works!!!
 	var rightOffset = ($('#page').css('margin')).replace("px", "");
 	var bottomOffset = parseInt(($('#map').css('bottom')).replace("px", "")) + parseInt(($('#page').css('margin')).replace("px", ""));
+	
+	//Getting lat long at rightclick
+	function onMapClick(e) {
+    latlong = e.latlng;
+	}
+	map.on('contextmenu', onMapClick);
 
 	document.getElementById('map').addEventListener('contextmenu', function (e) {
 		var evt = e ? e : window.event;
 
 		var x = evt.clientX;
 		var y = evt.clientY;
+		
+		console.log(latlong);
 
 		if ($(window).width() - rightOffset < (evt.clientX + popUpWidth)) {
 			x -= popUpWidth;
