@@ -55,7 +55,7 @@ function showMessages() {
 					0,
 					'Flood',
 					312,
-					221,
+					22,
 					'Peter Miller',
 					'',
 					'',
@@ -177,8 +177,8 @@ function showMessages() {
 				'<div class="location-voting">' +
 					'<div class="downvote-number">' + message['downvotes'] + '</div>' +
 					'<div class="upvote"><a href="#" id="upvote-' + message['message_id'] + '">&#9650;</a></div>' +
-					location_name_html +
 				'</div>' +
+				'<div class="location-name">' + location_name_html + '</div>' +
 				'<div class="downvote"><a href="#" id="downvote-' + message['message_id'] + '">&#9660;</a></div>' +
 				'<div class="upvote-number">' + message['upvotes'] + '</div>' +
 			'</div>');
@@ -213,7 +213,6 @@ function showMessages() {
 		// center the map on the message location
 		$('#message-' + message['message_id']).click(function() {
 			map.setView(new L.LatLng(message['location']['lat'], message['location']['lon']), message['location']['zoom']);
-			switchMessageDetails(message['message_id']);
 		});
 
 		// animations for the up- and downvote buttons
@@ -225,6 +224,14 @@ function showMessages() {
 		$('#upvote-' + message['message_id']).click(function() {
 			document.getElementById('upvote-' + message['message_id']).style.color = '#468f5c';
 			document.getElementById('downvote-' + message['message_id']).style.color = '#959595';
+		});
+		
+		$('#more-' + message['message_id']).click(function() {
+			switchMessageDetails(message['message_id']);
+		});
+		
+		$('#less-' + message['message_id']).click(function() {
+			switchMessageDetails(message['message_id']);
 		});
 	}
 

@@ -145,7 +145,7 @@ header nav ul li #message:active {
 	top: 85px;
 	bottom: 58px;
 	z-index: 3;
-	overflow-y: scroll;
+	overflow: auto;
 	padding-bottom: 20px;
 }
 
@@ -505,7 +505,6 @@ header nav ul li #message:active {
 
 /* Message field location and up/down-vote */
 #message-bar .message div.location-voting  {
-	float: right;
 	color: #959595;
 	font-style: italic;
 	font-size: 13px;
@@ -514,17 +513,34 @@ header nav ul li #message:active {
 }
 
 #message-bar .message div.upvote-number {
+	float: right;
 	position: relative;
+	top: -20px;
+	left: -2px;
 	color: #468f5c;
 	font-size: 13px;
-	left: 216px;
-	bottom: 3px;
 	text-align: center;
 	width: 30px;
 }
 
+/* Message field downvote arrow */
+#message-bar .message div.downvote {
+	float: right;
+	position: relative;
+	top: -20px;
+	left: 2px;
+	width: 15px;
+	font-size: 13px;
+	float: right;
+	-webkit-transform: scale(2.0,1.0);
+    -moz-transform: scale(2.0, 1.0);
+    -ms-transform: scale(2.0, 1.0);
+    -o-transform: scale(2.0, 1.0);
+    transform: scale(2.0,1.0);
+}
+
 #message-bar .message div.location-voting div.downvote-number {
-	margin-left: 8px;
+	margin-left: 10px;
 	float: right;
 	color: #A50026;
 	font-size: 13px;
@@ -544,6 +560,12 @@ header nav ul li #message:active {
     transform: scale(2.0,1.0);
 }
 
+#message-bar .message div.location-name {
+	color: #959595;
+	font-style: italic;
+	font-size: 13px;
+}
+
 #message-bar .message div.location-voting div.upvote a, #message-bar .message div.upvote a:visited, #message-bar .message div.upvote a:active {
 	color: #468f5c;
 	text-decoration: none;
@@ -551,22 +573,6 @@ header nav ul li #message:active {
 
 #message-bar .message div.location-voting div.upvote a:hover {
 	color: #82b090;
-}
-
-/* Message field downvote arrow */
-#message-bar .message div.downvote {
-	position: relative;
-	left: 111px;
-	bottom: 3px;
-	width: 15px;
-	font-size: 13px;
-	float: right;
-	margin-left: 3px;
-	-webkit-transform: scale(2.0,1.0);
-    -moz-transform: scale(2.0, 1.0);
-    -ms-transform: scale(2.0, 1.0);
-    -o-transform: scale(2.0, 1.0);
-    transform: scale(2.0,1.0);
 }
 
 #message-bar .message div.downvote a, #message-bar .message div.downvote a:visited, #message-bar .message div.downvote a:active {

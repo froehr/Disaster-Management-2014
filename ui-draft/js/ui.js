@@ -188,6 +188,7 @@ $('#hide-message-bar').click(function() {
 	if ( messageBarStatus ) {
 		$('#hide-message-bar-container').animate({left: 0});
 		$('#hide-message-bar').css('background-image', 'url(img/icons/show-message-bar.png)');
+		document.getElementById('hide-message-bar').title = 'Show message bar';
 		$('.leaflet-left').animate({left: 10});
 		$('#sort-form').animate({width: 'hide'}, 350);
 		$('#filter-form').animate({width: 'hide'}, 350);
@@ -196,6 +197,7 @@ $('#hide-message-bar').click(function() {
 	else {
 		$('#hide-message-bar-container').animate({left: 301});
 		$('#hide-message-bar').css('background-image', 'url(img/icons/hide-message-bar.png)');
+		document.getElementById('hide-message-bar').title = 'Hide message bar';
 		$('.leaflet-left').animate({left: 310});
 		messageBarStatus = true;
 	}
