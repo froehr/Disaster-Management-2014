@@ -97,7 +97,7 @@ function showMessages() {
 					false,
 					'smoke,fire,alarm', [
 					]
-		)/*,
+		),
 		new Message(2,
 					'need-support',
 					new Location(37.253192, -121.966156, 16),
@@ -105,7 +105,7 @@ function showMessages() {
 					'2014-04-17, 14:26',
 					'2014-04-17, 14:26',
 					'2014-04-17, 14:26',
-					'Test',
+					'Need support here!',
 					'Test',
 					0,
 					0,
@@ -121,7 +121,31 @@ function showMessages() {
 					false,
 					'', [
 					]
-		)*/
+		),
+		new Message(3,
+					'offer-support',
+					new Location(37.253192, -121.966156, 16),
+					'2014-04-17, 14:26',
+					'2014-04-17, 14:26',
+					'2014-04-17, 14:26',
+					'2014-04-17, 14:26',
+					'Here you get support!',
+					'Test',
+					0,
+					0,
+					'',
+					0,
+					'',
+					0,
+					0,
+					'',
+					'',
+					'',
+					'',
+					false,
+					'', [
+					]
+		)
 	];
 	
 	// Function appends one message-div element to the messages div for the message of the parameter

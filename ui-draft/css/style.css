@@ -310,31 +310,18 @@ header nav ul li #message:active {
 
 /* Emergency message field */
 #message-bar .message-emergency {
-	background-color: #ffebed !important;
-}
-
-#message-bar .message-emergency:hover {
-	background-color: #fff5f7 !important;
+	background-image: url(../img/background-emergency.png);
 }
 
 /* Need support message field */
 #message-bar .message-need-support {
-	background-color: #feefdf !important;
-}
-
-#message-bar .message-need-support:hover {
-	background-color: #fef6ed !important;
+	background-image: url(../img/background-need-support.png);
 }
 
 /* Offer support message field */
 #message-bar .message-offer-support {
-	background-color: #e8fff1 !important;
+	background-image: url(../img/background-offer-support.png);
 }
-
-#message-bar .message-offer-support:hover {
-	background-color: #f4fff8 !important;
-}
-
 /* Message field */
 #message-bar .message {
 	background-color: #FFFFFF;
@@ -343,10 +330,12 @@ header nav ul li #message:active {
 	min-height: 70px;
 	margin-bottom: 5px;
 	cursor: pointer;
+	background-repeat: no-repeat;
+	background-position: left bottom;
 }
 
 #message-bar .message:hover {
-	background-color: #F3F3F3;
+	background-color: #f7f7f7;
 }
 
 /* Message field headline */
@@ -506,6 +495,7 @@ header nav ul li #message:active {
 	color: #959595;
 	font-style: italic;
 	font-size: 13px;
+	margin-left: 3px;
 }
 
 /* Message field location and up/down-vote */
@@ -569,6 +559,7 @@ header nav ul li #message:active {
 	color: #959595;
 	font-style: italic;
 	font-size: 13px;
+	margin-left: 19px;
 }
 
 #message-bar .message div.location-voting div.upvote a, #message-bar .message div.upvote a:visited, #message-bar .message div.upvote a:active {
