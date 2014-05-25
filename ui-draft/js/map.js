@@ -14,13 +14,15 @@ var map = new L.Map('map', {
 		closePopupOnClick : true,
 		scale : true
 	});
-// global variable for position of weatherforcast
-var latlng;
 
+// global variable for position of weatherforcast
+var latlng;	
+	
 // Waterlevel measurement data (Pegel Online Restservice is used)
 var waterMeasurementData = L.layerJSON({
+		caching : true, ////disable markers caching and regenerate every time
 		url : 'http://www.pegelonline.wsv.de/webservices/rest-api/v2/stations.json?latitude=51.9544&longitude=7.627&radius=800&includeTimeseries=true&includeCurrentMeasurement=true',
-		// Pegel Rest API Documentation: http://www.pegelonline.wsv.de/webservice/dokuRestapi 
+		// Pegel Rest API Documentation: http://www.pegelonline.wsv.de/webservice/dokuRestapi
 		// propertyItems: 'timeseries',
 		propertyTitle : 'shortname',
 		propertyLoc : ['latitude', 'longitude'],
@@ -38,7 +40,7 @@ var waterMeasurementData = L.layerJSON({
 			var currentMeasurementValue = data.timeseries[0].currentMeasurement.value;
 			var currentMeasurementUnit = data.timeseries[0].unit;
 			var currentMeasurementTimestamp = data.timeseries[0].currentMeasurement.timestamp;
-			// var gaugeZeroValue = data.timeseries[0].gaugeZero.value;		// covered by if-statement
+			// var gaugeZeroValue = data.timeseries[0].gaugeZero.value;			// covered by if-statement
 			// var gaugeZeroUnit = data.timeseries[0].gaugeZero.unit			// covered by if-statement
 
 			var gaugeZeroValue = "";
@@ -53,9 +55,9 @@ var waterMeasurementData = L.layerJSON({
 			if (data.timeseries[0].gaugeZero && data.timeseries[0].gaugeZero.unit) {
 				gaugeZeroUnit = data.timeseries[0].gaugeZero.unit
 			};
-			
+
 			// Popup with name of measurementstation, the watername, the gaugezerovalue+unit, the current waterlevelmeasurement+unit and timestamp of last measurement
-			return ("<b>Measurementstation:</b> " + measurementStationName + "<br /><b>Watername:</b> " + waterName + "<br /><b>Waterzerovalue:</b> " + gaugeZeroValue + gaugeZeroUnit + "<br /><b>Current Waterlevel:</b> " + currentMeasurementValue + currentMeasurementUnit + "<br /><b>Last Measurement:</b> " + currentMeasurementTimestamp) || null;
+			return ("<b>Measurementstation:</b> " + measurementStationName + "<br /><b>Watername:</b> " + waterName + "<br /><b>Waterzerovalue:</b> " + gaugeZeroValue + gaugeZeroUnit + "<br /><b>Current Waterlevel:</b> " + currentMeasurementValue + currentMeasurementUnit + "<br /><b>Last Measurement:</b> " + currentMeasurementTimestamp + "<br/>" + "<img src=http://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/" + encodeURIComponent(measurementStationName) + "/W/measurements.png?start=P15D&width=260&height=130>" + "<br /><b>Click for an interactive graph:</b> " + "<button id=highchart>populate table</button>") || null;
 		}
 	});
 
@@ -366,8 +368,7 @@ groupedOverLayers = {
 		'Flodmarker' : pp,
 		'Floodmarker Name' : pn,
 		'Trend Water Gauge' : pt,
-		'Water Gauge' : pw,
-		'Test' : clusterpoints
+		'Water Gauge' : pw
 	},
 	"Demo Layer" : {
 		'Clustering' : clusterpoints,
@@ -381,6 +382,7 @@ var LlayerSwitcher = new L.control.groupedLayers(
 		position : 'topright'
 	}).addTo(map);
 
+
 // Right click menubar
 if (document.getElementById('map').addEventListener) {
 	var popUpWidth = $('#map-right-click-menu').width();
@@ -392,7 +394,7 @@ if (document.getElementById('map').addEventListener) {
 	// Nobody knows, why it is these numbers, but trust me, it works!!!
 	var rightOffset = ($('#page').css('margin')).replace("px", "");
 	var bottomOffset = parseInt(($('#map').css('bottom')).replace("px", "")) + parseInt(($('#page').css('margin')).replace("px", ""));
-	
+
 	//Getting lat long at rightclick
 	function onMapClick(e) {
     	latlng = e.latlng;
@@ -404,7 +406,7 @@ if (document.getElementById('map').addEventListener) {
 
 		var x = evt.clientX;
 		var y = evt.clientY;
-		
+
 		console.log(latlng);
 
 		if ($(window).width() - rightOffset < (evt.clientX + popUpWidth)) {
@@ -431,7 +433,7 @@ if (document.getElementById('map').addEventListener) {
 			$('#map-right-click-menu').fadeOut(200);
 		}
 
-		if ($('.leaflet-control-layers-list').css('display') == 'none') {
+		if ($('.leaflet-popup-pane' || '.leaflet-control-layers-list').css('display') == 'none') {
 			e.preventDefault();
 		}
 	}, false);
