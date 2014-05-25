@@ -1,6 +1,6 @@
 		var options = {
 			chart : {
-				renderTo : 'highchart',
+				renderTo : 'popup',
 				type : 'spline',
 				shadow : true
 			},
