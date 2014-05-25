@@ -133,6 +133,10 @@ $('#about').click(function() {
 	$('#popup').fadeIn();
 });
 
+$('#highchartButton').click(function() {
+	$('#popup').fadeIn();
+});
+
 $('#x-popup').click(function() {
 	$('#popup').fadeOut();
 });
