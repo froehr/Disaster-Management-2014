@@ -1,8 +1,9 @@
 initHighChartForStation = function (id) {
     var options = {
         chart: {
-            renderTo: 'highchartContainer',
+            renderTo: 'popup-content',
             type: 'spline',
+			width: 780,
             shadow: true
         },
         title: {
@@ -21,7 +22,7 @@ initHighChartForStation = function (id) {
         },
         yAxis: {
             title: {
-                text: 'data'
+                text: 'Water Level'
             }
         },
         legend: {
