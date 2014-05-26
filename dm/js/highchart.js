@@ -1,8 +1,9 @@
 $(function () {
     var options = {
         chart: {
-            renderTo: 'highchartContainer',
+            renderTo: 'popup-content',
             type: 'line',
+			width: 780,
             shadow: true
         },
         title: {

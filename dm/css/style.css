@@ -828,12 +828,13 @@ header nav ul li #message:active {
 
 /* Popup for further content pages */
 #popup {
-	position: relative;
-	top: 80px;
+	position: absolute;
 	margin: auto;
-	height: 50%;
-	width: 800px;
+	left: 50%;
+	margin-top: -50px;
+	margin-left: -400px;
 	min-height: 300px;
+	width: 800px;
 	background-color: #FFFFFF;
 	box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.55);
 	z-index: 1001;
@@ -875,23 +876,24 @@ header nav ul li #message:active {
 	background-color: #EEEEEE;
 }
 
-/* Highchart-Popup for further content pages */
-#highchartPopup {
-	position: relative;
-	top: 80px;
-	margin: auto;
-	height: 53%;
-	width: 800px;
-	min-height: 300px;
-	background-color: #FFFFFF;
-	box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.55);
-	z-index: 1001;
-	padding: 15px;
-	display: none;
+#highchart-button {
+	
 }
 
-#highchartContainer {
-	z-index: 1002;
+.generic-button {
+	border: 1px solid #a9a9a9;
+	background-color: #FFFFFF;
+	font-family: 'Noto Sans', Arial, sans-serif;
+	display: inline-block;
+	margin: 5px 0px;
+	padding: 5px 15px;
+	cursor: pointer;
+	background-color: #EEEEEE;
+	font-size: 13px;
+}
+
+.generic-button:hover {
+	border: 1px solid #5f5f5f;
 }
 
 footer {

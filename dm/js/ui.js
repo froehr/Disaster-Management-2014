@@ -138,13 +138,9 @@ $('#x-popup').click(function() {
 	$('#popup').fadeOut();
 });
 
-$("body").on("click","#highchartButton",function() {
-    $('#highchartPopup').fadeIn();
+$("body").on("click","#highchart-button",function() {
+    $('#popup').fadeIn();
 });
-
-$('#x-highchartPopup').click(function() {
-	$('#highchartPopup').fadeOut();
-}); 
 
 // click functions to open and clode the "more" fields for the input form
 $('#more-form').click(function() {
