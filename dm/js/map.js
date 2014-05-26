@@ -57,7 +57,7 @@ var waterMeasurementData = L.layerJSON({
 			};
 
 			// Popup with name of measurementstation, the watername, the gaugezerovalue+unit, the current waterlevelmeasurement+unit and timestamp of last measurement
-			return ("<b>Measurementstation:</b> " + measurementStationName + "<br /><b>Watername:</b> " + waterName + "<br /><b>Waterzerovalue:</b> " + gaugeZeroValue + gaugeZeroUnit + "<br /><b>Current Waterlevel:</b> " + currentMeasurementValue + currentMeasurementUnit + "<br /><b>Last Measurement:</b> " + currentMeasurementTimestamp + "<br/>" + "<img src=http://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/" + encodeURIComponent(measurementStationName) + "/W/measurements.png?start=P15D&width=260&height=130>" + "<div id='highchart-button' class='generic-button'>More information &nbsp; &#9658;</div>") || null;
+			return ("<b>Measurementstation:</b> " + measurementStationName + "<br /><b>Watername:</b> " + waterName + "<br /><b>Waterzerovalue:</b> " + gaugeZeroValue + gaugeZeroUnit + "<br /><b>Current Waterlevel:</b> " + currentMeasurementValue + currentMeasurementUnit + "<br /><b>Last Measurement:</b> " + currentMeasurementTimestamp + "<br/>" + "<img src=http://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/" + encodeURIComponent(measurementStationName) + "/W/measurements.png?start=P15D&width=260&height=130>" + "<button id='highchartButton' data-stationName='"+ encodeURIComponent(measurementStationName) +"'>More infos</button>") || null;
 		}
 	});
 
