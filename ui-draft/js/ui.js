@@ -133,13 +133,17 @@ $('#about').click(function() {
 	$('#popup').fadeIn();
 });
 
-$('#highchartButton').click(function() {
-	$('#popup').fadeIn();
-});
-
 $('#x-popup').click(function() {
 	$('#popup').fadeOut();
 });
+
+$("body").on("click","#highchartButton",function() {
+    $('#highchartPopup').fadeIn();
+});
+
+$('#x-highchartPopup').click(function() {
+	$('#highchartPopup').fadeOut();
+}); 
 
 // click functions to open and clode the "more" fields for the input form
 $('#more-form').click(function() {
