@@ -342,6 +342,7 @@ header nav ul li #message:active {
 #message-bar .message h1 {
 	font-size: 15px;
 	margin-bottom: 6px;
+	text-align: justify;
 }
 
 /* Message field emergency headline */
@@ -362,17 +363,6 @@ header nav ul li #message:active {
 /* Message field message headline */
 #message-bar .message h1.message-head {
 	color: #45544a;
-}
-
-/* Message field date and time */
-#message-bar .message .time {
-	color: #959595;
-	font-style: italic;
-	position: relative;
-	top: -24px;
-	margin-bottom: -20px;
-	text-align: right;
-	font-size: 13px;
 }
 
 /* Message field text */
