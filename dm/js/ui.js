@@ -138,9 +138,8 @@ $('#x-popup').click(function() {
 	$('#popup').fadeOut();
 });
 
-$("body").on("click","#highchartButton",function(e) {
-    $('#highchartPopup').fadeIn();
-	initHighChartForStation($(e.target).attr('data-stationName'));
+$("body").on("click","#highchart-button",function() {
+    $('#popup').fadeIn();
 });
 
 // click functions to open and clode the "more" fields for the input form
