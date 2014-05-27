@@ -798,6 +798,21 @@ header nav ul li #message:active {
     bottom: -160px !important;
 }
 
+/* Change highlighting of activated tools */
+/* Measure Control */
+#map .leaflet-control.enabled a {
+	background-color: yellow  !important;
+}
+
+/* Drawing Tools */
+#map .leaflet-draw-toolbar-button-enabled { 
+     background-color: yellow !important;
+}
+
+/*Locate Me Tool*/
+#map .leaflet-control-locate.active.following a {
+	background-color: yellow;
+}
 
 /* Message bar toggler */
 #hide-message-bar-container {
