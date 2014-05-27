@@ -159,6 +159,7 @@ header nav ul li #message:active {
 	display: none;
 }
 
+
 /* Cross for closing the message form */
 .x {
 	float: right;
@@ -298,14 +299,76 @@ header nav ul li #message:active {
 	font-size: 13px;
 }
 
-/* Message form marker image */
-#message-bar #message-form .marker-image {
-	text-align: center;
+/* Draw Tools in message-bar*/
+#message-bar #message-form #draw_buttons a {
+  background-image: url('../js/lib/Leaflet.draw/images/spritesheet.png');
+  background-repeat: no-repeat;
+  width: 27px;
+  height: 27px;
+  white-space: nowrap;
+  display: inline-block;
+  line-height: 27px;
 }
 
-#message-bar #message-form .marker-image img {
-	margin: 10px;
-	cursor: pointer;
+#message-bar #message-form #draw_buttons a:hover {
+  background-color: #E5E5E5;
+}
+
+#message-bar #message-form #draw_buttons .leaflet-draw-draw-polygon {
+  background-position: -31px -2px;
+}
+
+#message-bar #message-form #draw_buttons .leaflet-draw-draw-rectangle {
+  background-position: -62px -2px;
+}
+
+#message-bar #message-form #draw_buttons .leaflet-draw-draw-polyline {
+  background-position: 0px -2px;
+}
+
+#message-bar #message-form #draw_buttons .leaflet-draw-draw-circle {
+  background-position: -91px -2px;
+}
+
+#message-bar #message-form #draw_buttons .leaflet-draw-draw-marker {
+  background-position: -122px -2px;
+}
+
+#message-bar #message-form #draw_buttons .leaflet-draw-edit-edit {
+  background-position: -152px -2px;
+}
+
+#message-bar #message-form #draw_buttons .leaflet-draw-edit-remove {
+  background-position: -182px -2px;
+}
+
+#message-bar #message-form #draw_buttons .leaflet-draw-edit-remove.leaflet-disabled {
+  background-position: -242px -2px;
+}
+
+#message-bar #message-form #draw_buttons .leaflet-draw-edit-edit.leaflet-disabled {
+  background-position: -212px -2px;
+}
+
+#message-bar #message-form #draw_buttons .leaflet-draw-actions a {
+  background-image: none;
+  background-color: #919187;
+  border-left: 1px solid #AAA;
+  color: #FFF;
+  line-height: 28px;
+  padding-left: 2px;
+  padding-right: 2px;
+  height: 27px;
+  margin-top: 1px;
+  -webkit-border-radius: 0 0 0 0;
+          border-radius: 0 0 0 0;
+  width: auto;
+}
+
+#message-bar #message-form #draw_buttons .leaflet-draw-actions a:hover {
+	background-color: #F2F2F2;
+	color: #000000;
+	border-left: 1px solid #F2F2F2;
 }
 
 /* Emergency message field */

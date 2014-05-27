@@ -316,6 +316,68 @@ var drawControl = new L.Control.Draw({
 		}
 	});
 map.addControl(drawControl);
+// Chaning deletestart behavior of the DrawControl
+map.on('draw:deletestart', function (e) {
+});
+
+map.on('draw:drawstop', function (e) {
+	$("#draw_buttons a").animate({marginLeft:'0px'});
+});
+
+// Chaning created behavior of the DrawControl
+map.on('draw:created', function () {
+	$("#draw_buttons a").animate({marginLeft:'0px'});
+});
+
+// Chaning edited behavior of the DrawControl
+map.on('draw:edited', function (e) {
+	$("#draw_buttons a").animate({marginLeft:'0px'});
+});
+map.on('draw:editstart', function (e) {
+	$("#draw_buttons a").animate({marginLeft:'0px'});
+});
+map.on('draw:editstop', function (e) {
+	$("#draw_buttons a").animate({marginLeft:'0px'});
+});
+$("#draw_buttons").append($(".leaflet-draw-draw-polygon"));
+$("#draw_buttons").append($(".leaflet-draw-draw-rectangle"));
+$("#draw_buttons").append($(".leaflet-draw-draw-polyline"));
+$("#draw_buttons").append($(".leaflet-draw-draw-circle"));
+$("#draw_buttons").append($(".leaflet-draw-draw-marker"));
+$("#draw_buttons").append($(".leaflet-draw-edit-edit"));
+$("#draw_buttons").append($(".leaflet-draw-edit-remove"))
+$("#draw_buttons").append($(".leaflet-draw-actions"));
+$("#draw_buttons").append($(".leaflet-draw-actions"));
+
+
+// Adding some moving behavior for the toolbar buttons
+$(".leaflet-draw-draw-polygon").click(function(){
+	$(".leaflet-draw-draw-rectangle").animate({marginLeft:'119px'});
+	$(".leaflet-draw-actions").css('left','39px');
+});
+$(".leaflet-draw-draw-rectangle").click(function(){
+	$(".leaflet-draw-draw-polyline").animate({marginLeft:'36px'});
+	$(".leaflet-draw-actions").css('left',"64px");
+});
+$(".leaflet-draw-draw-polyline").click(function(){
+	$(".leaflet-draw-draw-circle").animate({marginLeft:'119px'});
+	$(".leaflet-draw-actions").css('left',"93px");
+});
+$(".leaflet-draw-draw-circle").click(function(){
+	$(".leaflet-draw-draw-marker").animate({marginLeft:'38px'});
+	$(".leaflet-draw-actions").css('left',"120px");
+});
+$(".leaflet-draw-draw-marker").click(function(){
+	$(".leaflet-draw-edit-edit").animate({marginLeft:'38px'});
+	$(".leaflet-draw-actions").css('left',"147px");
+});
+$(".leaflet-draw-edit-edit").click(function(){
+	$(".leaflet-draw-edit-remove").animate({marginLeft:'68px'});
+	$(".leaflet-draw-actions").css('left',"174px");
+});
+$(".leaflet-draw-edit-remove").click(function(){
+	$(".leaflet-draw-actions").css('left',"201px");
+});
 
 map.on('draw:created', function (e) {
 	var type = e.layerType,
