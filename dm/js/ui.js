@@ -52,6 +52,8 @@ var issueTag = '';
 // change the style and content of form
 function changeMessageForm(tag, color, title) {
 	issueTag = tag;
+				// change color of the drawing tool corresponding to tag
+			changeDrawColor(tag);
 	
 	// message form head color and content
 	var messageFormHead = document.getElementById('message-form-head');

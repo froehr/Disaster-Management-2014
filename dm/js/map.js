@@ -305,7 +305,7 @@ var drawControl = new L.Control.Draw({
 			},
 			circle : {
 				shapeOptions : {
-					color : '#662d91'
+					color : '#468f5c'
 				}
 			},
 			marker : true
@@ -325,7 +325,7 @@ map.on('draw:drawstop', function (e) {
 });
 
 // Chaning created behavior of the DrawControl
-map.on('draw:created', function () {
+map.on('draw:created', function (e) {
 	$("#draw_buttons a").animate({marginLeft:'0px'});
 });
 
@@ -339,6 +339,7 @@ map.on('draw:editstart', function (e) {
 map.on('draw:editstop', function (e) {
 	$("#draw_buttons a").animate({marginLeft:'0px'});
 });
+// Change position of draw-control into message-form
 $("#draw_buttons").append($(".leaflet-draw-draw-polygon"));
 $("#draw_buttons").append($(".leaflet-draw-draw-rectangle"));
 $("#draw_buttons").append($(".leaflet-draw-draw-polyline"));
@@ -351,31 +352,31 @@ $("#draw_buttons").append($(".leaflet-draw-actions"));
 
 
 // Adding some moving behavior for the toolbar buttons
-$(".leaflet-draw-draw-polygon").click(function(){
+$(".leaflet-draw-draw-polygon").click(function() {
 	$(".leaflet-draw-draw-rectangle").animate({marginLeft:'119px'});
 	$(".leaflet-draw-actions").css('left','39px');
 });
-$(".leaflet-draw-draw-rectangle").click(function(){
+$(".leaflet-draw-draw-rectangle").click(function() {
 	$(".leaflet-draw-draw-polyline").animate({marginLeft:'36px'});
 	$(".leaflet-draw-actions").css('left',"64px");
 });
-$(".leaflet-draw-draw-polyline").click(function(){
+$(".leaflet-draw-draw-polyline").click(function() {
 	$(".leaflet-draw-draw-circle").animate({marginLeft:'119px'});
 	$(".leaflet-draw-actions").css('left',"93px");
 });
-$(".leaflet-draw-draw-circle").click(function(){
+$(".leaflet-draw-draw-circle").click(function() {
 	$(".leaflet-draw-draw-marker").animate({marginLeft:'38px'});
 	$(".leaflet-draw-actions").css('left',"120px");
 });
-$(".leaflet-draw-draw-marker").click(function(){
+$(".leaflet-draw-draw-marker").click(function() {
 	$(".leaflet-draw-edit-edit").animate({marginLeft:'38px'});
 	$(".leaflet-draw-actions").css('left',"147px");
 });
-$(".leaflet-draw-edit-edit").click(function(){
+$(".leaflet-draw-edit-edit").click(function() {
 	$(".leaflet-draw-edit-remove").animate({marginLeft:'68px'});
 	$(".leaflet-draw-actions").css('left',"174px");
 });
-$(".leaflet-draw-edit-remove").click(function(){
+$(".leaflet-draw-edit-remove").click(function() {
 	$(".leaflet-draw-actions").css('left',"201px");
 });
 
@@ -391,7 +392,45 @@ map.on('draw:created', function (e) {
 	// First step would be to convert the Layer to geoJson by e.g. toDb = drawnItems.togeoJSON();
 	drawnItems.addLayer(layer);
 });
-
+function changeDrawColor(issueTag){
+	var tagColor;
+	switch(issueTag) {
+		case 'emergency':
+			tagColor = '#e50036';
+			break;
+		case 'need-support':
+			tagColor = '#eba259'
+			break;
+		case 'offer-support':
+			tagColor = '#468f5c'
+			break;
+		case 'message':
+			tagColor = '#45544a'
+			break;
+	}
+	drawControl.setDrawingOptions({
+		polygon:{
+			shapeOptions: {
+				color: tagColor
+			}
+		},
+		rectangle:{
+			shapeOptions: {
+				color: tagColor
+			}
+		},
+		polyline:{
+			shapeOptions: {
+				color: tagColor
+			}
+		},
+		circle:{
+			shapeOptions: {
+				color: tagColor
+			}
+		}
+	});
+}
 // Search for specific features depending on their categroy. Json can be used.
 // Should be discussed if we want to do the filtering using a plugin or using the frontend itself
 /*
