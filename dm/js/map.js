@@ -287,28 +287,7 @@ map.addLayer(drawnItems);
 // Initialise the draw control and pass it the FeatureGroup of editable layers
 var drawControl = new L.Control.Draw({
 		draw : {
-			position : 'topleft',
-			polygon : {
-				title : 'Draw a sexy polygon!',
-				allowIntersection : false,
-				drawError : {
-					color : '#b00b00',
-					timeout : 1000
-				},
-				shapeOptions : {
-					color : '#bada55'
-				},
-				showArea : true
-			},
-			polyline : {
-				metric : true
-			},
-			circle : {
-				shapeOptions : {
-					color : '#468f5c'
-				}
-			},
-			marker : true
+			position : 'topleft'
 		},
 		edit : {
 			featureGroup : drawnItems,
@@ -321,34 +300,34 @@ map.on('draw:deletestart', function (e) {
 });
 
 map.on('draw:drawstop', function (e) {
-	$("#draw_buttons a").animate({marginLeft:'0px'});
+	$("#draw-buttons a").animate({marginLeft:'0px'});
 });
 
 // Chaning created behavior of the DrawControl
 map.on('draw:created', function (e) {
-	$("#draw_buttons a").animate({marginLeft:'0px'});
+	$("#draw-buttons a").animate({marginLeft:'0px'});
 });
 
 // Chaning edited behavior of the DrawControl
 map.on('draw:edited', function (e) {
-	$("#draw_buttons a").animate({marginLeft:'0px'});
+	$("#draw-buttons a").animate({marginLeft:'0px'});
 });
 map.on('draw:editstart', function (e) {
-	$("#draw_buttons a").animate({marginLeft:'0px'});
+	$("#draw-buttons a").animate({marginLeft:'0px'});
 });
 map.on('draw:editstop', function (e) {
-	$("#draw_buttons a").animate({marginLeft:'0px'});
+	$("#draw-buttons a").animate({marginLeft:'0px'});
 });
 // Change position of draw-control into message-form
-$("#draw_buttons").append($(".leaflet-draw-draw-polygon"));
-$("#draw_buttons").append($(".leaflet-draw-draw-rectangle"));
-$("#draw_buttons").append($(".leaflet-draw-draw-polyline"));
-$("#draw_buttons").append($(".leaflet-draw-draw-circle"));
-$("#draw_buttons").append($(".leaflet-draw-draw-marker"));
-$("#draw_buttons").append($(".leaflet-draw-edit-edit"));
-$("#draw_buttons").append($(".leaflet-draw-edit-remove"))
-$("#draw_buttons").append($(".leaflet-draw-actions"));
-$("#draw_buttons").append($(".leaflet-draw-actions"));
+$("#draw-buttons").append($(".leaflet-draw-draw-polygon"));
+$("#draw-buttons").append($(".leaflet-draw-draw-rectangle"));
+$("#draw-buttons").append($(".leaflet-draw-draw-polyline"));
+$("#draw-buttons").append($(".leaflet-draw-draw-circle"));
+$("#draw-buttons").append($(".leaflet-draw-draw-marker"));
+$("#draw-buttons").append($(".leaflet-draw-edit-edit"));
+$("#draw-buttons").append($(".leaflet-draw-edit-remove"))
+$("#draw-buttons").append($(".leaflet-draw-actions"));
+$("#draw-buttons").append($(".leaflet-draw-actions"));
 
 
 // Adding some moving behavior for the toolbar buttons
@@ -380,23 +359,43 @@ $(".leaflet-draw-edit-remove").click(function() {
 	$(".leaflet-draw-actions").css('left',"201px");
 });
 
+var tagColor;
 map.on('draw:created', function (e) {
 	var type = e.layerType,
 	layer = e.layer;
-
-	if (type === 'marker') {
-		layer.bindPopup('A popup!');
-		// Do marker specific actions
-	}
-	// Do whatever elso you want to do. For example save all created items from Layer drawnItems to database.
-	// First step would be to convert the Layer to geoJson by e.g. toDb = drawnItems.togeoJSON();
+	
+	var popup = new L.popup({
+		closeButton: false,
+		className: 'feature-popup',
+		offset: [0, -42]
+	});
+	
+	layer.on('mouseover', function(evt) {
+		var popupContent;
+		if ( $('#title').val() == '' ) {
+			popupContent = 'Please enter a title.';
+		}
+		else {
+			popupContent = $('#title').val();
+		}
+		popup.setContent('<span style="color: ' + tagColor + ';">' + popupContent + '</span>');
+		popup.setLatLng(evt.latlng);
+		popup.openOn(map);
+	});
+	
+	layer.on('mouseout', function(evt) {
+		map.closePopup(popup);
+	});
+	
 	drawnItems.addLayer(layer);
 });
-function changeDrawColor(issueTag){
-	var tagColor;
+
+function changeDrawFeatures(issueTag) {
+	var iconUrl = 'img/marker/marker-icon-' + issueTag + '.png';
+	
 	switch(issueTag) {
 		case 'emergency':
-			tagColor = '#e50036';
+			tagColor = '#A50026';
 			break;
 		case 'need-support':
 			tagColor = '#eba259'
@@ -408,26 +407,48 @@ function changeDrawColor(issueTag){
 			tagColor = '#45544a'
 			break;
 	}
+	
 	drawControl.setDrawingOptions({
-		polygon:{
+		polygon: {
 			shapeOptions: {
 				color: tagColor
 			}
 		},
-		rectangle:{
+		rectangle: {
 			shapeOptions: {
 				color: tagColor
 			}
 		},
-		polyline:{
+		polyline: {
 			shapeOptions: {
 				color: tagColor
 			}
 		},
-		circle:{
+		circle: {
 			shapeOptions: {
 				color: tagColor
 			}
+		},
+		marker: {
+			icon: new L.Icon({
+				iconUrl: iconUrl,
+				iconAnchor: [12,41],
+				popupAnchor: [0, -42]
+			})
+		}
+	});
+	drawnItems.setStyle({
+		fillColor: tagColor,
+		color: tagColor
+	});
+	
+	drawnItems.eachLayer(function (layer) {
+		if ( typeof layer.setIcon == 'function' ) {
+			layer.setIcon(new L.Icon({
+				iconUrl: iconUrl,
+				iconAnchor: [12,41],
+				popupAnchor: [0, -42]
+			}));
 		}
 	});
 }
@@ -482,7 +503,7 @@ groupedOverLayers = {
 // Map control: Layer switcher
 var LlayerSwitcher = new L.control.groupedLayers(
 		baseLayers, groupedOverLayers, {
-		position : 'topright'
+		position : 'bottomleft'
 	}).addTo(map);
 
 

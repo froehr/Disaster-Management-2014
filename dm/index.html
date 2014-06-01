@@ -5,7 +5,7 @@
 		<title>Disaster Management</title>
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<link href="js/lib/jquery/jquery-ui-1.10.4.css" rel="stylesheet" type="text/css" />
-		<link href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css"rel="stylesheet" type="text/css" />
+		<link href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" rel="stylesheet" type="text/css" />
 		<link href="js/lib/Leaflet.locator/L.Control.Locate.css" rel="stylesheet" type="text/css" />
 		<link href="js/lib/Leaflet.minimap/Control.MiniMap.css" rel="stylesheet" type="text/css" />
 		<link href="js/lib/Leaflet.geosearch/l.geosearch.css" rel="stylesheet" type="text/css" />
@@ -21,7 +21,8 @@
 		
 		<script src="js/lib/jquery/jquery-2.1.0.min.js"></script>
 		<script src="js/lib/jquery/jquery-ui-1.10.4.js"></script>
-		<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+		<!-- Leaflet version 0.7.3 -->
+		<script src="js/lib/Leaflet/leaflet.js"></script>
 		<script src="js/lib/Leaflet.minimap/Control.MiniMap.js"></script>
 		<script src="js/lib/Leaflet.geosearch/l.control.geosearch.js"></script>
 		<script src="js/lib/Leaflet.geosearch/l.geosearch.provider.google.js"></script>
@@ -39,12 +40,8 @@
 		<script src="http://code.highcharts.com/highcharts.js"></script>
 		<script src="http://code.highcharts.com/modules/data.js"></script>
 		<script src="http://code.highcharts.com/modules/exporting.js"></script>
-		<!-- Additional files for the Highslide popup effect -->
 		<script src="http://www.highcharts.com/media/com_demo/highslide-full.min.js"></script>
-		<script src="http://www.highcharts.com/media/com_demo/highslide.config.js" charset="utf-8"></script>
-		
-		
-		
+		<script src="http://www.highcharts.com/media/com_demo/highslide.config.js"></script>
 	</head>
 	<body>
 		<div id="page">
@@ -87,7 +84,7 @@
 						<div id="details-offer-support">
 							<p id="head-location">Location</p>
 							<p class="small">Choose one tool to draw the location.</p>
-							<div id ="draw_buttons"></div>
+							<div id ="draw-buttons"></div>
 							<div id="details-emergency-need-support">
 								<p id="head-person-name">Your name</p>
 								<input type="text" name="person_name" id="person_name" />

@@ -300,7 +300,7 @@ header nav ul li #message:active {
 }
 
 /* Draw Tools in message-bar*/
-#message-bar #message-form #draw_buttons a {
+#message-bar #message-form #draw-buttons a {
   background-image: url('../js/lib/Leaflet.draw/images/spritesheet.png');
   background-repeat: no-repeat;
   width: 27px;
@@ -310,47 +310,47 @@ header nav ul li #message:active {
   line-height: 27px;
 }
 
-#message-bar #message-form #draw_buttons a:hover {
+#message-bar #message-form #draw-buttons a:hover {
   background-color: #E5E5E5;
 }
 
-#message-bar #message-form #draw_buttons .leaflet-draw-draw-polygon {
+#message-bar #message-form #draw-buttons .leaflet-draw-draw-polygon {
   background-position: -31px -2px;
 }
 
-#message-bar #message-form #draw_buttons .leaflet-draw-draw-rectangle {
+#message-bar #message-form #draw-buttons .leaflet-draw-draw-rectangle {
   background-position: -62px -2px;
 }
 
-#message-bar #message-form #draw_buttons .leaflet-draw-draw-polyline {
+#message-bar #message-form #draw-buttons .leaflet-draw-draw-polyline {
   background-position: 0px -2px;
 }
 
-#message-bar #message-form #draw_buttons .leaflet-draw-draw-circle {
+#message-bar #message-form #draw-buttons .leaflet-draw-draw-circle {
   background-position: -91px -2px;
 }
 
-#message-bar #message-form #draw_buttons .leaflet-draw-draw-marker {
+#message-bar #message-form #draw-buttons .leaflet-draw-draw-marker {
   background-position: -122px -2px;
 }
 
-#message-bar #message-form #draw_buttons .leaflet-draw-edit-edit {
+#message-bar #message-form #draw-buttons .leaflet-draw-edit-edit {
   background-position: -152px -2px;
 }
 
-#message-bar #message-form #draw_buttons .leaflet-draw-edit-remove {
+#message-bar #message-form #draw-buttons .leaflet-draw-edit-remove {
   background-position: -182px -2px;
 }
 
-#message-bar #message-form #draw_buttons .leaflet-draw-edit-remove.leaflet-disabled {
+#message-bar #message-form #draw-buttons .leaflet-draw-edit-remove.leaflet-disabled {
   background-position: -242px -2px;
 }
 
-#message-bar #message-form #draw_buttons .leaflet-draw-edit-edit.leaflet-disabled {
+#message-bar #message-form #draw-buttons .leaflet-draw-edit-edit.leaflet-disabled {
   background-position: -212px -2px;
 }
 
-#message-bar #message-form #draw_buttons .leaflet-draw-actions a {
+#message-bar #message-form #draw-buttons .leaflet-draw-actions a {
   background-image: none;
   background-color: #919187;
   border-left: 1px solid #AAA;
@@ -365,7 +365,7 @@ header nav ul li #message:active {
   width: auto;
 }
 
-#message-bar #message-form #draw_buttons .leaflet-draw-actions a:hover {
+#message-bar #message-form #draw-buttons .leaflet-draw-actions a:hover {
 	background-color: #F2F2F2;
 	color: #000000;
 	border-left: 1px solid #F2F2F2;
@@ -918,6 +918,32 @@ header nav ul li #message:active {
 	z-index: 1001;
 	padding: 15px;
 	display: none;
+}
+
+/* Popup for drawn features */
+.feature-popup {
+	font-size: 15px;
+	font-weight: bold;
+	font-family: 'Noto Sans', Arial, sans-serif;
+}
+
+.leaflet-popup {
+	margin-bottom: 10px;
+}
+
+.leaflet-popup-content-wrapper, .leaflet-popup-content  {
+   -webkit-border-radius: 0 !important;
+   -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+ }
+ 
+.leaflet-popup-content {
+	margin: 8px !important;
+	text-align: center !important;
+}
+
+.leaflet-popup-tip-container {
+	display: none !important;
 }
 
 #map-right-click-menu {

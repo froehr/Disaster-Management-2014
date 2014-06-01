@@ -166,45 +166,46 @@ function showMessages() {
 		
 		var file_html = '<div class="image-box"><img src="img/' + message['file'] + '" alt="' + message['title'] + '" class="image" /></div>';
 		
-		$('#messages').append('<div class="message message-' + message['message_type'] + '" id="message-' + message['message_id'] + '">' +
-			'<h1 class="' + message['message_type'] + '-head">' + message['title'] + '</h1>' +
-			'<p>' + message['description'] + ' <a href="#" id="more-' + message['message_id'] + '">more <span class="arrow">&#9658;</span></a></p>' +
-			'<div class="details" id="details-' + message['message_id'] + '">' +
-				'<table border="0">' +
-					'<tr>' +
-						'<td class="first">Sender:</td>' +
-						'<td>' + message['person_name'] + '</td>' +
-					'</tr>' +
-					'<tr>' +
-						'<td class="first">Tags:</td>' +
-						'<td>' + tags_html + '</td>' +
-					'</tr>' +
-				'</table>'
-				+ file_html +
-				'<div class="comments">' +
-				'<h1>Comments (' + message['comments'].length + ')</h1>'
-				+ comments_html +
-				'<div class="new-comment">' +
-					'<p><b>New comment</b></p>' +
-					'<input type="text" name="name" placeholder="Your name" />' +
-					'<textarea name="description" placeholder="Your comment"></textarea>' +
-					'<div class="submit">' +
-						'<input type="submit" value="Submit &nbsp; &#9658;" /></div>' +
+		$('#messages').append(
+			'<div class="message message-' + message['message_type'] + '" id="message-' + message['message_id'] + '">' +
+				'<h1 class="' + message['message_type'] + '-head">' + message['title'] + '</h1>' +
+				'<p>' + message['description'] + ' <a href="#" id="more-' + message['message_id'] + '">more <span class="arrow">&#9658;</span></a></p>' +
+				'<div class="details" id="details-' + message['message_id'] + '">' +
+					'<table border="0">' +
+						'<tr>' +
+							'<td class="first">Sender:</td>' +
+							'<td>' + message['person_name'] + '</td>' +
+						'</tr>' +
+						'<tr>' +
+							'<td class="first">Tags:</td>' +
+							'<td>' + tags_html + '</td>' +
+						'</tr>' +
+					'</table>'
+					+ file_html +
+					'<div class="comments">' +
+					'<h1>Comments (' + message['comments'].length + ')</h1>'
+					+ comments_html +
+					'<div class="new-comment">' +
+						'<p><b>New comment</b></p>' +
+						'<input type="text" name="name" placeholder="Your name" />' +
+						'<textarea name="description" placeholder="Your comment"></textarea>' +
+						'<div class="submit">' +
+							'<input type="submit" value="Submit &nbsp; &#9658;" /></div>' +
+						'</div>' +
+					'</div>' +
+					'<div class="less" id="less-' + message['message_id'] + '">' +
+						'<a href="#"><span>&#9668;</span> less</a>' +
 					'</div>' +
 				'</div>' +
-				'<div class="less" id="less-' + message['message_id'] + '">' +
-					'<a href="#"><span>&#9668;</span> less</a>' +
+				'<div class="category">Category: ' + message['category'] + '</div>' +
+				'<div class="location-voting">' +
+					'<div class="downvote-number">' + message['downvotes'] + '</div>' +
+					'<div class="upvote"><a href="#" id="upvote-' + message['message_id'] + '">&#9650;</a></div>' +
 				'</div>' +
-			'</div>' +
-			'<div class="category">Category: ' + message['category'] + '</div>' +
-			'<div class="location-voting">' +
-				'<div class="downvote-number">' + message['downvotes'] + '</div>' +
-				'<div class="upvote"><a href="#" id="upvote-' + message['message_id'] + '">&#9650;</a></div>' +
-			'</div>' +
-			'<div class="location-name">' + message['date_of_change'] + ', ' + location_name_html + '</div>' +
-			'<div class="downvote"><a href="#" id="downvote-' + message['message_id'] + '">&#9660;</a></div>' +
-			'<div class="upvote-number">' + message['upvotes'] + '</div>' +
-		'</div>');
+				'<div class="location-name">' + message['date_of_change'] + ', ' + location_name_html + '</div>' +
+				'<div class="downvote"><a href="#" id="downvote-' + message['message_id'] + '">&#9660;</a></div>' +
+				'<div class="upvote-number">' + message['upvotes'] + '</div>' +
+			'</div>');
 	}
 	
 	// Toggler to expand or collapse messages
