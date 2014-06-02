@@ -57,7 +57,29 @@ var waterMeasurementData = L.layerJSON({
 			};
 
 			// Popup with name of measurementstation, the watername, the gaugezerovalue+unit, the current waterlevelmeasurement+unit and timestamp of last measurement
-			return ("<b>Measurementstation:</b> " + measurementStationName + "<br /><b>Watername:</b> " + waterName + "<br /><b>Waterzerovalue:</b> " + gaugeZeroValue + gaugeZeroUnit + "<br /><b>Current Waterlevel:</b> " + currentMeasurementValue + currentMeasurementUnit + "<br /><b>Last Measurement:</b> " + currentMeasurementTimestamp + "<br/>" + "<img src=http://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/" + encodeURIComponent(measurementStationName) + "/W/measurements.png?start=P15D&width=260&height=130>" + "<div id='highchart-button' class='generic-button' data-stationName='"+ encodeURIComponent(measurementStationName) +"'>More information &nbsp; &#9658;</div>") || null;
+			return ('<div class="pegelonline">' +
+						'<h1>' + measurementStationName + '</h1>' +
+						'<table border="0">' +
+							'<tr>' +
+								'<td>River:</td>' +
+								'<td>' + waterName + '</td>' +
+							'</tr>' +
+							'<tr>' +
+								'<td>Zero value:</td>' +
+								'<td>' + gaugeZeroValue + gaugeZeroUnit + '</td>' +
+							'</tr>' +
+							'<tr>' +
+								'<td>Current water level:</td>' +
+								'<td>' + currentMeasurementValue + currentMeasurementUnit + '</td>' +
+							'</tr>' +
+							'<tr>' +
+								'<td>Last measurement:</td>' +
+								'<td>' + currentMeasurementTimestamp + '</td>' +
+							'</tr>' +
+						'</table>' +
+						'<img src="http://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/' + encodeURIComponent(measurementStationName) + '/W/measurements.png?start=P15D&width=260&height=130">' +
+						'<div class="highchart-link"><a href="#" id="highchart-button" data-stationName="' + encodeURIComponent(measurementStationName) + '">more information &nbsp; <span class="arrow">&#9658;</span></a></div>' +
+					'</div>') || null;
 		}
 	});
 
@@ -363,11 +385,19 @@ var tagColor;
 map.on('draw:created', function (e) {
 	var type = e.layerType,
 	layer = e.layer;
+	var vOffset;
+	
+	if ( type === 'marker' ) {
+		vOffset = -41;
+	}
+	else {
+		vOffset = -5;
+	}
 	
 	var popup = new L.popup({
 		closeButton: false,
 		className: 'feature-popup',
-		offset: [0, -42]
+		offset: [0, vOffset]
 	});
 	
 	layer.on('mouseover', function(evt) {

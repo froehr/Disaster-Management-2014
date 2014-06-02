@@ -853,6 +853,17 @@ header nav ul li #message:active {
 	padding-left: .5em;
 }
 
+#map .leaflet-control-coordinates {
+	background-color: #FFFFFF !important;
+	box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.5);
+}
+
+#map .leaflet-control-coordinates input {
+	background-color: #FFFFFF !important;
+	border-radius: 0px;
+	border: 0px;
+}
+
 /* Leaflet Scale */
 #map .leaflet-control-scale {
     margin-bottom: 5px !important;
@@ -940,6 +951,42 @@ header nav ul li #message:active {
 .leaflet-popup-content {
 	margin: 8px !important;
 	text-align: center !important;
+	font-family: 'Noto Sans', Arial, sans-serif;
+}
+
+.leaflet-popup-content .pegelonline {
+	text-align: justify;
+}
+
+.leaflet-popup-content .pegelonline h1 {
+	font-size: 13px;
+}
+
+.leaflet-popup-content .pegelonline table {
+	margin-bottom: 5px;
+}
+
+.leaflet-popup-content .pegelonline table tr td {
+	font-size: 13px;
+	padding: 2px 3px;
+}
+
+.leaflet-popup-content .pegelonline .highchart-link {
+	text-align: right;
+}
+
+.leaflet-popup-content a {
+	font-size: 13px;
+	color: #3697f2;
+	text-decoration: none;
+}
+
+.leaflet-popup-content a:hover {
+	color: #77bdff;
+}
+
+.leaflet-popup-content a span.arrow {
+	font-size: 11px;
 }
 
 .leaflet-popup-tip-container {
@@ -978,10 +1025,6 @@ header nav ul li #message:active {
 
 #map-right-click-menu ul li a:hover {
 	background-color: #EEEEEE;
-}
-
-#highchart-button {
-	
 }
 
 .generic-button {
