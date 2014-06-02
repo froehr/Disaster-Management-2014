@@ -106,23 +106,6 @@
 				</div>
 				<div id="messages"></div>
 			</div>
-			<div id="sort-form" class="utility-form sort">
-				<div class="x" id="x-sort">&#10006;</div>
-				<h1>Sort messages by</h1>
-				<select name="sort-message" class="select-sorting">
-					<option value="ratio-voting">Voting ratio</option>
-					<option value="upvotes">Up votes</option>
-					<option value="downvotes">Down votes</option>
-					<option value="start-time">Start date and time</option>
-					<option value="end-time">End date and time</option>
-					<option value="message-time">Message submission time</option>
-					<option value="message-change-time">Message edit time</option>
-				</select>
-				<p class="sorting-radio">
-					<span class="sorting-radio-pointer" id="desc"><input type="radio" name="sorting-method" value="desc" id="radio-desc" checked="checked" /> Descending</span>
-					<span class="sorting-radio-pointer" id="asc"><input type="radio" name="sorting-method" value="asc" id="radio-asc" /> Ascending</span>
-				</p>
-			</div>
 			<div id="filter-form" class="utility-form filter">
 				<div class="x" id="x-filter">&#10006;</div>
 				<h1>Message filter</h1>
@@ -152,15 +135,10 @@
 			</div>
 			<div id="message-search">
 				<input type="text" name="message-search" placeholder="Search for message ..." />
-				<img src="img/icons/sort.png" id="sort" title="Sort messages" />
 				<img src="img/icons/filter.png" id="filter" title="Filter messages by category" />
 			</div>
 			<div id="hide-message-bar-container"><div id="hide-message-bar" title="Hide message bar"></div></div>
 			<div id="map"></div>
-			<div id="popup">
-				<div class="x" id="x-popup">&#10006;</div>
-				<p id="popup-content"></p>
-			</div>
 			<footer>
 				<a href="#" id="hotlines">Hotlines</a>
 				<a href="#" id="help">Help</a>
@@ -172,6 +150,11 @@
 				<li id="sort-messages-distance"><a href="#">Sort messages by distance</a></li>
 				<li id="weatherforcast"><a href="#" id="weatherforcast">Weather forecast</a></li>
 			</ul>
+		</div>
+		
+		<div id="popup">
+			<div class="x" id="x-popup">&#10006;</div>
+			<p id="popup-content"></p>
 		</div>
 		
 		<script src="js/ui.js"></script>

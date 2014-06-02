@@ -116,24 +116,33 @@ $('#x-form').click(function() {
 
 // click functions to open "hotlines", "help", "about" and "weatherforcast" popups
 $('#hotlines').click(function() {
+	var marginTop = $('#popup').height() / 2;
+	$('#popup').css('margin-top', '-' + marginTop + 'px');
 	$('#popup').fadeIn();
 });
 
 $('#weatherforcast').click(function() {
 	var content = $.ajax({url:"http://api.openweathermap.org/data/2.5/forecast/daily?lat="+latlng.lat+"&lon="+latlng.lng+"&cnt=10&mode=html",dataType: "text",success:function(result){
-	   console.log(result);
-	   console.log("http://api.openweathermap.org/data/2.5/forecast/daily?lat="+latlng.lat+"&lon="+latlng.lng+"&cnt=10&mode=html");
-	   $('#popup-content').html(result);
-	   $('#map-right-click-menu').fadeOut();
-	   $('#popup').fadeIn();
-	   }});
+		console.log(result);
+		console.log("http://api.openweathermap.org/data/2.5/forecast/daily?lat="+latlng.lat+"&lon="+latlng.lng+"&cnt=10&mode=html");
+		$('#popup-content').html(result);
+		$('#map-right-click-menu').fadeOut();
+		
+		var marginTop = $('#popup').height() / 2;
+		$('#popup').css('margin-top', '-' + marginTop + 'px');
+		$('#popup').fadeIn();
+	}});
 });
 
 $('#help').click(function() {
+	var marginTop = $('#popup').height() / 2;
+	$('#popup').css('margin-top', '-' + marginTop + 'px');
 	$('#popup').fadeIn();
 });
 
 $('#about').click(function() {
+	var marginTop = $('#popup').height() / 2;
+	$('#popup').css('margin-top', '-' + marginTop + 'px');
 	$('#popup').fadeIn();
 });
 
@@ -142,7 +151,6 @@ $('#x-popup').click(function() {
 });
 
 $("body").on("click","#highchart-button",function(e) {
-    $('#popup').fadeIn();
 	initHighChartForStation($(e.target).attr('data-stationName'));
 });
 
@@ -202,7 +210,6 @@ $('#hide-message-bar').click(function() {
 		$('#hide-message-bar').css('background-image', 'url(img/icons/show-message-bar.png)');
 		document.getElementById('hide-message-bar').title = 'Show message bar';
 		$('.leaflet-left').animate({left: 10});
-		$('#sort-form').animate({width: 'hide'}, 350);
 		$('#filter-form').animate({width: 'hide'}, 350);
 		messageBarStatus = false;
 	}
@@ -215,7 +222,7 @@ $('#hide-message-bar').click(function() {
 	}
 });
 
-// animations fot the filter and sorting buttons below the message-bar
+// animations fot the filter button below the message-bar
 $('#filter').mouseover(function() {
 	$('#filter').attr("src", 'img/icons/filter-hover.png');
 });
@@ -226,28 +233,10 @@ $('#filter').mouseout(function() {
 
 $('#filter').click(function() {
 	$('#filter-form').animate({height: 'toggle'});
-	$('#sort-form').animate({height: 'hide'});
 });
 
 $('#x-filter').click(function() {
 	$('#filter-form').animate({height: 'toggle'});
-});
-
-$('#sort').mouseover(function() {
-	$('#sort').attr("src", 'img/icons/sort-hover.png');
-});
-
-$('#sort').mouseout(function() {
-	$('#sort').attr("src", 'img/icons/sort.png');
-});
-
-$('#sort').click(function() {
-	$('#sort-form').animate({height: 'toggle'});
-	$('#filter-form').animate({height: 'hide'});
-});
-
-$('#x-sort').click(function() {
-	$('#sort-form').animate({height: 'toggle'});
 });
 
 $('#desc').click(function() {

@@ -152,7 +152,17 @@ function showMessages() {
 		
 		var comments_html = '';
 		for ( var i = 0; i < message['comments'].length; i++ ) {
-			comments_html += '<div class="comment"><table border="0"><tr><td><b>' + message['comments'][i]['name'] + '</b></td><td class="right">' + message['comments'][i]['date_time'] + '</td></tr><tr><td colspan="2" class="justify">' + message['comments'][i]['message'] + '</td></tr></table></div>';
+			comments_html += '<div class="comment">' +
+									'<table border="0">' +
+										'<tr>' +
+											'<td><b>' + message['comments'][i]['name'] + '</b></td>' +
+											'<td class="right">' + message['comments'][i]['date_time'] + '</td>' +
+										'</tr>' +
+										'<tr>' +
+											'<td colspan="2" class="justify">' + message['comments'][i]['message'] + '</td>' +
+										'</tr>' +
+									'</table>' +
+								'</div>';
 		}
 		
 		var location_name_html = 'Location';
@@ -166,7 +176,7 @@ function showMessages() {
 			'<a name="message-' + message['message_id'] + '"></a>' +
 			'<div class="message message-' + message['message_type'] + '" id="message-' + message['message_id'] + '">' +
 				'<h1 class="' + message['message_type'] + '-head">' + message['title'] + '</h1>' +
-				'<p>' + message['description'] + ' <a href="#" id="more-' + message['message_id'] + '">more <span class="arrow">&#9658;</span></a></p>' +
+				'<p>' + message['description'] + '<br /><a href="#" id="more-' + message['message_id'] + '">Comments and more <span class="arrow">&#9658;</span></a></p>' +
 				'<div class="details" id="details-' + message['message_id'] + '">' +
 					'<table border="0">' +
 						'<tr>' +
@@ -180,6 +190,9 @@ function showMessages() {
 					'</table>'
 					+ file_html +
 					'<div class="comments">' +
+					'<div class="less" id="less-' + message['message_id'] + '-top">' +
+						'<a href="#"><span>&#9668;</span> less</a>' +
+					'</div>' +
 					'<h1>Comments (' + message['comments'].length + ')</h1>'
 					+ comments_html +
 					'<div class="new-comment">' +
@@ -190,7 +203,7 @@ function showMessages() {
 							'<input type="submit" value="Submit &nbsp; &#9658;" /></div>' +
 						'</div>' +
 					'</div>' +
-					'<div class="less" id="less-' + message['message_id'] + '">' +
+					'<div class="less" id="less-' + message['message_id'] + '-bottom">' +
 						'<a href="#"><span>&#9668;</span> less</a>' +
 					'</div>' +
 				'</div>' +
@@ -247,7 +260,7 @@ function showMessages() {
 						vOffset = -41;
 					}
 					else {
-						vOffset = -5;
+						vOffset = 0;
 					}
 					
 					var popup = new L.popup({
@@ -268,26 +281,34 @@ function showMessages() {
 						map.closePopup(popup);
 					});
 					
+					layer.on('mousemove', function(evt) {
+						popup.setLatLng(evt.latlng);
+					});
+					
 					layer.on('click', function(evt) {
+						switchMessageDetails(message);
 						document.location.href = '#message-' + message['message_id'];
-						switchMessageDetails(message['message_id']);
 					});
 				}
 			}).addTo(map);
 		}
 	}
 	
-	function switchMessageDetails(message_id) {
+	function switchMessageDetails(message) {
+		var message_id = message['message_id'];
+		
 		if ( ! message['display'] ) {
 			setElementDisplay('more-' + message_id, 'none');
-			setElementDisplay('less-' + message_id, 'block');
+			setElementDisplay('less-' + message_id + '-top', 'block');
+			setElementDisplay('less-' + message_id + '-bottom', 'block');
 			$('#details-' + message_id).slideDown('fast', 'linear');
 			message['display'] = true;
 			
 			for ( var i = 0; i < messages.length; i++ ) {
 				if ( messages[i]['message_id'] != message_id && messages[i]['display'] ) {
 					setElementDisplay('more-' + messages[i]['message_id'], 'inline');
-					setElementDisplay('less-' + messages[i]['message_id'], 'none');
+					setElementDisplay('less-' + messages[i]['message_id'] + '-top', 'none');
+					setElementDisplay('less-' + messages[i]['message_id'] + '-bottom', 'none');
 					$('#details-' + messages[i]['message_id']).slideUp('fast', 'linear');
 					messages[i]['display'] = false;
 				}
@@ -295,19 +316,20 @@ function showMessages() {
 		}
 		else {
 			setElementDisplay('more-' + message_id, 'inline');
-			setElementDisplay('less-' + message_id, 'none');
+			setElementDisplay('less-' + message_id + '-top', 'none');
+			setElementDisplay('less-' + message_id + '-bottom', 'none');
 			$('#details-' + message_id).slideUp('fast', 'linear');
 			message['display'] = false;
 		}
 	}
-	
+		
 	// Toggler to expand or collapse messages
 	function setMessageClickFunctions(message) {
 		// center the map on the message location
 		$('#message-' + message['message_id']).click(function() {
 			var loc = message['location-json'].getBounds();
-			map.setView(loc.getCenter());
 			map.fitBounds(loc);
+			map.setView(loc.getCenter());
 			
 			var featureColor;
 			switch(message['message_type']) {
@@ -349,11 +371,15 @@ function showMessages() {
 		});
 		
 		$('#more-' + message['message_id']).click(function() {
-			switchMessageDetails(message['message_id']);
+			switchMessageDetails(message);
 		});
 		
-		$('#less-' + message['message_id']).click(function() {
-			switchMessageDetails(message['message_id']);
+		$('#less-' + message['message_id'] + '-top').click(function() {
+			switchMessageDetails(message);
+		});
+		
+		$('#less-' + message['message_id'] + '-bottom').click(function() {
+			switchMessageDetails(message);
 		});
 	}
 

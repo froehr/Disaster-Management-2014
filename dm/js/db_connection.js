@@ -32,7 +32,7 @@
 		/*if (isNaN(document.getElementById("people_attending").value) || isNaN(document.getElementById("people_attending").value)){
 			alert("People attending and people need is not a number");
 		}*/
-		else{
+		//else{
 			$.post(
 				"php/insertMessage.php?",
 				{	
@@ -52,7 +52,7 @@
 				},
 				function(data){console.log(data);}	
 				);
-		}	
+		//}	
 }
 	
 	

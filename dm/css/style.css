@@ -178,7 +178,7 @@ header nav ul li #message:active {
 	left: 240px;
 }
 
-#sort-form .x, #filter-form .x {
+#filter-form .x {
 	position: relative;
 	top: 10px;
 }
@@ -447,6 +447,7 @@ header nav ul li #message:active {
 #message-bar .message a {
 	color: #3697f2;
 	text-decoration: none;
+	white-space: nowrap;
 }
 
 #message-bar .message a:hover {
@@ -652,10 +653,6 @@ header nav ul li #message:active {
 	height: 250px;
 }
 
-.sort {
-	height: 125px;
-}
-
 .utility-form h1 {
 	font-size: 15px;
 }
@@ -677,22 +674,7 @@ header nav ul li #message:active {
 	font-size: 11px;
 }
 
-.utility-form select.select-sorting {
-	margin: 5px 0px;
-	margin-right: 5px;
-	border: 1px solid #a9a9a9;
-	background-color: #FFFFFF;
-	font-family: 'Noto Sans', Arial, sans-serif;
-	width: 280px;
-	padding: 5px 15px;
-	font-size: 13px;
-}
-
 .utility-form select.select-filter:hover {
-	border: 1px solid #5f5f5f;
-}
-
-.utility-form select.select-sorting:hover {
 	border: 1px solid #5f5f5f;
 }
 
@@ -732,15 +714,6 @@ header nav ul li #message:active {
 
 .utility-form input.button:hover {
 	border: 1px solid #5f5f5f;
-}
-
-.utility-form p.sorting-radio {
-	text-align: center;
-	margin-top: 10px;
-}
-
-.utility-form p span.sorting-radio-pointer {
-	cursor: pointer;
 }
 
 .utility-form p input {
@@ -860,9 +833,12 @@ header nav ul li #message:active {
 }
 
 #map .leaflet-control-coordinates input {
-	background-color: #FFFFFF !important;
+	background-color: #F6F6F6 !important;
 	border-radius: 0px;
 	border: 0px;
+	font-family: 'Noto Sans', Arial, sans-serif;
+	font-size: 13px;
+	padding: 0px 5px;
 }
 
 /* Leaflet Scale */
@@ -919,9 +895,9 @@ header nav ul li #message:active {
 /* Popup for further content pages */
 #popup {
 	position: absolute;
-	margin: auto;
+	margin: auto 0;
+	top: 50%;
 	left: 50%;
-	margin-top: -50px;
 	margin-left: -400px;
 	min-height: 300px;
 	width: 800px;
@@ -956,20 +932,24 @@ header nav ul li #message:active {
 }
 
 .leaflet-popup-content .pegelonline {
-	text-align: justify;
+	text-align: left;
+	padding: 5px 7px;
+	min-width: 280px;
 }
 
 .leaflet-popup-content .pegelonline h1 {
 	font-size: 13px;
 }
 
-.leaflet-popup-content .pegelonline table {
-	margin-bottom: 5px;
-}
-
 .leaflet-popup-content .pegelonline table tr td {
 	font-size: 13px;
 	padding: 2px 3px;
+	vertical-align: top;
+}
+
+.leaflet-popup-content .pegelonline .img {
+	text-align: center;
+	margin: 10px 0px;
 }
 
 .leaflet-popup-content .pegelonline .highchart-link {

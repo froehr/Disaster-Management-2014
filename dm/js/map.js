@@ -40,14 +40,13 @@ var waterMeasurementData = L.layerJSON({
 			var currentMeasurementValue = data.timeseries[0].currentMeasurement.value;
 			var currentMeasurementUnit = data.timeseries[0].unit;
 			var currentMeasurementTimestamp = data.timeseries[0].currentMeasurement.timestamp;
-			// var gaugeZeroValue = data.timeseries[0].gaugeZero.value;			// covered by if-statement
-			// var gaugeZeroUnit = data.timeseries[0].gaugeZero.unit			// covered by if-statement
 
 			var gaugeZeroValue = "";
 			var notAvailable = "not available";
 			if (data.timeseries[0].gaugeZero && data.timeseries[0].gaugeZero.value) {
 				gaugeZeroValue = data.timeseries[0].gaugeZero.value
-			} else {
+			}
+			else {
 				gaugeZeroValue = notAvailable
 			};
 
@@ -55,30 +54,37 @@ var waterMeasurementData = L.layerJSON({
 			if (data.timeseries[0].gaugeZero && data.timeseries[0].gaugeZero.unit) {
 				gaugeZeroUnit = data.timeseries[0].gaugeZero.unit
 			};
+			
+			function toTitleCase(str) {
+				return str.replace(/-/g, ' ').replace(/\w\S*/g, function(txt) {return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+			}
+			
+			var index = currentMeasurementTimestamp.indexOf('+');
+			var time = currentMeasurementTimestamp.replace('T', ' ').substr(0, index - 3);
 
 			// Popup with name of measurementstation, the watername, the gaugezerovalue+unit, the current waterlevelmeasurement+unit and timestamp of last measurement
 			return ('<div class="pegelonline">' +
-						'<h1>' + measurementStationName + '</h1>' +
+						'<h1>' + toTitleCase(measurementStationName) + '</h1>' +
 						'<table border="0">' +
 							'<tr>' +
 								'<td>River:</td>' +
-								'<td>' + waterName + '</td>' +
+								'<td>' + toTitleCase(waterName) + '</td>' +
 							'</tr>' +
 							'<tr>' +
 								'<td>Zero value:</td>' +
-								'<td>' + gaugeZeroValue + gaugeZeroUnit + '</td>' +
+								'<td>' + gaugeZeroValue + ' ' + gaugeZeroUnit + '</td>' +
 							'</tr>' +
 							'<tr>' +
 								'<td>Current water level:</td>' +
-								'<td>' + currentMeasurementValue + currentMeasurementUnit + '</td>' +
+								'<td>' + currentMeasurementValue + ' ' + currentMeasurementUnit.replace('+NN', '<br />(above absolute altitude)') + '</td>' +
 							'</tr>' +
 							'<tr>' +
 								'<td>Last measurement:</td>' +
-								'<td>' + currentMeasurementTimestamp + '</td>' +
+								'<td>' + time + '</td>' +
 							'</tr>' +
 						'</table>' +
-						'<img src="http://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/' + encodeURIComponent(measurementStationName) + '/W/measurements.png?start=P15D&width=260&height=130">' +
-						'<div class="highchart-link"><a href="#" id="highchart-button" data-stationName="' + encodeURIComponent(measurementStationName) + '">more information &nbsp; <span class="arrow">&#9658;</span></a></div>' +
+						'<div class="img"><img src="http://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/' + encodeURIComponent(measurementStationName) + '/W/measurements.png?start=P15D&width=260&height=130"></div>' +
+						'<div class="highchart-link"><a href="#" id="highchart-button" data-stationName="' + encodeURIComponent(measurementStationName) + '">more information <span class="arrow">&#9658;</span></a></div>' +
 					'</div>') || null;
 		}
 	});

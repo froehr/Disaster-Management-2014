@@ -1,16 +1,20 @@
-initHighChartForStation = function (id) {
+function toTitleCase(str) {
+	return str.replace(/-/g, ' ').replace(/\w\S*/g, function(txt) {return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
+
+initHighChartForStation = function(id) {
     var options = {
         chart: {
             renderTo: 'popup-content',
             type: 'spline',
 			width: 780,
-            shadow: true
+            shadow: false
         },
         title: {
             text: 'Water level of the last 12 hours'
         },
         subtitle: {
-            text: 'Measured in '+decodeURIComponent(id)
+            text: 'measured in ' + toTitleCase(decodeURIComponent(id))
         },
         credits: {
             text: 'Source',
@@ -26,7 +30,7 @@ initHighChartForStation = function (id) {
             }
         },
         legend: {
-            enabled: true
+            enabled: false
         },
         series: [{}]
     };
@@ -37,5 +41,9 @@ initHighChartForStation = function (id) {
         });
         options.series[0].data = chart_data;
         var chart = new Highcharts.Chart(options);
+		
+		var marginTop = $('#popup').height() / 2;
+		$('#popup').css('margin-top', '-' + marginTop + 'px');
+		$('#popup').fadeIn();
     });
 };
