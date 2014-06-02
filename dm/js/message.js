@@ -163,6 +163,7 @@ function showMessages() {
 		}
 		
 		$('#messages').append(
+			'<a name="message-' + message['message_id'] + '"></a>' +
 			'<div class="message message-' + message['message_type'] + '" id="message-' + message['message_id'] + '">' +
 				'<h1 class="' + message['message_type'] + '-head">' + message['title'] + '</h1>' +
 				'<p>' + message['description'] + ' <a href="#" id="more-' + message['message_id'] + '">more <span class="arrow">&#9658;</span></a></p>' +
@@ -266,37 +267,42 @@ function showMessages() {
 					layer.on('mouseout', function(evt) {
 						map.closePopup(popup);
 					});
+					
+					layer.on('click', function(evt) {
+						document.location.href = '#message-' + message['message_id'];
+						switchMessageDetails(message['message_id']);
+					});
 				}
 			}).addTo(map);
 		}
 	}
 	
-	// Toggler to expand or collapse messages
-	function setMessageClickFunctions(message) {
-		function switchMessageDetails(message_id) {
-			if ( ! message['display'] ) {
-				setElementDisplay('more-' + message_id, 'none');
-				setElementDisplay('less-' + message_id, 'block');
-				$('#details-' + message_id).slideDown('fast', 'linear');
-				message['display'] = true;
-				
-				for ( var i = 0; i < messages.length; i++ ) {
-					if ( messages[i]['message_id'] != message_id && messages[i]['display'] ) {
-						setElementDisplay('more-' + messages[i]['message_id'], 'inline');
-						setElementDisplay('less-' + messages[i]['message_id'], 'none');
-						$('#details-' + messages[i]['message_id']).slideUp('fast', 'linear');
-						messages[i]['display'] = false;
-					}
+	function switchMessageDetails(message_id) {
+		if ( ! message['display'] ) {
+			setElementDisplay('more-' + message_id, 'none');
+			setElementDisplay('less-' + message_id, 'block');
+			$('#details-' + message_id).slideDown('fast', 'linear');
+			message['display'] = true;
+			
+			for ( var i = 0; i < messages.length; i++ ) {
+				if ( messages[i]['message_id'] != message_id && messages[i]['display'] ) {
+					setElementDisplay('more-' + messages[i]['message_id'], 'inline');
+					setElementDisplay('less-' + messages[i]['message_id'], 'none');
+					$('#details-' + messages[i]['message_id']).slideUp('fast', 'linear');
+					messages[i]['display'] = false;
 				}
 			}
-			else {
-				setElementDisplay('more-' + message_id, 'inline');
-				setElementDisplay('less-' + message_id, 'none');
-				$('#details-' + message_id).slideUp('fast', 'linear');
-				message['display'] = false;
-			}
 		}
-		
+		else {
+			setElementDisplay('more-' + message_id, 'inline');
+			setElementDisplay('less-' + message_id, 'none');
+			$('#details-' + message_id).slideUp('fast', 'linear');
+			message['display'] = false;
+		}
+	}
+	
+	// Toggler to expand or collapse messages
+	function setMessageClickFunctions(message) {
 		// center the map on the message location
 		$('#message-' + message['message_id']).click(function() {
 			var loc = message['location-json'].getBounds();
