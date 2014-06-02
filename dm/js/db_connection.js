@@ -4,30 +4,28 @@
 				layer = e.layer;
 
 			if (type === 'marker') {				
-				coordinates = layer.toGeoJSON();
-				var coord=coordinates.geometry.coordinates.toString();
-				console.log(coordinates);
+				coordinates = JSON.stringify(layer.toGeoJSON());
+				//var coord=coordinates.geometry.coordinates.toString();
 			}
 			 
 			if (type === 'polyline') {
-				var geojsonFeature = layer.toGeoJSON().geometry.coordinates;;
-				var coord=geojsonFeature.toString();	
+				coordinates = JSON.stringify(layer.toGeoJSON());
+				console.log(coordinates);
 			}
 			
 			if (type === 'polygon') {
-				var geojsonFeature = layer.toGeoJSON().geometry.coordinates;;
-				var coord=geojsonFeature.toString();		
+				coordinates = JSON.stringify(layer.toGeoJSON());
+				console.log(coordinates);	
 			}
 			
 			if (type === 'rectangle') {
-				var geojsonFeature = layer.toGeoJSON().geometry.coordinates;;
-				var coord=geojsonFeature.toString();		
+				coordinates = JSON.stringify(layer.toGeoJSON());
+				console.log(coordinates);
 			}
 			
 			if (type === 'circle') {
-				var geojsonFeature = layer.toGeoJSON().geometry.coordinates;;
-				var coord=geojsonFeature.toString();
-				console.log(coord);		
+				coordinates = JSON.stringify(layer.toGeoJSON());
+				console.log(coordinates);
 			}
 		});
 
