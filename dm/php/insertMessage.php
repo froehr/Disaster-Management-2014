@@ -1,9 +1,10 @@
 <?php
-$dbconn = pg_connect("host=hostname port=5432 dbname=disaster_management user=user password=password")
-    or die('Verbindungsaufbau fehlgeschlagen: ' . pg_last_error());
+//$dbconn = pg_connect("host=hostname port=5432 dbname=disaster_management user=user password=password")
+//    or die('Verbindungsaufbau fehlgeschlagen: ' . pg_last_error());
 	
 	$issue = $_POST['Issue'];
 	$title = $_POST['Title'];
+	$geometry = $_POST['Geometry'];
 	$description = $_POST['Description'];
 	$startdate = $_POST['Startdate'];
 	$starttime = $_POST['Starttime'];
@@ -16,8 +17,8 @@ $dbconn = pg_connect("host=hostname port=5432 dbname=disaster_management user=us
 	$people_need = $_POST['PeopleNeeded'];
 	$tags = $_POST['Tags'];
 	$priority = 10;
-	echo $startdate;
-	$query=pg_query($dbconn,"Insert into \"message\" values (DEFAULT,'".$issue."','".$title."','POINT(10 20)',TIMESTAMP '".$startdate."',TIMESTAMP '".$startdate."',TIMESTAMP '".$enddate."',TIMESTAMP '".$enddate."','".$description."',".$people_need.",".$people_attending.",'bla',".$priority.",'".$category."',0,0,'Upcoming','".$person_name."','".$person_contact."','delete?');");
+	echo $geometry;
+//	$query=pg_query($dbconn,"Insert into \"message\" values (DEFAULT,'".$issue."','".$title."','POINT(10 20)',TIMESTAMP '".$startdate."',TIMESTAMP '".$startdate."',TIMESTAMP '".$enddate."',TIMESTAMP '".$enddate."','".$description."',".$people_need.",".$people_attending.",'bla',".$priority.",'".$category."',0,0,'Upcoming','".$person_name."','".$person_contact."','delete?');");
 	
 	
 	
