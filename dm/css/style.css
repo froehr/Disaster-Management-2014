@@ -351,13 +351,14 @@ header nav ul li #message:active {
 }
 
 #message-bar #message-form #draw-buttons .leaflet-draw-actions a {
+	font-family: 'Noto Sans', Arial, sans-serif;
   background-image: none;
   background-color: #919187;
   border-left: 1px solid #AAA;
   color: #FFF;
   line-height: 28px;
-  padding-left: 2px;
-  padding-right: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
   height: 27px;
   margin-top: 1px;
   -webkit-border-radius: 0 0 0 0;

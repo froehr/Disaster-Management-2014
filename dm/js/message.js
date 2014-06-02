@@ -1,9 +1,3 @@
-function Location(lat, lon, zoom) {
-	this.lat = lat;
-	this.lon = lon;
-	this.zoom = zoom;
-}
-
 function Comment(comment_id, name, message, date_time, file) {
 	this.comment_id = comment_id;
 	this.name = name;
@@ -41,14 +35,13 @@ function Message(message_id, message_type, location, time_start, time_stop, date
 function showMessages() {
 	var messages = [
 		new Message(0,
-					'emergency',
-					new Location(37.246994, -121.840744, 12),
+					'emergency','{"type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[[7.612946033477782,51.96501340456607],[7.61101484298706,51.9650001835794],[7.609212398529052,51.96584631886286],[7.608332633972168,51.96476220515285],[7.606294155120849,51.96379705746947],[7.608118057250977,51.9627261158533],[7.60876178741455,51.96164192667244],[7.610800266265869,51.9623691296285],[7.612645626068115,51.962276577180184],[7.612946033477782,51.96501340456607]]]}}',
 					'2014-04-17, 14:30',
 					'2014-04-17, 14:30',
 					'2014-04-17, 14:30',
 					'2014-04-17, 14:30',
-					'Dikebreak',
-					'Students in Santa Clara Valley and Gunlock are being held at school after hours due to dikebreak.',
+					'Flood in the Schlossgarten!',
+					'The botanical garden of M&uuml;nster is flooded, we need help!',
 					0,
 					0,
 					'message-image-example-0.jpg',
@@ -61,52 +54,52 @@ function showMessages() {
 					'',
 					'',
 					false,
-					'flood,dikebreak,school', [
+					'flood,garden,castle', [
 						new Comment(0,
 									'Peter Miller',
 									'Thanks for the information. It was very useful.',
 									'2014-04-17, 14:35',
 									''),
 						new Comment(1,
-									'Susan Smith',
+									'Trollmaster 17',
 									'Warning! This information is wrong.',
 									'2014-04-17, 14:37',
 									'')
 					]
 		),
 		new Message(1,
-					'message',
-					new Location(37.253192, -121.966156, 16),
-					'2014-04-17, 14:26',
-					'2014-04-17, 14:26',
-					'2014-04-17, 14:26',
-					'2014-04-17, 14:26',
-					'Fire Alarm Recall',
-					'The U.S. Consumer Product Safety Commission (CPSC) in cooperation with Walter Kidde Portable Equipment Inc., of Mebane, N.C. has issued a voluntary recall of about 94,000 Dual Sensor Smoke Alarms.',
-					0,
-					0,
-					'message-image-example-1.jpg',
-					0,
-					'Fire',
-					0,
-					0,
-					'Gunther',
-					'',
-					'',
-					'',
-					false,
-					'smoke,fire,alarm', [
-					]
-		),
-		new Message(2,
 					'need-support',
-					new Location(37.253192, -121.966156, 16),
+					'{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[7.595736980438232,51.969376117172324]}}',
 					'2014-04-17, 14:26',
 					'2014-04-17, 14:26',
 					'2014-04-17, 14:26',
 					'2014-04-17, 14:26',
 					'Need support here!',
-					'Test',
+					'Writing an exam at ifgi. Please help!',
+					0,
+					0,
+					'',
+					0,
+					'',
+					0,
+					0,
+					'',
+					'',
+					'',
+					'',
+					false,
+					'', [
+					]
+		),
+		new Message(2,
+					'offer-support',
+					'{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[7.592325210571289,51.9396351536736],[7.597517967224121,51.94222785874081],[7.601037025451661,51.9449262293592],[7.6032257080078125,51.94810057520779],[7.609748840332032,51.951063095302274],[7.61549949645996,51.95378738300075],[7.619490623474122,51.95540071806757],[7.619490623474122,51.95651150518884],[7.619748115539551,51.958415647657844],[7.618331909179687,51.959817256410304],[7.617473602294921,51.96137748630892],[7.617902755737305,51.96325497910861],[7.6204776763916025,51.963492965537746],[7.622108459472655,51.964154032322156],[7.623567581176758,51.96433912927462]]}}',
+					'2014-04-17, 14:26',
+					'2014-04-17, 14:26',
+					'2014-04-17, 14:26',
+					'2014-04-17, 14:26',
+					'Here you get bananas!',
+					'Marathon in M&uuml;nster, you get free bananas!',
 					0,
 					0,
 					'',
@@ -123,14 +116,14 @@ function showMessages() {
 					]
 		),
 		new Message(3,
-					'offer-support',
-					new Location(37.253192, -121.966156, 16),
+					'message',
+					'',
 					'2014-04-17, 14:26',
 					'2014-04-17, 14:26',
 					'2014-04-17, 14:26',
 					'2014-04-17, 14:26',
-					'Here you get support!',
-					'Test',
+					'Thank you',
+					'Your platform is great!',
 					0,
 					0,
 					'',
@@ -138,7 +131,7 @@ function showMessages() {
 					'',
 					0,
 					0,
-					'',
+					'Gunther',
 					'',
 					'',
 					'',
@@ -164,7 +157,10 @@ function showMessages() {
 		
 		var location_name_html = 'Location';
 		
-		var file_html = '<div class="image-box"><img src="img/' + message['file'] + '" alt="' + message['title'] + '" class="image" /></div>';
+		var file_html = '';
+		if ( message['file'] != '' ) {
+			file_html = '<div class="image-box"><img src="img/' + message['file'] + '" alt="' + message['title'] + '" class="image" /></div>';
+		}
 		
 		$('#messages').append(
 			'<div class="message message-' + message['message_type'] + '" id="message-' + message['message_id'] + '">' +
@@ -206,6 +202,73 @@ function showMessages() {
 				'<div class="downvote"><a href="#" id="downvote-' + message['message_id'] + '">&#9660;</a></div>' +
 				'<div class="upvote-number">' + message['upvotes'] + '</div>' +
 			'</div>');
+		
+		if ( message['location'] != '' ) {
+			var featureColor;
+			switch(message['message_type']) {
+				case 'emergency':
+					featureColor = '#A50026';
+					break;
+				case 'need-support':
+					featureColor = '#eba259'
+					break;
+				case 'offer-support':
+					featureColor = '#468f5c'
+					break;
+				case 'message':
+					featureColor = '#45544a'
+					break;
+			}
+			var iconUrl = 'img/marker/marker-icon-' + message['message_type'] + '.png';
+			
+			var data = jQuery.parseJSON(message['location']);
+		
+			message['location-json'] = L.geoJson(data, {
+				pointToLayer: function (latlng) {                    
+					return new L.Marker([data.geometry.coordinates[1],data.geometry.coordinates[0]], {
+						icon:  new L.Icon({
+							iconUrl: iconUrl,
+							iconAnchor: [12,41],
+							popupAnchor: [0, -42]
+						})
+					});
+				},
+				style: function (feature) {
+					return {
+						color: featureColor,
+						opacity: 0.8
+					};
+				},
+				onEachFeature: function (feature, layer) {
+					var vOffset;
+		
+					if ( data.geometry.type == 'Point' ) {
+						vOffset = -41;
+					}
+					else {
+						vOffset = -5;
+					}
+					
+					var popup = new L.popup({
+						closeButton: false,
+						className: 'feature-popup',
+						offset: [0, vOffset]
+					});
+					
+					layer.on('mouseover', function(evt) {
+						var popupContent = message['title'];
+						
+						popup.setContent('<span style="color: ' + featureColor + ';">' + popupContent + '</span>');
+						popup.setLatLng(evt.latlng);
+						popup.openOn(map);
+					});
+					
+					layer.on('mouseout', function(evt) {
+						map.closePopup(popup);
+					});
+				}
+			}).addTo(map);
+		}
 	}
 	
 	// Toggler to expand or collapse messages
@@ -236,7 +299,36 @@ function showMessages() {
 		
 		// center the map on the message location
 		$('#message-' + message['message_id']).click(function() {
-			map.setView(new L.LatLng(message['location']['lat'], message['location']['lon']), message['location']['zoom']);
+			var loc = message['location-json'].getBounds();
+			map.setView(loc.getCenter());
+			map.fitBounds(loc);
+			
+			var featureColor;
+			switch(message['message_type']) {
+				case 'emergency':
+					featureColor = '#A50026';
+					break;
+				case 'need-support':
+					featureColor = '#eba259'
+					break;
+				case 'offer-support':
+					featureColor = '#468f5c'
+					break;
+				case 'message':
+					featureColor = '#45544a'
+					break;
+			}
+			
+			var popup = new L.popup({
+				closeButton: false,
+				className: 'feature-popup',
+				offset: [0, -41]
+			});
+			var popupContent = message['title'];
+						
+			popup.setContent('<span style="color: ' + featureColor + ';">' + popupContent + '</span>');
+			popup.setLatLng(loc.getCenter());
+			popup.openOn(map);
 		});
 
 		// animations for the up- and downvote buttons

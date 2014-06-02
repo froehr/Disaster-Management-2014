@@ -6,6 +6,7 @@
 			if (type === 'marker') {				
 				coordinates = JSON.stringify(layer.toGeoJSON());
 				//var coord=coordinates.geometry.coordinates.toString();
+				console.log(coordinates);
 			}
 			 
 			if (type === 'polyline') {
@@ -19,11 +20,6 @@
 			}
 			
 			if (type === 'rectangle') {
-				coordinates = JSON.stringify(layer.toGeoJSON());
-				console.log(coordinates);
-			}
-			
-			if (type === 'circle') {
 				coordinates = JSON.stringify(layer.toGeoJSON());
 				console.log(coordinates);
 			}
