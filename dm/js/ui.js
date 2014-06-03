@@ -143,7 +143,7 @@ $('#hotlines').click(function() {
 
 $('#weatherforcast').click(function() {
 	   $('#map-right-click-menu').fadeOut();
-	   $('#popup').fadeIn();
+	   createPopUp(800, 400, '');
 	   initHighChartForForecast(latlng);
 });
 
