@@ -402,7 +402,7 @@ map.on('draw:created', function (e) {
 		offset: [0, vOffset]
 	});
 	
-	layer.on('mouseover', function(evt) {
+	function updatePopupContent() {
 		var popupContent;
 		if ( $('#title').val() == '' ) {
 			popupContent = 'Please enter a title.';
@@ -411,12 +411,21 @@ map.on('draw:created', function (e) {
 			popupContent = $('#title').val();
 		}
 		popup.setContent('<span style="color: ' + tagColor + ';">' + popupContent + '</span>');
+	}
+					
+	layer.on('mouseover', function(evt) {
+		updatePopupContent();
 		popup.setLatLng(evt.latlng);
 		popup.openOn(map);
 	});
 	
 	layer.on('mouseout', function(evt) {
 		map.closePopup(popup);
+	});
+	
+	layer.on('mousemove', function(evt) {
+		updatePopupContent();
+		popup.setLatLng(evt.latlng);
 	});
 	
 	drawnItems.addLayer(layer);

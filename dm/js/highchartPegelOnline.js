@@ -42,8 +42,6 @@ initHighChartForStation = function(id) {
         options.series[0].data = chart_data;
         var chart = new Highcharts.Chart(options);
 		
-		var marginTop = $('#popup').height() / 2;
-		$('#popup').css('margin-top', '-' + marginTop + 'px');
-		$('#popup').fadeIn();
+		createPopUp(800, 440, '');
     });
 };

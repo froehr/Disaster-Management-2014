@@ -114,44 +114,57 @@ $('#x-form').click(function() {
 	$('#message-form').slideUp('slow', 'linear');
 });
 
-// click functions to open "hotlines", "help", "about" and "weatherforcast" popups
-$('#hotlines').click(function() {
+// popup function
+function createPopUp(width, height, content) {
+	if ( height != 0 ) $('#popup').height(height);
 	var marginTop = $('#popup').height() / 2;
 	$('#popup').css('margin-top', '-' + marginTop + 'px');
+	
+	if ( width != 0 ) $('#popup').width(width);
+	var marginLeft = $('#popup').width() / 2;
+	$('#popup').css('margin-left', '-' + marginLeft + 'px');
+	
+	if ( content != '' ) $('#popup-content').html(content);
 	$('#popup').fadeIn();
+}
+
+function closePopUp() {
+	$('#popup').fadeOut().promise().done(function() {
+		$('#popup').height('auto');
+		$('#popup-content').html('');
+	});
+}
+
+// click functions to open popups
+$('#hotlines').click(function() {
+	$('#popup-content').html('');
+	createPopUp(800, 300, '');
 });
 
 $('#weatherforcast').click(function() {
 	var content = $.ajax({url:"http://api.openweathermap.org/data/2.5/forecast/daily?lat="+latlng.lat+"&lon="+latlng.lng+"&cnt=10&mode=html",dataType: "text",success:function(result){
 		console.log(result);
 		console.log("http://api.openweathermap.org/data/2.5/forecast/daily?lat="+latlng.lat+"&lon="+latlng.lng+"&cnt=10&mode=html");
-		$('#popup-content').html(result);
 		$('#map-right-click-menu').fadeOut();
 		
-		var marginTop = $('#popup').height() / 2;
-		$('#popup').css('margin-top', '-' + marginTop + 'px');
-		$('#popup').fadeIn();
+		createPopUp(800, 300, result);
 	}});
 });
 
 $('#help').click(function() {
-	var marginTop = $('#popup').height() / 2;
-	$('#popup').css('margin-top', '-' + marginTop + 'px');
-	$('#popup').fadeIn();
+	createPopUp(800, 300, '');
 });
 
 $('#about').click(function() {
-	var marginTop = $('#popup').height() / 2;
-	$('#popup').css('margin-top', '-' + marginTop + 'px');
-	$('#popup').fadeIn();
+	createPopUp(800, 300, '');
+});
+
+$('body').on('click', '#highchart-button', function(e) {
+	initHighChartForStation($(e.target).attr('data-stationName'));
 });
 
 $('#x-popup').click(function() {
-	$('#popup').fadeOut();
-});
-
-$("body").on("click","#highchart-button",function(e) {
-	initHighChartForStation($(e.target).attr('data-stationName'));
+	closePopUp();
 });
 
 // click functions to open and clode the "more" fields for the input form

@@ -167,17 +167,23 @@ function showMessages() {
 		
 		var location_name_html = 'Location';
 		
+		var edit_remove_html = '';
+		if ( true /* TODO: USER LOGGED IN? */ ) {
+			edit_remove_html = '<div id="remove-' + message['message_id'] + '" class="edit-remove"><img src="img/remove.png" /><div> Remove</div></div><div id="edit-' + message['message_id'] + '" class="edit-remove"><img src="img/edit.png" /><div> Edit</div></div>';
+		}
+		
 		var file_html = '';
 		if ( message['file'] != '' ) {
 			file_html = '<div class="image-box"><img src="img/' + message['file'] + '" alt="' + message['title'] + '" class="image" /></div>';
 		}
 		
 		$('#messages').append(
-			'<a name="message-' + message['message_id'] + '"></a>' +
 			'<div class="message message-' + message['message_type'] + '" id="message-' + message['message_id'] + '">' +
-				'<h1 class="' + message['message_type'] + '-head">' + message['title'] + '</h1>' +
-				'<p>' + message['description'] + '<br /><a href="#" id="more-' + message['message_id'] + '">Comments and more <span class="arrow">&#9658;</span></a></p>' +
+				'<a name="message-' + message['message_id'] + '"></a>' +
+				'<h1 class="' + message['message_type'] + '-head" id="head-' + message['message_id'] + '">' + message['title'] + '</h1>' +
+				'<p id="description-' + message['message_id'] + '">' + message['description'] + '<br /><a href="#" id="more-' + message['message_id'] + '">Comments and more <span class="arrow">&#9658;</span></a></p>' +
 				'<div class="details" id="details-' + message['message_id'] + '">' +
+					edit_remove_html +
 					'<table border="0">' +
 						'<tr>' +
 							'<td class="first">Sender:</td>' +
@@ -325,38 +331,40 @@ function showMessages() {
 		
 	// Toggler to expand or collapse messages
 	function setMessageClickFunctions(message) {
+		var popup = new L.popup({
+			closeButton: false,
+			className: 'feature-popup',
+			offset: [0, -41]
+		});
+		
 		// center the map on the message location
 		$('#message-' + message['message_id']).click(function() {
-			var loc = message['location-json'].getBounds();
-			map.fitBounds(loc);
-			map.setView(loc.getCenter());
-			
-			var featureColor;
-			switch(message['message_type']) {
-				case 'emergency':
-					featureColor = '#A50026';
-					break;
-				case 'need-support':
-					featureColor = '#eba259'
-					break;
-				case 'offer-support':
-					featureColor = '#468f5c'
-					break;
-				case 'message':
-					featureColor = '#45544a'
-					break;
+			if ( typeof message['location-json'] != 'undefined' ) {
+				var loc = message['location-json'].getBounds();
+				map.fitBounds(loc);
+				map.setView(loc.getCenter());
+				
+				var featureColor;
+				switch(message['message_type']) {
+					case 'emergency':
+						featureColor = '#A50026';
+						break;
+					case 'need-support':
+						featureColor = '#eba259'
+						break;
+					case 'offer-support':
+						featureColor = '#468f5c'
+						break;
+					case 'message':
+						featureColor = '#45544a'
+						break;
+				}
+				
+				var popupContent = message['title'];
+				popup.setContent('<span style="color: ' + featureColor + ';">' + popupContent + '</span>');
+				popup.setLatLng(loc.getCenter());
+				popup.openOn(map);
 			}
-			
-			var popup = new L.popup({
-				closeButton: false,
-				className: 'feature-popup',
-				offset: [0, -41]
-			});
-			var popupContent = message['title'];
-						
-			popup.setContent('<span style="color: ' + featureColor + ';">' + popupContent + '</span>');
-			popup.setLatLng(loc.getCenter());
-			popup.openOn(map);
 		});
 
 		// animations for the up- and downvote buttons
@@ -370,8 +378,39 @@ function showMessages() {
 			document.getElementById('downvote-' + message['message_id']).style.color = '#959595';
 		});
 		
-		$('#more-' + message['message_id']).click(function() {
+		$('#description-' + message['message_id']).click(function() {
 			switchMessageDetails(message);
+		});
+		
+		$('#head-' + message['message_id']).click(function() {
+			switchMessageDetails(message);
+		});
+		
+		$('#edit-' + message['message_id']).click(function() {
+			// TODO: EDIT MESSAGE
+		});
+		
+		$('#remove-' + message['message_id']).click(function() {
+			var removeMessage = '<h1>Remove message</h1>' +
+				'<p>Do you really want to remove this message?</p>' +
+				'<p class="right">' +
+					'<a href="#" id="remove-yes">Yes, remove it!</a> &nbsp; <a href="#" id="remove-no">No, cancel!</a>' +
+				'</p>';
+			createPopUp(230, 0, removeMessage);
+			
+			$('#remove-yes').click(function() {
+				// TODO: REMOVE FROM DATABASE
+				
+				if ( typeof message['location-json'] != 'undefined' ) map.removeLayer(message['location-json']);
+				map.closePopup(popup);
+				message['display'] = false;
+				$('#message-' + message['message_id']).remove();
+				closePopUp();
+			});
+			
+			$('#remove-no').click(function() {
+				closePopUp();
+			});
 		});
 		
 		$('#less-' + message['message_id'] + '-top').click(function() {
