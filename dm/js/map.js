@@ -572,8 +572,6 @@ if (document.getElementById('map').addEventListener) {
 		var x = evt.clientX;
 		var y = evt.clientY;
 
-		console.log(latlng);
-
 		if ($(window).width() - rightOffset < (evt.clientX + popUpWidth)) {
 			x -= popUpWidth;
 		}
