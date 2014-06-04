@@ -14,7 +14,7 @@ initHighChartForForecast = function (latlng) {
 		},
 		credits : {
 			text : 'Source',
-			href : 'openweathermap.com'
+			href : 'http://www.openweathermap.com'
 		},
 		xAxis : {
 			type : 'datetime',
