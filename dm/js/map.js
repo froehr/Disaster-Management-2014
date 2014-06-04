@@ -547,6 +547,10 @@ var LlayerSwitcher = new L.control.groupedLayers(
 		position : 'bottomleft'
 	}).addTo(map);
 
+// closing PopUp when clicking on map
+map.on('click', function(){
+	closePopUp();
+});
 
 // Right click menubar
 if (document.getElementById('map').addEventListener) {
