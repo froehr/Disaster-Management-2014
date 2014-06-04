@@ -7,7 +7,7 @@ initHighChartForForecast = function (latlng) {
 			shadow : false
 		},
 		title : {
-			text : 'Weatherforecast for the next ten days'
+			text : 'Weather forecast for the next ten days'
 		},
 		subtitle : {
 			text : ''
@@ -109,7 +109,7 @@ initHighChartForForecast = function (latlng) {
                                 yAxis: 1,
                                 
                             }, {
-                                name: 'Temperatur',
+                                name: 'Temperature',
                                 color: '#BF0B23',
                                 yAxis: 0,
                                 data : [
@@ -126,8 +126,11 @@ initHighChartForForecast = function (latlng) {
                                         ],
                                 tooltip: {
                                      valueSuffix: ' \xB0C'
-                                }
-                                
+                                },
+                                marker : {
+                                        fillColor: 'none',
+                                        lineColor: null
+                                },
                             }, 
                         ]
 	}
