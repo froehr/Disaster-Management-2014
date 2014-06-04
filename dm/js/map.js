@@ -223,7 +223,7 @@ var Lscalebar = new L.control.scale({
 		},
 		setView : true, // automatically sets the map view to the user's location
 		strings : {
-			title : "Show your location\nSpeech:Start/End location", // title of the locat control
+			title : "Show your location", // title of the locat control
 			popup : "You are within {distance} {unit} from this point", // text to appear if user clicks on circle
 			outsideMapBoundsMsg : "You seem located outside the boundaries of the map" // default message for onLocationOutsideMapBounds
 		}
