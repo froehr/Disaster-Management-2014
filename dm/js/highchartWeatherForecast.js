@@ -70,10 +70,13 @@ initHighChartForForecast = function (latlng) {
 		options['plotOptions']['series']['pointStart'] = data.list[0].dt * 1000;
 		options['subtitle']['text'] = "around "+data.city.name;
 		for (var i = 0; i < data.list.length; i++) {
-			chart_data[0].push(parseFloat((data.list[i].temp.day - 272.15).toFixed(2)));
-			chart_data[1].push(data.list[i].pressure);
+		    chart_data[0]['Y'].push(parseFloat((data.list[i].temp.day - 272.15).toFixed(2)));
+                    chart_data[0]['symbol'].push('url(http://openweathermap.org/img/w/' + data.list[i].main.weather.icon + '.png');
+                    chart_data[1].push(data.list[i].pressure);
 		}
-		options.series[0]['data'] = chart_data[0];
+                
+		options.series[0]['data']['Y'] = chart_data[0]['Y'];
+                options.series[0]['data']['marker']['symbol'] = chart_data[0]['symbol'];
 		options.series[0]['color'] = '#BF0B23';
 		options.series[0].yAxis = 0;
 		options.series[0].name = 'Temperature in \xB0C';
