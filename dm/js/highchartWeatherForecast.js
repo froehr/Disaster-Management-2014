@@ -24,18 +24,22 @@ initHighChartForForecast = function (latlng) {
 			]
 
 		},
-		yAxis : [{
-				title : {
-					text : 'Temperature in \xB0C'
-				},
-			}, {
-				title : {
-					text : 'Pressure'
-				},
-				opposite : true,
-
-			}
-		],
+		yAxis: [{
+            title: {
+                text: 'Temperature in \xB0C'
+            },
+            lineColor: '#BF0B23',
+            lineWidth: 1
+        },
+        {
+            title : {
+                text: 'Pressure in hPa'
+            },
+            opposite: true,
+            lineColor: '#0080FF',
+            lineWidth: 1
+            
+        }],
 
 		plotOptions : {
 			series : {
