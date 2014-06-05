@@ -10,21 +10,40 @@ initIntroJS = function() {
 	    {
 	      element: '#emergency',
 	      intro: 'With this Buttons you can add a new Emergency',
-	      exitOnEsc: 'false',
-	      showButtons: 'false'
 	    },
 	    {
 	      element: '#need-support',
 	      intro: 'With this Buttons you can call for support',
-	      exitOnEsc: 'false'
 	    },
 	     {
 	      element: '#offer-support',
 	      intro: 'With this Buttons you can offer support',
-	      exitOnEsc: 'false'
 	    },
+	     {
+	      element: '#messages',
+	      intro: 'Here you get an overview of the newest messages',
+	      position: 'right',
+	    },
+	     {
+	      element: '#map-right-click-menu',
+	      intro: 'With a rightclick on the map you get another menu',
+	    }
 	  ]
 	});
-
-      intro.start();
+    
+    intro.start();
+    
+    $('#map-right-click-menu').fadeOut(100, function () {
+	document.getElementById('map-right-click-menu').style.left = '500px';
+	document.getElementById('map-right-click-menu').style.top = '300px';
+	$('#map-right-click-menu').fadeIn(200);
+    });
+    
+    intro.onexit(function() {
+	$('#map-right-click-menu').fadeOut(200);
+    });
+    
+    intro.oncomplete(function() {
+	$('#map-right-click-menu').fadeOut(200);
+    });
 }
