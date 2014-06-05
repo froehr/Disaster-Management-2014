@@ -73,7 +73,7 @@ initHighChartForForecast = function (latlng) {
 		plotOptions : {
 			series : {
 				pointStart : '',
-				pointInterval : 18 * 3600 * 1000 // ~seven day
+				pointInterval : 24 * 3600 * 1000  // ~ten days
 			}
 		},
 		
@@ -134,7 +134,7 @@ initHighChartForForecast = function (latlng) {
                             }, 
                         ]
 	}
-        
+	
         // Getting Data from open weather map and handling different scales
 	$.getJSON('http://api.openweathermap.org/data/2.5/forecast/daily?lat=' + latlng.lat + '&lon=' + latlng.lng + '&cnt=10&mode=json&lang=en', function (data) {
 		chart_data = [[[],[]], [], []];
