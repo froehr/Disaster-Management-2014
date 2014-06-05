@@ -134,11 +134,12 @@ initHighChartForForecast = function (latlng) {
                             }, 
                         ]
 	}
-	
+
         // Getting Data from open weather map and handling different scales
 	$.getJSON('http://api.openweathermap.org/data/2.5/forecast/daily?lat=' + latlng.lat + '&lon=' + latlng.lng + '&cnt=10&mode=json&lang=en', function (data) {
 		chart_data = [[[],[]], [], []];
-		options['plotOptions']['series']['pointStart'] = data.list[0].dt * 1000;
+		var date = new Date(data.list[0].dt * 1000);
+		options['plotOptions']['series']['pointStart'] = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
 		options['subtitle']['text'] = "around "+data.city.name;
 		for (var i = 0; i < data.list.length; i++) {
                     chart_data[0][0][i] = (parseFloat((data.list[i].temp.day - 272.15).toFixed(2)));
