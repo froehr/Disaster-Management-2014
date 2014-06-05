@@ -148,11 +148,6 @@ $('#weatherforcast').click(function() {
 	   initHighChartForForecast(latlng);
 });
 
-$('#highchart-button').click(function() {
-	   createPopUp(800, 400, '');
-	   initHighChartForStation(id);
-});
-
 $('#help').click(function() {
 	initIntroJS();	
 });
