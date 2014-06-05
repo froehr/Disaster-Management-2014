@@ -116,6 +116,8 @@ $('#x-form').click(function() {
 
 // popup function
 function createPopUp(width, height, content) {
+	$('#popup-content').html(content);
+	
 	if ( height != 0 ) $('#popup').height(height);
 	var marginTop = $('#popup').height() / 2;
 	$('#popup').css('margin-top', '-' + marginTop + 'px');
@@ -124,7 +126,6 @@ function createPopUp(width, height, content) {
 	var marginLeft = $('#popup').width() / 2;
 	$('#popup').css('margin-left', '-' + marginLeft + 'px');
 	
-	if ( content != '' ) $('#popup-content').html(content);
 	$('#popup').fadeIn();
 }
 
