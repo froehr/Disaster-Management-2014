@@ -1,6 +1,6 @@
 .introjs-overlay {
   position: absolute;
-  z-index: 999999;
+  z-index: 10000;
   background: #181818;
   opacity: 0;
   
@@ -12,12 +12,12 @@
 }
 
 .introjs-fixParent {
-  z-index: auto !important;
+  z-index: auto ;
   opacity: 1.0 !important;
 }
 
 .introjs-showElement {
-  z-index: 9999999 !important;
+  z-index: 10001;
 }
 
 .introjs-relativePosition {
@@ -26,9 +26,9 @@
 
 .introjs-helperLayer {
   position: absolute;
-  z-index: 9999998;
+  z-index: 10002;
   background-color: #FFF;
-  background-color: rgba(255,255,255,.9);
+  background-color: rgba(255,255,255,.4);
   border: 1px solid #777;
   border: 2px solid rgba(117, 117, 117, 1);
   border-radius: 4px;
@@ -44,7 +44,7 @@
   position: absolute;
   top: -16px;
   left: -9px;
-  z-index: 9999999999 !important;
+  z-index: 10004;
   padding: 2px;
   font-family: Arial, verdana, tahoma;
   font-size: 13px;
@@ -160,7 +160,7 @@
   background: transparent;
   text-decoration: none;
   font: 11px/normal sans-serif;
-  color: ##2980b9 !important;
+  color: #2980b9 !important;
   white-space: nowrap;
   cursor: pointer;
   outline: none !important;
@@ -173,7 +173,7 @@
   border-radius: 0.2em;
   /* IE hacks */
   zoom: 1;
-  *display: inline;
+  display: inline;
   margin-top: 10px;
   transition:all 0.25s ease;
   -webkit-transition:all 0.25s ease;

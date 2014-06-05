@@ -15,7 +15,12 @@ initIntroJS = function() {
 	    },
 	    {
 	      element: '#need-support',
-	      intro: 'With this Buttons you call for support',
+	      intro: 'With this Buttons you can call for support',
+	      exitOnEsc: 'false'
+	    },
+	     {
+	      element: '#offer-support',
+	      intro: 'With this Buttons you can offer support',
 	      exitOnEsc: 'false'
 	    },
 	  ]
