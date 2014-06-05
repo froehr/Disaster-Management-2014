@@ -535,6 +535,10 @@ header nav ul li #message:active {
 	text-align: justify;
 }
 
+#message-bar .message div.comment .report {
+	text-align: right;
+}
+
 /* Message field new comment form */
 #message-bar .message div.new-comment {
 	padding: 4px;
@@ -587,52 +591,16 @@ header nav ul li #message:active {
 	top: -17px;
 }
 
-#message-bar .message div.upvote-number {
+/* Message field report button */
+#message-bar .message div.report {
+	font-weight: bold;
 	float: right;
 	position: relative;
-	top: -20px;
-	left: -2px;
-	color: #468f5c;
-	font-size: 13px;
-	text-align: center;
-	width: 30px;
-}
-
-/* Message field downvote arrow */
-#message-bar .message div.downvote {
-	float: right;
-	position: relative;
-	top: -20px;
-	left: 2px;
+	top: -23px;
+	left: -5px;
 	width: 15px;
-	font-size: 13px;
+	font-size: 20px;
 	float: right;
-	-webkit-transform: scale(2.0,1.0);
-    -moz-transform: scale(2.0, 1.0);
-    -ms-transform: scale(2.0, 1.0);
-    -o-transform: scale(2.0, 1.0);
-    transform: scale(2.0,1.0);
-}
-
-#message-bar .message div.location-voting div.downvote-number {
-	margin-left: 10px;
-	float: right;
-	color: #A50026;
-	font-size: 13px;
-	text-align: center;
-	width: 15px;
-	font-style: normal;
-}
-
-/* Message field upvote arrow */
-#message-bar .message div.location-voting div.upvote {
-	float: right;
-	margin-left: 20px;
-	-webkit-transform: scale(2.0,1.0);
-    -moz-transform: scale(2.0, 1.0);
-    -ms-transform: scale(2.0, 1.0);
-    -o-transform: scale(2.0, 1.0);
-    transform: scale(2.0,1.0);
 }
 
 #message-bar .message div.location-name {
@@ -640,24 +608,6 @@ header nav ul li #message:active {
 	font-style: italic;
 	font-size: 13px;
 	margin-left: 19px;
-}
-
-#message-bar .message div.location-voting div.upvote a, #message-bar .message div.upvote a:visited, #message-bar .message div.upvote a:active {
-	color: #468f5c;
-	text-decoration: none;
-}
-
-#message-bar .message div.location-voting div.upvote a:hover {
-	color: #82b090;
-}
-
-#message-bar .message div.downvote a, #message-bar .message div.downvote a:visited, #message-bar .message div.downvote a:active {
-	color: #A50026;
-	text-decoration: none;
-}
-
-#message-bar .message div.downvote a:hover {
-	color: #e50036;
 }
 
 /* Form for sorting and filtering messages */
@@ -964,6 +914,10 @@ header nav ul li #message:active {
 
 #popup .center {
 	text-align: center;
+}
+
+#popup .pointer {
+	cursor: pointer;
 }
 
 /* Popup for drawn features */

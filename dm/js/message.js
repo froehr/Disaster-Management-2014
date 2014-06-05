@@ -62,7 +62,7 @@ function showMessages() {
 									''),
 						new Comment(1,
 									'Trollmaster 17',
-									'Warning! This information is wrong.',
+									'Warning! This information is wrong bla a.',
 									'2014-04-17, 14:37',
 									'')
 					]
@@ -161,7 +161,8 @@ function showMessages() {
 										'<tr>' +
 											'<td colspan="2" class="justify">' + message['comments'][i]['message'] + '</td>' +
 										'</tr>' +
-									'</table>' +
+									'</table><br />' +
+									'<div class="report"><img src="img/icons/report.png" width="20" height="20" id="report-comment-' + message['comments'][i]['comment_id'] + '" title="Report this message" /></div>' +
 								'</div>';
 		}
 		
@@ -214,13 +215,8 @@ function showMessages() {
 					'</div>' +
 				'</div>' +
 				'<div class="category">Category: ' + message['category'] + '</div>' +
-				'<div class="location-voting">' +
-					'<div class="downvote-number">' + message['downvotes'] + '</div>' +
-					'<div class="upvote"><a href="#" id="upvote-' + message['message_id'] + '">&#9650;</a></div>' +
-				'</div>' +
 				'<div class="location-name">' + message['date_of_change'] + ', ' + location_name_html + '</div>' +
-				'<div class="downvote"><a href="#" id="downvote-' + message['message_id'] + '">&#9660;</a></div>' +
-				'<div class="upvote-number">' + message['upvotes'] + '</div>' +
+				'<div class="report"><a href="#" id="report-' + message['message_id'] + '"><img src="img/icons/report.png" width="20" height="20" title="Report this message" /></a></div>' +
 			'</div>');
 		
 		if ( message['location'] != '' ) {
@@ -366,16 +362,45 @@ function showMessages() {
 				popup.openOn(map);
 			}
 		});
-
-		// animations for the up- and downvote buttons
-		$('#downvote-' + message['message_id']).click(function() {
-			document.getElementById('downvote-' + message['message_id']).style.color = '#A50026';
-			document.getElementById('upvote-' + message['message_id']).style.color = '#959595';
+		
+		function createReportPopUp(report, id) {
+			var content = '<h1>Report ' + report + '</h1>' +
+				'<p>Why do you want to report this ' + report + '?</p>' +
+				'<input type="hidden" id="report-report" value="' + report + '" />' +
+				'<input type="hidden" id="report-id" value="' + id + '" />' +
+				'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="wrong" checked="checked" /> Wrong information</label></p>' +
+				'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="spam" checked="checked" /> Spam or misleading</label></p>' +
+				'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="violent" /> Violent or repulsive</label></p>' +
+				'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="hateful" /> Hateful or abusive</label></p>' +
+				'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="sexual" /> Sexual content</label></p>' +
+				'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="other" /> Other</label></p>' +
+				'<p class="right">' +
+					'<a href="#" id="report-submit">Report it!</a> &nbsp; <a href="#" id="report-cancel">Cancel</a>' +
+				'</p>';
+			createPopUp(400, 225, content);
+			
+			$('#report-submit').click(function() {
+				var report = $('#report-report').val();
+				var id = $('#report-id').val();
+				var reason = $('.report-reason:checked').val();
+				// TODO: SUBMIT REPORT
+				closePopUp();
+			});
+			
+			$('#report-cancel').click(function() {
+				closePopUp();
+			});
+		}
+		
+		$('#report-' + message['message_id']).click(function() {
+			createReportPopUp('message', message['message_id']);
 		});
-
-		$('#upvote-' + message['message_id']).click(function() {
-			document.getElementById('upvote-' + message['message_id']).style.color = '#468f5c';
-			document.getElementById('downvote-' + message['message_id']).style.color = '#959595';
+		
+		$.each(message['comments'], function(i, v) {
+			var comment_id = v['comment_id'];
+			$('#report-comment-' + comment_id).click(function() {
+				createReportPopUp('comment', comment_id);
+			});
 		});
 		
 		$('#description-' + message['message_id']).click(function() {
@@ -396,7 +421,7 @@ function showMessages() {
 				'<p class="right">' +
 					'<a href="#" id="remove-yes">Yes, remove it!</a> &nbsp; <a href="#" id="remove-no">No, cancel!</a>' +
 				'</p>';
-			createPopUp(230, 0, removeMessage);
+			createPopUp(230, 90, removeMessage);
 			
 			$('#remove-yes').click(function() {
 				// TODO: REMOVE FROM DATABASE
