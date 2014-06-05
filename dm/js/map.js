@@ -146,44 +146,6 @@ var rain = new L.tileLayer('http://{s}.tile.openweathermap.org/map/rain/{z}/{x}/
 		opacity : 0.5
 	});
 
-/*
-	//Pegelonline wms layers - For more information: https://www.pegelonline.wsv.de/webservice/wmsAktuell
-var pp = new L.TileLayer.WMS("http://www.pegelonline.wsv.de/webservices/gis/wms/aktuell/mnwmhw", {
-		layers : 'Pegelpunkte',
-		format : 'image/png',
-		//crs: L.CRS.EPSG4326,
-		version : '1.1.1',
-		transparent : false,
-		opacity : 0.6
-	});
-
-var pn = new L.TileLayer.WMS("http://www.pegelonline.wsv.de/webservices/gis/wms/aktuell/mnwmhw", {
-		layers : 'Pegelnamen',
-		format : 'image/png',
-		//crs: L.CRS.EPSG4326,
-		version : '1.1.1',
-		transparent : false,
-		opacity : 0.6
-	});
-
-var pw = new L.TileLayer.WMS("http://www.pegelonline.wsv.de/webservices/gis/wms/aktuell/mnwmhw", {
-		layers : 'Pegelwasserstand',
-		format : 'image/png',
-		//crs: L.CRS.EPSG4326,
-		version : '1.1.1',
-		transparent : false,
-		opacity : 0.6
-	});
-
-var pt = new L.TileLayer.WMS("http://www.pegelonline.wsv.de/webservices/gis/wms/aktuell/mnwmhw", {
-		layers : 'TendenzWasserstand',
-		format : 'image/png',
-		//crs: L.CRS.EPSG4326,
-		version : '1.1.1',
-		transparent : false,
-		opacity : 0.6
-	});
-*/
 // New minimap - Plugin magic goes here! Note that you cannot use the same layer object again, as that will confuse the two map controls
 var overviewMap = new L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 		maxZoom : 18,
@@ -534,13 +496,6 @@ groupedOverLayers = {
 		'Rain' : rain,
 		'Flooding Areas' : flood,
 	},
-	/*"Pegel Online Layers" : {
-		'Flodmarker' : pp,
-		'Floodmarker Name' : pn,
-		'Trend Water Gauge' : pt,
-		'Water Gauge' : pw
-	},
-	*/
 	"Demo Layer" : {
 		'Clustering' : clusterpoints,
 		'Pegel Online Data' : waterMeasurementData
