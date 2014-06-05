@@ -467,27 +467,27 @@ header nav ul li #message:active {
 	line-height: 20px;
 }
 
-#message-bar .message .edit-remove {
+#message-bar .message .message-button {
 	float: right;
 	cursor: pointer;
-	padding: 0px 12px;
+	padding: 0px 10px;
 	padding-top: 2px;
 	margin-left: 3px;
 }
 
-#message-bar .message .edit-remove:hover {
+#message-bar .message .message-button:hover {
 	background-color: #ebebeb;
 }
 
-#message-bar .message .edit-remove:active {
+#message-bar .message .message-button:active {
 	background-color: #d9d9d9;
 }
 
-#message-bar .message .edit-remove img {
+#message-bar .message .message-button img {
 	margin-top: 2px;
 }
 
-#message-bar .message .edit-remove div {
+#message-bar .message .message-button div {
 	float: right;
 	padding-left: 5px;
 }

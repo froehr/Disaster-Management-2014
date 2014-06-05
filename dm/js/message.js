@@ -62,7 +62,7 @@ function showMessages() {
 									''),
 						new Comment(1,
 									'Trollmaster 17',
-									'Warning! This information is wrong bla a.',
+									'Warning! This information is wrong bla.',
 									'2014-04-17, 14:37',
 									'')
 					]
@@ -141,6 +141,20 @@ function showMessages() {
 		)
 	];
 	
+	function decreaseNumberOfComments(id, amount) {
+		var numberOfComments = parseInt($('#number-of-comments-' + id).html());
+		console.log(id);
+		numberOfComments -= amount;
+		$('#number-of-comments-' + id).html(numberOfComments);
+	}
+	
+	function increaseNumberOfComments(id, amount) {
+		var numberOfComments = parseInt($('#number-of-comments-' + id).html());
+		numberOfComments += amount;
+		$('#number-of-comments-' + id).html(numberOfComments);
+
+	}
+	
 	// Function appends one message-div element to the messages div for the message of the parameter
 	function showMessage(message) {
 		var tags_html = '';
@@ -152,7 +166,12 @@ function showMessages() {
 		
 		var comments_html = '';
 		for ( var i = 0; i < message['comments'].length; i++ ) {
-			comments_html += '<div class="comment">' +
+			var edit_remove_comment_html = '';
+			if ( true /* TODO: USER LOGGED IN? */ ) {
+				edit_remove_comment_html = '<div id="remove-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/remove.png" /><div> Remove</div></div><div id="edit-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/edit.png" /><div> Edit</div></div><br />';
+			}
+			
+			comments_html += '<div class="comment" id="comment-' + message['comments'][i]['comment_id'] + '">' +
 									'<table border="0">' +
 										'<tr>' +
 											'<td><b>' + message['comments'][i]['name'] + '</b></td>' +
@@ -161,8 +180,9 @@ function showMessages() {
 										'<tr>' +
 											'<td colspan="2" class="justify">' + message['comments'][i]['message'] + '</td>' +
 										'</tr>' +
-									'</table><br />' +
-									'<div class="report"><img src="img/icons/report.png" width="20" height="20" id="report-comment-' + message['comments'][i]['comment_id'] + '" title="Report this message" /></div>' +
+									'</table>' +
+									'<div id="report-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/report.png" /><div> Report</div></div>' +
+									edit_remove_comment_html +
 								'</div>';
 		}
 		
@@ -170,7 +190,7 @@ function showMessages() {
 		
 		var edit_remove_html = '';
 		if ( true /* TODO: USER LOGGED IN? */ ) {
-			edit_remove_html = '<div id="remove-' + message['message_id'] + '" class="edit-remove"><img src="img/remove.png" /><div> Remove</div></div><div id="edit-' + message['message_id'] + '" class="edit-remove"><img src="img/edit.png" /><div> Edit</div></div>';
+			edit_remove_html = '<div id="remove-' + message['message_id'] + '" class="message-button"><img src="img/icons/remove.png" /><div> Remove</div></div><div id="edit-' + message['message_id'] + '" class="message-button"><img src="img/icons/edit.png" /><div> Edit</div></div>';
 		}
 		
 		var file_html = '';
@@ -184,6 +204,7 @@ function showMessages() {
 				'<h1 class="' + message['message_type'] + '-head" id="head-' + message['message_id'] + '">' + message['title'] + '</h1>' +
 				'<p id="description-' + message['message_id'] + '">' + message['description'] + '<br /><a href="#" id="more-' + message['message_id'] + '">Comments and more <span class="arrow">&#9658;</span></a></p>' +
 				'<div class="details" id="details-' + message['message_id'] + '">' +
+					'<div id="report-' + message['message_id'] + '" class="message-button"><img src="img/icons/report.png" /><div> Report</div></div>' +
 					edit_remove_html +
 					'<table border="0">' +
 						'<tr>' +
@@ -200,7 +221,7 @@ function showMessages() {
 					'<div class="less" id="less-' + message['message_id'] + '-top">' +
 						'<a href="#"><span>&#9668;</span> less</a>' +
 					'</div>' +
-					'<h1>Comments (' + message['comments'].length + ')</h1>'
+					'<h1>Comments (<span id="number-of-comments-' + message['message_id'] + '">' + message['comments'].length + '</span>)</h1>'
 					+ comments_html +
 					'<div class="new-comment">' +
 						'<p><b>New comment</b></p>' +
@@ -216,7 +237,6 @@ function showMessages() {
 				'</div>' +
 				'<div class="category">Category: ' + message['category'] + '</div>' +
 				'<div class="location-name">' + message['date_of_change'] + ', ' + location_name_html + '</div>' +
-				'<div class="report"><a href="#" id="report-' + message['message_id'] + '"><img src="img/icons/report.png" width="20" height="20" title="Report this message" /></a></div>' +
 			'</div>');
 		
 		if ( message['location'] != '' ) {
@@ -369,7 +389,7 @@ function showMessages() {
 				'<input type="hidden" id="report-report" value="' + report + '" />' +
 				'<input type="hidden" id="report-id" value="' + id + '" />' +
 				'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="wrong" checked="checked" /> Wrong information</label></p>' +
-				'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="spam" checked="checked" /> Spam or misleading</label></p>' +
+				'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="spam" /> Spam or misleading</label></p>' +
 				'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="violent" /> Violent or repulsive</label></p>' +
 				'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="hateful" /> Hateful or abusive</label></p>' +
 				'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="sexual" /> Sexual content</label></p>' +
@@ -392,6 +412,38 @@ function showMessages() {
 			});
 		}
 		
+		function createRemovePopUp(remove, id) {
+			var content = '<h1>Remove ' + remove + '</h1>' +
+				'<p>Do you really want to remove this ' + remove + '?</p>' +
+				'<p class="right">' +
+					'<a href="#" id="remove-yes">Yes, remove it!</a> &nbsp; <a href="#" id="remove-no">No, cancel!</a>' +
+				'</p>';
+			createPopUp(230, 90, content);
+			
+			$('#remove-yes').click(function() {
+				// TODO: REMOVE FROM DATABASE
+				if ( remove == 'message' ) {
+					if ( typeof message['location-json'] != 'undefined' ) map.removeLayer(message['location-json']);
+					map.closePopup(popup);
+					message['display'] = false;
+					$('#message-' + id).remove();
+				}
+				else if ( remove == 'comment' ) {
+					decreaseNumberOfComments(message['message_id'], 1);
+					$('#comment-' + id).remove();
+				}
+				closePopUp();
+			});
+			
+			$('#remove-no').click(function() {
+				closePopUp();
+			});
+		}
+		
+		$('#remove-' + message['message_id']).click(function() {
+			createRemovePopUp('message', message['message_id']);
+		});
+		
 		$('#report-' + message['message_id']).click(function() {
 			createReportPopUp('message', message['message_id']);
 		});
@@ -400,6 +452,10 @@ function showMessages() {
 			var comment_id = v['comment_id'];
 			$('#report-comment-' + comment_id).click(function() {
 				createReportPopUp('comment', comment_id);
+			});
+			
+			$('#remove-comment-' + comment_id).click(function() {
+				createRemovePopUp('comment', comment_id);
 			});
 		});
 		
@@ -413,29 +469,6 @@ function showMessages() {
 		
 		$('#edit-' + message['message_id']).click(function() {
 			// TODO: EDIT MESSAGE
-		});
-		
-		$('#remove-' + message['message_id']).click(function() {
-			var removeMessage = '<h1>Remove message</h1>' +
-				'<p>Do you really want to remove this message?</p>' +
-				'<p class="right">' +
-					'<a href="#" id="remove-yes">Yes, remove it!</a> &nbsp; <a href="#" id="remove-no">No, cancel!</a>' +
-				'</p>';
-			createPopUp(230, 90, removeMessage);
-			
-			$('#remove-yes').click(function() {
-				// TODO: REMOVE FROM DATABASE
-				
-				if ( typeof message['location-json'] != 'undefined' ) map.removeLayer(message['location-json']);
-				map.closePopup(popup);
-				message['display'] = false;
-				$('#message-' + message['message_id']).remove();
-				closePopUp();
-			});
-			
-			$('#remove-no').click(function() {
-				closePopUp();
-			});
 		});
 		
 		$('#less-' + message['message_id'] + '-top').click(function() {
