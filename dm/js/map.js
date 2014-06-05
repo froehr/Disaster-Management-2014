@@ -291,32 +291,6 @@ var drawControl = new L.Control.Draw({
 		}
 	});
 map.addControl(drawControl);
-// Chaning deletestart behavior of the DrawControl
-map.on('draw:deletestart', function (e) {
-});
-
-map.on('draw:drawstop', function (e) {
-	$("#draw-buttons a").animate({marginLeft:'0px'});
-});
-
-// Chaning created behavior of the DrawControl
-map.on('draw:created', function (e) {
-	$("#draw-buttons a").animate({marginLeft:'0px'});
-});
-
-// Chaning edited behavior of the DrawControl
-map.on('draw:edited', function (e) {
-	$("#draw-buttons a").animate({marginLeft:'0px'});
-});
-map.on('draw:editstart', function (e) {
-	$("#draw-buttons a").css({marginLeft:'0px'});
-	$(".leaflet-draw-edit-remove").animate({marginLeft:'76px'});
-	$(".leaflet-draw-actions").css('left',"147px");
-});
-map.on('draw:editstop', function (e) {
-	$("#draw-buttons a").animate({marginLeft:'0px'});
-	$(".leaflet-draw-actions").css('left',"0px");
-});
 // Change position of draw-control into message-form
 $("#draw-buttons").append($(".leaflet-draw-draw-polygon"));
 $("#draw-buttons").append($(".leaflet-draw-draw-rectangle"));
@@ -330,24 +304,22 @@ $("#draw-buttons").append($(".leaflet-draw-actions"));
 
 // Adding some moving behavior for the toolbar buttons
 $(".leaflet-draw-draw-polygon").click(function() {
-	$(".leaflet-draw-draw-rectangle").animate({marginLeft:'137px'});
-	$(".leaflet-draw-actions").css('left','39px');
+	$(".leaflet-draw-actions").css('left','44px');
 });
 $(".leaflet-draw-draw-rectangle").click(function() {
-	$(".leaflet-draw-draw-polyline").animate({marginLeft:'40px'});
-	$(".leaflet-draw-actions").css('left',"64px");
+	$(".leaflet-draw-actions").css('left',"76px");
 });
 $(".leaflet-draw-draw-polyline").click(function() {
-	$(".leaflet-draw-draw-marker").animate({marginLeft:'137px'});
-	$(".leaflet-draw-actions").css('left',"93px");
+	$(".leaflet-draw-actions").css('left',"108px");
 });
 $(".leaflet-draw-draw-marker").click(function() {
-	$(".leaflet-draw-edit-edit").animate({marginLeft:'42px'});
-	$(".leaflet-draw-actions").css('left',"120px");
+	$(".leaflet-draw-actions").css('left',"140px");
 });
-
+$(".leaflet-draw-edit-edit").click(function() {
+	$(".leaflet-draw-actions").css('left',"172px");
+});
 $(".leaflet-draw-edit-remove").click(function() {
-	$(".leaflet-draw-actions").css('left',"174px");
+	$(".leaflet-draw-actions").css('left',"202px");
 });
 
 var tagColor;

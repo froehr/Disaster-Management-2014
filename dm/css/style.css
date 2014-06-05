@@ -290,7 +290,7 @@ header nav ul li #message:active {
 /* Message form more-link */
 #message-bar #message-form div.more {
 	position: relative;
-	top: 15px;
+	top: 0px;
 	left: 10px;
 	width: 120px;
 }
@@ -301,10 +301,10 @@ header nav ul li #message:active {
 
 /* Draw Tools in message-bar*/
 #message-bar #message-form #draw-buttons a {
-  background-image: url('../js/lib/Leaflet.draw/images/spritesheet.png');
+  background-image: url('../js/lib/Leaflet.draw/images/spritesheet-2x.png');
   background-repeat: no-repeat;
-  width: 27px;
-  height: 27px;
+  width: 32px;
+  height: 32px;
   white-space: nowrap;
   display: inline-block;
   line-height: 27px;
@@ -315,55 +315,52 @@ header nav ul li #message:active {
 }
 
 #message-bar #message-form #draw-buttons .leaflet-draw-draw-polygon {
-  background-position: -31px -2px;
+  background-position: -73px -15px;
 }
 
 #message-bar #message-form #draw-buttons .leaflet-draw-draw-rectangle {
-  background-position: -62px -2px;
+  background-position: -134px -15px;
 }
 
 #message-bar #message-form #draw-buttons .leaflet-draw-draw-polyline {
-  background-position: 0px -2px;
-}
-
-#message-bar #message-form #draw-buttons .leaflet-draw-draw-circle {
-  background-position: -91px -2px;
+  background-position: -15px -15px;
 }
 
 #message-bar #message-form #draw-buttons .leaflet-draw-draw-marker {
-  background-position: -122px -2px;
+  background-position: -255px -15px;
 }
 
 #message-bar #message-form #draw-buttons .leaflet-draw-edit-edit {
-  background-position: -152px -2px;
+  background-position: -315px -15px;
 }
 
 #message-bar #message-form #draw-buttons .leaflet-draw-edit-remove {
-  background-position: -182px -2px;
-}
-
-#message-bar #message-form #draw-buttons .leaflet-draw-edit-remove.leaflet-disabled {
-  background-position: -242px -2px;
+  background-position: -375px -15px;
 }
 
 #message-bar #message-form #draw-buttons .leaflet-draw-edit-edit.leaflet-disabled {
-  background-position: -212px -2px;
+  background-position: -436px -15px;
+}
+
+#message-bar #message-form #draw-buttons .leaflet-draw-edit-remove.leaflet-disabled {
+  background-position: -494px -15px;
 }
 
 #message-bar #message-form #draw-buttons .leaflet-draw-actions a {
 	font-family: 'Noto Sans', Arial, sans-serif;
-  background-image: none;
-  background-color: #919187;
-  border-left: 1px solid #AAA;
-  color: #FFF;
-  line-height: 28px;
-  padding-left: 4px;
-  padding-right: 4px;
-  height: 27px;
-  margin-top: 1px;
-  -webkit-border-radius: 0 0 0 0;
-          border-radius: 0 0 0 0;
-  width: auto;
+	font-size: 13px;
+	background-image: none;
+	background-color: #919187;
+	border-left: 1px solid #AAA;
+	color: #FFF;
+	line-height: 28px;
+	padding-left: 4px;
+	padding-right: 4px;
+	height: 32px;
+	margin-top: 1px;
+	-webkit-border-radius: 0 0 0 0;
+					border-radius: 0 0 0 0;
+	width: auto;
 }
 
 #message-bar #message-form #draw-buttons .leaflet-draw-actions a:hover {
