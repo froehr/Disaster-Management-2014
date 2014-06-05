@@ -91,9 +91,14 @@ var waterMeasurementData = L.layerJSON({
 
 // Basemaps
 // add an OpenStreetMap tile layer
-var osm = new L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+var osm_hot = new L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
 		attribution : '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 	}).addTo(map);
+
+var osm_mq = new L.tileLayer('http://{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
+		attribution : '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+		subdomains: ['otile1','otile2','otile3','otile4']
+	});
 
 // Orthophoto layer
 var layerOrtho = new L.tileLayer.wms('http://www.wms.nrw.de/geobasis/wms_nw_dop40', {
@@ -514,7 +519,8 @@ container.appendChild(document.createTextNode(props.details));
  */
 
 baseLayers = {
-	'OSM' : osm,
+	'Open Street Map Humanitarian' : osm_hot,
+	'Open Street Map MapQuest' : osm_mq,
 	'Aerial View' : layerOrtho,
 	'No Basemap' : " ", //works, but produces an error
 };
