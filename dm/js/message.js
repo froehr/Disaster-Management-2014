@@ -221,7 +221,7 @@ function showMessages() {
 					'<div class="less" id="less-' + message['message_id'] + '-top">' +
 						'<a href="#"><span>&#9668;</span> less</a>' +
 					'</div>' +
-					'<h1>Comments (<span id="number-of-comments-' + message['message_id'] + '">' + message['comments'].length + '</span>)</h1>'
+					'<p><b>Comments (<span id="number-of-comments-' + message['message_id'] + '">' + message['comments'].length + '</span>)</p></b>'
 					+ comments_html +
 					'<div class="new-comment">' +
 						'<p><b>New comment</b></p>' +

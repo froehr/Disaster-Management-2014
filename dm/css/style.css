@@ -512,17 +512,10 @@ header nav ul li #message:active {
 	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.55);
 }
 
-/* Message field comments headline */
-#message-bar .message div.comments h1 {
-	color: #959595;
-	font-style: italic;
-	font-size: 13px;
-	font-weight: normal;
-}
-
 /* Message field comment headline */
 #message-bar .message div.comment {
 	padding: 2px;
+	margin-bottom: 15px;
 }
 
 #message-bar .message div.comment table tr td.right {
