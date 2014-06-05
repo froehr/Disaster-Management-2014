@@ -15,7 +15,6 @@ people_attending INT,
 file BYTEA,
 category TEXT,
 tags TEXT,
-status TEXT,
 person_name TEXT,
 person_contact TEXT,
 person_email TEXT,
@@ -24,11 +23,11 @@ PRIMARY KEY (message_id)
 
 CREATE TABLE comment(
 comment_id SERIAL NOT NULL,
-message TEXT NOT NULL,
+message_id INT NOT NULL,
 date_of_creation TIMESTAMP NOT NULL,
+message TEXT NOT NULL,
 file BYTEA,
 person_name TEXT,
-message_id INT NOT NULL,
 PRIMARY KEY (comment_id),
 FOREIGN KEY (message_id) REFERENCES message
 	ON DELETE CASCADE
