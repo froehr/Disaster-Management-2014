@@ -484,37 +484,31 @@ groupedOverLayers = {
 	}
 };
 
-var empty = {};
-
-
 // Layer switcher
-var LlayerSwitcher = new L.control.groupedLayers(baseLayers, empty, {position: 'bottomleft'}).addTo(map);
+var LlayerSwitcher = new L.control.groupedLayers(baseLayers, groupedOverLayers, {position: 'bottomleft'}).addTo(map);
 
 $.each(groupedOverLayers, function(i, v) {
-	/*var layerHTML = '<h1>' + i + '</h1>';
-	$('#layer-popup').append(layerHTML);*/
-	
-	$.each(v, function(i1, v1) {
+	$.each(v, function(porperties, layer) {
 		var border = '';
 		var active = '';
-		var strings = i1.split('|');
-		if ( strings[2] == 'true' ) {
+		porperties = porperties.split('|');
+		if ( porperties[2] == 'true' ) {
 			border = ' class="border"';
 		}
-		if ( map.hasLayer(v1) ) {
+		if ( map.hasLayer(layer) ) {
 			active = ' active'
 		}
-		var layerHTML = '<div class="layer' + active + '" id="layer-' + v1._leaflet_id + '"><img src="img/layerthumb/' + strings[1] + '.png"' + border + ' /><div> ' + strings[0] + '</div><div class="small">' + strings[3] + '</div></div>';
+		var layerHTML = '<div class="layer' + active + '" id="layer-' + layer._leaflet_id + '"><img src="img/layerthumb/' + porperties[1] + '.png"' + border + ' /><div> ' + porperties[0] + '</div><div class="small">' + porperties[3] + '</div></div>';
 		$('#layer-popup').append(layerHTML);
 		
-		$('#layer-' + v1._leaflet_id).click(function() {
-			if ( ! map.hasLayer(v1) ) {
-				$('#layer-' + v1._leaflet_id).addClass('active');
-				v1.addTo(map);
+		$('#layer-' + layer._leaflet_id).click(function() {
+			if ( ! map.hasLayer(layer) ) {
+				$('#layer-' + layer._leaflet_id).addClass('active');
+				map.addLayer(layer);
 			}
 			else {
-				$('#layer-' + v1._leaflet_id).removeClass('active');
-				map.removeLayer(v1);
+				$('#layer-' + layer._leaflet_id).removeClass('active');
+				map.removeLayer(layer);
 			}
 		});
 	});
