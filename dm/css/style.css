@@ -62,6 +62,7 @@ header nav ul li {
 	float: right;
 	color: #000000;
 	margin-right: 40px;
+	text-align: center;
 }
 
 header nav ul li a {
@@ -79,12 +80,12 @@ header nav ul li a {
 header nav ul li a:hover {
 	display: block;
 	text-decoration: none;
-	height: 25px;
 }
 
 /* Header Login Button */
 header nav ul li #login {
 	background-color: #54825a;
+	width: 120px;
 }
 
 header nav ul li #login:hover {
@@ -98,6 +99,7 @@ header nav ul li #login:active {
 /* Header Layer Button */
 header nav ul li #layer {
 	background-color: #546a86;
+	width: 180px;
 }
 
 header nav ul li #layer:hover {
@@ -246,6 +248,10 @@ header nav ul li #layer:active {
 
 #message-bar #message-form #message-button:hover {
 	background-color: #45544a !important;
+}
+
+#message-bar #message-form #type-buttons {
+	height: 61px;
 }
 
 /* Message form input fields */
@@ -899,6 +905,31 @@ header nav ul li #layer:active {
 	border-bottom-right-radius: 4px;
 }
 
+/* Layer tab popup */
+.tab-popup {
+	position: absolute;
+	background-color: #FFFFFF;
+	z-index: 1001;
+	padding: 15px 20px;
+	display: none;
+	box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.5);
+}
+
+#layer-popup {
+	right: 288px;
+	top: 93px;
+	width: 180px;
+	height: 0px;
+}
+
+/* Login tab popup */
+#login-popup {
+	right: 88px;
+	top: 93px;
+	width: 120px;
+	height: 0px;
+}
+
 /* Popup for further content pages */
 #popup {
 	position: absolute;
@@ -912,44 +943,72 @@ header nav ul li #layer:active {
 	display: none;
 }
 
-#popup a {
+#popup a, .tab-popup a {
 	color: #3697f2;
 	text-decoration: none;
 }
 
-#popup a:hover {
+#popup a:hover, .tab-popup a:hover {
 	color: #77bdff;
 }
 
-#popup h1 {
+#popup h1, .tab-popup h1 {
 	font-size: 15px;
 	margin-top: 0px;
 	margin-bottom: 7x;
 }
 
-#popup p {
+#popup p, .tab-popup p {
 	font-size: 13px;
 	margin-top: 0px;
 	margin-bottom: 5px;
 	text-align: justify;
-	font-size: 13px;
 	line-height: 20px;
+	font-family: 'Noto Sans', Arial, sans-serif;
 }
 
-#popup .left {
+#popup .left, .tab-popup .left {
 	text-align: left;
 }
 
-#popup .right {
+#popup .right, .tab-popup .left {
 	text-align: right;
 }
 
-#popup .center {
+#popup .center, .tab-popup .center {
 	text-align: center;
 }
 
-#popup .pointer {
+#popup .pointer, .tab-popup .pointer {
 	cursor: pointer;
+}
+
+#popup input, .tab-popup input {
+	border: 1px solid #a9a9a9;
+	background-color: #FFFFFF;
+	font-family: 'Noto Sans', Arial, sans-serif;
+	width: 225px;
+	padding: 5px 15px;
+	margin-bottom: 5px;
+}
+
+#popup input:hover, .tab-popup input:hover {
+	border: 1px solid #5f5f5f;
+}
+
+#popup input.report-reason {
+	width: 20px;
+}
+
+#popup div.submit, .tab-popup div.submit {
+	margin-top: -42px;
+	margin-left: 156px;
+}
+
+#popup div.submit input, .tab-popup div.submit input {
+	width: 100px;
+	cursor: pointer;
+	background-color: #EEEEEE;
 }
 
 /* Popup for drawn features */
