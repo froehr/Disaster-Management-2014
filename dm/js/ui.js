@@ -149,7 +149,6 @@ $('#weatherforcast').click(function() {
 
 $('#nearestgauge').click(function() {
 	   $('#map-right-click-menu').fadeOut();
-	   createPopUp(800, 400, '');
 	   showNearestGauge(latlng);
 });
 
@@ -173,7 +172,7 @@ $('#submit').click(function() {
 	saveToDB();
 });
 
-// click functions to open and clode the "more" fields for the input form
+// click functions to open and close the "more" fields for the input form
 $('#more-form').click(function() {
 	setElementDisplay('more-form', 'none');
 	setElementDisplay('less-form', 'block');
