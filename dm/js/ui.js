@@ -147,6 +147,12 @@ $('#weatherforcast').click(function() {
 	   initHighChartForForecast(latlng);
 });
 
+$('#nearestgauge').click(function() {
+	   $('#map-right-click-menu').fadeOut();
+	   createPopUp(800, 400, '');
+	   showNearestGauge(latlng);
+});
+
 $('#help').click(function() {
 	initIntroJS();	
 });
@@ -237,7 +243,7 @@ $('#hide-message-bar').click(function() {
 
 $('#layer').mouseover(function() {
 	$('#layer-popup').css('display', 'block');
-	$('#layer-popup').animate({height: 200}, 'fast', function() {
+	$('#layer-popup').animate({height: 565}, 'fast', function() {
 		$('#layer-popup').animate({width: 400}, 'fast');
 	});
 	

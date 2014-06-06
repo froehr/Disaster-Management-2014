@@ -94,6 +94,7 @@ var waterMeasurementData = L.layerJSON({
 var osm_hot = new L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
 		attribution : '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 	}).addTo(map);
+var defaultLayer = osm_hot;
 
 var osm_mq = new L.tileLayer('http://{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
 		attribution : '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
@@ -210,7 +211,7 @@ var Lgeosearch = new L.Control.GeoSearch({
 	}).addTo(map);
 
 // new interactive coordinates display
-var LcoordinateDisplay = new L.control.coordinates({
+/*var LcoordinateDisplay = new L.control.coordinates({
 		position : "bottomleft", //optional default "bottomright"
 		decimals : 4, //optional default 4
 		decimalSeperator : ".", //optional default "."
@@ -219,7 +220,7 @@ var LcoordinateDisplay = new L.control.coordinates({
 		enableUserInput : true, //optional default true
 		useDMS : false, //optional default false
 		useLatLngOrder : true //ordering of labels, default false-> lng-lat
-	}).addTo(map);
+	}).addTo(map);*/
 
 /*
 Has to be extended and restyled later on, so that the created markers (which are stored in the database) got visualized depending on the bounding box.
@@ -469,31 +470,71 @@ baseLayers = {
 	'Open Street Map Humanitarian' : osm_hot,
 	'Open Street Map MapQuest' : osm_mq,
 	'Open Street Map Mapnik' : osm_mapnik,
-	'Aerial View' : layerOrtho,
-	'No Basemap' : " ", //works, but produces an error
+	//'Aerial View' : layerOrtho,
+	//'No Basemap' : " " //works, but produces an error
 };
 
 groupedOverLayers = {
-	"Map Layers" : {
-		'DGK5' : layerDGK5,
-		'DTK10' : layerDTK10,
-	},
-	"Weather Layers" : {
-		'Rain' : rain,
-		'Flooding Areas' : flood,
-	},
-	"Demo Layer" : {
-		'Clustering' : clusterpoints,
-		'Pegel Online Data' : waterMeasurementData
+	"Additional Maps" : {
+		'Pegel Online|pegel|false|Water level from gauges in Germany.' : waterMeasurementData,
+		'World Wide Rain Forecast|rain|true|Precipitation forecast from Open Weather map. This layer is only visible on low zoom levels, so zoom out to visualize.' : rain,
+		'Flood Prone Areas|flood_prone|true|Flood prone areas inside Germany.' : flood,
+		'DGK5|dgk|true|German ground map in scale 1:5000.' : layerDGK5,
+		'DTK10|dtk|true|German topographical map in scale 1:10000.' : layerDTK10
 	}
 };
 
-// Map control: Layer switcher
-var LlayerSwitcher = new L.control.groupedLayers(
-		baseLayers, groupedOverLayers, {
-		position : 'bottomleft'
-	}).addTo(map);
 
+// Layer switcher
+var LlayerSwitcher = new L.control.groupedLayers(baseLayers, groupedOverLayers);
+	
+// Own Layer switcher
+var layerHTML = '<h1>Base Maps</h1>';
+$('#layer-popup').append(layerHTML);
+
+var activeLayer;
+$.each(baseLayers, function(i, v) {
+	if ( v == defaultLayer ) activeLayer = v;
+	var layerHTML = '<div class="layer" id="layer-' + v._leaflet_id + '">' + i + '</div>';
+	$('#layer-popup').append(layerHTML);
+	
+	$('#layer-' + v._leaflet_id).click(function() {
+		map.removeLayer(activeLayer);
+		v.addTo(map);
+		activeLayer = v;
+	});
+});
+
+$.each(groupedOverLayers, function(i, v) {
+	var layerHTML = '<h1>' + i + '</h1>';
+	$('#layer-popup').append(layerHTML);
+	
+	$.each(v, function(i1, v1) {
+		var border = '';
+		var active = '';
+		var strings = i1.split('|');
+		if ( strings[2] == 'true' ) {
+			border = ' class="border"';
+		}
+		if ( map.hasLayer(v1) ) {
+			active = ' active'
+		}
+		var layerHTML = '<div class="layer' + active + '" id="layer-' + v1._leaflet_id + '"><img src="img/layerthumb/' + strings[1] + '.png"' + border + ' /><div> ' + strings[0] + '</div><div class="small">' + strings[3] + '</div></div>';
+		$('#layer-popup').append(layerHTML);
+		
+		$('#layer-' + v1._leaflet_id).click(function() {
+			if ( ! map.hasLayer(v1) ) {
+				$('#layer-' + v1._leaflet_id).addClass('active');
+				v1.addTo(map);
+			}
+			else {
+				$('#layer-' + v1._leaflet_id).removeClass('active');
+				map.removeLayer(v1);
+			}
+		});
+	});
+});
+	
 // closing PopUp when clicking on map
 map.on('click', function(){
 	closePopUp();
