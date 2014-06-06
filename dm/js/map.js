@@ -99,6 +99,11 @@ var osm_mq = new L.tileLayer('http://{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.p
 		attribution : '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
 		subdomains: ['otile1','otile2','otile3','otile4']
 	});
+	
+var osm_mapnik = new L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		attribution : '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+	});
+	
 
 // Orthophoto layer
 var layerOrtho = new L.tileLayer.wms('http://www.wms.nrw.de/geobasis/wms_nw_dop40', {
@@ -283,7 +288,15 @@ map.addLayer(drawnItems);
 var drawControl = new L.Control.Draw({
 		draw : {
 			position : 'topleft',
-			circle: false
+			circle: false,
+			polygon: {
+				allowIntersection: false, // Restricts shapes to simple polygons
+				drawError: {
+					color: '#FF0000', // Color the shape will turn when intersects
+					message: 'You can not draw a intersection path!' // Message that will show when intersect
+				},
+				opacity: 1.0,
+			}
 		},
 		edit : {
 			featureGroup : drawnItems,
@@ -307,19 +320,19 @@ $(".leaflet-draw-draw-polygon").click(function() {
 	$(".leaflet-draw-actions").css('left','44px');
 });
 $(".leaflet-draw-draw-rectangle").click(function() {
-	$(".leaflet-draw-actions").css('left',"76px");
+	$(".leaflet-draw-actions").css('left',"87px");
 });
 $(".leaflet-draw-draw-polyline").click(function() {
-	$(".leaflet-draw-actions").css('left',"108px");
+	$(".leaflet-draw-actions").css('left',"130px");
 });
 $(".leaflet-draw-draw-marker").click(function() {
-	$(".leaflet-draw-actions").css('left',"140px");
+	$(".leaflet-draw-actions").css('left',"173px");
 });
 $(".leaflet-draw-edit-edit").click(function() {
-	$(".leaflet-draw-actions").css('left',"172px");
+	$(".leaflet-draw-actions").css('left',"99px");
 });
 $(".leaflet-draw-edit-remove").click(function() {
-	$(".leaflet-draw-actions").css('left',"202px");
+	$(".leaflet-draw-actions").css('left',"142px");
 });
 
 var tagColor;
@@ -455,6 +468,7 @@ container.appendChild(document.createTextNode(props.details));
 baseLayers = {
 	'Open Street Map Humanitarian' : osm_hot,
 	'Open Street Map MapQuest' : osm_mq,
+	'Open Street Map Mapnik' : osm_mapnik,
 	'Aerial View' : layerOrtho,
 	'No Basemap' : " ", //works, but produces an error
 };

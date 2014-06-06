@@ -49,32 +49,32 @@
 				<h1>Disaster Management</h1>
 				<nav>
 					<ul>
-						<li><a href="#" class="header-buttons" id="emergency">Emergency</a></li>
-						<li><a href="#" class="header-buttons" id="need-support">Need support</a></li>
-						<li><a href="#" class="header-buttons" id="offer-support">Offer support</a></li>
-						<li><a href="#" class="header-buttons" id="message">Message</a></li>
+						<li><a href="#" class="header-buttons" id="login">User Login</a></li>
+						<li><a href="#" class="header-buttons" id="layer">Additional Maps</a></li>
 					</ul>
 				</nav>
 			</header>
 			<div id="message-bar">
+				<div id="submit-message-button">Submit message</div>
 				<div id="message-form">
 					<div class="x" id="x-form">&#10006;</div>
-					<h1 id="message-form-head"></h1>
+					<h1 id="message-form-head">Submit Message</h1>
 					<input type="hidden" name="issue" id="issue" />
-					<p>Title <span class="mandatory">*</span></p>
+					<p>Title <span class="required">*</span></p>
 					<input type="text" name="title" id="title" />
-					<p>Description <span class="mandatory">*</span></p>
+					<p>Choose a message type <span class="required">*</span></p>
+					<div id="type-buttons">
+						<div class="type" id="emergency-button">Emergency</div>
+						<div class="type" id="need-support-button">Need support</div>
+						<div class="type" id="offer-support-button">Offer support</div>
+						<div class="type" id="message-button">Message</div>
+					</div>
+					<p>Description <span class="required">*</span></p>
 					<textarea name="description" id="description"></textarea>
-					<p>Start date and time <span class="mandatory">*</span></p>
-					<input type="date" name="startdate" id="startdate" class="date" />
-					<input type="time" name="starttime" id="starttime" class="time" />
-					<p>End date and time <span class="mandatory">*</span></p>
-					<input type="date" name="enddate" id="enddate" class="date" />
-					<input type="time" name="endtime" id="endtime" class="time" />
 					<div id="details-message">
 						<p id="head-category">Category</p>
 						<select name="category" id="category">
-							<option value="cat-1">Category 1</option>
+							<option value="cat-1"><img src="img/icons/edit.png" /> Category 1</option>
 							<option value="cat-2">Category 2</option>
 							<option value="cat-3">Category 3</option>
 							<option value="...">...</option>
@@ -83,7 +83,7 @@
 						<input type="text" name="person_contact" id="person_contact" placeholder="Telephone, E-Mail or Address, ..." />
 						<div id="details-offer-support">
 							<p id="head-location">Location</p>
-							<p class="small">Choose one tool to draw the location.</p>
+							<p class="small">Choose a tool to draw the location.</p>
 							<div id ="draw-buttons"></div>
 							<div id="details-emergency-need-support">
 								<p id="head-person-name">Your name</p>
@@ -98,7 +98,7 @@
 						</div>
 					</div>
 					<div class="more">
-						<p class="small"><span class="mandatory"><b>*</b></span> mandatory fields</p>
+						<p class="small"><span class="required"><b>*</b></span> required fields</p>
 						<a href="#" id="more-form">more fields <span class="arrow">&#9658;</span></a>
 						<a href="#" id="less-form"><span class="arrow">&#9668;</span> less fields</a>
 					</div>
