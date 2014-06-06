@@ -106,9 +106,12 @@ setMessageFormButtonClickFunctions('message', '#45544a', 'Submit Message');
 // click function to close the input form
 $('#x-form').click(function() {
 	$('#message-form').slideUp('fast', 'linear',  function() {
-			$('#submit-message-button').fadeIn();
-		})
+		$('#submit-message-button').fadeIn();
 	});
+	
+	$('#error-message').fadeOut();
+	$('#' + cfield).css('border', border);
+});
 
 // popup function
 function createPopUp(width, height, content) {

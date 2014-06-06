@@ -28,13 +28,19 @@
 		});
 
 	
+	var border;
+	var cfield;
+	
 	function saveToDB(){
-		d = new Date()
-
+		d = new Date();
+		
+		$('#error-message').fadeOut();
+		$('#' + cfield).css('border', border);
+		
 		var type = document.getElementById("issue").value;
 		switch (type){
 			case '':
-				alert("You need to choose a message type.");
+				fieldError('type-buttons', 'You need to choose a message type.');
 				break;
 			case "emergency":
 				submitEmergency();
@@ -51,7 +57,25 @@
 			default:
 				break;
 		}
-	}	
+	}
+	
+	function fieldError(field, message) {
+		cfield = field;
+		border = $('#' + field).css('border');
+		$('#' + field).css('border', '2px solid #A50026');
+		
+		$('#error-message').html(message);
+		var top = $('#' + field).position().top + 90;
+		if ( top < 110 ) top = 110;
+		$('#error-message').css('top', top + 'px');
+		$('#error-message').width('auto');
+		$('#error-message').fadeIn();
+		
+		$('#error-message').click(function () {
+			$('#error-message').fadeOut();
+			$('#' + field).css('border', border);
+		});
+	}
 	
 	function submitEmergency(){
 		
@@ -75,20 +99,23 @@
 		}
 		
 		if (isNaN(document.getElementById("people_attending").value) || isNaN(document.getElementById("people_attending").value)){
-			alert("Helpers attending/needed is not a number");
+			fieldError('helpers', 'Helpers attending/needed is not a number.');
 		}
-		else if (document.getElementById("title").value == "" || document.getElementById("description").value == ""){
-			alert("Title and description are still empty");
+		else if (document.getElementById("title").value == "" ) {
+			fieldError('title', 'Title is stil empty.');
+		}
+		else if (document.getElementById("description").value == ""){
+			fieldError('description', 'Description is still empty.');
 		}
 		else if (coordinates == ""){
-			alert("A Feature on the map is missing");
+			fieldError('draw-buttons', 'A feature on the map is missing.');
 		}
 		else if (document.getElementById("person_contact").value == ""){
-			alert("Contact information missing");
+			fieldError('person_contact', 'Contact information missing.');
 		}
 		else if ((document.getElementById("people_attending").value != "" && document.getElementById("people_need").value =="") || 
 				(document.getElementById("people_need").value != "" && document.getElementById("people_attending").value == "")){
-			alert("People attending or people needed missing");
+			fieldError('helpers', 'People attending or people needed missing.');
 		}
 		else{
 			$.post(
@@ -133,17 +160,20 @@
 		}
 		
 		if (isNaN(document.getElementById("people_attending").value) || isNaN(document.getElementById("people_attending").value)){
-			alert("Helpers attending/needed is not a number");
+			fieldError('helpers', 'Helpers attending/needed is not a number.');
 		}
-		else if (document.getElementById("title").value == "" || document.getElementById("description").value == ""){
-			alert("Title and description are still empty");
+		else if (document.getElementById("title").value == "" ) {
+			fieldError('title', 'Title is stil empty.');
+		}
+		else if (document.getElementById("description").value == ""){
+			fieldError('description', 'Description is still empty.');
 		}
 		else if (document.getElementById("person_contact").value == ""){
-			alert("Contact information missing");
+			fieldError('person_contact', 'Contact information missing.');
 		}
 		else if ((document.getElementById("people_attending").value != "" && document.getElementById("people_need").value =="") || 
 				(document.getElementById("people_need").value != "" && document.getElementById("people_attending").value == "")){
-			alert("People attending or people needed missing");
+			fieldError('helpers', 'People attending or people needed missing.');
 		}
 		else{
 			$.post(
@@ -188,14 +218,17 @@
 		}
 		
 		if (isNaN(peopleAttending) || isNaN(peopleNeeded)){
-			alert("Helpers attending/needed is not a number");
+			fieldError('helpers', 'Helpers attending/needed is not a number.');
 		}
-		else if (document.getElementById("title").value == "" || document.getElementById("description").value == ""){
-			alert("Title and description are still empty");
+		else if (document.getElementById("title").value == "" ) {
+			fieldError('title', 'Title is stil empty.');
+		}
+		else if (document.getElementById("description").value == ""){
+			fieldError('description', 'Description is still empty.');
 		}
 		else if ((document.getElementById("people_attending").value != "" && document.getElementById("people_need").value =="") || 
 				(document.getElementById("people_need").value != "" && document.getElementById("people_attending").value == "")){
-			alert("People attending or people needed missing");
+			fieldError('helpers', 'People attending or people needed missing.');
 		}
 		else{
 			$.post(

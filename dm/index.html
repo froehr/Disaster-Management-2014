@@ -54,6 +54,7 @@
 					</ul>
 				</nav>
 			</header>
+			<div id="error-message"></div>
 			<div id="message-bar">
 				<div id="submit-message-button">Submit message</div>
 				<div id="message-form">
@@ -84,12 +85,12 @@
 						<div id="details-offer-support">
 							<p id="head-location">Location</p>
 							<p class="small">Choose a tool to draw the location.</p>
-							<div id ="draw-buttons"></div>
+							<div id="draw-buttons"></div>
 							<div id="details-emergency-need-support">
 								<p id="head-person-name">Your name</p>
 								<input type="text" name="person_name" id="person_name" />
 								<p>Helpers <span class="small">(attending / needed)</span></p>
-								<input type="text" name="people_attending" id="people_attending" class="small" /> / <input type="text" name="people_need" id="people_need" class="small" />
+								<div id="helpers"><input type="text" name="people_attending" id="people_attending" class="small" /> / <input type="text" name="people_need" id="people_need" class="small" /></div>
 								<p>Tags <span class="small">(separate with commas)</span></p>
 								<input type="text" name="tags" id="tags" />
 								<p>File / Image</p>
