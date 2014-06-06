@@ -916,7 +916,7 @@ header nav ul li #layer:active {
 #layer-popup {
 	right: 288px;
 	top: 93px;
-	width: 180px;
+	width: 400px;
 	height: 0px;
 	overflow: auto;
 }
@@ -956,6 +956,7 @@ header nav ul li #layer:active {
 #layer-popup .layer div.small {
 	float: none;
 	font-size: 13px;
+	margin-left: 52px;
 	margin-bottom: 5px;
 	text-align: justify;
 }
@@ -964,7 +965,7 @@ header nav ul li #layer:active {
 #login-popup {
 	right: 88px;
 	top: 93px;
-	width: 120px;
+	width: 260px;
 	height: 0px;
 }
 

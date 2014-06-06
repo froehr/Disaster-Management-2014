@@ -476,38 +476,23 @@ baseLayers = {
 
 groupedOverLayers = {
 	"Additional Maps" : {
-		'Pegel Online|pegel|false|Water level from gauges in Germany.' : waterMeasurementData,
-		'World Wide Rain Forecast|rain|true|Precipitation forecast from Open Weather map. This layer is only visible on low zoom levels, so zoom out to visualize.' : rain,
-		'Flood Prone Areas|flood_prone|true|Flood prone areas inside Germany.' : flood,
+		'Pegel Online|pegel|false|Current water level and water level diagrams from gauges in Germany.' : waterMeasurementData,
+		'World Wide Rain Forecast|rain|true|Precipitation forecast from Open Weather map. This layer is only visible on low zoom levels, so you need to zoom out to visualize it.' : rain,
+		'Flood Prone Areas|flood_prone|true|Flood prone areas in North-Rhine Westphalia.' : flood,
 		'DGK5|dgk|true|German ground map in scale 1:5000.' : layerDGK5,
 		'DTK10|dtk|true|German topographical map in scale 1:10000.' : layerDTK10
 	}
 };
 
+var empty = {};
+
 
 // Layer switcher
-var LlayerSwitcher = new L.control.groupedLayers(baseLayers, groupedOverLayers);
-	
-// Own Layer switcher
-var layerHTML = '<h1>Base Maps</h1>';
-$('#layer-popup').append(layerHTML);
-
-var activeLayer;
-$.each(baseLayers, function(i, v) {
-	if ( v == defaultLayer ) activeLayer = v;
-	var layerHTML = '<div class="layer" id="layer-' + v._leaflet_id + '">' + i + '</div>';
-	$('#layer-popup').append(layerHTML);
-	
-	$('#layer-' + v._leaflet_id).click(function() {
-		map.removeLayer(activeLayer);
-		v.addTo(map);
-		activeLayer = v;
-	});
-});
+var LlayerSwitcher = new L.control.groupedLayers(baseLayers, empty, {position: 'bottomleft'}).addTo(map);
 
 $.each(groupedOverLayers, function(i, v) {
-	var layerHTML = '<h1>' + i + '</h1>';
-	$('#layer-popup').append(layerHTML);
+	/*var layerHTML = '<h1>' + i + '</h1>';
+	$('#layer-popup').append(layerHTML);*/
 	
 	$.each(v, function(i1, v1) {
 		var border = '';
