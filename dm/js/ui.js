@@ -160,6 +160,10 @@ $('#x-popup').click(function() {
 	closePopUp();
 });
 
+$('#submit').click(function() {	
+	saveToDB();
+});
+
 // click functions to open and clode the "more" fields for the input form
 $('#more-form').click(function() {
 	setElementDisplay('more-form', 'none');

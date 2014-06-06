@@ -33,6 +33,9 @@
 
 		var type = document.getElementById("issue").value;
 		switch (type){
+			case '':
+				alert("You need to choose a message type.");
+				break;
 			case "emergency":
 				submitEmergency();
 				break;
