@@ -272,7 +272,7 @@ function showMessages() {
 				style: function (feature) {
 					return {
 						color: featureColor,
-						opacity: 0.8
+						opacity: 1.0
 					};
 				},
 				onEachFeature: function (feature, layer) {

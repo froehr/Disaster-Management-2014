@@ -3,47 +3,16 @@ function setElementDisplay(elementId, newDisplay) {
 	element.style.display = newDisplay;
 }
 
-// initialize global variables for time stamps
-var today = new Date();
-var dd = today.getDate();
-var mm = today.getMonth() + 1;
-var h = today.getHours();
-var m = today.getMinutes();
-var yyyy = today.getFullYear();
-if ( dd < 10 ) {
-	dd = '0' + dd;
-}
-if ( mm < 10 ) {
-	mm = '0' + mm;
-}
-if ( h < 10 ) {
-	h = '0' + h;
-}
-if ( m < 10 ) {
-	m = '0' + m;
-}
-today = yyyy + '-' + mm + '-' + dd;   
-
-var now = h + ':' + m;
-
-// fill time and date input fields
-$('#startdate').val(today);
-$('#starttime').val(now);
+$('#submit-message-button').click(function() {
+	$('#submit-message-button').fadeOut('fast', function() {
+		$('#message-form').slideDown('slow', 'linear');
+	});
+});
 
 // creating clickfunktion for the headerbuttons to open the input form
-function setHeaderButtonClickFunctions(tag, color, title) {
-	$('#' + tag).click(function() {
-		if ( $('#message-form').css('display') == 'none' ) {
-			changeMessageForm(tag, color, title);
-			$('#message-form').slideDown('slow', 'linear');
-		}
-		else {
-			$('#message-form').fadeOut(500);
-			setTimeout(function (){
-				changeMessageForm(tag, color, title);
-				 $('#message-form').fadeIn();
-			 }, 500);
-		}
+function setMessageFormButtonClickFunctions(tag, color, title) {
+	$('#' + tag + '-button').click(function() {
+		changeMessageForm(tag, color, title);
 	});
 }
 
@@ -67,52 +36,79 @@ function changeMessageForm(tag, color, title) {
 	// hidden field value
 	document.getElementById('issue').value = tag;
 	
-	function addMandatoryStars(fields) {
-		$('#head-category-mandatory').remove();
-		$('#head-person-contact-mandatory').remove();
-		$('#head-location-mandatory').remove();
+	$('#' + tag + '-button').css('background-color', color);
+	setElementDisplay('more-form', 'block');
+	
+	function addRequiredStars(fields) {
+		$('#head-category-required').remove();
+		$('#head-person-contact-required').remove();
+		$('#head-location-required').remove();
 		
 		for ( var i = 0; i < fields.length; i++ ) {
-			$('#head-' + fields[i]).append(' <span class="mandatory" id="head-' + fields[i] + '-mandatory">*</span>');
+			$('#head-' + fields[i]).append(' <span class="required" id="head-' + fields[i] + '-required">*</span>');
 		}
 	}
 	
-	// show the mandatory fields
+	// show the required fields
 	switch ( tag ) {
 		case 'emergency':
+			setElementDisplay('details-message', 'block');
+			setElementDisplay('details-offer-support', 'block');
+			setElementDisplay('details-emergency-need-support', 'none');
+			
+			addRequiredStars(['category', 'person-contact', 'location']);
+			
+			$('#need-support-button').css('background-color', '#f4dec8');
+			$('#offer-support-button').css('background-color', '#c1ebce');
+			$('#message-button').css('background-color', '#d1dad4');
+			break;
 		case 'need-support':
 			setElementDisplay('details-message', 'block');
 			setElementDisplay('details-offer-support', 'block');
 			setElementDisplay('details-emergency-need-support', 'none');
 			
-			addMandatoryStars(['category', 'person-contact', 'location']);
+			addRequiredStars(['category', 'person-contact', 'location']);
+			
+			$('#emergency-button').css('background-color', '#f5c9d3');
+			$('#offer-support-button').css('background-color', '#c1ebce');
+			$('#message-button').css('background-color', '#d1dad4');
 			break;
 		case 'offer-support':
 			setElementDisplay('details-message', 'block');
 			setElementDisplay('details-offer-support', 'none');
 			setElementDisplay('details-emergency-need-support', 'none');
 			
-			addMandatoryStars(['category', 'person-contact']);
+			addRequiredStars(['category', 'person-contact']);
+			
+			$('#emergency-button').css('background-color', '#f5c9d3');
+			$('#need-support-button').css('background-color', '#f4dec8');
+			$('#message-button').css('background-color', '#d1dad4');
 			break;
 		case 'message':
 			setElementDisplay('details-message', 'none');
 			setElementDisplay('details-offer-support', 'none');
 			setElementDisplay('details-emergency-need-support', 'none');
 			
-			addMandatoryStars([]);
+			addRequiredStars([]);
+			
+			$('#emergency-button').css('background-color', '#f5c9d3');
+			$('#need-support-button').css('background-color', '#f4dec8');
+			$('#offer-support-button').css('background-color', '#c1ebce');
 			break;
 	}
 }
 
-setHeaderButtonClickFunctions('emergency', '#A50026', 'Submit Emergency Issue');
-setHeaderButtonClickFunctions('need-support', '#eba259', 'Submit Support Request');
-setHeaderButtonClickFunctions('offer-support', '#468f5c', 'Submit Support Offer');
-setHeaderButtonClickFunctions('message', '#45544a', 'Submit Message');
+setMessageFormButtonClickFunctions('emergency', '#A50026', 'Submit Emergency Issue');
+setMessageFormButtonClickFunctions('need-support', '#eba259', 'Submit Support Request');
+setMessageFormButtonClickFunctions('offer-support', '#468f5c', 'Submit Support Offer');
+setMessageFormButtonClickFunctions('message', '#45544a', 'Submit Message');
 
 // click function to close the input form
 $('#x-form').click(function() {
-	$('#message-form').slideUp('slow', 'linear');
-});
+	$('#message-form').slideUp('fast', 'linear',  function() {
+			$('#submit-message-button').fadeIn();
+		})
+	});
 
 // popup function
 function createPopUp(width, height, content) {
