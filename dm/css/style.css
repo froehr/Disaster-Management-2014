@@ -11,7 +11,7 @@ html {
 }
 
 body {
-	background-color: #6A8F8E;
+	background-color: #567282;
 	font-family: 'Noto Sans', Arial, sans-serif;
 	font-size: 15px;
 	height: 100%;
@@ -31,7 +31,7 @@ body {
 }
 
 header {
-	background-color: #323D35;
+	background-color: #3c4245;
 	padding: 5px 40px;
 	height: 75px;
 	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
@@ -40,9 +40,7 @@ header {
 }
 
 /* Page title */
-header h1 {
-	font-size: 32px;
-	color: #FFFFFF;
+header img {
 	float: left;
 }
 
@@ -129,7 +127,7 @@ header nav ul li #layer:active {
 	font-size: 17px;
 	font-weight: bold;
 	text-transform: uppercase;
-	background-color: #8ba6a5;
+	background-color: #6b808a;
 	color: #FFFFFF;
 	cursor: pointer;
 	box-shadow: 0 0px 4px 0px rgba(0, 0, 0, 0.55);	
@@ -137,12 +135,12 @@ header nav ul li #layer:active {
 }
 
 #message-bar #submit-message-button:hover {
-	background-color: #819998;
+	background-color: #839ba7;
 	color: #EFEFEF;
 }
 
 #message-bar #submit-message-button:active {
-	background-color: #768c8b;
+	background-color: #a5beca;
 }
 
 /* Form to submit a new message */
@@ -1143,7 +1141,7 @@ header nav ul li #layer:active {
 }
 
 footer {
-	background-color: #323D35;
+	background-color: #3c4245;
 	padding: 4px 40px;
 	height: 20px;
 	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);

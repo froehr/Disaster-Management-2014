@@ -1,9 +1,5 @@
 initIntroJS = function() {
     var intro = introJs();
-	//intro.setOption('doneLabel', 'Exit');
-	//intro.setOption('nextLabel', 'Next');
-	//intro.setOption('showButtons', 'true');
-	//intro.setOption('showStepNumbers', 'false');
 	
 	intro.setOptions({
 	  // steps that are shown during intro
@@ -20,15 +16,16 @@ initIntroJS = function() {
 		},
 		{
 		  element: '#submit-message-button',
-		  intro: 'With this button you can create a new message',
+		  intro: 'With a click on this button you can create a new message',
 		},
 		{
 		  element: '#message-form',
 		  intro: 'Within this form you can describe and submit your message',
+		  position: 'right'
 		},
 		{
 		  element: '#layer',
-		  intro: 'With this Buttons you can add different map data',
+		  intro: 'With this Buttons you can add additional map data',
 		},
 		{
 		  element: '#login',
@@ -43,7 +40,7 @@ initIntroJS = function() {
     
     intro.start();
     
-    
+	// Show and do not show explained elements
 	intro.onbeforechange(function(targetElement) {   
 		switch (targetElement.id) 
 			{ 
@@ -51,58 +48,42 @@ initIntroJS = function() {
 				console.log('step1');
 			break;
 			case "messages": 
-				$('#submit-message-button').fadeIn('fast', 'linear');
-				$('#message-form').fadeOut('fast', 'linear'); 
+				document.getElementById('submit-message-button').style.display = 'block';
+				document.getElementById('message-form').style.display = 'none';
 			break; 
 			case "submit-message-button": 
-				 
+				document.getElementById('submit-message-button').style.display = 'block';
+				document.getElementById('message-form').style.display = 'none'; 
 			break;
 			case "message-form":
-				$('#submit-message-button').fadeOut('fast', 'linear');
+				document.getElementById('submit-message-button').style.display = 'none';
 				document.getElementById('message-form').style.display = 'block'; 
 			break;
-			case "layer": 
-				
+			case "layer":
+				document.getElementById('submit-message-button').style.display = 'block';
+				document.getElementById('message-form').style.display = 'none';
 			break;
 			case "login": 
-				$('#map-right-click-menu').fadeOut(100);
+				document.getElementById('map-right-click-menu').style.display = 'none';
 			break;
 			case "map-right-click-menu": 
-					document.getElementById('map-right-click-menu').style.left = '400px';
-					document.getElementById('map-right-click-menu').style.top = '170px';
-					$('#map-right-click-menu').fadeIn(100);
-			break;
-			}
-	})
-	intro.onafterchange(function(targetElement) {   
-		switch (targetElement.id) 
-			{ 
-			case "map": 
-				
-			break;
-			case "messages": 
-				
-			break; 
-			case "submit-message-button": 
-				$('#message-form').fadeOut('fast', 'linear');
-			break;
-			case "message-form":
-				 $('#message-form').fadeIn('fast', 'linear');
-			break;
-			case "layer": 
-				$('#message-form').fadeOut('fast', 'linear');
-			break;
-			case "login": 
-				
-			break;
-			case "map-right-click-menu": 
-					
+				document.getElementById('map-right-click-menu').style.left = '400px';
+				document.getElementById('map-right-click-menu').style.top = '170px';
+				document.getElementById('map-right-click-menu').style.display = 'block';
 			break;
 			}
 	})
     
-    // disable right-click-menu after showing
+    // getting back to old appearence
+    intro.oncomplete(function() {
+	document.getElementById('map-right-click-menu').style.display = 'none';
+	document.getElementById('submit-message-button').style.display = 'block';
+	document.getElementById('message-form').style.display = 'none';
+    });
+    
     intro.onexit(function() {
-	$('#map-right-click-menu').fadeOut(200);
+	document.getElementById('map-right-click-menu').style.display = 'none';
+	document.getElementById('submit-message-button').style.display = 'block';
+	document.getElementById('message-form').style.display = 'none';
     });
 }

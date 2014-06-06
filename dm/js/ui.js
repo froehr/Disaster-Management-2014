@@ -244,10 +244,6 @@ $('#layer').mouseover(function() {
 	closeLoginPopUp();
 });
 
-$('#layer').mouseout(function() {
-	$('#layer-popup').fadeOut();
-});
-
 $('#login').mouseover(function() {
 	$('#login-popup').css('display', 'block');
 	$('#login-popup').animate({height: 175}, 'fast', function() {
