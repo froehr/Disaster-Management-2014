@@ -32,6 +32,24 @@ initHighChartForStation = function(id) {
         legend: {
             enabled: false
         },
+	navigation: {
+	    buttonOptions: {
+		theme: {
+		    'stroke-width': 1,
+		    stroke: 'silver',
+		    r: 0,
+		    states: {
+			hover: {
+			    fill: '#CCCCCC',
+			},
+			select: {
+			    fill: '#CCCCCC'
+			}
+		    }
+		}
+	    }
+        },
+		
         series: [{}]
     };
     $.getJSON('php/getPegelOnlineData.php?measurementStationName='+id, function (data) {

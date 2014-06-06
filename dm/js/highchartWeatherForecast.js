@@ -86,6 +86,24 @@ initHighChartForForecast = function (latlng) {
 			enabled : true
 		},
                 
+                navigation: {
+                    buttonOptions: {
+                        theme: {
+                            'stroke-width': 1,
+                            stroke: 'silver',
+                            r: 0,
+                            states: {
+                                hover: {
+                                    fill: '#CCCCCC',
+                                },
+                                select: {
+                                    fill: '#CCCCCC'
+                                }
+                            }
+                        }
+                    }
+                },
+                
 		series : [{
                                 name: 'Rainfall',
                                 color: '#5C9DFF',
