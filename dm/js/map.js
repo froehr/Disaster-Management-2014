@@ -476,11 +476,11 @@ baseLayers = {
 
 groupedOverLayers = {
 	"Additional Maps" : {
-		'Pegel Online|pegel|false|Current water level and water level diagrams from gauges in Germany.' : waterMeasurementData,
-		'World Wide Rain Forecast|rain|true|Precipitation forecast from Open Weather map. This layer is only visible on low zoom levels, so you need to zoom out to visualize it.' : rain,
-		'Flood Prone Areas|flood_prone|true|Flood prone areas in North-Rhine Westphalia.' : flood,
-		'DGK5|dgk|true|German ground map in scale 1:5000.' : layerDGK5,
-		'DTK10|dtk|true|German topographical map in scale 1:10000.' : layerDTK10
+		'Pegel Online|pegel|false|Current water level and water level diagrams from gauges in Germany. Click on the icons on the map to show more information.' : waterMeasurementData,
+		'World Wide Rain Forecast|rain|true|Precipitation forecast from Open Weather map. This layer is only visible on very low zoom levels, so you need to zoom out to visualize it.' : rain,
+		'Flood Prone Areas|flood_prone|true|Flood prone areas in North-Rhine Westphalia. Calculated for a statistical flood once in one hundred years.' : flood,
+		'DGK5|dgk|true|German ground map in scale 1:5000 for North-Rhine Westphalia. This layer ist only visible on very high zoom levels, so you need to zoom in to visualize it.' : layerDGK5,
+		'DTK10|dtk|true|German topographical map in scale 1:10000 for North-Rhine Westphalia. This layer ist only visible on very high zoom levels, so you need to zoom in to visualize it.' : layerDTK10
 	}
 };
 
@@ -498,16 +498,24 @@ $.each(groupedOverLayers, function(i, v) {
 		if ( map.hasLayer(layer) ) {
 			active = ' active'
 		}
-		var layerHTML = '<div class="layer' + active + '" id="layer-' + layer._leaflet_id + '"><img src="img/layerthumb/' + porperties[1] + '.png"' + border + ' /><div> ' + porperties[0] + '</div><div class="small">' + porperties[3] + '</div></div>';
+		var layerHTML =
+			'<div class="layer' + active + '" id="layer-' + layer._leaflet_id + '">' +
+				'<img src="img/icons/check.png" id="layer-check-' + layer._leaflet_id + '" class="check' + active + '" />' +
+				'<img src="img/layerthumb/' + porperties[1] + '.png"' + border + ' />' +
+				'<div> ' + porperties[0] + '</div>' +
+				'<div class="small">' + porperties[3] + '</div>' +
+			'</div>';
 		$('#layer-popup').append(layerHTML);
 		
 		$('#layer-' + layer._leaflet_id).click(function() {
 			if ( ! map.hasLayer(layer) ) {
 				$('#layer-' + layer._leaflet_id).addClass('active');
+				$('#layer-check-' + layer._leaflet_id).addClass('active');
 				map.addLayer(layer);
 			}
 			else {
 				$('#layer-' + layer._leaflet_id).removeClass('active');
+				$('#layer-check-' + layer._leaflet_id).removeClass('active');
 				map.removeLayer(layer);
 			}
 		});

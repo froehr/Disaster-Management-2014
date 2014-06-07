@@ -108,20 +108,9 @@ header nav ul li #layer:active {
 	background-color: #8ba6c9;
 }
 
-/* Left Side bar for messages*/
-#message-bar {
-	box-shadow: 3px 0px 10px rgba(0, 0, 0, 0.55);
-	background-color: #FFFFFF;
-	width: 300px;
+#submit-message-button {
 	position: absolute;
 	top: 85px;
-	bottom: 58px;
-	z-index: 3;
-	overflow: auto;
-	padding-bottom: 20px;
-}
-
-#message-bar #submit-message-button {
 	text-align: center;
 	padding: 9px 0px;
 	font-size: 17px;
@@ -130,17 +119,31 @@ header nav ul li #layer:active {
 	background-color: #6b808a;
 	color: #FFFFFF;
 	cursor: pointer;
-	box-shadow: 0 0px 4px 0px rgba(0, 0, 0, 0.55);	
-	margin-bottom: 8px;
+	box-shadow: 3px 0px 10px rgba(0, 0, 0, 0.55);
+	z-index: 4;
+	width: 300px;
 }
 
-#message-bar #submit-message-button:hover {
+#submit-message-button:hover {
 	background-color: #839ba7;
 	color: #EFEFEF;
 }
 
-#message-bar #submit-message-button:active {
+#submit-message-button:active {
 	background-color: #a5beca;
+}
+
+/* Left Side bar for messages*/
+#message-bar {
+	box-shadow: 3px 0px 10px rgba(0, 0, 0, 0.55);
+	background-color: #FFFFFF;
+	width: 300px;
+	position: absolute;
+	top: 126px;
+	bottom: 58px;
+	z-index: 3;
+	overflow: auto;
+	padding-bottom: 20px;
 }
 
 /* Form to submit a new message */
@@ -908,7 +911,7 @@ header nav ul li #layer:active {
 	position: absolute;
 	background-color: #FFFFFF;
 	z-index: 1001;
-	padding: 15px 20px;
+	padding: 10px;
 	display: none;
 	box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.5);
 }
@@ -916,15 +919,15 @@ header nav ul li #layer:active {
 #layer-popup {
 	right: 288px;
 	top: 93px;
-	width: 400px;
+	width: 530px;
 	height: 0px;
 	overflow: auto;
 }
 
 #layer-popup .layer {
 	cursor: pointer;
-	padding: 5px 10px;
-	margin-bottom: 10px;
+	padding: 3px 10px;
+	margin-bottom: 5px;
 }
 
 #layer-popup .layer:hover {
@@ -935,7 +938,7 @@ header nav ul li #layer:active {
 	background-color: #d9d9d9;
 }
 
-#layer-popup .active {
+#layer-popup div.active {
 	background-color: #DDDDDD;
 }
 
@@ -947,6 +950,18 @@ header nav ul li #layer:active {
 
 #layer-popup .layer img.border {
 	border: 1px solid #777777;
+}
+
+#layer-popup .layer img.check {
+	position: absolute;
+	margin-top: 15px;
+	margin-left: 15px;
+	z-index: 1004;
+	display: none;
+}
+
+#layer-popup .layer img.active {
+	display: block;
 }
 
 #layer-popup .layer div {

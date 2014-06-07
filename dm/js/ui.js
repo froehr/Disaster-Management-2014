@@ -3,10 +3,17 @@ function setElementDisplay(elementId, newDisplay) {
 	element.style.display = newDisplay;
 }
 
+function scrollToId(id) {
+    var tag = $('#' + id);
+	var top = $('#message-bar').scrollTop() + tag.position().top;
+    $('#message-bar').animate({scrollTop: top}, 'slow');
+}
+
 $('#submit-message-button').click(function() {
-	$('#submit-message-button').fadeOut('fast', function() {
-		$('#message-form').slideDown('slow', 'linear');
-	});
+	$('#submit-message-button').css('display', 'none');
+	$('#message-bar').css('top', '85px');
+	$('#message-form').slideDown('slow', 'linear');
+	scrollToId('message-form');
 });
 
 // creating clickfunktion for the headerbuttons to open the input form
@@ -106,7 +113,8 @@ setMessageFormButtonClickFunctions('message', '#45544a', 'Submit Message');
 // click function to close the input form
 $('#x-form').click(function() {
 	$('#message-form').slideUp('fast', 'linear',  function() {
-		$('#submit-message-button').fadeIn();
+		$('#message-bar').css('top', '126px');
+		$('#submit-message-button').css('display', 'block');
 	});
 	
 	$('#error-message').fadeOut();
@@ -242,7 +250,7 @@ $('#hide-message-bar').click(function() {
 
 $('#layer').mouseover(function() {
 	$('#layer-popup').css('display', 'block');
-	$('#layer-popup').animate({height: 420}, 'fast');
+	$('#layer-popup').animate({height: 428}, 'fast');
 	
 	closeLoginPopUp();
 });
@@ -256,7 +264,7 @@ $('#login').mouseover(function() {
 
 function closeLayerPopUp() {
 	$('#layer-popup').fadeOut(function() {
-		$('#layer-popup').width(400);
+		$('#layer-popup').width(530);
 		$('#layer-popup').height(0);
 	});
 }

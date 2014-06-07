@@ -200,7 +200,6 @@ function showMessages() {
 		
 		$('#messages').append(
 			'<div class="message message-' + message['message_type'] + '" id="message-' + message['message_id'] + '">' +
-				'<a name="message-' + message['message_id'] + '"></a>' +
 				'<h1 class="' + message['message_type'] + '-head" id="head-' + message['message_id'] + '">' + message['title'] + '</h1>' +
 				'<p id="description-' + message['message_id'] + '">' + message['description'] + '<br /><a href="#" id="more-' + message['message_id'] + '">Comments and more <span class="arrow">&#9658;</span></a></p>' +
 				'<div class="details" id="details-' + message['message_id'] + '">' +
@@ -309,7 +308,6 @@ function showMessages() {
 					
 					layer.on('click', function(evt) {
 						switchMessageDetails(message);
-						document.location.href = '#message-' + message['message_id'];
 					});
 				}
 			}).addTo(map);
@@ -323,7 +321,9 @@ function showMessages() {
 			setElementDisplay('more-' + message_id, 'none');
 			setElementDisplay('less-' + message_id + '-top', 'block');
 			setElementDisplay('less-' + message_id + '-bottom', 'block');
-			$('#details-' + message_id).slideDown('fast', 'linear');
+			$('#details-' + message_id).slideDown('slow', 'linear', function() {
+				scrollToId('message-' + message['message_id']);
+			});
 			message['display'] = true;
 			
 			for ( var i = 0; i < messages.length; i++ ) {
@@ -340,7 +340,9 @@ function showMessages() {
 			setElementDisplay('more-' + message_id, 'inline');
 			setElementDisplay('less-' + message_id + '-top', 'none');
 			setElementDisplay('less-' + message_id + '-bottom', 'none');
-			$('#details-' + message_id).slideUp('fast', 'linear');
+			$('#details-' + message_id).slideUp('slow', 'linear', function() {
+				scrollToId('message-' + message['message_id']);
+			});
 			message['display'] = false;
 		}
 	}
