@@ -1,3 +1,4 @@
+// Calculate Distance between to Coordinates
 function Dist(LatA, LngA, LatB, LngB){
    
     function rad(x) {
@@ -17,6 +18,9 @@ function Dist(LatA, LngA, LatB, LngB){
 }
 
 showNearestGauge = function (latlng) {
+    
+    // Enable pegelonlone layer
+    map.addLayer(waterMeasurementData);
 	
     var stationID;
     var clickLat = latlng.lat;
@@ -43,15 +47,10 @@ showNearestGauge = function (latlng) {
         
 	// Zoom to nearest gauge
 	map.setView([stationLat, stationLong], 13);
-	console.log(stationID);
 	
-	// get data vor nearest gauge
+	// Get data vor nearest gauge
         $.getJSON('http://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/'+ stationID +'/W/measurements.json', function (dataStation) {
-            console.log(dataStation);
+	    // Maybe using Dominiks pegelonline highchart function
         });
-    });
-    
-    
-    
-    
+    });   
 };

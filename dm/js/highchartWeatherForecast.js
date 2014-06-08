@@ -52,7 +52,6 @@ initHighChartForForecast = function (latlng) {
                                 }
                             },
                             opposite: true,
-            
                         },
                         {
                         title: {
