@@ -423,21 +423,6 @@ function switchMessageDetails(message) {
 	}
 
 
-
-//post to hull with message_id as object
-function postComment (message) {
-	var message_id = message['message_id'];
-	var hull_id = getHullId(message_id);
-	var content = document.getElementById('commentdescription-' + message['message_id']).value; 
-	Hull.api(hull_id + '/comments', 'post', {
-		description: content
-		}).then(function(comment) {
-		  getComments(message);
-		});
-	}
-
-
-
 function createReportPopUp(report, id) {
 	var content = '<h1>Report ' + report + '</h1>' +
 		'<p>Why do you want to report this ' + report + '?</p>' +
@@ -499,11 +484,67 @@ function createRemovePopUp(remove, id, message) {
 	});
 }
 
+
+function createEditCommentPopUp(comment_id, old_content, message) {
+	var content = '<h1>Edit Comment</h1>' +
+		'<textarea name="description" id="commentdescription-' + comment_id + '">' + old_content +'</textarea>' +
+		'<p class="right">' +
+			'<a href="#" id="edit-comment-submit">Save changes!</a> &nbsp; <a href="#" id="edit-comment-cancel">Cancel</a>' +
+		'</p>' +
+		'<p id="edit-comment-empty-' + comment_id + '"></p>';
+	createPopUp(250, 125, content);
+	
+	$('#edit-comment-submit').click(function() {
+		var content = $('#commentdescription-' + comment_id).val();
+		if (content != ''){
+			editComment(comment_id, content, message);
+			closePopUp();
+		}
+		else{
+			$('#edit-comment-empty-' + comment_id).text('Your comment must not be empty!');
+		}	
+	});
+	
+	$('#comment-edit-cancel').click(function() {
+		closePopUp();
+	});
+}
+
+//post to hull with message_id as object
+function postComment (message) {
+	var message_id = message['message_id'];
+	var hull_id = getHullId(message_id);
+	var content = $('#commentdescription-' + message['message_id']).val(); 
+	Hull.api(hull_id + '/comments', 'post', {
+		description: content
+		}).then(function(comment) {
+		  getComments(message);
+		});
+	}
+
+
 function deleteComment(comment_id, message) {
 	
 	Hull.api(comment_id, 'delete').then(function(response) {
 		getComments(message);
 	});
+}
+
+
+function editComment(comment_id, content, message) {
+	
+	Hull.api(comment_id, 'put', {
+		description: content
+		}).then(function(response) {
+		
+		getComments(message);
+	});
+}
+
+
+function reportComment(comment_id, message) {
+	
+	//TODO
 }
 
 
@@ -575,6 +616,10 @@ function getComments(message) {
 
 						$('#remove-comment-' + comment_id).click(function() {
 							createRemovePopUp('comment', comment_id, message);
+						});
+
+						$('#edit-comment-' + comment_id).click(function() {
+							createEditCommentPopUp(comment_id, v['message'], message);
 						});
 					});
 
