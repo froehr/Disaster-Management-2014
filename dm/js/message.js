@@ -33,6 +33,7 @@ function Message(message_id, message_type, location, time_start, time_stop, date
 }
 
 function showMessages() {
+	
 	var messages = [
 		new Message(0,
 					'emergency','{"type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[[7.612946033477782,51.96501340456607],[7.61101484298706,51.9650001835794],[7.609212398529052,51.96584631886286],[7.608332633972168,51.96476220515285],[7.606294155120849,51.96379705746947],[7.608118057250977,51.9627261158533],[7.60876178741455,51.96164192667244],[7.610800266265869,51.9623691296285],[7.612645626068115,51.962276577180184],[7.612946033477782,51.96501340456607]]]}}',
@@ -141,22 +142,10 @@ function showMessages() {
 		)
 	];
 	
-	function decreaseNumberOfComments(id, amount) {
-		var numberOfComments = parseInt($('#number-of-comments-' + id).html());
-		console.log(id);
-		numberOfComments -= amount;
-		$('#number-of-comments-' + id).html(numberOfComments);
-	}
-	
-	function increaseNumberOfComments(id, amount) {
-		var numberOfComments = parseInt($('#number-of-comments-' + id).html());
-		numberOfComments += amount;
-		$('#number-of-comments-' + id).html(numberOfComments);
-
-	}
-	
+		
 	// Function appends one message-div element to the messages div for the message of the parameter
 	function showMessage(message) {
+		var logged_in = getUserInfo();
 		var tags_html = '';
 		var tags = message['tags'].split(',');
 		for ( var i = 0; i < tags.length; i++ ) {
@@ -165,13 +154,9 @@ function showMessages() {
 		tags_html = tags_html.substring(0, tags_html.length - 2);
 		
 		var comments_html = '';
-		for ( var i = 0; i < message['comments'].length; i++ ) {
-			var edit_remove_comment_html = '';
-			if ( true /* TODO: USER LOGGED IN? */ ) {
-				edit_remove_comment_html = '<div id="remove-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/remove.png" /><div> Remove</div></div><div id="edit-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/edit.png" /><div> Edit</div></div><br />';
-			}
+		
 			
-			comments_html += '<div class="comment" id="comment-' + message['comments'][i]['comment_id'] + '">' +
+			/*comments_html += '<div class="comment" id="comment-' + message['comments'][i]['comment_id'] + '">' +
 									'<table border="0">' +
 										'<tr>' +
 											'<td><b>' + message['comments'][i]['name'] + '</b></td>' +
@@ -183,13 +168,13 @@ function showMessages() {
 									'</table>' +
 									'<div id="report-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/report.png" /><div> Report</div></div>' +
 									edit_remove_comment_html +
-								'</div>';
-		}
+								'</div>';*/
+		
 		
 		var location_name_html = 'Location';
 		
 		var edit_remove_html = '';
-		if ( true /* TODO: USER LOGGED IN? */ ) {
+		if ( logged_in != null /* TODO: USER LOGGED IN? */ ) {
 			edit_remove_html = '<div id="remove-' + message['message_id'] + '" class="message-button"><img src="img/icons/remove.png" /><div> Remove</div></div><div id="edit-' + message['message_id'] + '" class="message-button"><img src="img/icons/edit.png" /><div> Edit</div></div>';
 		}
 		
@@ -216,7 +201,7 @@ function showMessages() {
 						'</tr>' +
 					'</table>'
 					+ file_html +
-					'<div class="comments">' +
+					'<div class="comments" id="comments-' + message['message_id'] + '">' +
 					'<div class="less" id="less-' + message['message_id'] + '-top">' +
 						'<a href="#"><span>&#9668;</span> less</a>' +
 					'</div>' +
@@ -224,10 +209,10 @@ function showMessages() {
 					+ comments_html +
 					'<div class="new-comment">' +
 						'<p><b>New comment</b></p>' +
-						'<input type="text" name="name" placeholder="Your name" />' +
-						'<textarea name="description" placeholder="Your comment"></textarea>' +
+					//	'<input type="text" name="name" placeholder="Your name" />' +
+						'<textarea name="description" placeholder="Your comment" id="commentdescription"></textarea>' +
 						'<div class="submit">' +
-							'<input type="submit" value="Submit &nbsp; &#9658;" /></div>' +
+							'<input type="submit" value="Submit &nbsp; &#9658;" id="postcomment" onclick="postComment(' + message + ')"></div>' +
 						'</div>' +
 					'</div>' +
 					'<div class="less" id="less-' + message['message_id'] + '-bottom">' +
@@ -314,10 +299,34 @@ function showMessages() {
 		}
 	}
 	
-	function switchMessageDetails(message) {
-		var message_id = message['message_id'];
+	
+
+	for ( var i = 0; i < messages.length; i++ ) {
+		showMessage(messages[i]);
+		setMessageClickFunctions(messages[i]);
+	}
+}
+
+function decreaseNumberOfComments(id, amount) {
+		var numberOfComments = parseInt($('#number-of-comments-' + id).html());
+		console.log(id);
+		numberOfComments -= amount;
+		$('#number-of-comments-' + id).html(numberOfComments);
+	}
+	
+function increaseNumberOfComments(id, amount) {
+	var numberOfComments = parseInt($('#number-of-comments-' + id).html());
+	numberOfComments += amount;
+	$('#number-of-comments-' + id).html(numberOfComments);
+
+}
+
+function switchMessageDetails(message) {
 		
+		var message_id = message['message_id'];
+				
 		if ( ! message['display'] ) {
+			getComments(message);
 			setElementDisplay('more-' + message_id, 'none');
 			setElementDisplay('less-' + message_id + '-top', 'block');
 			setElementDisplay('less-' + message_id + '-bottom', 'block');
@@ -385,81 +394,17 @@ function showMessages() {
 			}
 		});
 		
-		function createReportPopUp(report, id) {
-			var content = '<h1>Report ' + report + '</h1>' +
-				'<p>Why do you want to report this ' + report + '?</p>' +
-				'<input type="hidden" id="report-report" value="' + report + '" />' +
-				'<input type="hidden" id="report-id" value="' + id + '" />' +
-				'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="wrong" checked="checked" /> Wrong information</label></p>' +
-				'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="spam" /> Spam or misleading</label></p>' +
-				'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="violent" /> Violent or repulsive</label></p>' +
-				'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="hateful" /> Hateful or abusive</label></p>' +
-				'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="sexual" /> Sexual content</label></p>' +
-				'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="other" /> Other</label></p>' +
-				'<p class="right">' +
-					'<a href="#" id="report-submit">Report it!</a> &nbsp; <a href="#" id="report-cancel">Cancel</a>' +
-				'</p>';
-			createPopUp(400, 225, content);
-			
-			$('#report-submit').click(function() {
-				var report = $('#report-report').val();
-				var id = $('#report-id').val();
-				var reason = $('.report-reason:checked').val();
-				// TODO: SUBMIT REPORT
-				closePopUp();
-			});
-			
-			$('#report-cancel').click(function() {
-				closePopUp();
-			});
-		}
 		
-		function createRemovePopUp(remove, id) {
-			var content = '<h1>Remove ' + remove + '</h1>' +
-				'<p>Do you really want to remove this ' + remove + '?</p>' +
-				'<p class="right">' +
-					'<a href="#" id="remove-yes">Yes, remove it!</a> &nbsp; <a href="#" id="remove-no">No, cancel!</a>' +
-				'</p>';
-			createPopUp(230, 90, content);
-			
-			$('#remove-yes').click(function() {
-				// TODO: REMOVE FROM DATABASE
-				if ( remove == 'message' ) {
-					if ( typeof message['location-json'] != 'undefined' ) map.removeLayer(message['location-json']);
-					map.closePopup(popup);
-					message['display'] = false;
-					$('#message-' + id).remove();
-				}
-				else if ( remove == 'comment' ) {
-					decreaseNumberOfComments(message['message_id'], 1);
-					$('#comment-' + id).remove();
-				}
-				closePopUp();
-			});
-			
-			$('#remove-no').click(function() {
-				closePopUp();
-			});
-		}
 		
 		$('#remove-' + message['message_id']).click(function() {
-			createRemovePopUp('message', message['message_id']);
+			createRemovePopUp('message', message['message_id'], "");
 		});
 		
 		$('#report-' + message['message_id']).click(function() {
 			createReportPopUp('message', message['message_id']);
 		});
 		
-		$.each(message['comments'], function(i, v) {
-			var comment_id = v['comment_id'];
-			$('#report-comment-' + comment_id).click(function() {
-				createReportPopUp('comment', comment_id);
-			});
-			
-			$('#remove-comment-' + comment_id).click(function() {
-				createRemovePopUp('comment', comment_id);
-			});
-		});
+		
 		
 		$('#description-' + message['message_id']).click(function() {
 			switchMessageDetails(message);
@@ -473,19 +418,184 @@ function showMessages() {
 			// TODO: EDIT MESSAGE
 		});
 		
-		$('#less-' + message['message_id'] + '-top').click(function() {
-			switchMessageDetails(message);
-		});
 		
-		$('#less-' + message['message_id'] + '-bottom').click(function() {
-			switchMessageDetails(message);
+
+	}
+
+
+
+//post to hull with message_id as object
+function postComment (message) {
+	var message_id = message['message_id'];
+	var hull_id = getHullId(message_id);
+	var content = document.getElementById('commentdescription-' + message['message_id']).value; 
+	Hull.api(hull_id + '/comments', 'post', {
+		description: content
+		}).then(function(comment) {
+		  getComments(message);
 		});
 	}
 
-	for ( var i = 0; i < messages.length; i++ ) {
-		showMessage(messages[i]);
-		setMessageClickFunctions(messages[i]);
-	}
+
+
+function createReportPopUp(report, id) {
+	var content = '<h1>Report ' + report + '</h1>' +
+		'<p>Why do you want to report this ' + report + '?</p>' +
+		'<input type="hidden" id="report-report" value="' + report + '" />' +
+		'<input type="hidden" id="report-id" value="' + id + '" />' +
+		'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="wrong" checked="checked" /> Wrong information</label></p>' +
+		'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="spam" /> Spam or misleading</label></p>' +
+		'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="violent" /> Violent or repulsive</label></p>' +
+		'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="hateful" /> Hateful or abusive</label></p>' +
+		'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="sexual" /> Sexual content</label></p>' +
+		'<p><label class="pointer"><input type="radio" name="report-reason" class="report-reason" value="other" /> Other</label></p>' +
+		'<p class="right">' +
+			'<a href="#" id="report-submit">Report it!</a> &nbsp; <a href="#" id="report-cancel">Cancel</a>' +
+		'</p>';
+	createPopUp(400, 225, content);
+	
+	$('#report-submit').click(function() {
+		var report = $('#report-report').val();
+		var id = $('#report-id').val();
+		var reason = $('.report-reason:checked').val();
+		// TODO: SUBMIT REPORT
+		closePopUp();
+	});
+	
+	$('#report-cancel').click(function() {
+		closePopUp();
+	});
 }
 
-showMessages();
+function createRemovePopUp(remove, id, message) {
+	console.log(id);
+	var content = '<h1>Remove ' + remove + '</h1>' +
+		'<p>Do you really want to remove this ' + remove + '?</p>' +
+		'<p class="right">' +
+			'<a href="#" id="remove-yes">Yes, remove it!</a> &nbsp; <a href="#" id="remove-no">No, cancel!</a>' +
+		'</p>';
+	createPopUp(230, 90, content);
+	
+	$('#remove-yes').click(function() {
+		// TODO: REMOVE FROM DATABASE
+		if ( remove == 'message' ) {
+			if ( typeof message['location-json'] != 'undefined' ) map.removeLayer(message['location-json']);
+			map.closePopup(popup);
+			message['display'] = false;
+			$('#message-' + id).remove();
+		}
+		else if ( remove == 'comment' ) {
+			
+			deleteComment(id, message);
+			decreaseNumberOfComments(message['message_id'], 1);
+			
+			$('#comment-' + id).remove();
+		}
+		closePopUp();
+	});
+	
+	$('#remove-no').click(function() {
+		closePopUp();
+	});
+}
+
+function deleteComment(comment_id, message) {
+	
+	Hull.api(comment_id, 'delete').then(function(response) {
+		getComments(message);
+	});
+}
+
+
+//get Comments from Hull.io
+function getComments(message) {
+	
+	var hull_id = getHullId(message.message_id);
+	var url = "https://22dd92ac.hullapp.io/api/v1/" + hull_id + "/comments?order_by=created_at%20ASC";
+	var logged_in = getUserInfo();
+
+	$.getJSON(url, function(data){
+					message['comments'] = [];
+					for ( var i = 0; i < data.length; i++ ) {
+						message['comments'].push(new Comment(
+							data[i].id,
+							data[i].user,
+							data[i].description,
+							data[i].created_at,
+							''));
+
+					}
+					
+					
+					
+					comments_html = '<div class="less" id="less-' + message['message_id'] + '-top" style="display: block;">' +
+										'<a href="#"><span>&#9668;</span> less</a>' +
+									'</div>' +
+									'<p><b>Comments (<span id="number-of-comments-' + message['message_id'] + '">' + message['comments'].length + '</span>)</p></b>';
+					
+					
+					var comments_fields_html = '<div class="new-comment">' +
+													'<p><b>New comment</b></p>' +
+													//'<input type="text" name="name" placeholder="Your name" />' +
+													'<textarea name="description" placeholder="Your comment" id="commentdescription-' + message['message_id'] +'"></textarea>' +
+													'<div class="submit">' +
+														'<input type="submit" value="Submit &nbsp; &#9658;" id="postcomment-' + message['message_id'] + '"/></div>' +
+												'</div>';
+					
+					for ( var i = 0; i < message['comments'].length; i++ ) {
+						
+						var edit_remove_comment_html = '';
+						if ( logged_in != null ) {
+							edit_remove_comment_html = '<div id="remove-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/remove.png" /><div> Remove</div></div><div id="edit-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/edit.png" /><div> Edit</div></div><br />';					
+												
+						}
+
+						comments_html += '<div class="comment" id="comment-' + message['comments'][i]['comment_id'] + '">' +
+											'<table border="0">' +
+												'<tr>' +
+													'<td><b>' + message['comments'][i]['name']['name'] + '</b></td>' +
+													'<td class="right">' + message['comments'][i]['date_time'] + '</td>' +
+												'</tr>' +
+												'<tr>' +
+													'<td colspan="2" class="justify">' + message['comments'][i]['message'] + '</td>' +
+												'</tr>' +
+											'</table>' +
+											'<div id="report-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/report.png" /><div> Report</div></div>' +
+											edit_remove_comment_html +
+										'</div>';
+					}
+					
+					document.getElementById('comments-' + message['message_id']).innerHTML = comments_html + comments_fields_html;
+
+					$.each(message['comments'], function(i, v) {
+						var comment_id = v['comment_id'];
+						$('#report-comment-' + comment_id).click(function() {
+							createReportPopUp('comment', comment_id);
+						});
+
+						$('#remove-comment-' + comment_id).click(function() {
+							createRemovePopUp('comment', comment_id, message);
+						});
+					});
+
+					$('#less-' + message['message_id'] + '-bottom').off('click');
+
+					$('#myimage').off('click');
+					
+					$('#postcomment-' + message['message_id']).off('click');
+
+					$('#less-' + message['message_id'] + '-top').click(function() {
+						switchMessageDetails(message);
+					});
+				
+					$('#less-' + message['message_id'] + '-bottom').click(function() {
+						switchMessageDetails(message);
+					});
+					
+
+					$('#postcomment-' + message['message_id']).click(function () {
+						postComment(message);
+					});
+				}	
+			);
+}
