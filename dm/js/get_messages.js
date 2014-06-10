@@ -9,7 +9,7 @@ var filterValue, filterType;
 
 jQuery.ajax({
     type: "POST",
-    url: 'get_msg_connection.php',
+    url: 'php/get_msg_connection.php',
     dataType: 'json',
     data: {filterValue: filterValue, filterType: filterType},
     success: function(data) {
