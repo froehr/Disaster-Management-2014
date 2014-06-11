@@ -9,14 +9,15 @@ Hull.init({
 
 
 //Facebook login
-var $button = $('button.current-user');
+var $button = $('#facebook-login');
 
 function refreshButton() {
     var user = Hull.currentUser();
     if (user) {
+		$('#login').html('Logout');
       $button.html("Connected as " + user.name + ". Logout");
     } else {
-      $button.html("Login with Facebook");
+      //$button.html("Login with Facebook");
     }
   };
 
@@ -26,7 +27,13 @@ function refreshButton() {
 Hull.on('hull.init', function() {
 	refreshButton();
 	showMessages();
-
+	
+	$('#login').click(function () {
+		if (Hull.currentUser()) {
+			Hull.logout();
+		} 
+	});
+	
 	$button.on('click', function() {
 		if (Hull.currentUser()) {
 			Hull.logout();

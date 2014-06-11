@@ -984,6 +984,59 @@ header nav ul li #layer:active {
 	height: 0px;
 }
 
+#login-popup .login-button {
+	color: #FFFFFF;
+	background-repeat: no-repeat;
+	background-position: 10px 5px;
+	margin-top: 10px;
+	margin-left: 20px;
+	padding-top: 7px;
+	padding-bottom: 7px;
+	padding-left: 50px;
+	padding-right: 15px;
+	width: 150px;
+	cursor: pointer;
+}
+
+#login-popup #facebook-login {
+	background-color: #3e559e;
+	background-image: url(../img/social-logos/facebook.png);
+}
+
+#login-popup #facebook-login:hover {
+	background-color: #4a64bd;
+}
+
+#login-popup #facebook-login:active {
+	background-color: #526fd1;
+}
+
+#login-popup #twitter-login {
+	background-color: #1ab2e8;
+	background-image: url(../img/social-logos/twitter.png);
+}
+
+#login-popup #twitter-login:hover {
+	background-color: #1cc1fc;
+}
+
+#login-popup #twitter-login:active {
+	background-color: #50d0ff;
+}
+
+#login-popup #googleplus-login {
+	background-color: #c53624;
+	background-image: url(../img/social-logos/googleplus.png);
+}
+
+#login-popup #googleplus-login:hover {
+	background-color: #d95242;
+}
+
+#login-popup #googleplus-login:active {
+	background-color: #eb6d5d;
+}
+
 /* Popup for further content pages */
 #popup {
 	position: absolute;

@@ -21,6 +21,8 @@ showNearestGauge = function (latlng) {
     
     // Enable pegelonlone layer
     map.addLayer(waterMeasurementData);
+	$('#layer-' + waterMeasurementData._leaflet_id).addClass('active');
+	$('#layer-check-' + waterMeasurementData._leaflet_id).addClass('active');
 	
     var stationID;
     var clickLat = latlng.lat;
