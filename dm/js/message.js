@@ -146,6 +146,7 @@ function showMessages() {
 	// Function appends one message-div element to the messages div for the message of the parameter
 	function showMessage(message) {
 		var logged_in = getUserInfo();
+		var not_logged_in = ((logged_in == null) || (logged_in ==false));
 		var tags_html = '';
 		var tags = message['tags'].split(',');
 		for ( var i = 0; i < tags.length; i++ ) {
@@ -153,28 +154,12 @@ function showMessages() {
 		}
 		tags_html = tags_html.substring(0, tags_html.length - 2);
 		
-		var comments_html = '';
-		
-			
-			/*comments_html += '<div class="comment" id="comment-' + message['comments'][i]['comment_id'] + '">' +
-									'<table border="0">' +
-										'<tr>' +
-											'<td><b>' + message['comments'][i]['name'] + '</b></td>' +
-											'<td class="right">' + message['comments'][i]['date_time'] + '</td>' +
-										'</tr>' +
-										'<tr>' +
-											'<td colspan="2" class="justify">' + message['comments'][i]['message'] + '</td>' +
-										'</tr>' +
-									'</table>' +
-									'<div id="report-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/report.png" /><div> Report</div></div>' +
-									edit_remove_comment_html +
-								'</div>';*/
-		
+		var comments_html = '';	
 		
 		var location_name_html = 'Location';
 		
 		var edit_remove_html = '';
-		if ( logged_in != null /* TODO: USER LOGGED IN? */ ) {
+		if ( not_logged_in == false ) {
 			edit_remove_html = '<div id="remove-' + message['message_id'] + '" class="message-button"><img src="img/icons/remove.png" /><div> Remove</div></div><div id="edit-' + message['message_id'] + '" class="message-button"><img src="img/icons/edit.png" /><div> Edit</div></div>';
 		}
 		
@@ -554,6 +539,7 @@ function getComments(message) {
 	var hull_id = getHullId(message.message_id);
 	var url = "https://22dd92ac.hullapp.io/api/v1/" + hull_id + "/comments?order_by=created_at%20ASC";
 	var logged_in = getUserInfo();
+	var not_logged_in = ((logged_in == null) || (logged_in ==false));
 
 	$.getJSON(url, function(data){
 					message['comments'] = [];
@@ -586,7 +572,7 @@ function getComments(message) {
 					for ( var i = 0; i < message['comments'].length; i++ ) {
 						
 						var edit_remove_comment_html = '';
-						if ( logged_in != null ) {
+						if ( not_logged_in == false ) {
 							edit_remove_comment_html = '<div id="remove-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/remove.png" /><div> Remove</div></div><div id="edit-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/edit.png" /><div> Edit</div></div><br />';					
 												
 						}
