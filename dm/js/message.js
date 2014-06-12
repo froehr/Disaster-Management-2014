@@ -292,27 +292,7 @@ function showMessages() {
 		}
 	}
 
-	for ( var i = 0; i < messages.length; i++ ) {
-		showMessage(messages[i]);
-		setMessageClickFunctions(messages[i]);
-	}
-}
-
-function decreaseNumberOfComments(id, amount) {
-		var numberOfComments = parseInt($('#number-of-comments-' + id).html());
-		console.log(id);
-		numberOfComments -= amount;
-		$('#number-of-comments-' + id).html(numberOfComments);
-	}
-	
-function increaseNumberOfComments(id, amount) {
-	var numberOfComments = parseInt($('#number-of-comments-' + id).html());
-	numberOfComments += amount;
-	$('#number-of-comments-' + id).html(numberOfComments);
-
-}
-
-function switchMessageDetails(message) {
+	function switchMessageDetails(message) {
 		
 		var message_id = message['message_id'];
 				
@@ -636,3 +616,24 @@ function getComments(message) {
 				}	
 			);
 }
+
+	for ( var i = 0; i < messages.length; i++ ) {
+		showMessage(messages[i]);
+		setMessageClickFunctions(messages[i]);
+	}
+}
+
+function decreaseNumberOfComments(id, amount) {
+		var numberOfComments = parseInt($('#number-of-comments-' + id).html());
+		console.log(id);
+		numberOfComments -= amount;
+		$('#number-of-comments-' + id).html(numberOfComments);
+	}
+	
+function increaseNumberOfComments(id, amount) {
+	var numberOfComments = parseInt($('#number-of-comments-' + id).html());
+	numberOfComments += amount;
+	$('#number-of-comments-' + id).html(numberOfComments);
+
+}
+
