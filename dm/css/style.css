@@ -1056,6 +1056,15 @@ header nav ul li #layer:active {
 	display: none;
 }
 
+#popup #drag-popup {
+	position: absolute;
+	height: 45px;
+	width: 85%;
+	left: 0px;
+	top: 0px;
+	cursor: move;
+}
+
 #popup a, .tab-popup a {
 	color: #3697f2;
 	text-decoration: none;

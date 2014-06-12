@@ -132,6 +132,7 @@ function createPopUp(width, height, content) {
 	if ( width != 0 ) $('#popup').width(width);
 	var marginLeft = $('#popup').width() / 2;
 	$('#popup').css('margin-left', '-' + marginLeft + 'px');
+	$('#popup').draggable();
 	
 	$('#popup').fadeIn();
 }
