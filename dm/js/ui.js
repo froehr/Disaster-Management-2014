@@ -248,25 +248,26 @@ $('#hide-message-bar').click(function() {
 	}
 });
 
+function setAutoHeight(id) {
+	$('#' + id).css('height', 'auto');
+	var autoHeight = $('#' + id).height();
+	$('#' + id).css('height', 0);
+	$('#' + id).css('display', 'block');
+	$('#' + id).animate({height: autoHeight}, 'fast');
+}
+
 $('#layer').mouseover(function() {
-	$('#layer-popup').css('display', 'block');
-	$('#layer-popup').animate({height: 428}, 'fast');
-	
+	setAutoHeight('layer-popup');
 	closeLoginPopUp();
 });
 
 $('#login').mouseover(function() {
-	$('#login-popup').css('display', 'block');
-	$('#login-popup').animate({height: 355}, 'fast');
-	
+	setAutoHeight('login-popup');
 	closeLayerPopUp();
 });
 
 function closeLayerPopUp() {
-	$('#layer-popup').fadeOut(function() {
-		$('#layer-popup').width(530);
-		$('#layer-popup').height(0);
-	});
+	$('#layer-popup').fadeOut();
 }
 
 function closeLoginPopUp() {
@@ -280,10 +281,7 @@ function closeLoginPopUp() {
 	}
 	
 	if ( close ) {
-		$('#login-popup').fadeOut(function() {
-			$('#login-popup').width(260);
-			$('#login-popup').height(0);
-		});
+		$('#login-popup').fadeOut();
 	}
 }
 

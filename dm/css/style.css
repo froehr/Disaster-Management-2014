@@ -922,6 +922,7 @@ header nav ul li #layer:active {
 	width: 530px;
 	height: 0px;
 	overflow: auto;
+	max-height: 428px;
 }
 
 #layer-popup .layer {
@@ -981,15 +982,15 @@ header nav ul li #layer:active {
 	right: 88px;
 	top: 93px;
 	width: 260px;
-	height: 0px;
+	//height: 0px;
 }
 
-#login-popup .login-button {
+#login-popup .um-button {
 	color: #FFFFFF;
 	background-repeat: no-repeat;
 	background-position: 10px 5px;
 	margin-top: 10px;
-	margin-left: 20px;
+	margin-left: 23px;
 	padding-top: 7px;
 	padding-bottom: 7px;
 	padding-left: 50px;
@@ -998,43 +999,48 @@ header nav ul li #layer:active {
 	cursor: pointer;
 }
 
-#login-popup #facebook-login {
+#login-popup #facebook {
 	background-color: #3e559e;
 	background-image: url(../img/social-logos/facebook.png);
 }
 
-#login-popup #facebook-login:hover {
+#login-popup #facebook:hover {
 	background-color: #4a64bd;
 }
 
-#login-popup #facebook-login:active {
+#login-popup #facebook:active {
 	background-color: #526fd1;
 }
 
-#login-popup #twitter-login {
+#login-popup #twitter {
 	background-color: #1ab2e8;
 	background-image: url(../img/social-logos/twitter.png);
 }
 
-#login-popup #twitter-login:hover {
+#login-popup #twitter:hover {
 	background-color: #1cc1fc;
 }
 
-#login-popup #twitter-login:active {
+#login-popup #twitter:active {
 	background-color: #50d0ff;
 }
 
-#login-popup #googleplus-login {
+#login-popup #googleplus {
 	background-color: #c53624;
 	background-image: url(../img/social-logos/googleplus.png);
 }
 
-#login-popup #googleplus-login:hover {
+#login-popup #googleplus:hover {
 	background-color: #d95242;
 }
 
-#login-popup #googleplus-login:active {
+#login-popup #googleplus:active {
 	background-color: #eb6d5d;
+}
+
+#login-popup .username {
+	padding: 10px;
+	//margin-left: 50px;
 }
 
 /* Popup for further content pages */
@@ -1078,7 +1084,7 @@ header nav ul li #layer:active {
 	text-align: left;
 }
 
-#popup .right, .tab-popup .left {
+#popup .right, .tab-popup .right {
 	text-align: right;
 }
 
@@ -1088,6 +1094,10 @@ header nav ul li #layer:active {
 
 #popup .pointer, .tab-popup .pointer {
 	cursor: pointer;
+}
+
+#popup .float-left, .tab-popup .float-left {
+	float: left;
 }
 
 #popup input, .tab-popup input {

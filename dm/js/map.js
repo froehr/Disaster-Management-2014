@@ -143,7 +143,7 @@ var flood = new L.TileLayer.WMS("http://www.wms.nrw.de/umwelt/wasser/uesg", {
 	});
 
 // Rain layer
-var rain = new L.tileLayer('http://{s}.tile.openweathermap.org/map/rain/{z}/{x}/{y}.png', {
+var rain = new L.tileLayer('http://{s}.tile.openweathermap.org/map/current/{z}/{x}/{y}.png', {
 		options : {
 			attribution : 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
 			opacity : 0.5
@@ -479,8 +479,8 @@ groupedOverLayers = {
 		'Pegel Online|pegel|false|Current water level and water level diagrams from gauges in Germany. Click on the icons on the map to show more information.' : waterMeasurementData,
 		'World Wide Rain Forecast|rain|true|Precipitation forecast from Open Weather map. This layer is only visible on very low zoom levels, so you need to zoom out to visualize it.' : rain,
 		'Flood Prone Areas|flood_prone|true|Flood prone areas in North-Rhine Westphalia. Calculated for a statistical flood once in one hundred years.' : flood,
-		'DGK5|dgk|true|German ground map in scale 1:5000 for North-Rhine Westphalia. This layer ist only visible on very high zoom levels, so you need to zoom in to visualize it.' : layerDGK5,
-		'DTK10|dtk|true|German topographical map in scale 1:10000 for North-Rhine Westphalia. This layer ist only visible on very high zoom levels, so you need to zoom in to visualize it.' : layerDTK10
+		'Ground Map (DGK5)|dgk|true|German ground map in scale 1:5000 for North-Rhine Westphalia. This layer ist only visible on very high zoom levels, so you need to zoom in to visualize it.' : layerDGK5,
+		'Topographical Map (DTK10)|dtk|true|German topographical map in scale 1:10000 for North-Rhine Westphalia. This layer ist only visible on very high zoom levels, so you need to zoom in to visualize it.' : layerDTK10
 	}
 };
 
@@ -488,11 +488,11 @@ groupedOverLayers = {
 var LlayerSwitcher = new L.control.groupedLayers(baseLayers, groupedOverLayers, {position: 'bottomleft'}).addTo(map);
 
 $.each(groupedOverLayers, function(i, v) {
-	$.each(v, function(porperties, layer) {
+	$.each(v, function(properties, layer) {
 		var border = '';
 		var active = '';
-		porperties = porperties.split('|');
-		if ( porperties[2] == 'true' ) {
+		properties = properties.split('|');
+		if ( properties[2] == 'true' ) {
 			border = ' class="border"';
 		}
 		if ( map.hasLayer(layer) ) {
@@ -501,9 +501,9 @@ $.each(groupedOverLayers, function(i, v) {
 		var layerHTML =
 			'<div class="layer' + active + '" id="layer-' + layer._leaflet_id + '">' +
 				'<img src="img/icons/check.png" id="layer-check-' + layer._leaflet_id + '" class="check' + active + '" />' +
-				'<img src="img/layerthumb/' + porperties[1] + '.png"' + border + ' />' +
-				'<div> ' + porperties[0] + '</div>' +
-				'<div class="small">' + porperties[3] + '</div>' +
+				'<img src="img/layerthumb/' + properties[1] + '.png"' + border + ' />' +
+				'<div> ' + properties[0] + '</div>' +
+				'<div class="small">' + properties[3] + '</div>' +
 			'</div>';
 		$('#layer-popup').append(layerHTML);
 		
