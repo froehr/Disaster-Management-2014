@@ -194,7 +194,6 @@ function showMessages() {
 					+ comments_html +
 					'<div class="new-comment">' +
 						'<p><b>New comment</b></p>' +
-					//	'<input type="text" name="name" placeholder="Your name" />' +
 						'<textarea name="description" placeholder="Your comment" id="commentdescription"></textarea>' +
 						'<div class="submit">' +
 							'<input type="submit" value="Submit &nbsp; &#9658;" id="postcomment" onclick="postComment(' + message + ')"></div>' +
@@ -278,13 +277,20 @@ function showMessages() {
 					
 					layer.on('click', function(evt) {
 						switchMessageDetails(message);
+						if ( ! messageBarStatus ) {
+							$('#message-bar').animate({width: 'toggle'});
+							$('#message-search').animate({width: 'toggle'});
+							$('#hide-message-bar-container').animate({left: 301});
+							$('#hide-message-bar').css('background-image', 	'url(img/icons/hide-message-bar.png)');
+							document.getElementById('hide-message-bar').title = 'Hide message bar';
+							$('.leaflet-left').animate({left: 310});
+							messageBarStatus = true;
+						}
 					});
 				}
 			}).addTo(map);
 		}
 	}
-	
-	
 
 	for ( var i = 0; i < messages.length; i++ ) {
 		showMessage(messages[i]);

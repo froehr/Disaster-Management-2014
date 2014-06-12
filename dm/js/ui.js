@@ -262,9 +262,18 @@ $('#layer').mouseover(function() {
 	closeLoginPopUp();
 });
 
+var popUpTrigger = false;
+$('#layer').click(function() {
+	popUpTrigger = true;
+});
+
 $('#login').mouseover(function() {
 	setAutoHeight('login-popup');
 	closeLayerPopUp();
+});
+
+$('#login').click(function() {
+	popUpTrigger = true;
 });
 
 function closeLayerPopUp() {
@@ -287,8 +296,10 @@ function closeLoginPopUp() {
 }
 
 $('#map').mouseover(function() {
-	closeLoginPopUp();
-	closeLayerPopUp();
+	if ( popUpTrigger == false ) {
+		closeLoginPopUp();
+		closeLayerPopUp();
+	}
 });
 
 // animations fot the filter button below the message-bar

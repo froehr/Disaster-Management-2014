@@ -525,6 +525,11 @@ $.each(groupedOverLayers, function(i, v) {
 // closing PopUp when clicking on map
 map.on('click', function(){
 	closePopUp();
+	if ( popUpTrigger ) {
+		closeLayerPopUp();
+		closeLoginPopUp();
+		popUpTrigger = false;
+	}
 });
 
 // Right click menubar
