@@ -13,11 +13,11 @@ Hull.init({
 function setLoginContent() {
 	$('#login').html('User Login');
 	
-	var defaultContent = '<h1>Username</h1>' +
-		'<input type="text" name="username" id="username" />' +
+	var defaultContent = '<h1>E-Mail</h1>' +
+		'<input type="text" name="mail" id="mail" />' +
 		'<h1>Password</h1>' +
 		'<input type="password" name="password" id="password" />' +
-		'<p><a href="#">Forgot password?</a><br /><a href="#">Create new account.</a></p>' +
+		'<p><a href="#" id="forgot-password">Forgot password?</a><br /><a href="#" id="create-account">Create new account.</a></p>' +
 		'<div class="submit"><input type="submit" value="Login &nbsp; &#9658;" id="submit" /></div><br />' +
 		'<h1>Social Media Login</h1>' +
 		'<div class="center">' +
@@ -27,6 +27,20 @@ function setLoginContent() {
 		'</div>';
 	$('#login-popup').html(defaultContent);
 	$('#login-popup').css('height', 'auto');
+
+	$('#create-account').click(function() {
+		var content = '<h1>Create new account</h1>' +
+			'<p>Name</p>' +
+			'<input type="text" name="create-account-name" id="create-account-name" />' +
+			'<p>E-Mail</p>' +
+			'<input type="text" name="create-account-mail" id="create-account-mail" />' +
+			'<p>Password</p>' +
+			'<input type="password" name="create-account-password-1" id="create-account-password-1" />' +
+			'<p>Confirm password</p>' +
+			'<input type="password" name="create-account-password-2" id="create-account-password-2" />' +
+			'<div class="submit normalized"><input type="submit" value="Submit" id="create-account-submit" /></div><br />';
+		createPopUp(257, 310, content);
+	});
 
 	$('#facebook').click(function() {
 		Hull.login('facebook');

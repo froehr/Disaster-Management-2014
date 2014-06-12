@@ -272,7 +272,7 @@ function closeLayerPopUp() {
 
 function closeLoginPopUp() {
 	var close = true;
-	if ( $('#username').is(':focus') ) {
+	if ( $('#mail').is(':focus') ) {
 		close = false;
 	}
 
