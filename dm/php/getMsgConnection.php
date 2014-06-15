@@ -1,263 +1,308 @@
 	
 <?php
 	
-//function to connect to database and return connection obj		
-function getConnection()
+	include('insertMessage.php');
+	//connect to database and return connection obj		
+	function getConnection()
 		 {
 		 	
 			$db_connection = pg_connect("host=host port=5432 dbname=dbname user=user password=password")
-			or die('Error in Connection');
+			or die('Verbindungsaufbau fehlgeschlagen: ' . pg_last_error());
   
   			return $db_connection;
 		}
 		 
 			
-//function to return al messages with associated comments
-function getAllData() {
+	//function to return al messages with associated comments
+	function getAllData() {
 	
-	$con = getConnection();
-	$data = Array();
+		$con = getConnection();
+		$data = Array();
 	
-	if(!$con)
-	{  die(json_encode(array("error" => "no connection to the server")));}
+		if(!$con)
+			{  die(json_encode(array("error" => "no connection to the server")));}
 	
-		//get all messages order by submition time, still editable 'extent'
-		$queryString = 'SELECT "message_id", "message_type", "title", ST_AsText(location),"time_start","time_stop", "date_of_change", "date_of_creation", "description", "people_needed", "people_attending",
-								"file","priority","category", "upvotes", "downvotes", "status", "person_name", "person_contact", "person_email" FROM message order by time_start Desc ;';
+		//get all messages order by submission time, still editable 'extent'
+		$queryString = 'SELECT "message_id", "message_type", "title", ST_AsText(location),"time_start", "relevant" ,"date_of_change",
+						"description", "people_needed", "people_attending","file","category", "tags", "person_name", "person_contact",
+						"person_email" FROM message order by time_start Desc ;';
 				
+
 		$result = pg_query($con, $queryString);
-		if(!$result)
-		{ throw new Exception("no results found");}
-	 	while($row = pg_fetch_assoc($result)){
-	 					
-			$data[] = array($row);	
-			//get all comments 
-			$queryString2 = 'SELECT * FROM comment where message_id='.$row['message_id'].' ;';
-				
-				$result2 = pg_query($con, $queryString2);
-	 			while($row2 = pg_fetch_assoc($result2)){
-	 					
-			
-				   		$data[]['new comment'] = array($row2);	
-						
-					
-				}
-	 }
-	 
-	 pg_close($con);
-    echo(json_encode($data));
-	
-}
-
-
-
-//function to filter the data--->create dynamic query string (concatenate all the filter values )
-function getFilteredData() {
-	
-	$Type=$_POST['MessageType'];
-	$SubCategory=$_POST['SubCategory'];
-	$TimeStart=$_POST['TimeStart'];
-	$TimeEnd=$_POST['TimeStart'];
-	
-	
-	$con = getConnection();
-	//clear array
-	unset($varArray);
-
-//check the values for filtir and added to one array
-	if($Type)
-	{	
-		$varArray[]='message_type=\'' . $Type . '\'';
 		
-	}
-	
-	if($SubCategory)
-	{
-		
-		$varArray[]='category=\'' . $SubCategory . '\'';
-				
-	}
-	
-	if($TimeStart & $TimeEnd)
-	{
-		//$varArray[]='time_start >= \'' . $TimeStart . '\' AND time_start <= \''. $TimeEnd .'\'';	
-		$varArray[]='time_start BETWEEN \'' . $TimeStart . '\' AND \''. $TimeEnd .'\'';	
-	}  
-	
-	if(!$con)
-	{  die(json_encode(array("error" => "no connection to the server")));}
-	
-	
-	$query = 'SELECT "message_id", "message_type", "title", ST_AsText(location),
-								"time_start", "description", "people_needed", "people_attending",
-								"category", "person_name", "person_contact",
-								 "person_email" FROM message';
-
-	if (!empty($varArray)) {
-    	$query .= ' WHERE ' . implode(' AND ', $varArray) . ' order by time_start Desc ; ';
-	
-	echo($query);
-	
-		$result = pg_query($con, $query);
-				if(!$result) 
-				{
-            // throw exception
-            throw new Exception("no results found");
-				}
-	 			while($row = pg_fetch_assoc($result)){
-	 					
-				   		$data[] = array($row);	
+		if($result)
+		{
 			
+	 		while($row = pg_fetch_assoc($result))
+	 		{
+	 					
+				$data[] = array($row);	
+				//get all comments 
 				$queryString2 = 'SELECT * FROM comment where message_id='.$row['message_id'].' ;';
 				
 				$result2 = pg_query($con, $queryString2);
-	 			while($row2 = pg_fetch_assoc($result2)){
-	 					
-			
-				   		$data[]['new comment'] = array($row2);	
+	 			while($row2 = pg_fetch_assoc($result2))
+	 			{
+	 					$data[]['new comment'] = array($row2);	
 						
-					
 				}
-				}
-	pg_close($con);
-    echo(json_encode($data));
-	
-	}
-	else{
-			
-		return json_encode(array("error" => "No valid search parameter"));
-		
-		}
-									
-		}
-
-
-
-//return all official message order by submition time
-function getOfficial()
-{
-	
-	$con = getConnection();
-	if(!$con)
-	{  die(json_encode(array("error" => "no connection to the server")));}
-	
-		$queryString = 'SELECT "message_id", "message_type", "title", ST_AsText(location),
-								"time_start","time_stop", "date_of_change", "date_of_creation", "description", "people_needed", "people_attending",
-								"file","priority","category", "upvotes", "downvotes", "status", "person_name", "person_contact", 
-								"person_email" FROM message where isofficial=1 order by time_start Desc ;';
-				
-		$result = pg_query($con, $queryString);
-	 	while($row = pg_fetch_assoc($result)){
-	 					
-			$data[] = array($row);	
-			
-			$queryString2 = 'SELECT * FROM comment where message_id='.$row['message_id'].' ;';
-				
-				$result2 = pg_query($con, $queryString2);
-	 			while($row2 = pg_fetch_assoc($result2)){
-	 					
-			
-				   		$data[]['new comment'] = array($row2);	
-						
-					
-				}
-	 }
+	    	}
 	 
-	pg_close($con);
-    echo(json_encode($data));
-	//return json_encode($data);
-	
+	 		pg_close($con);
+			//echo(json_encode($data));
+     		return json_encode($data);
+	 		
+		}
+		
+		else
+		{
+			throw new Exception("no results found");
+		}
 	
 }
 
+
+	
+	//function to filter the data--->create dynamic query string (concatenate all the filter values )
+	function getFilteredData() 
+	{
 		
-function helpShortage()
-{
+		$data = Array();
+		$con = getConnection();
+		//clear array
+		unset($varArray);
+
+		//check the values for filtir and added to one array
+		if($_POST['MessageType']!=null or "")
+		{	
+			$varArray[]='message_type=\'' . $_POST['MessageType'] . '\'';
+		
+		}
 	
-	$con = getConnection();
-	if(!$con)
-	{  die(json_encode(array("error" => "no connection to the server")));}
+		if($_POST['SubCategory']!=null or "")
+		{
+		
+			$varArray[]='category=\'' . $_POST['SubCategory'] . '\'';
+				
+		}
 	
-		$queryString = 'SELECT "message_id", "message_type", "title", ST_AsText(location),
+		if(($_POST['TimeStart']!=null or "")  && ($_POST['TimeEnd']!=null or ""))
+		{
+		
+			$varArray[]='time_start BETWEEN \'' . $_POST['TimeStart'] . '\' AND \''. $_POST['TimeEnd'] .'\'';	
+		
+		}  
+	
+		
+		if(!$con)
+		{  die(json_encode(array("error" => "no connection to the server")));}
+		
+		$query = 'SELECT "message_id", "message_type", "title", ST_AsText(location),"time_start", "relevant" ,"date_of_change",
+						"description", "people_needed", "people_attending","file","category", "tags", "person_name", "person_contact",
+						"person_email" FROM message';
+
+		if (!empty($varArray))
+		 {
+    			$query .= ' WHERE ' . implode(' AND ', $varArray) . ' order by time_start Desc ; ';
+	
+				$result = pg_query($con, $query);
+				if($result!=null)
+				{
+            		
+	 				while($row = pg_fetch_assoc($result))
+	 				{
+	 					
+				   		$data[] = array($row);	
+			
+						$queryString2 = 'SELECT * FROM comment where message_id='.$row['message_id'].' ;';
+				
+						$result2 = pg_query($con, $queryString2);
+	 					while($row2 = pg_fetch_assoc($result2))
+	 					{
+	 					
+			
+				   				$data[]['new comment'] = array($row2);	
+						
+					
+						}
+					}
+			
+					pg_close($con);
+					echo(json_encode($data));
+    				return json_encode($data);
+				}
+				else
+				{	// throw exception
+            		throw new Exception("no results found");
+				}
+	
+		}
+		else
+		{
+			
+			return json_encode(array("error" => "No valid search parameter"));
+		
+		}
+									
+	}
+
+
+
+	//return all official message order by submition time
+	function getOfficial()
+	{
+	
+			$con = getConnection();
+			if(!$con)
+			{
+				  die(json_encode(array("error" => "no connection to the server")));
+			}
+	
+			else
+			{
+				$queryString = 'SELECT "message_id", "message_type", "title", ST_AsText(location),"time_start","time_stop", "date_of_change", "date_of_creation", "description", "people_needed", "people_attending",
+								"file","priority","category", "upvotes", "downvotes", "status", "person_name", "person_contact", "person_email" FROM message where isofficial=1 order by time_start Desc ;';
+				
+				$result = pg_query($con, $queryString);
+				if($result!=null)
+				{
+	 				while($row = pg_fetch_assoc($result))
+	 				{
+	 					
+						$data[] = array($row);	
+			
+						$queryString2 = 'SELECT * FROM comment where message_id='.$row['message_id'].' ;';
+				
+						$result2 = pg_query($con, $queryString2);
+	 					while($row2 = pg_fetch_assoc($result2))
+	 					{
+				   			$data[]['new comment'] = array($row2);	
+						
+						}
+	 				}
+	 
+					pg_close($con);
+    				//echo(json_encode($data));
+					return json_encode($data);
+				}
+				else
+				{// throw exception
+            		throw new Exception("no results found");
+				}
+	
+			}
+	}
+
+		
+	function helpShortage()
+	{
+		$con = getConnection();
+		if(!$con)
+		{  die(json_encode(array("error" => "no connection to the server")));}
+	
+			$queryString = 'SELECT "message_id", "message_type", "title", ST_AsText(location),
 								"time_start","time_stop", "date_of_change", "date_of_creation", "description", "people_needed", "people_attending",
 								"file","priority","category", "upvotes", "downvotes", "status", "person_name", "person_contact", 
 								"person_email" FROM message where people_needed > people_attending order by time_start Desc ;';
 				
-		$result = pg_query($con, $queryString);
-		
-	 	while($row = pg_fetch_assoc($result)){
+			$result = pg_query($con, $queryString);
+			if($result)
+			{
+	 			while($row = pg_fetch_assoc($result))
+	 			{
 	 					
-			$data[] = array($row);	
+					$data[] = array($row);	
 			
-			$queryString2 = 'SELECT * FROM comment where message_id='.$row['message_id'].' ;';
+					$queryString2 = 'SELECT * FROM comment where message_id='.$row['message_id'].' ;';
 				
-				$result2 = pg_query($con, $queryString2);
-	 			while($row2 = pg_fetch_assoc($result2)){
-	 					
-			
+					$result2 = pg_query($con, $queryString2);
+	 				while($row2 = pg_fetch_assoc($result2))
+	 				{
 				   		$data[]['new comment'] = array($row2);	
-						
-					
-				}
-	 }
+					}
+	 			}
 	 
-	pg_close($con);
-    echo(json_encode($data));
-	//return json_encode($data);
-	
-	
-}
-
-
-//get messages that are within a distance X from Point p
-function selectByDistance($Point,$distance)
-{
-	
-	$con = getConnection();
-	if(!$con)
-	{  die(json_encode(array("error" => "no connection to the server")));}
-	
-	
-	if($Point && $distance )
-	{
-	//remember to use ST_GeometryFromText
-		$queryString = 'SELECT "message_id", "message_type", "title", ST_AsText(location),
-								"time_start","time_stop", "date_of_change", "date_of_creation", "description", "people_needed", "people_attending",
-								"file","priority","category", "upvotes", "downvotes", "status", "person_name", "person_contact", 
-								"person_email" FROM message where ST_DWithin(location, '.$Point.','.$distance.') order by time_start Desc ;';
-				
-				
-		$result = pg_query($con, $queryString);
-		if(!$result) 
-				{
-           			 // throw exception
+				pg_close($con);
+    			//echo(json_encode($data));
+				return json_encode($data);
+			}
+			else
+				{// throw exception
             		throw new Exception("no results found");
 				}
-		else{}
+	
+	
+	}
+
+
+	//get messages that are within a distance X from Point p
+	function selectByDistance($xCoordinate,$type,$distance)
+	{
 		
-	 	while($row = pg_fetch_assoc($result)){
-	 					
-			$data[] = array($row);	
+		$data = Array();
+		
+		if($xCoordinate!='' & $type!='')
+		{
+			$coordString=buildCoords($xCoordinate, $type);
 			
-			$queryString2 = 'SELECT * FROM comment where message_id='.$row['message_id'].' ;';
+			if($coordString!='')
+			{
+					
+				$coordString=$type.$coordString;
 				
-				$result2 = pg_query($con, $queryString2);
-	 			while($row2 = pg_fetch_assoc($result2)){
+				$con = getConnection();
+		
+				if(!$con)
+				{  die(json_encode(array("error" => "no connection to the server")));}
+				
+	
+				else
+				{
+					//use ST_MakePoint or ST_Point or ST_GeomFromText
+					$queryString = "SELECT message_id, message_type, title, ST_AsText(location),time_start, relevant ,date_of_change,
+						description, people_needed, people_attending,file,category, tags, person_name, person_contact,
+						person_email FROM message where ST_DWithin(location, ST_Centroid(ST_GeomFromText( '".$coordString."')), ".$distance.")  order by time_start Desc ;";
+				
+								
+					$result = pg_query($con, $queryString);
+					if($result)
+					{
+	 					while($row = pg_fetch_assoc($result))
+	 					{
+	 						
+							$data[] = array($row);	
+			
+							$queryString2 ='SELECT * FROM comment where message_id='.$row['message_id'].' ;';
+				
+							$result2 = pg_query($con, $queryString2);
+	 						while($row2 = pg_fetch_assoc($result2))
+	 						{
 	 					
 			
-				   		$data[]['new comment'] = array($row2);	
+				   				$data[]['new comment'] = array($row2);	
 						
 					
+							}
+	 					}
+
+						pg_close($con);
+   						echo(json_encode($data));
+						return json_encode($data);
+				
+					}
+
+					else
+					{die(json_encode(array("error" => "no result found ")));}
 				}
-		} 
-	 }
-	 
-	pg_close($con);
-    echo(json_encode($data));
-	return json_encode($data);
-	
-	
-}
+			}
+			else
+			{
+				{ throw new Exception("not valid coordinate");}
+			}
+		}
+		
+	}
+
 
   
 ?>
