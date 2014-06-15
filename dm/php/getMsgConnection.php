@@ -286,7 +286,7 @@
 	 					}
 
 						pg_close($con);
-   						echo(json_encode($data));
+   						//echo(json_encode($data));
 						return json_encode($data);
 				
 					}
@@ -303,6 +303,75 @@
 		
 	}
 
+	
+	//input: pointLowLeft , pointUpRight to make 2dBox 
+  	function getMsgByExtent($arrayPointlow,$arrayPointUp)
+	{
+
+		$data = Array();
+		$type='Point';	
+		
+		if($arrayPointlow & $arrayPointUp)
+		{
+			$coordStringLow=buildCoords($arrayPointlow, $type);
+			$coordStringUp=buildCoords($arrayPointUp, $type);
+			
+			if($coordStringLow!='' & $coordStringUp!='')
+			{
+					
+				$con = getConnection();
+		
+				if(!$con)
+				{  die(json_encode(array("error" => "no connection to the server")));}
+				
+	
+				else
+				{
+					//use ST_MakeBox2D create 2Dbox then return all feature that fall(or part) inside this box
+					//use ST_MakePoint or ST_Point or ST_GeomFromText
+					$queryString = "SELECT message_id, message_type, title, ST_AsText(location),time_start, relevant ,date_of_change,
+					description, people_needed, people_attending,file,category, tags, person_name, person_contact,person_email FROM message 
+					where ST_Within(location, ST_MakeBox2D(ST_GeomFromText( '".$type.$coordStringLow."'),ST_GeomFromText('".$type.$coordStringUp."'))) order by time_start Desc ;";
+				
+					$result = pg_query($con, $queryString);
+					if($result)
+					{
+	 					while($row = pg_fetch_assoc($result))
+	 					{
+	 						
+							$data[] = array($row);	
+			
+							$queryString2 ='SELECT * FROM comment where message_id='.$row['message_id'].' ;';
+				
+							$result2 = pg_query($con, $queryString2);
+	 						while($row2 = pg_fetch_assoc($result2))
+	 						{
+	 					
+			
+				   				$data[]['new comment'] = array($row2);	
+						
+					
+							}
+	 					}
+
+						pg_close($con);
+						return json_encode($data);
+				
+					}
+
+					else
+					{die(json_encode(array("error" => "no result found ")));}
+				}
+			}
+			else
+			{
+				{ throw new Exception("not valid coordinate");}
+			}
+		}
+		
+		
+	
+	}
 
   
 ?>
