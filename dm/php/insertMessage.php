@@ -1,5 +1,5 @@
 <?php
-$dbconn = pg_connect("host=host port=5432 dbname=dbname user=user password=password")
+$dbconn = pg_connect("host=host port=5432 dbname=dbname user=user password=pw")
     or die('Verbindungsaufbau fehlgeschlagen: ' . pg_last_error());
 	
 	$issue = $_POST['Issue'];
@@ -60,7 +60,7 @@ $dbconn = pg_connect("host=host port=5432 dbname=dbname user=user password=passw
 		$geometry = "Point";
 		$coordinates = "(0 0)";
 	}
-	$query=pg_query($dbconn,"Insert into \"message\" values (DEFAULT,'".$issue."','".$title."','".$geometry.$coordinates."',TIMESTAMP '".$creationDate."',TIMESTAMP '".$creationDate."',TIMESTAMP '2001-09-28 01:00:00',TIMESTAMP '".$creationDate."','".$description."',".$people_need.",".$people_attending.",'',0,'".$category."',0,0,'Upcoming','".$person_name."','".$person_contact."','delete?');");
+	$query=pg_query($dbconn,"Insert into \"message\" values (DEFAULT,'".$issue."','".$title."','".$geometry.$coordinates."',TIMESTAMP '".$creationDate."',true,TIMESTAMP '".$creationDate."','".$description."',".$people_need.",".$people_attending.",'','".$category."','','".$person_name."','".$person_contact."','delete?');");
 	
 	//REMEBER: Select ST_AsText(location) from message;
 	
