@@ -1,6 +1,5 @@
-	
 <?php
-	//put insertMessage out, because otherwise json could not be parsed
+	// Exclude insertMessage.php, because otherwise json could not be parsed
 	//include('insertMessage.php');
 	//connect to database and return connection obj		
 	function getConnection()
@@ -11,12 +10,17 @@
   
   			return $db_connection;
 		}
-		 
-	if($_GET["action"] == "GetAll")
-  		{getAllData();}
-	else if($_GET["action"] == "ByExtent")
-  	{getMsgByExtent();}
-			
+	
+	/*
+    *	@Nourhan: Please check if this is needed anymore?!
+	*/
+	//if($_GET["action"] == "GetAll")
+  	//	{getAllData();}
+	//else if($_GET["action"] == "ByExtent")
+  	//{getMsgByExtent();}
+	
+	
+	getAllData();		
 	//function to return al messages with associated comments
 	function getAllData() {
 	
