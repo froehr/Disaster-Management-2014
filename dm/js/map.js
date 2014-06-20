@@ -241,6 +241,32 @@ var LlocationFilter = new L.LocationFilter({
 		}
 	}).addTo(map);
 
+
+LlocationFilter.on("enabled", function (e) {
+	northEastBoundsLat = LlocationFilter._ne.lat;
+	northEastBoundsLong = LlocationFilter._ne.lng;
+	southWestBoundsLat = LlocationFilter._sw.lat;
+	southWestBoundsLong = LlocationFilter._sw.lng;
+	PointUp = new Array(LlocationFilter._ne.lat,LlocationFilter._ne.lng);
+	PointDown = new Array(LlocationFilter._sw.lat,LlocationFilter._sw.lng);
+	//console.log("NorthEastBoundsLat: "+northEastBoundsLat+", NorthEastBoundsLong: "+northEastBoundsLong+ "; SouthWestBoundsLat: "+southWestBoundsLat+", SouthWestBoundsLong: "+southWestBoundsLong)
+	console.log(PointUp);
+	console.log(PointDown);
+});
+
+LlocationFilter.on("change", function (e) {
+	northEastBoundsLat = LlocationFilter._ne.lat;
+	northEastBoundsLong = LlocationFilter._ne.lng;
+	southWestBoundsLat = LlocationFilter._sw.lat;
+	southWestBoundsLong = LlocationFilter._sw.lng;
+	PointUp = new Array(LlocationFilter._ne.lat,LlocationFilter._ne.lng);
+	PointDown = new Array(LlocationFilter._sw.lat,LlocationFilter._sw.lng);
+	//console.log("NorthEastBoundsLat: "+northEastBoundsLat+", NorthEastBoundsLong: "+northEastBoundsLong+ "; SouthWestBoundsLat: "+southWestBoundsLat+", SouthWestBoundsLong: "+southWestBoundsLong)
+	console.log(PointUp);
+	console.log(PointDown);
+});
+
+
 /*
 For now, the time information is used of a local json file.
 Demo of temporal data and slidercontrol
