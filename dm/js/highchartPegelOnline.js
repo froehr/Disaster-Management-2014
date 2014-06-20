@@ -59,7 +59,5 @@ initHighChartForStation = function(id) {
         });
         options.series[0].data = chart_data;
         var chart = new Highcharts.Chart(options);
-		
-		createPopUp(800, 440, '');
     });
 };

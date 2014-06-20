@@ -170,6 +170,7 @@ $('#about').click(function() {
 });
 
 $('body').on('click', '#highchart-button', function(e) {
+	createPopUp(800, 400, '');
 	initHighChartForStation($(e.target).attr('data-stationName'));
 });
 
