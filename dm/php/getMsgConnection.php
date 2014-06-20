@@ -1,7 +1,7 @@
 	
 <?php
-	
-	include('insertMessage.php');
+	//put insertMessage out, because otherwise json could not be parsed
+	//include('insertMessage.php');
 	//connect to database and return connection obj		
 	function getConnection()
 		 {
@@ -40,7 +40,7 @@
 	 		while($row = pg_fetch_assoc($result))
 	 		{
 	 					
-				$data[] = array($row);	
+				$data[] = $row;	
 				//get all comments 
 				$queryString2 = 'SELECT * FROM comment where message_id='.$row['message_id'].' ;';
 				
@@ -52,8 +52,8 @@
 				}
 	    	}
 	 
-	 		pg_close($con);
-			//echo(json_encode($data));
+	 	pg_close($con);
+		echo(json_encode($data));
      		return json_encode($data);
 	 		
 		}
