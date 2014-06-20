@@ -143,7 +143,7 @@ var flood = new L.TileLayer.WMS("http://www.wms.nrw.de/umwelt/wasser/uesg", {
 	});
 
 // Rain layer
-var rain = new L.tileLayer('http://{s}.tile.openweathermap.org/map/current/{z}/{x}/{y}.png', {
+var rain = new L.tileLayer('http://{s}.tile.openweathermap.org/map/rain_cls/{z}/{x}/{y}.png', {
 		options : {
 			attribution : 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
 			opacity : 0.5
@@ -512,6 +512,28 @@ groupedOverLayers = {
 
 // Layer switcher
 var LlayerSwitcher = new L.control.groupedLayers(baseLayers, groupedOverLayers, {position: 'bottomleft'}).addTo(map);
+
+
+// Zoom to  suitable extend on overlay layer change
+map.on('overlayadd', function(e) {
+	if (e.name== 'Pegel Online|pegel|false|Current water level and water level diagrams from gauges in Germany. Click on the icons on the map to show more information.'){
+			map.setView([51.40, 10.70], 6)
+		};
+	if (e.name== 'Flood Prone Areas|flood_prone|true|Flood prone areas in North-Rhine Westphalia. Calculated for a statistical flood once in one hundred years.'){
+			map.setView([51.961, 7.652], 12)
+		};
+	if (e.name== 'Ground Map (DGK5)|dgk|true|German ground map in scale 1:5000 for North-Rhine Westphalia. This layer ist only visible on very high zoom levels, so you need to zoom in to visualize it.'){
+			map.setView([51.962, 7.624], 16)
+		};
+	if (e.name== 'Topographical Map (DTK10)|dtk|true|German topographical map in scale 1:10000 for North-Rhine Westphalia. This layer ist only visible on very high zoom levels, so you need to zoom in to visualize it.'){
+			map.setView([51.962, 7.624], 14)
+		};
+	if (e.name== 'World Wide Rain Forecast|rain|true|Precipitation forecast from Open Weather map. This layer is only visible on very low zoom levels, so you need to zoom out to visualize it.'){
+			map.setView([51.962, 7.624], 5)
+		};	
+  });	
+
+
 
 $.each(groupedOverLayers, function(i, v) {
 	$.each(v, function(properties, layer) {
