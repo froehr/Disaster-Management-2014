@@ -12,6 +12,10 @@
   			return $db_connection;
 		}
 		 
+	if($_GET["action"] == "GetAll")
+  		{getAllData();}
+	else if($_GET["action"] == "ByExtent")
+  	{getMsgByExtent();}
 			
 	//function to return al messages with associated comments
 	function getAllData() {
@@ -327,7 +331,7 @@
 	
 				else
 				{
-					//use ST_MakeBox2D create 2Dbox then return all feature that fall(or part) inside this box
+					//use ST_MakeBox2D create 2Dbox then return all feature that fall inside this box
 					//use ST_MakePoint or ST_Point or ST_GeomFromText
 					$queryString = "SELECT message_id, message_type, title, ST_AsText(location),time_start, relevant ,date_of_change,
 					description, people_needed, people_attending,file,category, tags, person_name, person_contact,person_email FROM message 

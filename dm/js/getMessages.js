@@ -5,13 +5,13 @@
 function readAllMessages() {
 	
 //set filtervalues and type later 
-var filterValue, filterType;
+var Action;
 
 jQuery.ajax({
     type: "POST",
-    url: 'php/get_msg_connection.php',
+    url: 'php/getMsgConnection.php',
     dataType: 'json',
-    data: {filterValue: filterValue, filterType: filterType},
+    data: {Action:'GetAll'},
     success: function(data) {
     	console.log(data);
     },
@@ -21,5 +21,24 @@ jQuery.ajax({
         
 });
 }
+
+function getMessagesbyExtent(Pointlow,PointUp) {
+	
+//set filtervalues and type later 
+var Action,Argument1, Argument2;
+
+jQuery.ajax({
+    type: "POST",
+    url: 'php/getMsgConnection.php',
+    dataType: 'json',
+    data: {Action:'ByExtent', Argument1:Pointlow, Argument2:PointUp},
+    success: function(data) {
+    	console.log(data);
+    },
+    error: function(textStatus){
+    	console.log("textStatus");
+    }
+        
+});
 
 
