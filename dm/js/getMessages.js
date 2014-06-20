@@ -1,4 +1,4 @@
-/**
+/*
  * @author Nourhan
  */
 
@@ -15,8 +15,9 @@ jQuery.ajax({
     success: function(data) {
     	console.log(data);
     },
-    error: function(textStatus){
-    	console.log("textStatus");
+    error: function(textStatus, error){
+    	console.log(textStatus);
+	console.log(error);
     }
         
 });
