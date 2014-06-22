@@ -18,7 +18,8 @@ function setLoginContent() {
 		'<h1>Password</h1>' +
 		'<input type="password" name="password" id="password" />' +
 		'<p><a href="#" id="forgot-password">Forgot password?</a><br /><a href="#" id="create-account">Create new account.</a></p>' +
-		'<div class="submit"><input type="submit" value="Login &nbsp; &#9658;" id="submit" /></div><br />' +
+		'<div class="submit"><input type="submit" value="Login &nbsp; &#9658;" id="email-login" /></div><br />' +
+		'<p id="login-error"></p>' +
 		'<h1>Social Media Login</h1>' +
 		'<div class="center">' +
 			'<div id="facebook" class="um-button">Login with Facebook</div>' +
@@ -27,6 +28,10 @@ function setLoginContent() {
 		'</div>';
 	$('#login-popup').html(defaultContent);
 	$('#login-popup').css('height', 'auto');
+	$('#email-login').click(function() {
+		signIn();
+	});
+
 
 	$('#create-account').click(function() {
 		var content = '<h1>Create new account</h1>' +
@@ -38,8 +43,11 @@ function setLoginContent() {
 			'<input type="password" name="create-account-password-1" id="create-account-password-1" />' +
 			'<p>Confirm password</p>' +
 			'<input type="password" name="create-account-password-2" id="create-account-password-2" />' +
-			'<div class="submit normalized"><input type="submit" value="Submit" id="create-account-submit" /></div><br />';
+			'<p id="signup-error"></p><div class="submit normalized"><input type="submit" value="Submit" id="create-account-submit" /></div><br />';
 		createPopUp(257, 310, content);
+		$('#create-account-submit').click(function() {
+			signUp();
+		});
 	});
 
 	$('#facebook').click(function() {
@@ -50,18 +58,33 @@ function setLoginContent() {
 	$('#twitter').click(function() {
 		Hull.login('twitter');
 	});
-
-	$('#google').click(function() {
-		Hull.login('google');
+	
+	$('#googleplus').click(function() {
+		Hull.login('googleplus');
 	});
+	
 	*/
+
+	
+
 }
 
 function setLogoutContent() {
 	$('#login').html('Account');
 	
-	var user = Hull.currentUser();
-	var provider = user.identities[0].provider;
+	var user = getUserInfo();
+	provider = 'dummy';
+	try {
+    	provider = user.identities[0].provider;
+	}
+	catch(err) {
+    	
+	}
+	
+	if (provider == 'dummy') {
+		provider = 'email';
+	}
+
 	var uppercaseProvider = provider.charAt(0).toUpperCase() + provider.substr(1, provider.length);
 	content = '<div class="center">' +
 			'<img src="' + user.picture + '" class="float-left" />' +
@@ -111,3 +134,52 @@ function getHullId(id) {
 	return entity;
 }
 
+//Registration with E-Mail
+function signUp() {
+	
+	var name = $('#create-account-name').val();
+	var email = $('#create-account-mail').val();
+	var password1 = $('#create-account-password-1').val();
+	var password2 = $('#create-account-password-2').val();
+	if (password1 == password2) {
+		Hull.api('/users', 'post',{
+	  		"email": email,
+	  		"password": password1,
+	  		"name": name
+			}).then(function(response) {
+	 		
+ 				closePopUp();
+ 			}
+ 			,function(error) {
+		    	var status = error.status;
+		 		if (status == 400) {
+		 			if (error.param == "email"){
+	 					printErrorMsg("Invalid Mailing Adress!");
+	 				}else{
+	 					printErrorMsg("User already exists!");
+	 				}
+	 			} 
+			}
+		);
+	} else {
+		printErrorMsg("Passwords do not match!");
+	}
+	
+	function printErrorMsg(message) {
+		$("#signup-error").text(message);
+		$('#popup').css('height', 330);
+	}	
+}
+
+// Log in with E-Mail
+function signIn() {
+	var email = $('#mail').val();
+	var password = $('#password').val();
+
+	Hull.login(email, password).then(function (me) {
+  		$("#login-error").text("");
+		}, function (error) {
+  		$("#login-error").text("Wrong E-Mail or Password.");
+  		$('#login-popup').css('height', 'auto');
+	});
+}
