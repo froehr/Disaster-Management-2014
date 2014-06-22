@@ -17,6 +17,27 @@ var map = new L.Map('map', {
 
 // global variable for position of weatherforcast
 var latlng;	
+
+
+// Get messages from database as a GeoJSON FeatureCollection
+$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
+	messages = L.geoJson(data, {
+		onEachFeature: function (feature, layer) {
+			layer.bindPopup(feature.properties.description);
+		},
+		style: function(feature){
+            switch(feature.properties.message_type){
+            case "emergency": return {color: '#A50026'};
+            case "need-support": return {color: '#eba259'};
+            case "offer-support": return {color: '#468f5c'};
+            case "message": return {color: '#45544a'}
+            }
+		}	
+	});
+	messages.addData(data);
+	messages.addTo(map)
+});
+
 	
 // Waterlevel measurement data (Pegel Online Restservice is used)
 var waterMeasurementData = L.layerJSON({
