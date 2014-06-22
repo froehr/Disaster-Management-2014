@@ -1058,6 +1058,20 @@ div.location-filter.button-container.enabled {
 	background-color: #eb6d5d;
 }
 
+#login-popup #email {
+	background-color: #49C6BD;
+	background-image: url(../img/social-logos/email.png);
+}
+
+#login-popup #email:hover {
+	background-color: #56D1C9;
+}
+
+#login-popup #email:active {
+	background-color: #56D1C9;
+}
+
+
 #login-popup .username {
 	padding: 10px;
 	margin-left: 50px;
