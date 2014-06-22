@@ -51,9 +51,10 @@ function setLoginContent() {
 		});
 	});
 
-	var onError = function(error) {
-  		console.log("oops, something went wrong : ", error.reason);
-	}
+	
+	$('#forgot-password').click(function() {
+		resetPW();
+	});
 
 	$('#facebook').click(function() {
 		Hull.login('facebook');
@@ -64,11 +65,11 @@ function setLoginContent() {
 		Hull.login('twitter');
 	});
 	
-	/*
+	
 	$('#googleplus').click(function() {
 		Hull.login('google');
 	});
-	*/
+	
 	
 
 	
@@ -186,6 +187,35 @@ function signIn() {
   		$("#login-error").text("");
 		}, function (error) {
   		$("#login-error").text("Wrong E-Mail or Password.");
+  		$('#login-error').css('color', '#A50026');
   		$('#login-popup').css('height', 'auto');
 	});
+}
+
+function resetPW() {
+	
+	var onSuccess = function(user) {
+  		closePopUp();
+	};
+
+	var onError = function(error) {
+	  $('#recover-error').text('Invalid E-Mail or User does not exist.');
+	  $('#recover-error').css('color', '#A50026');
+	  $('#popup').css('height', '140');
+	}
+
+	var content = '<h1>Password Reset</h1>' +
+				'<p>Please enter your E-Mail:<p>' +
+					'<input type="text" name="mail" id="recover-mail" /><br />' +
+					'<div class="submit normalized"><input type="submit" value="Submit &nbsp; &#9658;" id="reset-pw" /></div><br />' +
+					'<p id="recover-error"></p>';
+	createPopUp(255, 120, content);
+
+	$("#reset-pw").click(function(){
+		var email = $("#recover-mail").val();
+		Hull.api('/users/request_password_reset', 'post',{
+	  		"email": email
+			}).then(onSuccess, onError);
+	});			
+			
 }
