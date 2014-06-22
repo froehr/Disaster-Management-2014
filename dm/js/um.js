@@ -3,10 +3,11 @@ Hull.init({
 	"orgUrl": "https://22dd92ac.hullapp.io"
 	},
 	function(hull, me, app, org) {
-	
+		
+		
 	},
 	function(error) {
-    // An Error happend, handle it.
+    console.log(error);
 	}
 );
 
@@ -50,20 +51,25 @@ function setLoginContent() {
 		});
 	});
 
+	var onError = function(error) {
+  		console.log("oops, something went wrong : ", error.reason);
+	}
+
 	$('#facebook').click(function() {
 		Hull.login('facebook');
 	});
 
-	/*
+	
 	$('#twitter').click(function() {
 		Hull.login('twitter');
 	});
 	
+	/*
 	$('#googleplus').click(function() {
-		Hull.login('googleplus');
+		Hull.login('google');
 	});
-	
 	*/
+	
 
 	
 
