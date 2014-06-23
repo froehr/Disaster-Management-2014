@@ -6,7 +6,30 @@ function Comment(comment_id, name, message, date_time, file) {
 	this.file = file;
 }
 
-function Message(message_id, message_type, location, time_start, time_stop, date_of_change, date_of_creation, title, description, people_need, people_attending, file, priority, category, upvotes, downvotes, person_name, person_contact, person_telephone, person_email, display, tags, comments) {
+// Database/geoJson Structure
+function Message(message_id, message_type, title, location, time_start, relevant, date_of_change, description, people_need, people_attending, file, category, tags, person_name, person_contact, person_email, comments) {
+	this.message_id = message_id;
+	this.message_type = message_type;
+	this.title = title;
+	this.location = location;
+	this.time_start = time_start;
+	this.relevant = relevant;
+	this.date_of_change = date_of_change;
+	this.description = description;
+	this.people_need = people_need;
+	this.people_attending = people_attending;
+	this.file = file;
+	this.category = category;
+	this.tags = tags;
+	this.person_name = person_name;
+	this.person_contact = person_contact;
+	this.person_email = person_email;
+	this.comments = comments;
+}
+
+
+// Local, static examples
+ /* function Message(message_id, message_type, location, time_start, time_stop, date_of_change, date_of_creation, title, description, people_need, people_attending, file, priority, category, upvotes, downvotes, person_name, person_contact, person_telephone, person_email, display, tags, comments) {
 	this.message_id = message_id;
 	this.message_type = message_type;
 	this.location = location;
@@ -30,11 +53,13 @@ function Message(message_id, message_type, location, time_start, time_stop, date
 	this.display = display;
 	this.tags = tags;
 	this.comments = comments;
-}
+} */
+
 
 function showMessages() {
 	
-	var messages = [
+	// Local static examples
+	/* var messages = [
 		new Message(0,
 					'emergency','{"type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[[7.612946033477782,51.96501340456607],[7.61101484298706,51.9650001835794],[7.609212398529052,51.96584631886286],[7.608332633972168,51.96476220515285],[7.606294155120849,51.96379705746947],[7.608118057250977,51.9627261158533],[7.60876178741455,51.96164192667244],[7.610800266265869,51.9623691296285],[7.612645626068115,51.962276577180184],[7.612946033477782,51.96501340456607]]]}}',
 					'2014-04-17, 14:30',
@@ -140,7 +165,7 @@ function showMessages() {
 					'', [
 					]
 		)
-	];
+	]; */
 	
 		
 	// Function appends one message-div element to the messages div for the message of the parameter
@@ -189,8 +214,9 @@ function showMessages() {
 					'<div class="comments" id="comments-' + message['message_id'] + '">' +
 					'<div class="less" id="less-' + message['message_id'] + '-top">' +
 						'<a href="#"><span>&#9668;</span> less</a>' +
-					'</div>' +
-					'<p><b>Comments (<span id="number-of-comments-' + message['message_id'] + '">' + message['comments'].length + '</span>)</p></b>'
+					'</div>' 
+					// Until now this line causes an error. Personally I could not finde the problem, but probably it won't be too hard :P
+					//+ '<p><b>Comments (<span id="number-of-comments-' + message['message_id'] + '">' + message['comments'].length + '</span>)</p></b>'
 					+ comments_html +
 					'<div class="new-comment">' +
 						'<p><b>New comment</b></p>' +
@@ -621,6 +647,24 @@ function getComments(message) {
 		showMessage(messages[i]);
 		setMessageClickFunctions(messages[i]);
 	}
+	
+	/*
+	File has to be done separately? At least while accessing file here ("messageFeatures.properties.file" instead of "") jquery gives me an error
+	
+	*/
+	$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
+		for (var i = 0, len = data.features.length; i < len; i++){
+			var messageFeatures = data.features[i];
+			var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, "", messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email);
+			showMessage(msg);
+			setMessageClickFunctions(msg);
+		}
+
+	});
+	// messages.addData(data);
+	// messages.addTo(map)
+	
+	
 }
 
 function decreaseNumberOfComments(id, amount) {

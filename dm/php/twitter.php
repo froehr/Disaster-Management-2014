@@ -22,7 +22,8 @@ $url = "https://api.twitter.com/1.1/statuses/update.json";
 
 $requestMethod = "POST";
 //Post something in Twitter, e.g. $getfield = array('status'=>'another funtweet','screen_name'=>'MarkusKonkol');
-$getfield = array('status'=>'New Message: '$issue.', '.$description,'screen_name'=>'DisasterManagement');
+//Originally $getfield = array('status'=>'New Message: '$issue.', '.$description,'screen_name'=>'DisasterManagement');   but this gave me an error. Switched to something differnt for testing purposes.
+$getfield = array('status'=>'New Message: '.$issue. ', ' .$title. ', ' .$category. ', ' .$person_contact);
 
 $twitter = new TwitterAPIExchange($settings);
 echo $twitter->buildOauth($url, $requestMethod)

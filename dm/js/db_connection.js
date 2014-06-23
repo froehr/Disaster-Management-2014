@@ -138,7 +138,7 @@
 				}	
 				);
 	
-		$.post(
+		 $.post(
 				"php/twitter.php?",
 				{	
 					Issue:issue,
@@ -147,8 +147,10 @@
 					Category:category,
 					PersonContact:contact				
 				},
-				function(data){console.log(data);}	
-				);			
+				function(data){
+					console.log(data)
+				}
+			);	 		
 		}	
 	}
 	
@@ -207,6 +209,19 @@
 				},
 				function(data){console.log(data);}	
 				);
+		$.post(
+				"php/twitter.php?",
+				{	
+					Issue:issue,
+					Title:title,
+					Description:description,
+					Category:category,
+					PersonContact:contact				
+				},
+				function(data){
+					console.log(data)
+				}
+			);	
 		}	
 	}
 	

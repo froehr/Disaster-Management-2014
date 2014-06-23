@@ -37,6 +37,7 @@ function getConnection()
 			$feature["properties"]["description"] = $row["description"];
 			$feature["properties"]["people_needed"] = $row["people_needed"];
 			$feature["properties"]["people_attending"] = $row["people_attending"];
+			$feature["properties"]["file"] = $row["file"];
 			$feature["properties"]["category"] = $row["category"];
 			$feature["properties"]["tags"] = $row["tags"];
 			$feature["properties"]["person_name"] = $row["person_name"];
