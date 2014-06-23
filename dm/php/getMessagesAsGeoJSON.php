@@ -42,6 +42,7 @@ function getConnection()
 			$feature["properties"]["person_name"] = $row["person_name"];
 			$feature["properties"]["person_contact"] = $row["person_contact"];
 			$feature["properties"]["person_email"] = $row["person_email"];
+			$feature["properties"]["comments"] = "";
 			
 			$FeatureCollection["features"][] = $feature;
 		}
