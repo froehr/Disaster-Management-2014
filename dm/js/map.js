@@ -21,7 +21,7 @@ var latlng;
 
 // Get messages from database
 $.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
-	var messages = L.geoJson(data, {
+	messages = L.geoJson(data, {
 			onEachFeature : function (feature, layer) {
 				layer.bindPopup(feature.properties.description);
 			},
