@@ -133,8 +133,22 @@
 				Tags:tags,
 				CreationDate: creationDate
 				},
-				function(data){console.log(data);}	
+				function(data){
+				//	console.log(data);
+				}	
 				);
+	
+		$.post(
+				"php/twitter.php?",
+				{	
+					Issue:issue,
+					Title:title,
+					Description:description,
+					Category:category,
+					PersonContact:contact				
+				},
+				function(data){console.log(data);}	
+				);			
 		}	
 	}
 	
@@ -234,22 +248,23 @@
 			$.post(
 				"php/insertMessage.php?",
 				{	
-				Issue:issue,
-				Title:title,
-				Description:description,
-				Category:category,
-				PersonContact:contact,
-				Geometry: geometry,
-				Name:name,
-				PeopleAttending:peopleAttending,
-				PeopleNeeded:peopleNeeded,
-				Tags:tags,
-				CreationDate: creationDate
+					Issue:issue,
+					Title:title,
+					Description:description,
+					Category:category,
+					PersonContact:contact,
+					Geometry: geometry,
+					Name:name,
+					PeopleAttending:peopleAttending,
+					PeopleNeeded:peopleNeeded,
+					Tags:tags,
+					CreationDate: creationDate
 				},
-				function(data){console.log(data);}	
-				);
+				function(data){
+				//	console.log(data);
+				}	
+				);				
 		}	
 	}
-	
-	
+
 	
