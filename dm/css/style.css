@@ -1045,16 +1045,16 @@ div.location-filter.button-container.enabled {
 	background-color: #50d0ff;
 }
 
-#login-popup #googleplus {
+#login-popup #google {
 	background-color: #c53624;
 	background-image: url(../img/social-logos/googleplus.png);
 }
 
-#login-popup #googleplus:hover {
+#login-popup #google:hover {
 	background-color: #d95242;
 }
 
-#login-popup #googleplus:active {
+#login-popup #google:active {
 	background-color: #eb6d5d;
 }
 
@@ -1141,6 +1141,10 @@ div.location-filter.button-container.enabled {
 
 #popup .float-left, .tab-popup .float-left {
 	float: left;
+}
+
+#popup .profile-img, .tab-popup .profile-img {
+	max-width: 50px;
 }
 
 #popup input, .tab-popup input {

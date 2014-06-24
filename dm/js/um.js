@@ -65,15 +65,9 @@ function setLoginContent() {
 		Hull.login('twitter');
 	});
 	
-	
 	$('#googleplus').click(function() {
 		Hull.login('google');
 	});
-	
-	
-
-	
-
 }
 
 function setLogoutContent() {
@@ -83,6 +77,7 @@ function setLogoutContent() {
 	provider = 'dummy';
 	try {
     	provider = user.identities[0].provider;
+    	console.log(provider);
 	}
 	catch(err) {
     	
@@ -94,15 +89,20 @@ function setLogoutContent() {
 
 	var uppercaseProvider = provider.charAt(0).toUpperCase() + provider.substr(1, provider.length);
 	content = '<div class="center">' +
-			'<img src="' + user.picture + '" class="float-left" />' +
+			'<img src="' + user.picture + '" class="float-left profile-img" />' +
 			'<div class="left username">Connected as <b>' + user.name + '</b> via ' + uppercaseProvider + '.</div>' +
 			'<div id="' + provider + '" class="um-button">Logout</div>' +
-		'</div>';
+		'</div>' +
+		'<p><a href="#" id="delete-account">Delete Account</a><br />';
 	$('#login-popup').html(content);
 	$('#login-popup').css('height', 'auto');
 
 	$('#' + provider).click(function() {
 		Hull.logout();
+	});
+
+	$('#delete-account').click(function() {
+		setDeleteAccountContext();
 	});
 }
 
@@ -218,4 +218,25 @@ function resetPW() {
 			}).then(onSuccess, onError);
 	});			
 			
+}
+
+//delete Hull E-Mail Account
+function deleteUser(id) {
+	Hull.api(id, 'delete').then(function(response) {
+		//
+	});
+}
+
+//Delete Account Confirmation Popup
+function setDeleteAccountContext() {
+	var content = '<div>' +
+				'<h1>Delete Account</h1>' +
+				'<p>Do you really want to delete your Account?<p>' +
+				'<div class="submit normalized"><input type="submit" value="YES" id="delete-account-submit" />' +
+				'</div>';
+	createPopUp(260, 80, content);
+	$('#delete-account-submit').click(function(){
+		deleteUser(getUserInfo().id);
+		Hull.logout();
+	});				
 }
