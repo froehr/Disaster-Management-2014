@@ -25,7 +25,7 @@ function setLoginContent() {
 		'<div class="center">' +
 			'<div id="facebook" class="um-button">Login with Facebook</div>' +
 			'<div id="twitter" class="um-button">Login with Twitter</div>' +
-			'<div id="googleplus" class="um-button">Login with Google+</div>' +
+			'<div id="google" class="um-button">Login with Google+</div>' +
 		'</div>';
 	$('#login-popup').html(defaultContent);
 	$('#login-popup').css('height', 'auto');
