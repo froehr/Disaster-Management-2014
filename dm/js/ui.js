@@ -239,6 +239,7 @@ $('#hide-message-bar').click(function() {
 		document.getElementById('hide-message-bar').title = 'Show message bar';
 		$('.leaflet-left').animate({left: 10});
 		$('#filter-form').animate({width: 'hide'}, 350);
+		$('#submit-message-button').animate({width: 'hide'});
 		messageBarStatus = false;
 	}
 	else {
@@ -246,6 +247,7 @@ $('#hide-message-bar').click(function() {
 		$('#hide-message-bar').css('background-image', 'url(img/icons/hide-message-bar.png)');
 		document.getElementById('hide-message-bar').title = 'Hide message bar';
 		$('.leaflet-left').animate({left: 310});
+		$('#submit-message-button').animate({width: 'show'});
 		messageBarStatus = true;
 	}
 });

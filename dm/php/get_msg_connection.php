@@ -1,6 +1,6 @@
 	
 <?php
-$db_connection = pg_connect("host=host port=5432 dbname=dbname user=user password=password")
+$db_connection = pg_connect("host=host port=5432 dbname=dbname user=user password=pw")
     or die('Verbindungsaufbau fehlgeschlagen: ' . pg_last_error());
 
 //get the filter type and values or[arguments] for the query  ...will be edit later 'filters'
