@@ -91,9 +91,9 @@ function setLogoutContent() {
 	content = '<div class="center">' +
 			'<img src="' + user.picture + '" class="float-left profile-img" />' +
 			'<div class="left username">Connected as <b>' + user.name + '</b> via ' + uppercaseProvider + '.</div>' +
+			'<a href="#" id="change-password">Change Password</a> &nbsp; <a href="#" id="delete-account">Delete Account</a>' +
 			'<div id="' + provider + '" class="um-button">Logout</div>' +
-		'</div>' +
-		'<p><a href="#" id="delete-account">Delete Account</a><br />';
+		'</div>';
 	$('#login-popup').html(content);
 	$('#login-popup').css('height', 'auto');
 
