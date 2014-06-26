@@ -653,6 +653,7 @@ function getComments(message) {
 	
 	*/
 	$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
+		console.log("domsdatra: "+data)
 		for (var i = 0, len = data.features.length; i < len; i++){
 			var messageFeatures = data.features[i];
 			var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, "", messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email);
@@ -661,6 +662,59 @@ function getComments(message) {
 		}
 
 	});
+	LlocationFilter.on("enabled", function (e) {
+		northEastBoundsLat = LlocationFilter._ne.lat;
+		northEastBoundsLong = LlocationFilter._ne.lng;
+		southWestBoundsLat = LlocationFilter._sw.lat;
+		southWestBoundsLong = LlocationFilter._sw.lng;
+		PointUp = new Array(LlocationFilter._ne.lat, LlocationFilter._ne.lng);
+		PointDown = new Array(LlocationFilter._sw.lat, LlocationFilter._sw.lng);
+		var bboxString = southWestBoundsLong + "," + southWestBoundsLat + "," + northEastBoundsLong + "," + northEastBoundsLat;
+		console.log(bboxString)
+		$("#messages").empty();
+		$.post( "php/getMessagesAsGeoJSONByExtend.php", 
+			{ 
+				bboxString: bboxString
+			},
+			function( data ) {
+				console.log("dat: "+data)
+				for (var i = 0, len = data.features.length; i < len; i++){
+					var messageFeatures = data.features[i];
+					var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, "", messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email);
+					showMessage(msg);
+					setMessageClickFunctions(msg);
+				}
+			},
+			"json"
+		);
+	});
+
+	LlocationFilter.on("change", function (e) {
+		northEastBoundsLat = LlocationFilter._ne.lat;
+		northEastBoundsLong = LlocationFilter._ne.lng;
+		southWestBoundsLat = LlocationFilter._sw.lat;
+		southWestBoundsLong = LlocationFilter._sw.lng;
+		PointUp = new Array(LlocationFilter._ne.lat, LlocationFilter._ne.lng);
+		PointDown = new Array(LlocationFilter._sw.lat, LlocationFilter._sw.lng);
+		var bboxString = southWestBoundsLong + "," + southWestBoundsLat + "," + northEastBoundsLong + "," + northEastBoundsLat;
+		console.log(bboxString)
+		$("#messages").empty();
+		$.post( "php/getMessagesAsGeoJSONByExtend.php", 
+			{ 
+				bboxString: bboxString
+			},
+			function( data ) {
+				console.log("dat: "+data)
+				for (var i = 0, len = data.features.length; i < len; i++){
+					var messageFeatures = data.features[i];
+					var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, "", messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email);
+					showMessage(msg);
+					setMessageClickFunctions(msg);
+				}
+			},
+			"json"
+		);
+	});
 	// messages.addData(data);
 	// messages.addTo(map)
 	
@@ -668,11 +722,11 @@ function getComments(message) {
 }
 
 function decreaseNumberOfComments(id, amount) {
-		var numberOfComments = parseInt($('#number-of-comments-' + id).html());
-		console.log(id);
-		numberOfComments -= amount;
-		$('#number-of-comments-' + id).html(numberOfComments);
-	}
+	var numberOfComments = parseInt($('#number-of-comments-' + id).html());
+	console.log(id);
+	numberOfComments -= amount;
+	$('#number-of-comments-' + id).html(numberOfComments);
+}
 	
 function increaseNumberOfComments(id, amount) {
 	var numberOfComments = parseInt($('#number-of-comments-' + id).html());
@@ -680,4 +734,3 @@ function increaseNumberOfComments(id, amount) {
 	$('#number-of-comments-' + id).html(numberOfComments);
 
 }
-

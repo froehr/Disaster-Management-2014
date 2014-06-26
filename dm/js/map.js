@@ -23,7 +23,6 @@ var latlng;
 $.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
 	messages = L.geoJson(data, {
 			onEachFeature : function (feature, layer) {
-				console.log(feature.geometry)
 				layer.bindPopup(feature.properties.description);
 			},
 			style : function (feature) {
@@ -48,7 +47,7 @@ $.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
 			}
 		});
 	messages.addData(data);
-	messages.addTo(map)
+	messages.addTo(map);
 
 // Slidercontrol which refers to the creation-date of a case
 	var sliderControl = L.control.sliderControl({
@@ -294,31 +293,6 @@ var LlocationFilter = new L.LocationFilter({
 }).addTo(map);
 
 
-LlocationFilter.on("enabled", function (e) {
-	northEastBoundsLat = LlocationFilter._ne.lat;
-	northEastBoundsLong = LlocationFilter._ne.lng;
-	southWestBoundsLat = LlocationFilter._sw.lat;
-	southWestBoundsLong = LlocationFilter._sw.lng;
-	PointUp = new Array(LlocationFilter._ne.lat, LlocationFilter._ne.lng);
-	PointDown = new Array(LlocationFilter._sw.lat, LlocationFilter._sw.lng);
-	var bboxString = southWestBoundsLong + "," + southWestBoundsLat + "," + northEastBoundsLong + "," + northEastBoundsLat;
-	console.log(bboxString)
-});
-
-
-LlocationFilter.on("change", function (e) {
-	northEastBoundsLat = LlocationFilter._ne.lat;
-	northEastBoundsLong = LlocationFilter._ne.lng;
-	southWestBoundsLat = LlocationFilter._sw.lat;
-	southWestBoundsLong = LlocationFilter._sw.lng;
-	PointUp = new Array(LlocationFilter._ne.lat, LlocationFilter._ne.lng);
-	PointDown = new Array(LlocationFilter._sw.lat, LlocationFilter._sw.lng);
-	var bboxString = southWestBoundsLong + "," + southWestBoundsLat + "," + northEastBoundsLong + "," + northEastBoundsLat;
-	console.log(bboxString)
-
-});
-
-
 // Measure Control
 var LmeasureControl = new L.Control.measureControl({
 	position : "topleft"
@@ -335,7 +309,7 @@ var drawControl = new L.Control.Draw({
 	draw : {
 		position : 'topleft',
 		circle : false,
-		polygon : {
+		psolygon : {
 			allowIntersection : false, // Restricts shapes to simple polygons
 			drawError : {
 				color : '#FF0000', // Color the shape will turn when intersects
