@@ -323,7 +323,25 @@ function createRemovePopUp(remove, id, message) {
 	createPopUp(230, 90, content);
 	
 	$('#remove-yes').click(function() {
-		// TODO: REMOVE FROM DATABASE
+		// Delete message from database
+		$.ajax({
+		  type: 'POST',
+		  url: 'php/deleteMessages.php',
+		  data: {
+			 message_id: id	
+		  },
+		  success: function(data){
+			 console.log("Successfully deleted");
+			 // Has to be changed later on! This is just a quick and dirty hack. Actually layer has to be updated (redrawn)
+			 javascript: location.reload()
+		  },
+		  error: function(xhr, textStatus, error){
+			  console.log(xhr.statusText);
+			  console.log(textStatus);
+			  console.log(error);
+		  }
+		});
+		
 		if ( remove == 'message' ) {
 			if ( typeof message['location-json'] != 'undefined' ) map.removeLayer(message['location-json']);
 			map.closePopup(popup);
@@ -516,7 +534,6 @@ function getComments(message) {
 	File has to be done separately? At least while accessing file here ("messageFeatures.properties.file" instead of "") jquery gives me an error
 	*/
 	$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
-		console.log("domsdatra: "+data)
 		for (var i = 0, len = data.features.length; i < len; i++){
 			var messageFeatures = data.features[i];
 			var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, "", messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email, messageFeatures.properties.hulluser_id);
