@@ -14,13 +14,15 @@
 	/*
     *	@Nourhan: Please check if this is needed anymore?!
 	*/
-	//if($_GET["action"] == "GetAll")
-  	//	{getAllData();}
-	//else if($_GET["action"] == "ByExtent")
-  	//{getMsgByExtent();}
+	if($_POST["action"] == "GetAll")
+  		{getAllData();}
+	else if($_POST["action"] == "ByExtent") {
+		$bboxString = $_POST["bboxString"];
+		getMsgByExtent($bboxString);
+	}
 	
 	
-	getAllData();		
+	// getAllData();		
 	//function to return al messages with associated comments
 	function getAllData() {
 	
@@ -313,69 +315,61 @@
 
 	
 	//input: pointLowLeft , pointUpRight to make 2dBox 
-  	function getMsgByExtent($arrayPointlow,$arrayPointUp)
+  	function getMsgByExtent($bboxString)
 	{
-
+		$bboxArray = explode(",", $bboxString);
 		$data = Array();
-		$type='Point';	
 		
-		if($arrayPointlow & $arrayPointUp)
-		{
-			$coordStringLow=buildCoords($arrayPointlow, $type);
-			$coordStringUp=buildCoords($arrayPointUp, $type);
-			
-			if($coordStringLow!='' & $coordStringUp!='')
-			{
-					
-				$con = getConnection();
-		
-				if(!$con)
-				{  die(json_encode(array("error" => "no connection to the server")));}
-				
 	
-				else
-				{
-					//use ST_MakeBox2D create 2Dbox then return all feature that fall inside this box
-					//use ST_MakePoint or ST_Point or ST_GeomFromText
-					$queryString = "SELECT message_id, message_type, title, ST_AsText(location),time_start, relevant ,date_of_change,
-					description, people_needed, people_attending,file,category, tags, person_name, person_contact,person_email FROM message 
-					where ST_Within(location, ST_MakeBox2D(ST_GeomFromText( '".$type.$coordStringLow."'),ST_GeomFromText('".$type.$coordStringUp."'))) order by time_start Desc ;";
-				
-					$result = pg_query($con, $queryString);
-					if($result)
-					{
-	 					while($row = pg_fetch_assoc($result))
-	 					{
-	 						
-							$data[] = array($row);	
-			
-							$queryString2 ='SELECT * FROM comment where message_id='.$row['message_id'].' ;';
-				
-							$result2 = pg_query($con, $queryString2);
-	 						while($row2 = pg_fetch_assoc($result2))
-	 						{
-	 					
-			
-				   				$data[]['new comment'] = array($row2);	
-						
-					
-							}
-	 					}
+		$con = getConnection();
 
-						pg_close($con);
-						return json_encode($data);
+		if(!$con)
+		{  die(json_encode(array("error" => "no connection to the server")));}
+		
+
+		else
+		{
+			//use ST_MakeBox2D create 2Dbox then return all feature that fall inside this box
+			//use ST_MakePoint or ST_Point or ST_GeomFromText
+			$queryString = "SELECT * FROM message 
+			WHERE 
+			ST_Within(message.location, ST_SetSRID(ST_MakeBox2D(ST_Point(".$bboxArray[0].",".$bboxArray[1]."),ST_Point(".$bboxArray[2].",".$bboxArray[3].")),4326))
+			OR
+			ST_Intersects(message.location, ST_SetSRID(ST_MakeBox2D(ST_Point(".$bboxArray[0].",".$bboxArray[1]."),ST_Point(".$bboxArray[2].",".$bboxArray[3].")),4326));";
+		
+			$result = pg_query($con, $queryString);
+			echo("<br/> queryString: ".$queryString."<br/>");
+			echo($result);
+			if($result)
+			{
+					while($row = pg_fetch_assoc($result))
+					{
+						
+					$data[] = array($row);	
+	
+					$queryString2 ='SELECT * FROM comment where message_id='.$row['message_id'].' ;';
+		
+					$result2 = pg_query($con, $queryString2);
+						while($row2 = pg_fetch_assoc($result2))
+						{
+					
+	
+		   				$data[]['new comment'] = array($row2);	
 				
+			
+					}
 					}
 
-					else
-					{die(json_encode(array("error" => "no result found ")));}
-				}
+				pg_close($con);
+				return json_encode($data);
+				echo("<br/> Hallo: ".json_encode($data)."<br/>");
 			}
+
 			else
-			{
-				{ throw new Exception("not valid coordinate");}
-			}
+			{die(json_encode(array("error" => "no result found ")));}
 		}
+
+		
 		
 		
 	

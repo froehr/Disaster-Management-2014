@@ -23,6 +23,7 @@ var latlng;
 $.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
 	messages = L.geoJson(data, {
 			onEachFeature : function (feature, layer) {
+				console.log(feature.geometry)
 				layer.bindPopup(feature.properties.description);
 			},
 			style : function (feature) {
@@ -300,9 +301,8 @@ LlocationFilter.on("enabled", function (e) {
 	southWestBoundsLong = LlocationFilter._sw.lng;
 	PointUp = new Array(LlocationFilter._ne.lat, LlocationFilter._ne.lng);
 	PointDown = new Array(LlocationFilter._sw.lat, LlocationFilter._sw.lng);
-	//console.log("NorthEastBoundsLat: "+northEastBoundsLat+", NorthEastBoundsLong: "+northEastBoundsLong+ "; SouthWestBoundsLat: "+southWestBoundsLat+", SouthWestBoundsLong: "+southWestBoundsLong)
-	console.log(PointUp);
-	console.log(PointDown);
+	var bboxString = southWestBoundsLong + "," + southWestBoundsLat + "," + northEastBoundsLong + "," + northEastBoundsLat;
+	console.log(bboxString)
 });
 
 
@@ -313,9 +313,9 @@ LlocationFilter.on("change", function (e) {
 	southWestBoundsLong = LlocationFilter._sw.lng;
 	PointUp = new Array(LlocationFilter._ne.lat, LlocationFilter._ne.lng);
 	PointDown = new Array(LlocationFilter._sw.lat, LlocationFilter._sw.lng);
-	//console.log("NorthEastBoundsLat: "+northEastBoundsLat+", NorthEastBoundsLong: "+northEastBoundsLong+ "; SouthWestBoundsLat: "+southWestBoundsLat+", SouthWestBoundsLong: "+southWestBoundsLong)
-	console.log(PointUp);
-	console.log(PointDown);
+	var bboxString = southWestBoundsLong + "," + southWestBoundsLat + "," + northEastBoundsLong + "," + northEastBoundsLat;
+	console.log(bboxString)
+
 });
 
 
