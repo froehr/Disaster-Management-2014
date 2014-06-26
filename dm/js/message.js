@@ -7,7 +7,7 @@ function Comment(comment_id, name, message, date_time, file) {
 }
 
 // Database/geoJson Structure
-function Message(message_id, message_type, title, location, time_start, relevant, date_of_change, description, people_need, people_attending, file, category, tags, person_name, person_contact, person_email, comments) {
+function Message(message_id, message_type, title, location, time_start, relevant, date_of_change, description, people_need, people_attending, file, category, tags, person_name, person_contact, person_email, hulluser_id, comments) {
 	this.message_id = message_id;
 	this.message_type = message_type;
 	this.title = title;
@@ -24,150 +24,14 @@ function Message(message_id, message_type, title, location, time_start, relevant
 	this.person_name = person_name;
 	this.person_contact = person_contact;
 	this.person_email = person_email;
+	this.hulluser_id = hulluser_id;
+	
 	this.comments = comments;
 }
 
 
-// Local, static examples
- /* function Message(message_id, message_type, location, time_start, time_stop, date_of_change, date_of_creation, title, description, people_need, people_attending, file, priority, category, upvotes, downvotes, person_name, person_contact, person_telephone, person_email, display, tags, comments) {
-	this.message_id = message_id;
-	this.message_type = message_type;
-	this.location = location;
-	this.time_start = time_start;
-	this.time_stop = time_stop;
-	this.date_of_change = date_of_change;
-	this.date_of_creation = date_of_creation;
-	this.title = title;
-	this.description = description;
-	this.people_need = people_need;
-	this.people_attending = people_attending;
-	this.file = file;
-	this.priority = priority;
-	this.category = category;
-	this.upvotes = upvotes;
-	this.downvotes = downvotes;
-	this.person_name = person_name;
-	this.person_contact = person_contact;
-	this.person_telephone = person_telephone;
-	this.person_email = person_email;
-	this.display = display;
-	this.tags = tags;
-	this.comments = comments;
-} */
-
-
 function showMessages() {
-	
-	// Local static examples
-	/* var messages = [
-		new Message(0,
-					'emergency','{"type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[[7.612946033477782,51.96501340456607],[7.61101484298706,51.9650001835794],[7.609212398529052,51.96584631886286],[7.608332633972168,51.96476220515285],[7.606294155120849,51.96379705746947],[7.608118057250977,51.9627261158533],[7.60876178741455,51.96164192667244],[7.610800266265869,51.9623691296285],[7.612645626068115,51.962276577180184],[7.612946033477782,51.96501340456607]]]}}',
-					'2014-04-17, 14:30',
-					'2014-04-17, 14:30',
-					'2014-04-17, 14:30',
-					'2014-04-17, 14:30',
-					'Flood in the Schlossgarten!',
-					'The botanical garden of M&uuml;nster is flooded, we need help!',
-					0,
-					0,
-					'message-image-example-0.jpg',
-					0,
-					'Flood',
-					312,
-					22,
-					'Peter Miller',
-					'',
-					'',
-					'',
-					false,
-					'flood,garden,castle', [
-						new Comment(0,
-									'Peter Miller',
-									'Thanks for the information. It was very useful.',
-									'2014-04-17, 14:35',
-									''),
-						new Comment(1,
-									'Trollmaster 17',
-									'Warning! This information is wrong bla.',
-									'2014-04-17, 14:37',
-									'')
-					]
-		),
-		new Message(1,
-					'need-support',
-					'{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[7.595736980438232,51.969376117172324]}}',
-					'2014-04-17, 14:26',
-					'2014-04-17, 14:26',
-					'2014-04-17, 14:26',
-					'2014-04-17, 14:26',
-					'Need support here!',
-					'Writing an exam at ifgi. Please help!',
-					0,
-					0,
-					'',
-					0,
-					'',
-					0,
-					0,
-					'',
-					'',
-					'',
-					'',
-					false,
-					'', [
-					]
-		),
-		new Message(2,
-					'offer-support',
-					'{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[7.592325210571289,51.9396351536736],[7.597517967224121,51.94222785874081],[7.601037025451661,51.9449262293592],[7.6032257080078125,51.94810057520779],[7.609748840332032,51.951063095302274],[7.61549949645996,51.95378738300075],[7.619490623474122,51.95540071806757],[7.619490623474122,51.95651150518884],[7.619748115539551,51.958415647657844],[7.618331909179687,51.959817256410304],[7.617473602294921,51.96137748630892],[7.617902755737305,51.96325497910861],[7.6204776763916025,51.963492965537746],[7.622108459472655,51.964154032322156],[7.623567581176758,51.96433912927462]]}}',
-					'2014-04-17, 14:26',
-					'2014-04-17, 14:26',
-					'2014-04-17, 14:26',
-					'2014-04-17, 14:26',
-					'Here you get bananas!',
-					'Marathon in M&uuml;nster, you get free bananas!',
-					0,
-					0,
-					'',
-					0,
-					'',
-					0,
-					0,
-					'',
-					'',
-					'',
-					'',
-					false,
-					'', [
-					]
-		),
-		new Message(3,
-					'message',
-					'',
-					'2014-04-17, 14:26',
-					'2014-04-17, 14:26',
-					'2014-04-17, 14:26',
-					'2014-04-17, 14:26',
-					'Thank you',
-					'Your platform is great!',
-					0,
-					0,
-					'',
-					0,
-					'',
-					0,
-					0,
-					'Gunther',
-					'',
-					'',
-					'',
-					false,
-					'', [
-					]
-		)
-	]; */
-	
-		
+			
 	// Function appends one message-div element to the messages div for the message of the parameter
 	function showMessage(message) {
 		var logged_in = getUserInfo();
@@ -650,13 +514,12 @@ function getComments(message) {
 	
 	/*
 	File has to be done separately? At least while accessing file here ("messageFeatures.properties.file" instead of "") jquery gives me an error
-	
 	*/
 	$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
 		console.log("domsdatra: "+data)
 		for (var i = 0, len = data.features.length; i < len; i++){
 			var messageFeatures = data.features[i];
-			var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, "", messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email);
+			var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, "", messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email, messageFeatures.properties.hulluser_id);
 			showMessage(msg);
 			setMessageClickFunctions(msg);
 		}
@@ -677,10 +540,10 @@ function getComments(message) {
 				bboxString: bboxString
 			},
 			function( data ) {
-				console.log("dat: "+data)
 				for (var i = 0, len = data.features.length; i < len; i++){
 					var messageFeatures = data.features[i];
-					var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, "", messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email);
+					var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, "", messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email, messageFeatures.properties.hulluser_id);
+					console.log(data);
 					showMessage(msg);
 					setMessageClickFunctions(msg);
 				}
@@ -704,10 +567,10 @@ function getComments(message) {
 				bboxString: bboxString
 			},
 			function( data ) {
-				console.log("dat: "+data)
 				for (var i = 0, len = data.features.length; i < len; i++){
 					var messageFeatures = data.features[i];
-					var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, "", messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email);
+					var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, "", messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email, messageFeatures.properties.hulluser_id);
+					console.log(data);
 					showMessage(msg);
 					setMessageClickFunctions(msg);
 				}

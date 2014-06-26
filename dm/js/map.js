@@ -22,40 +22,41 @@ var latlng;
 // Get messages from database
 $.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
 	messages = L.geoJson(data, {
-			onEachFeature : function (feature, layer) {
-				layer.bindPopup(feature.properties.description);
-			},
-			style : function (feature) {
-				switch (feature.properties.message_type) {
-				case "emergency":
-					return {
-						color : '#A50026'
-					};
-				case "need-support":
-					return {
-						color : '#eba259'
-					};
-				case "offer-support":
-					return {
-						color : '#468f5c'
-					};
-				case "message":
-					return {
-						color : '#45544a'
-					}
+		onEachFeature : function (feature, layer) {
+			layer.bindPopup(feature.properties.description);
+		},
+		style : function (feature) {
+			switch (feature.properties.message_type) {
+			case "emergency":
+				return {
+					color : '#A50026'
+				};
+			case "need-support":
+				return {
+					color : '#eba259'
+				};
+			case "offer-support":
+				return {
+					color : '#468f5c'
+				};
+			case "message":
+				return {
+					color : '#45544a'
 				}
 			}
-		});
-	messages.addData(data);
-	messages.addTo(map);
+		}
+	});
+messages.addData(data);
+// Excluded this, because this solves the error that messages got drawn darker (added twice) after the intial loading
+//messages.addTo(map);
 
 // Slidercontrol which refers to the creation-date of a case
-	var sliderControl = L.control.sliderControl({
-			position : "topright",
-			layer : messages
-		});
-	map.addControl(sliderControl);
-	sliderControl.startSlider();
+var sliderControl = L.control.sliderControl({
+	position : "topright",
+		layer : messages
+});
+map.addControl(sliderControl);
+sliderControl.startSlider();
 });
 
 
