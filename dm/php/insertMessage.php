@@ -13,6 +13,7 @@ $dbconn = pg_connect("host=host port=5432 dbname=dbname user=user password=pw")
 		$people_need = $_POST['PeopleNeeded'];
 		$tags = $_POST['Tags'];
 		$creationDate = $_POST['CreationDate'];
+		$hulluser_id = $_POST['Hulluser_id'];
 
 		$feature;
 		$coords;
@@ -30,6 +31,7 @@ $dbconn = pg_connect("host=host port=5432 dbname=dbname user=user password=pw")
 			"people_need" => $people_need,
 			"tags" => $tags,
 			"creationDate" => $creationDate,	
+			"hulluser_id" => $hulluser_id,	
 		);
 
 	if ($feature != ""){
@@ -73,7 +75,7 @@ $dbconn = pg_connect("host=host port=5432 dbname=dbname user=user password=pw")
 		$geometry = "Point";
 		$coordinates = "(0 0)";
 	}
-	$query=pg_query($dbconn,"Insert into \"message\" values (DEFAULT,'".$issue."','".$title."',ST_SetSRID(".$coordinates."), 4326),TIMESTAMP '".$creationDate."',true,TIMESTAMP '".$creationDate."','".$description."',".$people_need.",".$people_attending.",'','".$category."','','".$person_name."','".$person_contact."','delete?');");
+	$query=pg_query($dbconn,"Insert into \"message\" values (DEFAULT,'".$issue."','".$title."',ST_SetSRID(".$coordinates."), 4326),TIMESTAMP '".$creationDate."',true,TIMESTAMP '".$creationDate."','".$description."',".$people_need.",".$people_attending.",'','".$category."','','".$person_name."','".$person_contact."','delete?','".$hulluser_id."');");
 	echo json_encode ($data_send);
 	//REMEBER: Select ST_AsText(location) from message;
 
