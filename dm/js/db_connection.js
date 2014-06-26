@@ -90,6 +90,9 @@
 		var peopleNeeded = document.getElementById("people_need").value;
 		var tags = document.getElementById("tags").value;
 		var creationDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+		var hulluserProfile = getUserInfo();
+		var hulluser_id = hulluserProfile.id;
+		console.log("Your user id: "+hulluser_id);
 		
 		if (peopleAttending == "" && peopleAttending == ""){
 			peopleAttending = 0;
@@ -128,6 +131,7 @@
 				PersonContact:contact,
 				Geometry: geometry,
 				Name:name,
+				Hulluser_id:hulluser_id,
 				PeopleAttending:peopleAttending,
 				PeopleNeeded:peopleNeeded,
 				Tags:tags,
@@ -167,6 +171,9 @@
 		var peopleNeeded = document.getElementById("people_need").value;
 		var tags = document.getElementById("tags").value;
 		var creationDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+		var hulluserProfile = getUserInfo();
+		var hulluser_id = hulluserProfile.id;
+		console.log("Your user id: "+hulluser_id);
 		
 		if (peopleAttending == "" && peopleAttending == ""){
 			peopleAttending = 0;
@@ -202,6 +209,7 @@
 				PersonContact:contact,
 				Geometry: geometry,
 				Name:name,
+				Hulluser_id:hulluser_id,
 				PeopleAttending:peopleAttending,
 				PeopleNeeded:peopleNeeded,
 				Tags:tags,
@@ -238,6 +246,9 @@
 		var peopleNeeded = document.getElementById("people_need").value;
 		var tags = document.getElementById("tags").value;
 		var creationDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+		var hulluserProfile = getUserInfo();
+		var hulluser_id = hulluserProfile.id;
+		console.log("Your user id: "+hulluser_id);
 		
 		if (peopleAttending == "" && peopleAttending == ""){
 			peopleAttending = 0;
@@ -270,6 +281,7 @@
 					PersonContact:contact,
 					Geometry: geometry,
 					Name:name,
+					Hulluser_id:hulluser_id,
 					PeopleAttending:peopleAttending,
 					PeopleNeeded:peopleNeeded,
 					Tags:tags,
