@@ -88,6 +88,7 @@ function setLogoutContent() {
 	}
 
 	var uppercaseProvider = provider.charAt(0).toUpperCase() + provider.substr(1, provider.length);
+	if ( uppercaseProvider == 'Email' ) uppercaseProvider = 'E-Mail';
 	content = '<div class="center">' +
 			'<img src="' + user.picture + '" class="float-left profile-img" />' +
 			'<div class="left username">Connected as <b>' + user.name + '</b> via ' + uppercaseProvider + '.</div>' +
