@@ -43,17 +43,17 @@ $dbconn = pg_connect("host=host port=5432 dbname=dbname user=user password=pw")
 	function buildCoords($coordinates, $type){
 		$coordString = '';
 		if ( $type == 'Point' ){
-			$coordString = $coordString.'ST_MakePoint('.$coordinates[0].', '.$coordinates[1];
+			$coordString = $coordString.'ST_SetSRID(ST_MakePoint('.$coordinates[0].', '.$coordinates[1];
 		}
 		else if ( $type == 'LineString' ){
-			$coordString = $coordString.'(ST_MakeLine(';
+			$coordString = $coordString. 'ST_SetSRID((ST_MakeLine(';
 			for ( $i = 0; $i < count($coordinates); $i++ ){
-				$coordString = $coordString.'ST_MakePoint('.$coordinates[$i][0].' '.$coordinates[$i][1].'),';
+				$coordString = $coordString . 'ST_MakePoint('.$coordinates[$i][0].' '.$coordinates[$i][1].'),';
 			}
 			$coordString = substr($coordString,0,strlen($coordString)-1);
 		}	
 		else{
-			$coordString = $coordString."(ST_MakePolygon(ST_GeomFromText('LINESTRING(";
+			$coordString = $coordString."ST_SetSRID((ST_MakePolygon(ST_GeomFromText('LINESTRING(";
 			for ( $i = 0; $i < count($coordinates); $i++ ){
 				for ( $j = 0; $j < count($coordinates[$i]); $j++ ){
 					$coordString = $coordString.$coordinates[$i][$j][0].' '.$coordinates[$i][$j][1].',';
@@ -63,7 +63,7 @@ $dbconn = pg_connect("host=host port=5432 dbname=dbname user=user password=pw")
 			$coordString = substr($coordString,0,strlen($coordString)-1);
 			$coordString = $coordString.")'))";
 		}
-
+		$coordString .= '), 4326)';
 		return $coordString;
 	}
 
@@ -73,9 +73,9 @@ $dbconn = pg_connect("host=host port=5432 dbname=dbname user=user password=pw")
 	}
 	else{
 		$geometry = "Point";
-		$coordinates = "(0 0)";
+		$coordinates = "null";
 	}
-	$query=pg_query($dbconn,"Insert into \"message\" values (DEFAULT,'".$issue."','".$title."',ST_SetSRID(".$coordinates."), 4326),TIMESTAMP '".$creationDate."',true,TIMESTAMP '".$creationDate."','".$description."',".$people_need.",".$people_attending.",'','".$category."','','".$person_name."','".$person_contact."','delete?','".$hulluser_id."');");
+	$query=pg_query($dbconn,"Insert into message values (DEFAULT,'".$issue."','".$title."',".$coordinates.",TIMESTAMP '".$creationDate."',true,TIMESTAMP '".$creationDate."','".$description."',".$people_need.",".$people_attending.",'','".$category."','','".$person_name."','".$person_contact."','delete?','".$hulluser_id."');");
 	echo json_encode ($data_send);
 	//REMEBER: Select ST_AsText(location) from message;
 

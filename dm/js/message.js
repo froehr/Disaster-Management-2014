@@ -43,8 +43,6 @@ function showMessages() {
 		}
 		tags_html = tags_html.substring(0, tags_html.length - 2);
 		
-		var comments_html = '';	
-		
 		var location_name_html = 'Location';
 		
 		var edit_remove_html = '';
@@ -78,10 +76,7 @@ function showMessages() {
 					'<div class="comments" id="comments-' + message['message_id'] + '">' +
 					'<div class="less" id="less-' + message['message_id'] + '-top">' +
 						'<a href="#"><span>&#9668;</span> less</a>' +
-					'</div>' 
-					// Until now this line causes an error. Personally I could not finde the problem, but probably it won't be too hard :P
-					//+ '<p><b>Comments (<span id="number-of-comments-' + message['message_id'] + '">' + message['comments'].length + '</span>)</p></b>'
-					+ comments_html +
+					'</div>' +
 					'<div class="new-comment">' +
 						'<p><b>New comment</b></p>' +
 						'<textarea name="description" placeholder="Your comment" id="commentdescription"></textarea>' +
@@ -100,9 +95,6 @@ function showMessages() {
 		if ( message['location'] != '' ) {
 			var featureColor;
 			switch(message['message_type']) {
-				case 'emergency':
-					featureColor = '#A50026';
-					break;
 				case 'need-support':
 					featureColor = '#eba259'
 					break;
@@ -116,10 +108,10 @@ function showMessages() {
 			var iconUrl = 'img/marker/marker-icon-' + message['message_type'] + '.png';
 			
 			var data = jQuery.parseJSON(message['location']);
-		
+			
 			message['location-json'] = L.geoJson(data, {
 				pointToLayer: function (latlng) {                    
-					return new L.Marker([data.geometry.coordinates[1],data.geometry.coordinates[0]], {
+					return new L.Marker([data.coordinates[1],data.coordinates[0]], {
 						icon:  new L.Icon({
 							iconUrl: iconUrl,
 							iconAnchor: [12,41],
@@ -136,7 +128,7 @@ function showMessages() {
 				onEachFeature: function (feature, layer) {
 					var vOffset;
 		
-					if ( data.geometry.type == 'Point' ) {
+					if ( data.type == 'Point' ) {
 						vOffset = -41;
 					}
 					else {
@@ -229,36 +221,35 @@ function showMessages() {
 		$('#message-' + message['message_id']).click(function() {
 			if ( typeof message['location-json'] != 'undefined' ) {
 				var loc = message['location-json'].getBounds();
-				map.fitBounds(loc);
-				map.setView(loc.getCenter());
+				if ( typeof loc._southWest != 'undefined' ) {
+					map.fitBounds(loc);
+					map.setView(loc.getCenter());
 				
-				var featureColor;
-				switch(message['message_type']) {
-					case 'emergency':
-						featureColor = '#A50026';
-						break;
-					case 'need-support':
-						featureColor = '#eba259'
-						break;
-					case 'offer-support':
-						featureColor = '#468f5c'
-						break;
-					case 'message':
-						featureColor = '#45544a'
-						break;
+					var featureColor;
+					switch(message['message_type']) {
+						case 'need-support':
+							featureColor = '#eba259'
+							break;
+						case 'offer-support':
+							featureColor = '#468f5c'
+							break;
+						case 'message':
+							featureColor = '#45544a'
+							break;
+					}
+					
+					var popupContent = message['title'];
+					popup.setContent('<span style="color: ' + featureColor + ';">' + popupContent + '</span>');
+					popup.setLatLng(loc.getCenter());
+					popup.openOn(map);
 				}
-				
-				var popupContent = message['title'];
-				popup.setContent('<span style="color: ' + featureColor + ';">' + popupContent + '</span>');
-				popup.setLatLng(loc.getCenter());
-				popup.openOn(map);
 			}
 		});
 		
 		
 		
 		$('#remove-' + message['message_id']).click(function() {
-			createRemovePopUp('message', message['message_id'], "");
+			createRemovePopUp('message', message['message_id'], message);
 		});
 		
 		$('#report-' + message['message_id']).click(function() {
@@ -323,26 +314,24 @@ function createRemovePopUp(remove, id, message) {
 	createPopUp(230, 90, content);
 	
 	$('#remove-yes').click(function() {
-		// Delete message from database
-		$.ajax({
-		  type: 'POST',
-		  url: 'php/deleteMessages.php',
-		  data: {
-			 message_id: id	
-		  },
-		  success: function(data){
-			 console.log("Successfully deleted");
-			 // Has to be changed later on! This is just a quick and dirty hack. Actually layer has to be updated (redrawn)
-			 javascript: location.reload()
-		  },
-		  error: function(xhr, textStatus, error){
-			  console.log(xhr.statusText);
-			  console.log(textStatus);
-			  console.log(error);
-		  }
-		});
-		
 		if ( remove == 'message' ) {
+				// Delete message from database
+				$.ajax({
+				  type: 'POST',
+				  url: 'php/deleteMessages.php',
+				  data: {
+					 message_id: id	
+				  },
+				  success: function(data){
+					 console.log("Successfully deleted");
+				  },
+				  error: function(xhr, textStatus, error){
+					  console.log(xhr.statusText);
+					  console.log(textStatus);
+					  console.log(error);
+				  }
+			});
+			
 			if ( typeof message['location-json'] != 'undefined' ) map.removeLayer(message['location-json']);
 			map.closePopup(popup);
 			message['display'] = false;
@@ -445,15 +434,12 @@ function getComments(message) {
 							data[i].created_at,
 							''));
 
-					}
+					}					
 					
-					
-					
-					comments_html = '<div class="less" id="less-' + message['message_id'] + '-top" style="display: block;">' +
+					var comments_html = '<div class="less" id="less-' + message['message_id'] + '-top" style="display: block;">' +
 										'<a href="#"><span>&#9668;</span> less</a>' +
 									'</div>' +
 									'<p><b>Comments (<span id="number-of-comments-' + message['message_id'] + '">' + message['comments'].length + '</span>)</p></b>';
-					
 					
 					var comments_fields_html = '<div class="new-comment">' +
 													'<p><b>New comment</b></p>' +
@@ -536,7 +522,7 @@ function getComments(message) {
 	$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
 		for (var i = 0, len = data.features.length; i < len; i++){
 			var messageFeatures = data.features[i];
-			var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, "", messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email, messageFeatures.properties.hulluser_id);
+			var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures.geometry), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, "", messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email, messageFeatures.properties.hulluser_id);
 			showMessage(msg);
 			setMessageClickFunctions(msg);
 		}
@@ -559,7 +545,7 @@ function getComments(message) {
 			function( data ) {
 				for (var i = 0, len = data.features.length; i < len; i++){
 					var messageFeatures = data.features[i];
-					var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, "", messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email, messageFeatures.properties.hulluser_id);
+					var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures.geometry), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, "", messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email, messageFeatures.properties.hulluser_id);
 					console.log(data);
 					showMessage(msg);
 					setMessageClickFunctions(msg);
@@ -586,7 +572,7 @@ function getComments(message) {
 			function( data ) {
 				for (var i = 0, len = data.features.length; i < len; i++){
 					var messageFeatures = data.features[i];
-					var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, "", messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email, messageFeatures.properties.hulluser_id);
+					var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures.geometry), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, "", messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email, messageFeatures.properties.hulluser_id);
 					console.log(data);
 					showMessage(msg);
 					setMessageClickFunctions(msg);

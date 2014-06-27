@@ -9,8 +9,8 @@ function scrollToId(id) {
     $('#message-bar').animate({scrollTop: top}, 'slow');
 }
 
-$('#submit-message-button').click(function() {
-	$('#submit-message-button').css('display', 'none');
+$('#create-message-button').click(function() {
+	$('#create-message-button').css('display', 'none');
 	$('#message-bar').css('top', '85px');
 	$('#message-form').slideDown('slow', 'linear');
 	scrollToId('message-form');
@@ -25,6 +25,16 @@ function setMessageFormButtonClickFunctions(tag, color, title) {
 
 var issueTag = '';
 
+function addRequiredStars(fields) {
+	$('#head-category-required').remove();
+	$('#head-person-contact-required').remove();
+	$('#head-location-required').remove();
+	
+	for ( var i = 0; i < fields.length; i++ ) {
+		$('#head-' + fields[i]).append(' <span class="required" id="head-' + fields[i] + '-required">*</span>');
+	}
+}
+
 // change the style and content of form
 function changeMessageForm(tag, color, title) {
 	issueTag = tag;
@@ -37,7 +47,6 @@ function changeMessageForm(tag, color, title) {
 	messageFormHead.style.color = color;
 	messageFormHead.innerHTML = title;
 	
-	setElementDisplay('more-form', 'inline');
 	setElementDisplay('less-form', 'none');
 	
 	// hidden field value
@@ -46,66 +55,41 @@ function changeMessageForm(tag, color, title) {
 	$('#' + tag + '-button').css('background-color', color);
 	setElementDisplay('more-form', 'block');
 	
-	function addRequiredStars(fields) {
-		$('#head-category-required').remove();
-		$('#head-person-contact-required').remove();
-		$('#head-location-required').remove();
-		
-		for ( var i = 0; i < fields.length; i++ ) {
-			$('#head-' + fields[i]).append(' <span class="required" id="head-' + fields[i] + '-required">*</span>');
-		}
-	}
-	
 	// show the required fields
 	switch ( tag ) {
-		case 'emergency':
-			setElementDisplay('details-message', 'block');
-			setElementDisplay('details-offer-support', 'block');
-			setElementDisplay('details-emergency-need-support', 'none');
-			
-			addRequiredStars(['category', 'person-contact', 'location']);
-			
-			$('#need-support-button').css('background-color', '#f4dec8');
-			$('#offer-support-button').css('background-color', '#c1ebce');
-			$('#message-button').css('background-color', '#d1dad4');
-			break;
 		case 'need-support':
 			setElementDisplay('details-message', 'block');
 			setElementDisplay('details-offer-support', 'block');
-			setElementDisplay('details-emergency-need-support', 'none');
+			setElementDisplay('details-need-support', 'none');
 			
 			addRequiredStars(['category', 'person-contact', 'location']);
 			
-			$('#emergency-button').css('background-color', '#f5c9d3');
 			$('#offer-support-button').css('background-color', '#c1ebce');
 			$('#message-button').css('background-color', '#d1dad4');
 			break;
 		case 'offer-support':
 			setElementDisplay('details-message', 'block');
 			setElementDisplay('details-offer-support', 'none');
-			setElementDisplay('details-emergency-need-support', 'none');
+			setElementDisplay('details-need-support', 'none');
 			
 			addRequiredStars(['category', 'person-contact']);
 			
-			$('#emergency-button').css('background-color', '#f5c9d3');
 			$('#need-support-button').css('background-color', '#f4dec8');
 			$('#message-button').css('background-color', '#d1dad4');
 			break;
 		case 'message':
 			setElementDisplay('details-message', 'none');
 			setElementDisplay('details-offer-support', 'none');
-			setElementDisplay('details-emergency-need-support', 'none');
+			setElementDisplay('details-need-support', 'none');
 			
 			addRequiredStars([]);
 			
-			$('#emergency-button').css('background-color', '#f5c9d3');
 			$('#need-support-button').css('background-color', '#f4dec8');
 			$('#offer-support-button').css('background-color', '#c1ebce');
 			break;
 	}
 }
 
-setMessageFormButtonClickFunctions('emergency', '#A50026', 'Submit Emergency Issue');
 setMessageFormButtonClickFunctions('need-support', '#eba259', 'Submit Support Request');
 setMessageFormButtonClickFunctions('offer-support', '#468f5c', 'Submit Support Offer');
 setMessageFormButtonClickFunctions('message', '#45544a', 'Submit Message');
@@ -114,11 +98,10 @@ setMessageFormButtonClickFunctions('message', '#45544a', 'Submit Message');
 $('#x-form').click(function() {
 	$('#message-form').slideUp('fast', 'linear',  function() {
 		$('#message-bar').css('top', '126px');
-		$('#submit-message-button').css('display', 'block');
+		$('#create-message-button').css('display', 'block');
 	});
 	
 	$('#error-message').fadeOut();
-	$('#' + cfield).css('border', border);
 });
 
 // popup function
@@ -178,8 +161,47 @@ $('#x-popup').click(function() {
 	closePopUp();
 });
 
-$('#submit').click(function() {	
-	saveToDB();
+$('#submit').click(function() {
+	if ( saveToDB() ) {
+		$('#message-form').slideUp('fast', 'linear',  function() {
+			$('#message-bar').css('top', '126px');
+			$('#create-message-button').css('display', 'block');
+		});
+		
+		$('#error-message').fadeOut();
+		
+		var content = '<h1>Message created</h1>' +
+			'<p>Thank you for your participation!</p>' +
+			'<p class="right">' +
+				'<a href="#" id="create-message-okay">Okay</a>' +
+			'</p>';
+		createPopUp(300, 72, content);
+		
+		$('#create-message-okay').click(function() {
+			closePopUp();
+		});
+		
+		$('#need-support-button').css('background-color', '#f4dec8');
+		$('#offer-support-button').css('background-color', '#c1ebce');
+		$('#message-button').css('background-color', '#d1dad4');
+		addRequiredStars([]);
+		
+		setElementDisplay('details-message', 'none');
+		setElementDisplay('details-offer-support', 'none');
+		setElementDisplay('details-need-support', 'none');
+		setElementDisplay('more-form', 'none');
+		setElementDisplay('less-form', 'none');
+		
+		$('#title').val('');
+		$('#description').val('');
+		$('#category option[value="cat-1"]').attr('selected', true);
+		$('#person_contact').val('');
+		$('#person_name').val('');
+		$('#people_attending').val('');
+		$('#people_need').val('');
+		$('#tags').val('');
+		$('#file').val('');
+	}
 });
 
 // click functions to open and close the "more" fields for the input form
@@ -188,15 +210,14 @@ $('#more-form').click(function() {
 	setElementDisplay('less-form', 'block');
 	
 	switch ( issueTag ) {
-		case 'emergency':
 		case 'need-support':
-			$('#details-emergency-need-support').slideDown('fast', 'linear');
+			$('#details-need-support').slideDown('fast', 'linear');
 			break;
 		case 'offer-support':
-			$('#details-emergency-need-support').slideDown('fast', 'linear').promise().done(function() { $('#details-offer-support').slideDown('fast', 'linear'); });
+			$('#details-need-support').slideDown('fast', 'linear').promise().done(function() { $('#details-offer-support').slideDown('fast', 'linear'); });
 			break;
 		case 'message':
-			$('#details-emergency-need-support').slideDown('fast', 'linear').promise().done(function() { $('#details-offer-support').slideDown('fast', 'linear'); }).promise().done(function() { $('#details-message').slideDown('fast', 'linear'); });
+			$('#details-need-support').slideDown('fast', 'linear').promise().done(function() { $('#details-offer-support').slideDown('fast', 'linear'); }).promise().done(function() { $('#details-message').slideDown('fast', 'linear'); });
 			break;
 	}
 });
@@ -206,15 +227,14 @@ $('#less-form').click(function() {
 	setElementDisplay('less-form', 'none');
 
 	switch ( issueTag ) {
-		case 'emergency':
 		case 'need-support':
-			$('#details-emergency-need-support').slideUp('fast', 'linear');
+			$('#details-need-support').slideUp('fast', 'linear');
 			break;
 		case 'offer-support':
-			$('#details-emergency-need-support').slideUp('fast', 'linear').promise().done(function() { $('#details-offer-support').slideUp('fast', 'linear'); });
+			$('#details-need-support').slideUp('fast', 'linear').promise().done(function() { $('#details-offer-support').slideUp('fast', 'linear'); });
 			break;
 		case 'message':
-			$('#details-emergency-need-support').slideUp('fast', 'linear').promise().done(function() { $('#details-offer-support').slideUp('fast', 'linear'); }).promise().done(function() { $('#details-message').slideUp('fast', 'linear'); });
+			$('#details-need-support').slideUp('fast', 'linear').promise().done(function() { $('#details-offer-support').slideUp('fast', 'linear'); }).promise().done(function() { $('#details-message').slideUp('fast', 'linear'); });
 			break;
 	}
 });
@@ -239,7 +259,7 @@ $('#hide-message-bar').click(function() {
 		document.getElementById('hide-message-bar').title = 'Show message bar';
 		$('.leaflet-left').animate({left: 10});
 		$('#filter-form').animate({width: 'hide'}, 350);
-		$('#submit-message-button').animate({width: 'hide'});
+		$('#create-message-button').animate({width: 'hide'});
 		messageBarStatus = false;
 	}
 	else {
@@ -247,7 +267,7 @@ $('#hide-message-bar').click(function() {
 		$('#hide-message-bar').css('background-image', 'url(img/icons/hide-message-bar.png)');
 		document.getElementById('hide-message-bar').title = 'Hide message bar';
 		$('.leaflet-left').animate({left: 310});
-		$('#submit-message-button').animate({width: 'show'});
+		$('#create-message-button').animate({width: 'show'});
 		messageBarStatus = true;
 	}
 });

@@ -42,17 +42,14 @@
 			case '':
 				fieldError('type-buttons', 'You need to choose a message type.');
 				break;
-			case "emergency":
-				submitEmergency();
-				break;
 			case "need-support":
-				submitEmergency();
+				return submitNeedSupport();
 				break;
 			case "offer-support":
-				submitOfferSupport();
+				return submitOfferSupport();
 				break;
 			case "message":
-				submitMessage();
+				return submitMessage();
 				break;
 			default:
 				break;
@@ -77,7 +74,7 @@
 		});
 	}
 	
-	function submitEmergency(){
+	function submitNeedSupport(){
 		
 		var issue = document.getElementById("issue").value;
 		var title = document.getElementById("title").value;
@@ -138,11 +135,11 @@
 				CreationDate: creationDate
 				},
 				function(data){
-				//	console.log(data);
+					//console.log(data);
 				}	
 				);
 	
-		 $.post(
+			/*$.post(
 				"php/twitter.php?",
 				{	
 					Issue:issue,
@@ -154,8 +151,11 @@
 				function(data){
 					console.log(data)
 				}
-			);	 		
-		}	
+			);*/
+			
+			return true;
+		}
+		return false;
 	}
 	
 	function submitOfferSupport(){
@@ -217,20 +217,22 @@
 				},
 				function(data){console.log(data);}	
 				);
-		$.post(
-				"php/twitter.php?",
-				{	
-					Issue:issue,
-					Title:title,
-					Description:description,
-					Category:category,
-					PersonContact:contact				
-				},
-				function(data){
-					console.log(data)
-				}
-			);	
+			$.post(
+					"php/twitter.php?",
+					{	
+						Issue:issue,
+						Title:title,
+						Description:description,
+						Category:category,
+						PersonContact:contact				
+					},
+					function(data){
+						console.log(data)
+					}
+				);	
+			return true;
 		}	
+		return false;
 	}
 	
 	function submitMessage(){
@@ -288,10 +290,12 @@
 					CreationDate: creationDate
 				},
 				function(data){
-				//	console.log(data);
+					//console.log(data);
 				}	
-				);				
+				);	
+			return true;
 		}	
+		return false;
 	}
 
 	

@@ -58,17 +58,16 @@
 				</nav>
 			</header>
 			<div id="error-message"></div>
-			<div id="submit-message-button">Submit message</div>
+			<div id="create-message-button">Create new message</div>
 			<div id="message-bar">
 				<div id="message-form">
 					<div class="x" id="x-form">&#10006;</div>
-					<h1 id="message-form-head">Submit Message</h1>
+					<h1 id="message-form-head">Create new Message</h1>
 					<input type="hidden" name="issue" id="issue" />
 					<p>Title <span class="required">*</span></p>
 					<input type="text" name="title" id="title" />
 					<p>Choose a message type <span class="required">*</span></p>
 					<div id="type-buttons">
-						<div class="type" id="emergency-button">Emergency</div>
 						<div class="type" id="need-support-button">Need support</div>
 						<div class="type" id="offer-support-button">Offer support</div>
 						<div class="type" id="message-button">Message</div>
@@ -89,7 +88,7 @@
 							<p id="head-location">Location</p>
 							<p class="small">Choose a tool to draw the location.</p>
 							<div id="draw-buttons"></div>
-							<div id="details-emergency-need-support">
+							<div id="details-need-support">
 								<p id="head-person-name">Your name</p>
 								<input type="text" name="person_name" id="person_name" />
 								<p>Helpers <span class="small">(attending / needed)</span></p>
@@ -115,7 +114,6 @@
 				<h1>Message filter</h1>
 				<p>Category</p>
 				<select name="filter-issue" class="select-filter">
-					<option value="emergency">Emergency</option>
 					<option value="need-support">Need support</option>
 					<option value="offer-support">Offer support</option>
 					<option value="message">Message</option>

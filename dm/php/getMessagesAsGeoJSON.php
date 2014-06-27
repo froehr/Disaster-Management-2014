@@ -14,7 +14,7 @@ function getConnection()
 		if(!$con)
 			{die(json_encode(array("error" => "no connection to the server")));}
 			
-		$queryString = "SELECT * ,ST_AsGeoJSON(location) AS geojson FROM message";
+		$queryString = "SELECT * ,ST_AsGeoJSON(location) AS geojson FROM message ORDER BY time_start DESC";
 		$result = pg_query($con, $queryString);
 		
 		$FeatureCollection = array();
@@ -26,7 +26,14 @@ function getConnection()
 			$parsed_geojson = json_decode ($row["geojson"]);
 			
 			$feature["type"] = "Feature";
-			$feature["geometry"] = $parsed_geojson;
+			
+			if ( $parsed_geojson != null ) {
+				$feature["geometry"] = $parsed_geojson;
+			}
+			else {
+				$feature["geometry"] = null;
+			}
+			
 			$feature["properties"] = array();
 			$feature["properties"]["message_id"] = $row["message_id"];
 			$feature["properties"]["message_type"] = $row["message_type"];

@@ -18,48 +18,6 @@ var map = new L.Map('map', {
 // Global variable for position of weatherforcast
 var latlng;
 
-
-// Get messages from database
-$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
-	messages = L.geoJson(data, {
-		onEachFeature : function (feature, layer) {
-			layer.bindPopup(feature.properties.description);
-		},
-		style : function (feature) {
-			switch (feature.properties.message_type) {
-			case "emergency":
-				return {
-					color : '#A50026'
-				};
-			case "need-support":
-				return {
-					color : '#eba259'
-				};
-			case "offer-support":
-				return {
-					color : '#468f5c'
-				};
-			case "message":
-				return {
-					color : '#45544a'
-				}
-			}
-		}
-	});
-messages.addData(data);
-// Excluded this, because this solves the error that messages got drawn darker (added twice) after the intial loading
-//messages.addTo(map);
-
-// Slidercontrol which refers to the creation-date of a case
-var sliderControl = L.control.sliderControl({
-	position : "topright",
-		layer : messages
-});
-map.addControl(sliderControl);
-sliderControl.startSlider();
-});
-
-
 // Waterlevel measurement data (Pegel Online Restservice is used)
 var waterMeasurementData = L.layerJSON({
 	caching : true, ////disable markers caching and regenerate every time
@@ -409,9 +367,6 @@ function changeDrawFeatures(issueTag) {
 	var iconUrl = 'img/marker/marker-icon-' + issueTag + '.png';
 
 	switch (issueTag) {
-	case 'emergency':
-		tagColor = '#A50026';
-		break;
 	case 'need-support':
 		tagColor = '#eba259'
 			break;

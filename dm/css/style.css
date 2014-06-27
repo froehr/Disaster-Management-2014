@@ -108,7 +108,7 @@ header nav ul li #layer:active {
 	background-color: #8ba6c9;
 }
 
-#submit-message-button {
+#create-message-button {
 	position: absolute;
 	top: 85px;
 	text-align: center;
@@ -125,12 +125,12 @@ header nav ul li #layer:active {
 	height: 23px;
 }
 
-#submit-message-button:hover {
+#create-message-button:hover {
 	background-color: #839ba7;
 	color: #EFEFEF;
 }
 
-#submit-message-button:active {
+#create-message-button:active {
 	background-color: #a5beca;
 }
 
@@ -216,14 +216,10 @@ header nav ul li #layer:active {
 	cursor: pointer;
 }
 
-#message-bar #message-form #emergency-button {
-	background-color: #f5c9d3;
-	float: left;
-}
-
 #message-bar #message-form #need-support-button {
 	background-color: #f4dec8;
 	float: left;
+	width: 237px;
 }
 
 #message-bar #message-form #offer-support-button {
@@ -234,10 +230,6 @@ header nav ul li #layer:active {
 #message-bar #message-form #message-button {
 	background-color: #d1dad4;
 	float: left;
-}
-
-#message-bar #message-form #emergency-button:hover {
-	background-color: #A50026 !important;
 }
 
 #message-bar #message-form #need-support-button:hover {
@@ -305,7 +297,7 @@ header nav ul li #layer:active {
 
 #message-bar #message-form #details-message,
 #message-bar #message-form #details-offer-support ,
-#message-bar #message-form #details-emergency-need-support,
+#message-bar #message-form #details-need-support,
 #message-bar #message-form #less-form {
 	display: none;
 }
@@ -419,11 +411,6 @@ header nav ul li #layer:active {
 	border-left: 1px solid #F2F2F2;
 }
 
-/* Emergency message field */
-#message-bar .message-emergency {
-	background-image: url(../img/background-emergency.png);
-}
-
 /* Need support message field */
 #message-bar .message-need-support {
 	background-image: url(../img/background-need-support.png);
@@ -454,11 +441,6 @@ header nav ul li #layer:active {
 	font-size: 15px;
 	margin-bottom: 6px;
 	text-align: justify;
-}
-
-/* Message field emergency headline */
-#message-bar .message h1.emergency-head {
-	color: #A50026;
 }
 
 /* Message field need support headline */
