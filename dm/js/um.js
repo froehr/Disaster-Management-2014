@@ -105,6 +105,10 @@ function setLogoutContent() {
 	$('#delete-account').click(function() {
 		setDeleteAccountContext();
 	});
+
+	$('#change-password').click(function(){
+		setChangePasswordContext();
+	});
 }
 
 var provider = '';
@@ -221,12 +225,7 @@ function resetPW() {
 			
 }
 
-//delete Hull E-Mail Account
-function deleteUser(id) {
-	Hull.api(id, 'delete').then(function(response) {
-		//
-	});
-}
+
 
 //Delete Account Confirmation Popup
 function setDeleteAccountContext() {
@@ -240,5 +239,52 @@ function setDeleteAccountContext() {
 		deleteUser(getUserInfo().id);
 		Hull.logout();
 		closePopUp();
-	});				
+	});
+
+	//delete Hull E-Mail Account
+	function deleteUser(id) {
+		Hull.api(id, 'delete').then(function(response) {
+			//
+		});
+	}				
+}
+
+function setChangePasswordContext() {
+	
+	var content = '<div>' +
+				'<h1>Change Password</h1>' +
+				'<p>Password</p>' +
+				'<input type="password" name="create-account-password-1" id="update-account-password-1" />' +
+				'<p>Confirm password</p>' +
+				'<input type="password" name="create-account-password-2" id="update-account-password-2" />'+
+				'<div class="submit normalized"><input type="submit" value="Submit &nbsp; &#9658;" id="update-pw-submit" />' +
+				'</div>' +
+				'<p id="change-password-error"></p>';
+
+	createPopUp(275, 185, content);
+
+	var onSuccess = function(user) {
+  		closePopUp();
+	};
+
+	var onError = function(error) {
+	  	console.log(error);	
+		
+	}			
+
+	$('#update-pw-submit').click(function(){
+		var password1 = $('#update-account-password-1').val();
+		var password2 = $('#update-account-password-2').val();
+		if (password1 == password2) {
+			Hull.api('me', 'put', {
+				password: password1	
+			}).then(onSuccess, onError);
+		}else {
+			$('#change-password-error').text('Passwords do not match.');
+			$('#change-password-error').css('color', '#A50026');
+			$('#popup').css('height', 'auto');
+		}
+	
+	});
+
 }
