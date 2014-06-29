@@ -65,7 +65,7 @@ function setLoginContent() {
 		Hull.login('twitter');
 	});
 	
-	$('#googleplus').click(function() {
+	$('#google').click(function() {
 		Hull.login('google');
 	});
 }
@@ -239,5 +239,6 @@ function setDeleteAccountContext() {
 	$('#delete-account-submit').click(function(){
 		deleteUser(getUserInfo().id);
 		Hull.logout();
+		closePopUp();
 	});				
 }
