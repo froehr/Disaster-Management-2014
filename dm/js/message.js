@@ -527,6 +527,8 @@ function getComments(message) {
 			setMessageClickFunctions(msg);
 		}
 
+		showMessagebyUrl();
+
 	});
 	LlocationFilter.on("enabled", function (e) {
 		northEastBoundsLat = LlocationFilter._ne.lat;
@@ -600,3 +602,24 @@ function increaseNumberOfComments(id, amount) {
 	$('#number-of-comments-' + id).html(numberOfComments);
 
 }
+
+//Link messages to URLs: e.g.: host.com/?message=1
+function showMessagebyUrl() {
+
+	var host = window.location.host;
+	var path = window.location.pathname;
+	var url = host + path;
+
+	if (url != host) {
+		var message_id = getURLParameter('message');
+		var message_element_id = '#head-' + message_id;
+
+		//show message details & show on map
+		$(message_element_id).trigger("click");
+	}
+
+	function getURLParameter(message) {
+		return decodeURIComponent((new RegExp('[?|&]' + message + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+	}
+}
+
