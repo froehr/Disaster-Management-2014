@@ -1,8 +1,10 @@
-/* Compatible with Leaflet 0.7 */
+/* Compatible with Leaflet 0.7 
+Commented out to change the symbol of Leaflet Locator
 
 @import url('font/locate-fa.woff');
 @import url('css/locate-fa.css');
 @import url('css/animation.css');
+*/
 
 .leaflet-touch .leaflet-bar-part-single {
 	-webkit-border-radius: 7px 7px 7px 7px;
@@ -14,6 +16,7 @@
 	font-size: 1.4em;
 	margin-left: 1px;
     color: #444;
+	background-image: url(images/geolocation_icon.png);
 }
 
 .leaflet-control-locate.active a {

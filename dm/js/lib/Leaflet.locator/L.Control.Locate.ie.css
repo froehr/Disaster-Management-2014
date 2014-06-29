@@ -1,5 +1,8 @@
-/* Conditional stylesheet for IE. */
+/* Conditional stylesheet for IE. 
+Commented out to change the symbol of Leaflet Locator
+
 @import url('font/locate-fa-ie7.css');
+*/
 
 .leaflet-control-locate {
 	border: 3px solid #999;
@@ -7,6 +10,7 @@
 
 .leaflet-control-locate a {
 	background-color: #eee;
+	background-image: url(images/geolocation_icon.png);
 }
 
 .leaflet-control-locate a:hover {

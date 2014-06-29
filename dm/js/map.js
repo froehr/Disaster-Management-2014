@@ -162,13 +162,18 @@ var overviewMap = new L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 });
 
 
+var rect1 = {color: "#F50707", weight: 4};
+var rect2 = {color: "#F50707", weight: 4, opacity:0.8, fillOpacity:0.8};
+
 // Minimap
 var LminiMap = new L.Control.MiniMap(overviewMap, {
 	toggleDisplay : true,
+	aimingRectOptions : rect1,
+	shadowRectOptions: rect2,
 	mapOptions : {
 		panControl : false,
 		zoomsliderControl : false,
-		crs : L.CRS.Simple,
+		crs : L.CRS.Simple
 	}
 }).addTo(map);
 
