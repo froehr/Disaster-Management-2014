@@ -74,9 +74,10 @@
 	}
 
 	function getHullUserId ($message_id) {
+		
+		include 'db_connect.php';
 
-		$con = pg_connect("host=* port=* dbname=* user=postgres password=*")
-	    or die('Verbindungsaufbau fehlgeschlagen: ' . pg_last_error());
+		$con = getConnection();
 
 	 	$query = 'SELECT "hulluser_id" FROM message WHERE message_id ='.$message_id;
 

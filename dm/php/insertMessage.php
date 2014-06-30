@@ -1,6 +1,7 @@
 <?php
-$dbconn = pg_connect("host=host port=5432 dbname=dbname user=user password=pw")
-    or die('Verbindungsaufbau fehlgeschlagen: ' . pg_last_error());
+
+include 'db_connect.php';
+$dbconn = getConnection();
 	
 		$issue = $_POST['Issue'];
 		$title = $_POST['Title'];

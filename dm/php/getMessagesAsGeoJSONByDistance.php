@@ -1,14 +1,7 @@
 <?php
 	
-	function getConnection()
-		 {$db_connection = pg_connect("host=host port=5432 dbname=dbname user=user password=pw")
-			or die('Verbindungsaufbau fehlgeschlagen: ' . pg_last_error());
-  
-  			return $db_connection;
-		 } 
+include 'db_connect.php';
 		 
-
-
 		//get messages that are within a distance X from Point p
 	
 		$xCoordinate = $_POST["Coordinate"];
