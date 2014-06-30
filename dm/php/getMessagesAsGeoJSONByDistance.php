@@ -1,19 +1,13 @@
 <?php
 	
-include 'db_connect.php';
-		 
+include 'db_connect.php';		
+
 		//get messages that are within a distance X from Point p
 	
 		$xCoordinate = $_POST["Coordinate"];
-		$distance = $_POST["distance"];
-		//$type = $_POST["type"];          //in case of other geometry not only point
 		
-		
-		if($xCoordinate!='' & $distance!='')
-		
-		{
+		if($xCoordinate!='') {
 			$coordArray = explode(",", $xCoordinate);
-			//$coordString=buildCoords($coordArray, $type);    //in case of other geometry not only point
 			
 			if($coordArray!='')
 			{
@@ -23,12 +17,10 @@ include 'db_connect.php';
 				if(!$con)
 				{  die(json_encode(array("error" => "no connection to the server")));}
 				
-					//use ST_MakePoint or ST_Point or ST_GeomFromText
-					$queryString = "SELECT *, ST_AsGeoJSON(location) AS geojson FROM message
-									where ST_Distance(ST_Transform(ST_GeomFromText('Point(".$coordArray[0]." ".$coordArray[1].")',4326),26986),ST_Transform(location,26986))
-									 <=".$distance." order by time_start Desc ;" ;
-					
-				//or transform to 2163  less accurate.
+									 
+				 	$queryString = "SELECT *, ST_AsGeoJSON(location) AS geojson FROM message
+								ORDER BY ST_Distance(ST_Transform(location,26986),ST_Transform(ST_GeomFromText('Point(".$coordArray[0]." ".$coordArray[1].")',4326),26986));" ;
+									 
 					$result = pg_query($con, $queryString);
 					if($result)
 					{
@@ -80,5 +72,6 @@ include 'db_connect.php';
 				{ throw new Exception("not valid coordinate");}
 			}
 		}
+		
 		
 ?>
