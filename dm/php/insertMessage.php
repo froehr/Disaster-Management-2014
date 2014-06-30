@@ -76,8 +76,16 @@ $dbconn = getConnection();
 		$geometry = "Point";
 		$coordinates = "null";
 	}
-	$query=pg_query($dbconn,"Insert into message values (DEFAULT,'".$issue."','".$title."',".$coordinates.",TIMESTAMP '".$creationDate."',true,TIMESTAMP '".$creationDate."','".$description."',".$people_need.",".$people_attending.",'','".$category."','','".$person_name."','".$person_contact."','delete?','".$hulluser_id."');");
-	echo json_encode ($data_send);
+	$query=pg_query($dbconn,"Insert into message values (DEFAULT,'".$issue."','".$title."',".$coordinates.",TIMESTAMP '".$creationDate."',true,TIMESTAMP '".$creationDate."','".$description."',".$people_need.",".$people_attending.",'false','".$category."','','".$person_name."','".$person_contact."','delete?','".$hulluser_id."');");
+
+	$query2=pg_query($dbconn,'Select max(message_id) from "message";');	
+	while ($line = pg_fetch_array($query2, null, PGSQL_ASSOC)) {
+		foreach ($line as $col_value) {
+			echo $col_value;
+		}
+	}
+	//Necessary?:
+	//echo json_encode ($data_send);
 	//REMEBER: Select ST_AsText(location) from message;
 
 ?>

@@ -1,4 +1,4 @@
-		var coordinates="";
+			var coordinates="";
 		map.on('draw:created', function (e) {
 			var type = e.layerType,
 				layer = e.layer;
@@ -121,35 +121,35 @@
 			$.post(
 				"php/insertMessage.php?",
 				{	
-				Issue:issue,
-				Title:title,
-				Description:description,
-				Category:category,
-				PersonContact:contact,
-				Geometry: geometry,
-				Name:name,
-				Hulluser_id:hulluser_id,
-				PeopleAttending:peopleAttending,
-				PeopleNeeded:peopleNeeded,
-				Tags:tags,
-				CreationDate: creationDate
+					Issue:issue,
+					Title:title,
+					Description:description,
+					Category:category,
+					PersonContact:contact,
+					Geometry: geometry,
+					Name:name,
+					Hulluser_id:hulluser_id,
+					PeopleAttending:peopleAttending,
+					PeopleNeeded:peopleNeeded,
+					Tags:tags,
+					CreationDate: creationDate
 				},
 				function(data){
-					//console.log(data);
+					console.log(data);
 				}	
 				);
 	
 			$.post(
-					"php/twitter.php?",
-					{	
-						Issue:issue,
-						Title:title,
-						Description:description,
-						Category:category,
-						PersonContact:contact				
-					},
-					function(data){
-						console.log(data)
+				"php/twitter.php?",
+				{	
+					Issue:issue,
+					Title:title,
+					Description:description,
+					Category:category,
+					PersonContact:contact				
+				},
+				function(data){
+					console.log(data)
 					}
 				);
 			
@@ -202,32 +202,34 @@
 			$.post(
 				"php/insertMessage.php?",
 				{	
-				Issue:issue,
-				Title:title,
-				Description:description,
-				Category:category,
-				PersonContact:contact,
-				Geometry: geometry,
-				Name:name,
-				Hulluser_id:hulluser_id,
-				PeopleAttending:peopleAttending,
-				PeopleNeeded:peopleNeeded,
-				Tags:tags,
-				CreationDate: creationDate
+					Issue:issue,
+					Title:title,
+					Description:description,
+					Category:category,
+					PersonContact:contact,
+					Geometry: geometry,
+					Name:name,
+					Hulluser_id:hulluser_id,
+					PeopleAttending:peopleAttending,
+					PeopleNeeded:peopleNeeded,
+					Tags:tags,
+					CreationDate: creationDate
 				},
-				function(data){console.log(data);}	
+				function(data){
+					console.log(data);
+					}	
 				);
 			$.post(
-					"php/twitter.php?",
-					{	
-						Issue:issue,
-						Title:title,
-						Description:description,
-						Category:category,
-						PersonContact:contact				
-					},
-					function(data){
-						console.log(data)
+				"php/twitter.php?",
+				{	
+					Issue:issue,
+					Title:title,
+					Description:description,
+					Category:category,
+					PersonContact:contact				
+				},
+				function(data){
+					console.log(data)
 					}
 				);	
 			return true;
@@ -290,7 +292,7 @@
 					CreationDate: creationDate
 				},
 				function(data){
-					//console.log(data);
+					console.log(data);
 				}	
 				);
 			$.post(
