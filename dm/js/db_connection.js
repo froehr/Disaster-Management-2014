@@ -139,19 +139,19 @@
 				}	
 				);
 	
-			/*$.post(
-				"php/twitter.php?",
-				{	
-					Issue:issue,
-					Title:title,
-					Description:description,
-					Category:category,
-					PersonContact:contact				
-				},
-				function(data){
-					console.log(data)
-				}
-			);*/
+			$.post(
+					"php/twitter.php?",
+					{	
+						Issue:issue,
+						Title:title,
+						Description:description,
+						Category:category,
+						PersonContact:contact				
+					},
+					function(data){
+						console.log(data)
+					}
+				);
 			
 			return true;
 		}
@@ -292,7 +292,21 @@
 				function(data){
 					//console.log(data);
 				}	
-				);	
+				);
+			$.post(
+				"php/twitter.php?",
+				{	
+					Issue:issue,
+					Title:title,
+					Description:description,
+					Category:category,
+					PersonContact:contact				
+				},
+				function(data){
+					console.log(data)
+				}
+			);
+				
 			return true;
 		}	
 		return false;
