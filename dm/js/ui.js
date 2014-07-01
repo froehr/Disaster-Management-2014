@@ -144,7 +144,7 @@ $('#nearestgauge').click(function() {
 	   showNearestGauge(latlng);
 });
 
-$('#help').click(function() {
+$('#quickstart').click(function() {
 	initIntroJS();	
 });
 
