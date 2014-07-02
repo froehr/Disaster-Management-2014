@@ -288,3 +288,12 @@ function setChangePasswordContext() {
 	});
 
 }
+
+function canEdit(owner_id) {
+
+	var isAdmin = getUserInfo().is_admin;
+	var is_Owner = owner_id == getUserInfo().id;
+	canEdit = isAdmin || is_Owner;
+
+	return canEdit;
+}
