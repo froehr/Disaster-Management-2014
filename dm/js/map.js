@@ -156,7 +156,7 @@ var rain = new L.tileLayer('http://{s}.tile.openweathermap.org/map/rain_cls/{z}/
 
 
 // New minimap - Plugin magic goes here! Note that you cannot use the same layer object again, as that will confuse the two map controls
-var overviewMap = new L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+var overviewMap = new L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
 	maxZoom : 18,
 	attribution : 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap<\/a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA<\/a>, Imagery © <a href="http://cloudmade.com">CloudMade<\/a>'
 });
