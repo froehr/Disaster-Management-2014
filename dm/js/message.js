@@ -176,6 +176,12 @@ function showMessages() {
 								messageBarStatus = true;
 							}
 						});
+					},
+					filter: function (feature, layer) {
+						if (message['relevant'] == true) {
+							return true;
+						}
+						
 					}
 				}).addTo(layerGroup);
 				
@@ -316,7 +322,6 @@ function showMessages() {
 	}
 
 	function createRemovePopUp(remove, id, message) {
-		console.log(id);
 		var content = '<h1>Remove ' + remove + '</h1>' +
 			'<p>Do you really want to remove this ' + remove + '?</p>' +
 			'<p class="right">' +
