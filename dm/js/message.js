@@ -412,13 +412,25 @@ function showMessages() {
 	function postComment (message) {
 		var message_id = message['message_id'];
 		var hull_id = getHullId(message_id);
-		var content = $('#commentdescription-' + message['message_id']).val(); 
+		var content = $('#commentdescription-' + message['message_id']).val();
+		var name = $('#commentuser-' + message['message_id']).val();
+
+		if (name == "") {
+			fieldError('commentuser-' + message['message_id'], 'Must not be empty');
+			return false;
+		}
+
+		if (content == "") {
+			fieldError('commentdescription-' + message['message_id'], 'Must not be empty');
+			return false;
+		}
+
 		Hull.api(hull_id + '/comments', 'post', {
 			description: content
 		}).then(function(comment) {
 				
 				Hull.api('me', 'put', {
-					name: $('#commentuser-' + message['message_id']).val()	
+					name: name	
 				}).then(function() {
 					getComments(message);
 				});
@@ -518,7 +530,9 @@ function showMessages() {
 			}
 			
 			document.getElementById('comments-' + message['message_id']).innerHTML = comments_html + comments_fields_html;
-			$('#commentuser-' + message['message_id']).val(getUserInfo().name);	
+			try {
+				$('#commentuser-' + message['message_id']).val(getUserInfo().name);
+			} catch (err){}		
 
 			$.each(message['comments'], function(i, v) {
 				var comment_id = v['comment_id'];
