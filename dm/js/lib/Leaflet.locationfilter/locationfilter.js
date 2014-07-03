@@ -55,7 +55,7 @@ L.Control.Button = L.Class.extend({
     },
 
     setText: function(text) {
-        this._button.title = text;
+        this._button.title = 'Filter messages by location';
         this._button.innerHTML = text;
     }
 });
