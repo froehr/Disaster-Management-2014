@@ -65,7 +65,7 @@
 					<h1 id="message-form-head">Create new Message</h1>
 					<input type="hidden" name="issue" id="issue" />
 					<p>Title <span class="required">*</span></p>
-					<input type="text" name="title" id="title" />
+					<input type="text" name="title" id="title" placeholder="Title of your message" />
 					<p>Choose a message type <span class="required">*</span></p>
 					<div id="type-buttons">
 						<div class="type" id="need-support-button">Need support</div>
@@ -73,7 +73,7 @@
 						<div class="type" id="message-button">Message</div>
 					</div>
 					<p>Description <span class="required">*</span></p>
-					<textarea name="description" id="description"></textarea>
+					<textarea name="description" id="description" placeholder="Provide some details."></textarea>
 					<div id="details-message">
 						<p id="head-category">Category</p>
 						<select name="category" id="category">
@@ -94,7 +94,7 @@
 								<p>Helpers / Volunteers</p>
 								<div id="helpers"><input type="text" name="people_attending" id="people_attending" placeholder="attending" class="small" /> of <input type="text" name="people_need" id="people_need" placeholder="needed" class="small" /></div>
 								<p>Tags <span class="small">(separate with commas)</span></p>
-								<input type="text" name="tags" id="tags" />
+								<input type="text" name="tags" id="tags" placeholder="food, sandsacks, electricity, ..."/>
 								<p>File / Image</p>
 								<input type="file" name="file" id="file" class="file" />
 							</div>
