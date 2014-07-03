@@ -24,6 +24,7 @@ function setMessageFormButtonClickFunctions(tag, color, title) {
 }
 
 var issueTag = '';
+var username = '';
 
 function addRequiredStars(fields) {
 	$('#head-category-required').remove();
@@ -196,7 +197,7 @@ $('#submit').click(function() {
 		$('#description').val('');
 		$('#category option[value="cat-1"]').attr('selected', true);
 		$('#person_contact').val('');
-		$('#person_name').val('');
+		$('#person_name').val(username);
 		$('#people_attending').val('');
 		$('#people_need').val('');
 		$('#tags').val('');

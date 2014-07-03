@@ -118,6 +118,8 @@ var content = '';
 Hull.on('hull.init', function() {
 	showMessages();
 	if ( Hull.currentUser() ) {
+		username = getUserInfo().name;
+		$('#person_name').val(username);
 		setLogoutContent();
 	}
 	else {
@@ -128,10 +130,14 @@ Hull.on('hull.init', function() {
 
 // User logged in
 Hull.on('hull.auth.login', function() {
+	username = getUserInfo().name;
+	$('#person_name').val(username);
 	setLogoutContent();
 });
 
 Hull.on('hull.auth.logout', function() {
+	username = '';
+	$('#person_name').val(username);
 	setLoginContent();
 });
 	
