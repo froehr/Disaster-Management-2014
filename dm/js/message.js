@@ -38,8 +38,7 @@ function showMessages() {
 		@param {boolean} redrawMapFeatures: ture if the features on the map have to be redrawn
 	*/
 	function showMessage(message, refreshMessages, redrawMapFeatures) {
-		var logged_in = getUserInfo();
-		var not_logged_in = ((logged_in == null) || (logged_in ==false));
+		
 		if (refreshMessages && message['relevant']) {
 			var tags_html = '';
 			var tags = message['tags'].split(',');
@@ -48,9 +47,17 @@ function showMessages() {
 			}
 			tags_html = tags_html.substring(0, tags_html.length - 2);
 			
-			var edit_remove_html = '';
-			if ( not_logged_in == false ) {
-				edit_remove_html = '<div id="remove-' + message['message_id'] + '" class="message-button"><img src="img/icons/remove.png" /><div> Remove</div></div><div id="edit-' + message['message_id'] + '" class="message-button"><img src="img/icons/edit.png" /><div> Edit</div></div>';
+			var edit_html = '';
+			var remove_html = '';
+			var report_html = '';
+
+			if (hasAccess(message['hulluser_id'])) {
+				remove_html = '<div id="remove-' + message['message_id'] + '" class="message-button"><img src="img/icons/remove.png" /><div> Remove</div></div>'
+			}
+
+			if (isOnline()) {
+				edit_html = '<div id="edit-' + message['message_id'] + '" class="message-button"><img src="img/icons/edit.png" /><div> Edit</div></div>';
+				report_html = '<div id="report-' + message['message_id'] + '" class="message-button"><img src="img/icons/report.png" /><div> Report</div></div>';
 			}
 			
 			var file_html = '';
@@ -58,13 +65,14 @@ function showMessages() {
 				file_html = '<div class="image-box"><img src="img/' + message['file'] + '" alt="' + message['title'] + '" class="image" /></div>';
 			}
 			
+			var edit_remove_report_html = report_html + remove_html + edit_html;
+
 			$('#messages').append(
 				'<div class="message message-' + message['message_type'] + '" id="message-' + message['message_id'] + '">' +
 					'<h1 class="' + message['message_type'] + '-head" id="head-' + message['message_id'] + '">' + message['title'] + '</h1>' +
 					'<p id="description-' + message['message_id'] + '">' + message['description'] + '<br /><a href="#" id="more-' + message['message_id'] + '">Comments and more <span class="arrow">&#9658;</span></a></p>' +
 					'<div class="details" id="details-' + message['message_id'] + '">' +
-						'<div id="report-' + message['message_id'] + '" class="message-button"><img src="img/icons/report.png" /><div> Report</div></div>' +
-						edit_remove_html +
+						edit_remove_report_html +
 						'<table border="0">' +
 							'<tr>' +
 								'<td class="first">Sender:</td>' +
@@ -408,7 +416,14 @@ function showMessages() {
 		Hull.api(hull_id + '/comments', 'post', {
 			description: content
 		}).then(function(comment) {
-			  getComments(message);
+				
+				Hull.api('me', 'put', {
+					name: $('#commentuser-' + message['message_id']).val()	
+				}).then(function() {
+					getComments(message);
+				});
+				
+			  	
 		});
 	}
 
@@ -441,8 +456,6 @@ function showMessages() {
 		
 		var hull_id = getHullId(message.message_id);
 		var url = "https://22dd92ac.hullapp.io/api/v1/" + hull_id + "/comments?order_by=created_at%20ASC";
-		var logged_in = getUserInfo();
-		var not_logged_in = ((logged_in == null) || (logged_in ==false));
 
 		$.getJSON(url, function(data){
 			message['comments'] = [];
@@ -461,21 +474,34 @@ function showMessages() {
 							'</div>' +
 							'<p><b>Comments (<span id="number-of-comments-' + message['message_id'] + '">' + message['comments'].length + '</span>)</p></b>';
 			
-			var comments_fields_html = '<div class="new-comment">' +
-											'<p><b>New comment</b></p>' +
-											//'<input type="text" name="name" placeholder="Your name" />' +
-											'<textarea name="description" placeholder="Your comment" id="commentdescription-' + message['message_id'] +'"></textarea>' +
-											'<div class="submit">' +
-												'<input type="submit" value="Submit &nbsp; &#9658;" id="postcomment-' + message['message_id'] + '"/></div>' +
-										'</div>';
+			var comments_fields_html = '';
 			
 			for ( var i = 0; i < message['comments'].length; i++ ) {
 				
-				var edit_remove_comment_html = '';
-				if ( not_logged_in == false ) {
-					edit_remove_comment_html = '<div id="remove-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/remove.png" /><div> Remove</div></div><div id="edit-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/edit.png" /><div> Edit</div></div><br />';					
-										
+				var edit_remove_report_comment_html = '';
+				var edit_comment_html = '';
+				var remove_comment_html = '';
+				var report_comment_html = '';
+
+				if (hasAccess(message['comments'][i]['name']['id'])) {
+
+					remove_comment_html = '<div id="remove-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/remove.png" /><div> Remove</div></div>';					
+					edit_comment_html = '<div id="edit-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/edit.png" /><div> Edit</div></div><br />';											
+				
 				}
+
+				if (isOnline()) {
+					report_comment_html = '<div id="report-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/report.png" /><div> Report</div></div>';
+					comments_fields_html = '<div class="new-comment">' +
+										   		'<p><b>New comment</b></p>' +
+												'<input type="text" id="commentuser-' + message['message_id'] + '" name="name" placeholder="Your name" />' +
+												'<textarea name="description" placeholder="Your comment" id="commentdescription-' + message['message_id'] +'"></textarea>' +
+											'<div class="submit">' +
+												'<input type="submit" value="Submit &nbsp; &#9658;" id="postcomment-' + message['message_id'] + '"/></div>' +
+											'</div>';						
+				}
+
+				edit_remove_report_comment_html	= report_comment_html + remove_comment_html + edit_comment_html; 	
 
 				comments_html += '<div class="comment" id="comment-' + message['comments'][i]['comment_id'] + '">' +
 									'<table border="0">' +
@@ -487,12 +513,12 @@ function showMessages() {
 											'<td colspan="2" class="justify">' + message['comments'][i]['message'] + '</td>' +
 										'</tr>' +
 									'</table>' +
-									'<div id="report-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/report.png" /><div> Report</div></div>' +
-									edit_remove_comment_html +
+									edit_remove_report_comment_html +
 								'</div>';
 			}
 			
 			document.getElementById('comments-' + message['message_id']).innerHTML = comments_html + comments_fields_html;
+			$('#commentuser-' + message['message_id']).val(getUserInfo().name);	
 
 			$.each(message['comments'], function(i, v) {
 				var comment_id = v['comment_id'];
@@ -587,7 +613,6 @@ function showMessages() {
 
 function decreaseNumberOfComments(id, amount) {
 	var numberOfComments = parseInt($('#number-of-comments-' + id).html());
-	console.log(id);
 	numberOfComments -= amount;
 	$('#number-of-comments-' + id).html(numberOfComments);
 }

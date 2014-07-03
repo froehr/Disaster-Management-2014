@@ -77,7 +77,6 @@ function setLogoutContent() {
 	provider = 'dummy';
 	try {
     	provider = user.identities[0].provider;
-    	console.log(provider);
 	}
 	catch(err) {
     	
@@ -231,7 +230,11 @@ function resetPW() {
 			
 }
 
-
+function changeName(name) {
+	Hull.api('me', 'put', {
+				name: name	
+			});
+}
 
 //Delete Account Confirmation Popup
 function setDeleteAccountContext() {
@@ -295,11 +298,26 @@ function setChangePasswordContext() {
 
 }
 
-function canEdit(owner_id) {
+function hasAccess(owner_id) {
+
+	var hasAccess;
+
+	if(isOnline() == false) {
+		return false;
+	}
 
 	var isAdmin = getUserInfo().is_admin;
 	var is_Owner = owner_id == getUserInfo().id;
-	canEdit = isAdmin || is_Owner;
+	hasAccess = isAdmin || is_Owner;
 
-	return canEdit;
+	return hasAccess;
 }
+
+function isOnline() {
+	
+	var logged_in = getUserInfo();
+	logged_in = !((logged_in == null) || (logged_in ==false));
+
+	return logged_in;
+}
+
