@@ -40,7 +40,7 @@ function showMessages() {
 	function showMessage(message, refreshMessages, redrawMapFeatures) {
 		var logged_in = getUserInfo();
 		var not_logged_in = ((logged_in == null) || (logged_in ==false));
-		if (refreshMessages) {
+		if (refreshMessages && message['relevant']) {
 			var tags_html = '';
 			var tags = message['tags'].split(',');
 			for ( var i = 0; i < tags.length; i++ ) {
