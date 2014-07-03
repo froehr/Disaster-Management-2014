@@ -263,7 +263,7 @@ header nav ul li #layer:active {
 
 /* Message form small input field */
 #message-bar #message-form input.small {
-	width: 52px;
+	width: 70px;
 }
 
 /* Message form file input field */

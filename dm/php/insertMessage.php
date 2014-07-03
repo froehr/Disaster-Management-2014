@@ -76,7 +76,7 @@ $dbconn = getConnection();
 		$geometry = "Point";
 		$coordinates = "null";
 	}
-	$query=pg_query($dbconn,"Insert into message values (DEFAULT,'".$issue."','".$title."',".$coordinates.",TIMESTAMP '".$creationDate."',true,TIMESTAMP '".$creationDate."','".$description."',".$people_need.",".$people_attending.",'false','".$category."','','".$person_name."','".$person_contact."','delete?','".$hulluser_id."');");
+	$query=pg_query($dbconn,"Insert into message values (DEFAULT,'".$issue."','".$title."',".$coordinates.",TIMESTAMP '".$creationDate."',true,TIMESTAMP '".$creationDate."','".$description."',".$people_need.",".$people_attending.",'false','".$category."','".$tags."','".$person_name."','".$person_contact."','delete?','".$hulluser_id."');");
 
 	$query2=pg_query($dbconn,'Select max(message_id) from "message";');	
 	while ($line = pg_fetch_array($query2, null, PGSQL_ASSOC)) {

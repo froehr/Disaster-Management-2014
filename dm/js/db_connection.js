@@ -88,8 +88,13 @@
 		var tags = document.getElementById("tags").value;
 		var creationDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
 		var hulluserProfile = getUserInfo();
-		var hulluser_id = hulluserProfile.id;
-		console.log("Your user id: "+hulluser_id);
+		var hulluser_id;
+		if ( hulluserProfile != null ) {
+			hulluser_id = hulluserProfile.id;
+		}
+		else {
+			hulluser_id = 0;
+		}
 		
 		if (peopleAttending == "" && peopleAttending == ""){
 			peopleAttending = 0;

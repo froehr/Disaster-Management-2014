@@ -48,8 +48,6 @@ function showMessages() {
 			}
 			tags_html = tags_html.substring(0, tags_html.length - 2);
 			
-			var location_name_html = 'Location';
-			
 			var edit_remove_html = '';
 			if ( not_logged_in == false ) {
 				edit_remove_html = '<div id="remove-' + message['message_id'] + '" class="message-button"><img src="img/icons/remove.png" /><div> Remove</div></div><div id="edit-' + message['message_id'] + '" class="message-button"><img src="img/icons/edit.png" /><div> Edit</div></div>';
@@ -73,6 +71,14 @@ function showMessages() {
 								'<td>' + message['person_name'] + '</td>' +
 							'</tr>' +
 							'<tr>' +
+								'<td class="first">Contact:</td>' +
+								'<td>' + message['person_contact'] + '</td>' +
+							'</tr>' +
+							'<tr>' +
+								'<td class="first">Helpers:</td>' +
+								'<td>' + message['people_attending'] + ' attending, ' + message['people_need'] + ' needed</td>' +
+							'</tr>' +
+							'<tr>' +
 								'<td class="first">Tags:</td>' +
 								'<td>' + tags_html + '</td>' +
 							'</tr>' +
@@ -94,7 +100,7 @@ function showMessages() {
 						'</div>' +
 					'</div>' +
 					'<div class="category">Category: ' + message['category'] + '</div>' +
-					'<div class="location-name">' + message['date_of_change'] + ', ' + location_name_html + '</div>' +
+					'<div class="location-name">' + message['date_of_change'] + '</div>' +
 				'</div>');
 		}
 		if (redrawMapFeatures) {
