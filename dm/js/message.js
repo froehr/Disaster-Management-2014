@@ -501,7 +501,7 @@ function showMessages() {
 					edit_comment_html = '<div id="edit-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/edit.png" /><div> Edit</div></div><br />';											
 				
 				}
-
+				
 				if (isOnline()) {
 					report_comment_html = '<div id="report-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/report.png" /><div> Report</div></div>';
 					comments_fields_html = '<div class="new-comment">' +
@@ -529,7 +529,18 @@ function showMessages() {
 								'</div>';
 			}
 			
+			if (isOnline()) {
+				comments_fields_html = '<div class="new-comment">' +
+									   		'<p><b>New comment</b></p>' +
+											'<input type="text" id="commentuser-' + message['message_id'] + '" name="name" placeholder="Your name" />' +
+											'<textarea name="description" placeholder="Your comment" id="commentdescription-' + message['message_id'] +'"></textarea>' +
+										'<div class="submit">' +
+											'<input type="submit" value="Submit &nbsp; &#9658;" id="postcomment-' + message['message_id'] + '"/></div>' +
+										'</div>';						
+			}
+			
 			document.getElementById('comments-' + message['message_id']).innerHTML = comments_html + comments_fields_html;
+			
 			try {
 				$('#commentuser-' + message['message_id']).val(getUserInfo().name);
 			} catch (err){}		
