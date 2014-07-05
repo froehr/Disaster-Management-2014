@@ -75,7 +75,6 @@
 	}
 	
 	function submitNeedSupport(){
-		
 		var issue = document.getElementById("issue").value;
 		var title = document.getElementById("title").value;
 		var description = document.getElementById("description").value;
@@ -141,7 +140,9 @@
 				},
 				function(data){
 					console.log(data);
-					twitterMessage(issue, title, data);
+					if ( document.getElementsByName("twitter")[0].checked ){
+						twitterMessage(issue, title, data);
+					}					
 					}	
 				);
 	
@@ -211,7 +212,10 @@
 				},
 				function(data){
 					console.log(data);
-					twitterMessage(issue, title, data);
+					if ( document.getElementsByName("twitter")[0].checked ){
+						twitterMessage(issue, title, data);
+					}					
+
 					}	
 				);
 			return true;
@@ -275,7 +279,10 @@
 				},
 				function(data){
 					console.log(data);
-					twitterMessage(issue, title, data);
+					if ( document.getElementsByName("twitter")[0].checked ){
+						twitterMessage(issue, title, data);
+					}					
+
 				}	
 				);
 
