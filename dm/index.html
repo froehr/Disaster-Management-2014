@@ -96,7 +96,9 @@
 								<p>Tags <span class="small">(separate with commas)</span></p>
 								<input type="text" name="tags" id="tags" placeholder="food, sandsacks, electricity, ..."/>
 								<p>File / Image</p>
-								<input type="file" name="file" id="file" class="file" />
+								<form action="" method="post" enctype="multipart/form-data">
+									<input name="file" type="file" id="fileA" onchange=""/>
+								</form>
 								<p>Publish on Twitter?</p>
 								<form action="">
 									Yes<input type="radio" name="twitter" value="yes"><br>

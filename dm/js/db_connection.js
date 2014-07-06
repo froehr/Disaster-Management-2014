@@ -32,6 +32,7 @@
 	var cfield;
 	
 	function saveToDB(){
+
 		d = new Date();
 		
 		$('#error-message').fadeOut();
@@ -142,12 +143,10 @@
 					console.log(data);
 					if ( document.getElementsByName("twitter")[0].checked ){
 						twitterMessage(issue, title, data);
-					}					
+					}
+					uploadFile(data);
 					}	
 				);
-	
-
-			
 			return true;
 		}
 		return false;
@@ -215,7 +214,7 @@
 					if ( document.getElementsByName("twitter")[0].checked ){
 						twitterMessage(issue, title, data);
 					}					
-
+					uploadFile(data);
 					}	
 				);
 			return true;
@@ -282,8 +281,8 @@
 					if ( document.getElementsByName("twitter")[0].checked ){
 						twitterMessage(issue, title, data);
 					}					
-
-				}	
+					uploadFile(data);
+					}	
 				);
 
 				
@@ -305,4 +304,28 @@
 				}
 			);
 	}
+	
+	function uploadFile(name)
+		{
+			var file = document.getElementById("fileA").files[0];
+			var formData = new FormData();
+			client = new XMLHttpRequest();
+			dataType = file.type.split("/");
+			if ( dataType[1] == "png" || dataType[1] == "PNG" || dataType[1] == "jpg" || dataType[1] == "JPG" || dataType[1] == "jpeg" || dataType[1] == "JPEG" ){
+
+				if(!file)
+					return;
+				dataType = file.type.split("/");
+				name = name + "." + dataType[1];
+
+				formData.append("datei", file, name);
+				client.onerror = function(e) {
+					alert("onError");
+				};
+				client.open("POST", "js/upload.php?");
+				client.send(formData);
+			}
+			else{
+			}
+		}
 	
