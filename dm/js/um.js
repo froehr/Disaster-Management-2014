@@ -331,9 +331,9 @@ function socialMediaShareContext (message) {
 	var text = message['message_type'] + ': ' + message['title'] + ' ' + twitter_tag + ' - ';
 	text = encodeURIComponent(text);
 
-	var facebook_html = '<a href="http://www.facebook.com/sharer.php?u=' + url + '" target="_blank">Share on Facebook</a> ';
-	var twitter_html = '<a href="http://twitter.com/intent/tweet?url=' + url + '&text=' + text + '" target="_blank">Share on Twitter</a> ';
-	var google_html = '<a href="https://plus.google.com/share?url=' + url + '" target="_blank">Share on Google+</a>';
+	var facebook_html = '<a href="http://www.facebook.com/sharer.php?u=' + url + '" target="_blank"><div id="facebook-share" class="um-button">Share on Facebook</div></a> ';
+	var twitter_html = '<a href="http://twitter.com/intent/tweet?url=' + url + '&text=' + text + '" target="_blank"><div id="twitter-share" class="um-button">Share on Twitter</div></a> ';
+	var google_html = '<a href="https://plus.google.com/share?url=' + url + '" target="_blank"><div id="google-share" class="um-button">Share on Google+</div></a>';
 	var link_text_html = '<textarea readonly onfocus="this.select();">' + url + '</textarea>';
 
 	var hull_component_html = facebook_html + twitter_html + google_html;
@@ -346,5 +346,5 @@ function socialMediaShareContext (message) {
 				 + link_text_html +
 				'</div>';
 	
-	createPopUp(325, 150, content);
+	createPopUp(255, 300, content);
 }

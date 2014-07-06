@@ -988,7 +988,7 @@ div.location-filter.button-container.enabled {
 	//height: 0px;
 }
 
-#login-popup .um-button {
+#login-popup .um-button, #popup .um-button {
 	color: #FFFFFF;
 	background-repeat: no-repeat;
 	background-position: 10px 5px;
@@ -1002,42 +1002,42 @@ div.location-filter.button-container.enabled {
 	cursor: pointer;
 }
 
-#login-popup #facebook {
+#login-popup #facebook, #popup #facebook-share {
 	background-color: #3e559e;
 	background-image: url(../img/social-logos/facebook.png);
 }
 
-#login-popup #facebook:hover {
+#login-popup #facebook:hover, #popup #facebook-share:hover {
 	background-color: #4a64bd;
 }
 
-#login-popup #facebook:active {
+#login-popup #facebook:active, #popup #facebook-share:hover {
 	background-color: #526fd1;
 }
 
-#login-popup #twitter {
+#login-popup #twitter, #popup #twitter-share {
 	background-color: #1ab2e8;
 	background-image: url(../img/social-logos/twitter.png);
 }
 
-#login-popup #twitter:hover {
+#login-popup #twitter:hover, #popup #twitter-share:hover {
 	background-color: #1cc1fc;
 }
 
-#login-popup #twitter:active {
+#login-popup #twitter:active, #popup #twitter-share:active {
 	background-color: #50d0ff;
 }
 
-#login-popup #google {
+#login-popup #google, #popup #google-share {
 	background-color: #c53624;
 	background-image: url(../img/social-logos/googleplus.png);
 }
 
-#login-popup #google:hover {
+#login-popup #google:hover, #popup #google-share:hover {
 	background-color: #d95242;
 }
 
-#login-popup #google:active {
+#login-popup #google:active, #popup #google-share:active {
 	background-color: #eb6d5d;
 }
 
