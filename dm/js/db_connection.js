@@ -32,28 +32,29 @@
 	var cfield;
 	
 	function saveToDB(){
-
-		d = new Date();
-		
-		$('#error-message').fadeOut();
-		$('#' + cfield).css('border', border);
-		
-		var type = document.getElementById("issue").value;
-		switch (type){
-			case '':
-				fieldError('type-buttons', 'You need to choose a message type.');
-				break;
-			case "need-support":
-				return submitNeedSupport();
-				break;
-			case "offer-support":
-				return submitOfferSupport();
-				break;
-			case "message":
-				return submitMessage();
-				break;
-			default:
-				break;
+		if (isOnline()) {
+			d = new Date();
+			
+			$('#error-message').fadeOut();
+			$('#' + cfield).css('border', border);
+			
+			var type = document.getElementById("issue").value;
+			switch (type){
+				case '':
+					fieldError('type-buttons', 'You need to choose a message type.');
+					break;
+				case "need-support":
+					return submitNeedSupport();
+					break;
+				case "offer-support":
+					return submitOfferSupport();
+					break;
+				case "message":
+					return submitMessage();
+					break;
+				default:
+					break;
+			}
 		}
 	}
 	
