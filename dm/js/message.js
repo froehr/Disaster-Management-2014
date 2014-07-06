@@ -90,6 +90,9 @@ function showMessages() {
 								'<td class="first">Tags:</td>' +
 								'<td>' + tags_html + '</td>' +
 							'</tr>' +
+							'<tr>' +
+								'<td class="first"><a href="#" id="share-' + message['message_id'] + '">Share Message</a></td>' +
+							'</tr>' +
 						'</table>'
 						+ file_html +
 						'<div class="comments" id="comments-' + message['message_id'] + '">' +
@@ -300,6 +303,10 @@ function showMessages() {
 		$('#edit-' + message['message_id']).click(function() {
 			// TODO: EDIT MESSAGE
 		});
+
+		$('#share-' + message['message_id']).click(function() {
+			socialMediaShareContext(message);
+		});
 		
 		
 
@@ -426,7 +433,7 @@ function showMessages() {
 		}
 
 		Hull.api(hull_id + '/comments', 'post', {
-			description: content
+			description: content,
 		}).then(function(comment) {
 				
 				Hull.api('me', 'put', {
@@ -469,6 +476,7 @@ function showMessages() {
 		var hull_id = getHullId(message.message_id);
 		var url = "https://22dd92ac.hullapp.io/api/v1/" + hull_id + "/comments?order_by=created_at%20ASC";
 
+
 		$.getJSON(url, function(data){
 			message['comments'] = [];
 			for ( var i = 0; i < data.length; i++ ) {
@@ -477,10 +485,10 @@ function showMessages() {
 					data[i].user,
 					data[i].description,
 					data[i].created_at,
-					''));
+					data[i].picture));
 
 			}					
-			
+		
 			var comments_html = '<div class="less" id="less-' + message['message_id'] + '-top" style="display: block;">' +
 								'<a href="#"><span>&#9668;</span> less</a>' +
 							'</div>' +
@@ -490,10 +498,21 @@ function showMessages() {
 			
 			for ( var i = 0; i < message['comments'].length; i++ ) {
 				
+				var img_url_html = message['comments'][i]['file'];
+
+				if(img_url_html != null) {
+					img_url_html = '<tr>' +
+								'<td><img src="' + message['comments'][i]['file'] + '" width="100%"></td>' +
+								'</tr>';
+				}else{
+					img_url_html = '';
+				}
+
 				var edit_remove_report_comment_html = '';
 				var edit_comment_html = '';
 				var remove_comment_html = '';
 				var report_comment_html = '';
+
 
 				if (hasAccess(message['comments'][i]['name']['id'])) {
 
@@ -524,6 +543,7 @@ function showMessages() {
 										'<tr>' +
 											'<td colspan="2" class="justify">' + message['comments'][i]['message'] + '</td>' +
 										'</tr>' +
+										img_url_html +
 									'</table>' +
 									edit_remove_report_comment_html +
 								'</div>';

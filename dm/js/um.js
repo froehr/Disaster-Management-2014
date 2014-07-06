@@ -4,7 +4,7 @@ Hull.init({
 	},
 	function(hull, me, app, org) {
 		
-		
+		showMessages();
 	},
 	function(error) {
     console.log(error);
@@ -115,7 +115,7 @@ var content = '';
 
 // Event for Initalization of Hull.io - Include every function that needs to be called on start
 Hull.on('hull.init', function() {
-	showMessages();
+	
 	if ( Hull.currentUser() ) {
 		username = getUserInfo().name;
 		$('#person_name').val(username);
@@ -321,3 +321,30 @@ function isOnline() {
 	return logged_in;
 }
 
+function socialMediaShareContext (message) {
+
+	
+	var host = window.location.host;
+	var path = window.location.pathname;
+	var url = host + path + '?message=' + message['message_id'];
+	var twitter_tag = '#dmifgi';
+	var text = message['message_type'] + ': ' + message['title'] + ' ' + twitter_tag + ' - ';
+	text = encodeURIComponent(text);
+
+	var facebook_html = '<a href="http://www.facebook.com/sharer.php?u=' + url + '" target="_blank">Share on Facebook</a> ';
+	var twitter_html = '<a href="http://twitter.com/intent/tweet?url=' + url + '&text=' + text + '" target="_blank">Share on Twitter</a> ';
+	var google_html = '<a href="https://plus.google.com/share?url=' + url + '" target="_blank">Share on Google+</a>';
+	var link_text_html = '<textarea readonly onfocus="this.select();">' + url + '</textarea>';
+
+	var hull_component_html = facebook_html + twitter_html + google_html;
+
+	var content = '<div id="usershare">' +
+				'<h1>Share Message</h1>' +
+				'<p>Share on Social Networks:</p>' +
+				hull_component_html +
+				'</br><p>Share Link:</p>'
+				 + link_text_html +
+				'</div>';
+	
+	createPopUp(325, 150, content);
+}
