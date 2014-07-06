@@ -610,12 +610,7 @@ function showMessages() {
 	File has to be done separately? At least while accessing file here ("messageFeatures.properties.file" instead of "") jquery gives me an error
 	*/
 	$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
-		for (var i = 0, len = data.features.length; i < len; i++){
-			var messageFeatures = data.features[i];
-			var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures.geometry), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, "", messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email, messageFeatures.properties.hulluser_id);
-			showMessage(msg, true, true);
-			setMessageClickFunctions(msg);
-		}
+		parseMessages(data, true, true)
 		showMessagebyUrl();
 	});
 	function spatialFilter (){
@@ -633,12 +628,7 @@ function showMessages() {
 				bboxString: bboxString
 			},
 			function( data ) {
-				for (var i = 0, len = data.features.length; i < len; i++) {
-					var messageFeatures = data.features[i];
-					var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures.geometry), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, "", messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email, messageFeatures.properties.hulluser_id);
-					showMessage(msg, true, false);
-					setMessageClickFunctions(msg);
-				}
+				parseMessages(data, true, false)
 			},
 			"json"
 		);
@@ -652,6 +642,32 @@ function showMessages() {
 	});
 	// messages.addData(data);
 	// messages.addTo(map)
+	
+	//end of showmessages() function
+	function parseMessages (data, refreshMessages, redrawMapFeatures) {
+		for (var i = 0, len = data.features.length; i < len; i++) {
+			var messageFeatures = data.features[i];
+			var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures.geometry), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, "", messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email, messageFeatures.properties.hulluser_id);
+			showMessage(msg, refreshMessages, redrawMapFeatures);
+			setMessageClickFunctions(msg);
+		}
+	}
+	$('#apply-filter').click(function() {
+		var filter_issue = '\'' + document.getElementById('filter-issue').value + '\'';
+		var filter_category = '\'' + document.getElementById('filter-category').value + '\'';
+		$.post( "php/filter.php", 
+			{ 
+				message_type: filter_issue,
+				category: filter_category
+			},
+			function( data ) {
+				$("#messages").empty();
+				layerGroup.clearLayers();
+				parseMessages(data, true, true);
+			},
+			"json"
+		);
+	});
 	
 	//end of showmessages() function	
 }
