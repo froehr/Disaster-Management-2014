@@ -144,6 +144,7 @@
 					if ( document.getElementsByName("twitter")[0].checked ){
 						twitterMessage(issue, title, data);
 					}
+					console.log
 					uploadFile(data);
 					}	
 				);
@@ -307,25 +308,28 @@
 	
 	function uploadFile(name)
 		{
-			var file = document.getElementById("fileA").files[0];
-			var formData = new FormData();
-			client = new XMLHttpRequest();
-			dataType = file.type.split("/");
-			if ( dataType[1] == "png" || dataType[1] == "PNG" || dataType[1] == "jpg" || dataType[1] == "JPG" || dataType[1] == "jpeg" || dataType[1] == "JPEG" ){
-
-				if(!file)
-					return;
+			console.log(document.getElementById("fileA").value);
+			if (document.getElementById("fileA").value != ""){
+				var file = document.getElementById("fileA").files[0];
+				var formData = new FormData();
+				client = new XMLHttpRequest();
 				dataType = file.type.split("/");
-				name = name + "." + dataType[1];
+				if ( dataType[1] == "png" || dataType[1] == "PNG" || dataType[1] == "jpg" || dataType[1] == "JPG" || dataType[1] == "jpeg" || dataType[1] == "JPEG" ){
 
-				formData.append("datei", file, name);
-				client.onerror = function(e) {
-					alert("onError");
-				};
-				client.open("POST", "php/upload.php?");
-				client.send(formData);
-			}
-			else{
-			}
+					if(!file)
+						return;
+					dataType = file.type.split("/");
+					name = name + "." + dataType[1];
+
+					formData.append("datei", file, name);
+					client.onerror = function(e) {
+						alert("onError");
+					};
+					client.open("POST", "php/upload.php?");
+					client.send(formData);
+				}
+				else{
+				}
+			}	
 		}
 	
