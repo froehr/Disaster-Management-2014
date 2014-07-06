@@ -322,7 +322,7 @@
 				client.onerror = function(e) {
 					alert("onError");
 				};
-				client.open("POST", "js/upload.php?");
+				client.open("POST", "php/upload.php?");
 				client.send(formData);
 			}
 			else{
