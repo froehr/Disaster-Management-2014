@@ -9,12 +9,7 @@ function scrollToId(id) {
     $('#message-bar').animate({scrollTop: top}, 'slow');
 }
 
-$('#create-message-button').click(function() {
-	$('#create-message-button').css('display', 'none');
-	$('#message-bar').css('top', '85px');
-	$('#message-form').slideDown('slow', 'linear');
-	scrollToId('message-form');
-});
+
 
 // creating clickfunktion for the headerbuttons to open the input form
 function setMessageFormButtonClickFunctions(tag, color, title) {
@@ -279,6 +274,22 @@ function setAutoHeight(id) {
 	$('#' + id).css('height', 0);
 	$('#' + id).css('display', 'block');
 	$('#' + id).animate({height: autoHeight}, 'fast');
+}
+
+function switchCreateMessageStatus() {
+
+	if (isOnline()) {
+		$('#create-message-button').text('Create New Message');
+		$('#create-message-button').click(function() {
+			$('#create-message-button').css('display', 'none');
+			$('#message-bar').css('top', '85px');
+			$('#message-form').slideDown('slow', 'linear');
+			scrollToId('message-form');
+		});
+	}else{
+		$('#create-message-button').text('Login to create message');
+		$('#create-message-button').unbind('click');
+	}
 }
 
 $('#layer').mouseover(function() {
