@@ -131,8 +131,8 @@ function showMessages() {
 				var iconUrl = 'img/marker/marker-icon-' + message['message_type'] + '.png';
 				
 				var data = jQuery.parseJSON(message['location']);
-				
-				message['location-json'] = L.geoJson(data, {
+
+			message['location-json'] = L.geoJson(data, {
 					pointToLayer: function (latlng) {                    
 						return new L.Marker([data.coordinates[1],data.coordinates[0]], {
 							icon:  new L.Icon({
@@ -149,6 +149,7 @@ function showMessages() {
 						};
 					},
 					id: message['message_id'],
+					time: message['time_start'],
 					onEachFeature: function (feature, layer) {
 						var vOffset;
 			
@@ -201,10 +202,15 @@ function showMessages() {
 						
 					}
 				}).addTo(layerGroup);
+
 				
+
 			}
 		}
 		layerGroup.addTo(map);
+		var sliderControl = L.control.sliderControl({position: 'topright', layer:layerGroup});
+		map.addControl(sliderControl);
+		sliderControl.startSlider();
 		// end of function showMessage(message, refreshMessages, redrawMapFeatures)
 	}
 	
@@ -639,6 +645,12 @@ function showMessages() {
 
 	LlocationFilter.on("change", function (e) {
 		spatialFilter();
+	});
+	LlocationFilter.on("disabled", function (e){
+		$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
+			parseMessages(data, true, false)
+			showMessagebyUrl();
+		});
 	});
 	// messages.addData(data);
 	// messages.addTo(map)

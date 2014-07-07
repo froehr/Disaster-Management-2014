@@ -86,9 +86,10 @@ L.Control.SliderControl = L.Control.extend({
                 var map = options.map;
                 if(!!options.markers[ui.value]) {
                     //If there is no time property, this line has to be removed (or exchanged with a different property)
-                    if(options.markers[ui.value].feature.properties.time_start){
-                        if(options.markers[ui.value]) $('#slider-timestamp').html(options.markers[ui.value].feature.properties.time_start.substr(0, 19));
-                    }
+                   // if(options.markers[ui.value].feature.properties.time_start){
+                        // for the Disaster Management System, this line got changed for our proposes
+                        if(options.markers[ui.value]) $('#slider-timestamp').html(options.markers[ui.value].options.time.substr(0, 19));
+                    //}
                     if(options.range){
                         for (var i = ui.values[0]; i< ui.values[1]; i++){
                            if(options.markers[i]) map.addLayer(options.markers[i]); 
