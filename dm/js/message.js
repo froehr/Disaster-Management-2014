@@ -648,6 +648,7 @@ function showMessages() {
 	});
 	LlocationFilter.on("disabled", function (e){
 		$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
+			$("#messages").empty();
 			parseMessages(data, true, false)
 			showMessagebyUrl();
 		});
@@ -664,21 +665,54 @@ function showMessages() {
 			setMessageClickFunctions(msg);
 		}
 	}
-	$('#apply-filter').click(function() {
+	$('#filter-issue').change(function() {
+		applyFilter();
+		console.log('issue')
+	})
+	$('#filter-category').change(function() {
+		applyFilter();
+		console.log('category')
+	})
+
+	function applyFilter(){
 		var filter_issue = '\'' + document.getElementById('filter-issue').value + '\'';
 		var filter_category = '\'' + document.getElementById('filter-category').value + '\'';
+		console.log('category: ' + filter_category + ' issue: ' + filter_issue)
 		$.post( "php/filter.php", 
 			{ 
 				message_type: filter_issue,
 				category: filter_category
 			},
 			function( data ) {
-				$("#messages").empty();
-				layerGroup.clearLayers();
-				parseMessages(data, true, true);
+				if (data.features.length != 0) {
+					console.log(data)
+					console.log('erfolg')
+					$("#messages").empty();
+					layerGroup.clearLayers();
+					parseMessages(data, true, true);
+				}
+				else {
+					console.log('nope')
+					var msg = new Message('error', 'message', 'there is no message available', '', '', 'true', '', 'please change the filter or reset the filter', '', '', '', '', '', '', '', '', '');
+					$("#messages").empty();
+					showMessage(msg, true, false);
+				}
+				
 			},
 			"json"
 		);
+	}
+	$('#apply-filter').click(function() {
+		applyFilter();
+	})
+	$('#reset-filter').click(function() {
+		$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
+			$("#messages").empty();
+			parseMessages(data, true, true)
+			showMessagebyUrl();
+		});
+		$('#filter-issue').val('any');
+		$('#filter-category').val('cat-0')
 	});
 	
 	//end of showmessages() function	

@@ -9,14 +9,24 @@
 
 	
 		// create the 'WEHRE'-Query for the SQL Query
-		if ($message_type != '') {
+		/*if ($message_type != '') {
 			$message_type = 'message_type ='. $message_type;
 		}
 		if ($category != '') {
 			$category = 'category =' . $category;
+		}*/
+		if ($message_type == "'any'" and $category == "'cat-0'") {
+			$whereString = '';
 		}
-
-		$whereString = $message_type . 'AND ' . $category;
+		elseif ($message_type == "'any'" and $category != "'cat-0'") {
+			$whereString = 'category =' . $category;
+		}
+		elseif ($message_type != "'any'" and $category == "'cat-0'") {
+			$whereString = 'message_type ='. $message_type;
+		}
+		else {
+			$whereString = 'message_type ='. $message_type . ' AND category =' . $category;
+		}
 
 		$con = getConnection();
 		$data = Array();
