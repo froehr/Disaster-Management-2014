@@ -120,12 +120,12 @@
 				<div class="x" id="x-filter">&#10006;</div>
 				<h1>Message filter</h1>
 				<p>Category</p>
-				<select name="filter-issue" class="select-filter">
+				<select name="filter-issue" id="filter-issue" class="select-filter">
 					<option value="need-support">Need support</option>
 					<option value="offer-support">Offer support</option>
 					<option value="message">Message</option>
 				</select>
-				<select name="filter-category" class="select-filter">
+				<select name="filter-category" id="filter-category" class="select-filter">
 					<option value="cat-1">Food and Water</option>
 					<option value="cat-2">Sand bags</option>
 					<option value="cat-3">Cloth</option>
@@ -140,7 +140,7 @@
 				<p>End date and time</p>
 				<input type="date" name="filter-enddate" id="filter-enddate" class="date" />
 				<input type="time" name="filter-endtime" id="filter-endtime" class="time" />
-				<input type="button" value="Apply filter &nbsp; &#9658;" class="button" />
+				<input type="button" value="Apply filter &nbsp; &#9658;" id="apply-filter" class="button" />
 			</div>
 			<div id="message-search">
 				<input type="text" name="message-search" placeholder="Search in messages ..." />
