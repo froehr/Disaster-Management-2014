@@ -200,7 +200,7 @@ $('#submit').click(function() {
 	}
 });
 
-// click functions to open and close the "more" fields for the input form
+// click functions and close the "more" fields for the input form
 $('#more-form').click(function() {
 	setElementDisplay('more-form', 'none');
 	setElementDisplay('less-form', 'block');
@@ -280,6 +280,7 @@ function switchCreateMessageStatus() {
 
 	if (isOnline()) {
 		$('#create-message-button').text('Create New Message');
+		$('#create-message-button').unbind('click');
 		$('#create-message-button').click(function() {
 			$('#create-message-button').css('display', 'none');
 			$('#message-bar').css('top', '85px');
@@ -289,6 +290,11 @@ function switchCreateMessageStatus() {
 	}else{
 		$('#create-message-button').text('Login to create message');
 		$('#create-message-button').unbind('click');
+		$('#create-message-button').click(function() {
+			setAutoHeight('login-popup');
+			popUpTrigger = true;
+
+		});
 	}
 }
 
@@ -297,7 +303,14 @@ $('#layer').mouseover(function() {
 	closeLoginPopUp();
 });
 
-var popUpTrigger = false;
+
+
+function setPopUpTrigger(value) {
+	popUpTrigger = value;
+}
+
+setPopUpTrigger(false);
+
 $('#layer').click(function() {
 	popUpTrigger = true;
 });
@@ -305,9 +318,14 @@ $('#layer').click(function() {
 $('#login').mouseover(function() {
 	setAutoHeight('login-popup');
 	closeLayerPopUp();
+	popUpTrigger = false;
 });
 
 $('#login').click(function() {
+	popUpTrigger = true;
+});
+
+$('#login-popup').click(function() {
 	popUpTrigger = true;
 });
 

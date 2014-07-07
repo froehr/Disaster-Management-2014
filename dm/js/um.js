@@ -32,6 +32,9 @@ function setLoginContent() {
 	$('#email-login').click(function() {
 		signIn();
 	});
+	$('#login-popup').mouseover(function() {
+		setPopUpTrigger(false);
+	});
 
 
 	$('#create-account').click(function() {
