@@ -4,7 +4,7 @@ Hull.init({
 	},
 	function(hull, me, app, org) {
 		
-		showMessages();
+		
 	},
 	function(error) {
     console.log(error);
@@ -115,8 +115,9 @@ var content = '';
 
 // Event for Initalization of Hull.io - Include every function that needs to be called on start
 Hull.on('hull.init', function() {
-	
-	if ( Hull.currentUser() ) {
+	showMessages();
+	switchCreateMessageStatus();
+		if ( isOnline() ) {
 		username = getUserInfo().name;
 		$('#person_name').val(username);
 		setLogoutContent();
@@ -129,12 +130,14 @@ Hull.on('hull.init', function() {
 
 // User logged in
 Hull.on('hull.auth.login', function() {
+	switchCreateMessageStatus();
 	username = getUserInfo().name;
 	$('#person_name').val(username);
 	setLogoutContent();
 });
 
 Hull.on('hull.auth.logout', function() {
+	switchCreateMessageStatus();
 	username = '';
 	$('#person_name').val(username);
 	setLoginContent();
@@ -319,6 +322,7 @@ function isOnline() {
 	logged_in = !((logged_in == null) || (logged_in ==false));
 
 	return logged_in;
+	
 }
 
 function socialMediaShareContext (message) {
