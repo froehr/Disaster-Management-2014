@@ -3,7 +3,7 @@
 
 //This file can be used to post messages of our application on twitter
 
-	require_once('TwitterAPIExchange.php');
+	require_once('Twitter/TwitterAPIExchange.php');
 	 
 	/** Set access tokens here - see: https://dev.twitter.com/apps/ **/
 	$settings = array(
