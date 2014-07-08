@@ -271,6 +271,12 @@ header nav ul li #layer:active {
 	border: none;
 }
 
+#message-bar #message-form #TwitterCheckbox {
+	position: absolute;
+	margin-left: -35%;
+}
+
+
 /* Message form submit button */
 #message-bar #message-form div.submit {
 	margin-top: -24px;

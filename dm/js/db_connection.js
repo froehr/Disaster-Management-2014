@@ -147,7 +147,7 @@
 				},
 				function(data){
 					console.log(data);
-					if ( document.getElementsByName('twitter')[0].checked ){
+					if ( document.getElementsByName('twitterCheckbox')[0].checked ){
 						twitterMessage(issue, title, data);
 					}
 					console.log
@@ -220,7 +220,7 @@
 				},
 				function(data){
 					console.log(data);
-					if ( document.getElementsByName('twitter')[0].checked ){
+					if ( document.getElementsByName('twitterCheckbox')[0].checked ){
 						twitterMessage(issue, title, data);
 					}					
 					uploadFile(data);
@@ -289,7 +289,7 @@
 				},
 				function(data){
 					console.log(data);
-					if ( document.getElementsByName('twitter')[0].checked ){
+					if ( document.getElementsByName('twitterCheckbox')[0].checked ){
 						twitterMessage(issue, title, data);
 					}					
 					uploadFile(data);
