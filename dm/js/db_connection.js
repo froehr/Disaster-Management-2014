@@ -1,55 +1,55 @@
-			var coordinates="";
-		map.on('draw:created', function (e) {
-			var type = e.layerType,
-				layer = e.layer;
+//authors: Markus Konkol, Daniel Schumacher
 
-			if (type === 'marker') {				
-				coordinates = JSON.stringify(layer.toGeoJSON());
-				//console.log(coordinates);
-			}
-			 
-			else if (type === 'polyline') {
-				coordinates = JSON.stringify(layer.toGeoJSON());
-				//console.log(coordinates);
-			}
-			
-			else if (type === 'polygon') {
-				coordinates = JSON.stringify(layer.toGeoJSON());
-				//console.log(coordinates);	
-			}
-			
-			else if (type === 'rectangle') {
-				coordinates = JSON.stringify(layer.toGeoJSON());
-				//console.log(coordinates);
-			}
-			else{
-				coordinates = "";
-			}
-		});
+	//get last drawn feature and check the type of the feature
+	var coordinates='';
+	map.on('draw:created', function (e) {
+		var type = e.layerType,
+			layer = e.layer;
+
+		if (type === 'marker') {				
+			coordinates = JSON.stringify(layer.toGeoJSON());
+		}
+		 
+		else if (type === 'polyline') {
+			coordinates = JSON.stringify(layer.toGeoJSON());
+		}
+		
+		else if (type === 'polygon') {
+			coordinates = JSON.stringify(layer.toGeoJSON());	
+		}
+		
+		else if (type === 'rectangle') {
+			coordinates = JSON.stringify(layer.toGeoJSON());
+		}
+		else{
+			coordinates = '';
+		}
+	});
 
 	
 	var border;
 	var cfield;
 	
+	//check which type of message will be submitted and trigger particular function
 	function saveToDB(){
-		if (isOnline()) {
+		if ( isOnline() ) {
 			d = new Date();
 			
 			$('#error-message').fadeOut();
 			$('#' + cfield).css('border', border);
 			
 			var type = document.getElementById("issue").value;
-			switch (type){
+			switch ( type ){
 				case '':
 					fieldError('type-buttons', 'You need to choose a message type.');
 					break;
-				case "need-support":
+				case 'need-support':
 					return submitNeedSupport();
 					break;
-				case "offer-support":
+				case 'offer-support':
 					return submitOfferSupport();
 					break;
-				case "message":
+				case 'message':
 					return submitMessage();
 					break;
 				default:
@@ -76,20 +76,25 @@
 		});
 	}
 	
+	//submit a need-support message
 	function submitNeedSupport(){
-		var issue = document.getElementById("issue").value;
-		var title = document.getElementById("title").value;
-		var description = document.getElementById("description").value;
-		var category = document.getElementById("category").value;
-		var contact = document.getElementById("person_contact").value;
+	
+		//get all values
+		var issue = document.getElementById('issue').value;
+		var title = document.getElementById('title').value;
+		var description = document.getElementById('description').value;
+		var category = document.getElementById('category').value;
+		var contact = document.getElementById('person_contact').value;
 		var geometry = coordinates;
-		var name = document.getElementById("person_name").value;
-		var peopleAttending = document.getElementById("people_attending").value;
-		var peopleNeeded = document.getElementById("people_need").value;
-		var tags = document.getElementById("tags").value;
-		var creationDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+		var name = document.getElementById('person_name').value;
+		var peopleAttending = document.getElementById('people_attending').value;
+		var peopleNeeded = document.getElementById('people_need').value;
+		var tags = document.getElementById('tags').value;
+		var creationDate = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
 		var hulluserProfile = getUserInfo();
 		var hulluser_id;
+		
+		//check for wrong input and throw error-messages for the user
 		if ( hulluserProfile != null ) {
 			hulluser_id = hulluserProfile.id;
 		}
@@ -97,35 +102,35 @@
 			hulluser_id = 0;
 		}
 		
-		if (peopleAttending == "" && peopleAttending == ""){
+		if (peopleAttending == '' && peopleAttending == ''){
 			peopleAttending = 0;
 			peopleNeeded = 0;
 		}
 		else{
 		}
 		
-		if (isNaN(document.getElementById("people_attending").value) || isNaN(document.getElementById("people_attending").value)){
+		if ( isNaN(document.getElementById('people_attending').value) || isNaN(document.getElementById('people_attending').value) ){
 			fieldError('helpers', 'Helpers attending/needed is not a number.');
 		}
-		else if (document.getElementById("title").value == "" ) {
+		else if ( document.getElementById('title').value == '' ) {
 			fieldError('title', 'Title is stil empty.');
 		}
-		else if (document.getElementById("description").value == ""){
+		else if ( document.getElementById('description').value == '' ){
 			fieldError('description', 'Description is still empty.');
 		}
-		else if (coordinates == ""){
+		else if ( coordinates == '' ){
 			fieldError('draw-buttons', 'A feature on the map is missing.');
 		}
-		else if (document.getElementById("person_contact").value == ""){
+		else if ( document.getElementById('person_contact').value == '' ){
 			fieldError('person_contact', 'Contact information missing.');
 		}
-		else if ((document.getElementById("people_attending").value != "" && document.getElementById("people_need").value =="") || 
-				(document.getElementById("people_need").value != "" && document.getElementById("people_attending").value == "")){
+		else if ((document.getElementById('people_attending').value != '' && document.getElementById('people_need').value =='') || 
+				(document.getElementById('people_need').value != '' && document.getElementById('people_attending').value == '')){
 			fieldError('helpers', 'People attending or people needed missing.');
 		}
 		else{
 			$.post(
-				"php/insertMessage.php?",
+				'php/insertMessage.php?',
 				{	
 					Issue:issue,
 					Title:title,
@@ -142,7 +147,7 @@
 				},
 				function(data){
 					console.log(data);
-					if ( document.getElementsByName("twitter")[0].checked ){
+					if ( document.getElementsByName('twitter')[0].checked ){
 						twitterMessage(issue, title, data);
 					}
 					console.log
@@ -154,49 +159,51 @@
 		return false;
 	}
 	
+	//submit an offer-support message
 	function submitOfferSupport(){
-	
-		var issue = document.getElementById("issue").value;
-		var title = document.getElementById("title").value;
-		var description = document.getElementById("description").value;
-		var category = document.getElementById("category").value;
-		var contact = document.getElementById("person_contact").value;
+		//get all values
+		var issue = document.getElementById('issue').value;
+		var title = document.getElementById('title').value;
+		var description = document.getElementById('description').value;
+		var category = document.getElementById('category').value;
+		var contact = document.getElementById('person_contact').value;
 		var geometry = coordinates;
-		var name = document.getElementById("person_name").value;
-		var peopleAttending = document.getElementById("people_attending").value;
-		var peopleNeeded = document.getElementById("people_need").value;
-		var tags = document.getElementById("tags").value;
-		var creationDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+		var name = document.getElementById('person_name').value;
+		var peopleAttending = document.getElementById('people_attending').value;
+		var peopleNeeded = document.getElementById('people_need').value;
+		var tags = document.getElementById('tags').value;
+		var creationDate = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
 		var hulluserProfile = getUserInfo();
 		var hulluser_id = hulluserProfile.id;
-		console.log("Your user id: "+hulluser_id);
+		console.log('Your user id: ' + hulluser_id);
 		
-		if (peopleAttending == "" && peopleAttending == ""){
+		//check for wrong input and throw error-messages for the user
+		if (peopleAttending == '' && peopleAttending == ''){
 			peopleAttending = 0;
 			peopleNeeded = 0;
 		}
 		else{
 		}
 		
-		if (isNaN(document.getElementById("people_attending").value) || isNaN(document.getElementById("people_attending").value)){
+		if (isNaN(document.getElementById('people_attending').value) || isNaN(document.getElementById('people_attending').value)){
 			fieldError('helpers', 'Helpers attending/needed is not a number.');
 		}
-		else if (document.getElementById("title").value == "" ) {
+		else if (document.getElementById('title').value == '' ) {
 			fieldError('title', 'Title is stil empty.');
 		}
-		else if (document.getElementById("description").value == ""){
+		else if (document.getElementById('description').value == ''){
 			fieldError('description', 'Description is still empty.');
 		}
-		else if (document.getElementById("person_contact").value == ""){
+		else if (document.getElementById('person_contact').value == ''){
 			fieldError('person_contact', 'Contact information missing.');
 		}
-		else if ((document.getElementById("people_attending").value != "" && document.getElementById("people_need").value =="") || 
-				(document.getElementById("people_need").value != "" && document.getElementById("people_attending").value == "")){
+		else if ((document.getElementById('people_attending').value != '' && document.getElementById('people_need').value == '') || 
+				(document.getElementById('people_need').value != "" && document.getElementById('people_attending').value == '')){
 			fieldError('helpers', 'People attending or people needed missing.');
 		}
 		else{
 			$.post(
-				"php/insertMessage.php?",
+				'php/insertMessage.php?',
 				{	
 					Issue:issue,
 					Title:title,
@@ -213,7 +220,7 @@
 				},
 				function(data){
 					console.log(data);
-					if ( document.getElementsByName("twitter")[0].checked ){
+					if ( document.getElementsByName('twitter')[0].checked ){
 						twitterMessage(issue, title, data);
 					}					
 					uploadFile(data);
@@ -224,24 +231,26 @@
 		return false;
 	}
 	
+	//submit a simple message 
 	function submitMessage(){
-	
-		var issue = document.getElementById("issue").value;
-		var title = document.getElementById("title").value;
-		var description = document.getElementById("description").value;
-		var category = document.getElementById("category").value;
-		var contact = document.getElementById("person_contact").value;
+		//get all values
+		var issue = document.getElementById('issue').value;
+		var title = document.getElementById('title').value;
+		var description = document.getElementById('description').value;
+		var category = document.getElementById('category').value;
+		var contact = document.getElementById('person_contact').value;
 		var geometry = coordinates;
-		var name = document.getElementById("person_name").value;
-		var peopleAttending = document.getElementById("people_attending").value;
-		var peopleNeeded = document.getElementById("people_need").value;
-		var tags = document.getElementById("tags").value;
-		var creationDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+		var name = document.getElementById('person_name').value;
+		var peopleAttending = document.getElementById('people_attending').value;
+		var peopleNeeded = document.getElementById('people_need').value;
+		var tags = document.getElementById('tags').value;
+		var creationDate = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
 		var hulluserProfile = getUserInfo();
 		var hulluser_id = hulluserProfile.id;
-		console.log("Your user id: "+hulluser_id);
+		console.log('Your user id: ' + hulluser_id);
 		
-		if (peopleAttending == "" && peopleAttending == ""){
+		//check for wrong input and throw error-messages for the user
+		if (peopleAttending == '' && peopleAttending == ''){
 			peopleAttending = 0;
 			peopleNeeded = 0;
 		}
@@ -257,13 +266,13 @@
 		else if (document.getElementById("description").value == ""){
 			fieldError('description', 'Description is still empty.');
 		}
-		else if ((document.getElementById("people_attending").value != "" && document.getElementById("people_need").value =="") || 
-				(document.getElementById("people_need").value != "" && document.getElementById("people_attending").value == "")){
+		else if ((document.getElementById("people_attending").value != '' && document.getElementById('people_need').value =='') || 
+				(document.getElementById('people_need').value != '' && document.getElementById('people_attending').value == '')){
 			fieldError('helpers', 'People attending or people needed missing.');
 		}
 		else{
 			$.post(
-				"php/insertMessage.php?",
+				'php/insertMessage.php',
 				{	
 					Issue:issue,
 					Title:title,
@@ -280,22 +289,21 @@
 				},
 				function(data){
 					console.log(data);
-					if ( document.getElementsByName("twitter")[0].checked ){
+					if ( document.getElementsByName('twitter')[0].checked ){
 						twitterMessage(issue, title, data);
 					}					
 					uploadFile(data);
 					}	
-				);
-
-				
+				);			
 			return true;
 		}	
 		return false;
 	}
 
+	//sends  a submitted message to twitter including issue, title, and id for the URL
 	function twitterMessage(issue, title, id){
 			$.post(
-				"php/twitter.php?",
+				'php/twitter.php?',
 				{	
 					Issue:issue,
 					Title:title,
@@ -307,25 +315,33 @@
 			);
 	}
 	
+	//  saves file on server
 	function uploadFile(name)
 		{
-			console.log(document.getElementById("fileA").value);
-			if (document.getElementById("fileA").value != ""){
-				var file = document.getElementById("fileA").files[0];
+			console.log(document.getElementById('fileA').value);
+			
+			//checks if file is given.
+			if (document.getElementById('fileA').value != ''){
+				var file = document.getElementById('fileA').files[0];
 				var formData = new FormData();
-				client = new XMLHttpRequest();
-				dataType = file.type.split("/");
-				if ( dataType[1] == "png" || dataType[1] == "PNG" || dataType[1] == "jpg" || dataType[1] == "JPG" || dataType[1] == "jpeg" || dataType[1] == "JPEG" ){
+				var client = new XMLHttpRequest();
+					dataType = file.type.split('/');
+				
+				//Then checks if type is one of the allowed ones.
+				if ( dataType[1] == 'png' || dataType[1] == 'PNG' || dataType[1] == 'jpg' || dataType[1] == 'JPG' || dataType[1] == 'jpeg' || dataType[1] == 'JPEG' ){
 
 					if(!file)
 						return;
-					dataType = file.type.split("/");
+				
+					//build name
+					dataType = file.type.split('/');
 					name = name + "." + dataType[1];
 
-					formData.append("datei", file, name);
+					formData.append('datei', file, name);
 					client.onerror = function(e) {
-						alert("onError");
+						alert('onError');
 					};
+					//Then sends it to the server-file upload.php
 					client.open("POST", "php/upload.php?");
 					client.send(formData);
 				}
