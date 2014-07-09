@@ -211,6 +211,7 @@ function showMessages() {
 		var sliderControl = L.control.sliderControl({position: 'topright', layer:layerGroup});
 		map.addControl(sliderControl);
 		sliderControl.startSlider();
+		$('#slider').append($("#leaflet-slider"));
 		// end of function showMessage(message, refreshMessages, redrawMapFeatures)
 	}
 	
@@ -750,4 +751,3 @@ function showMessagebyUrl() {
 		return decodeURIComponent((new RegExp('[?|&]' + message + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
 	}
 }
-

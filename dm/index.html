@@ -132,15 +132,12 @@
 					<option value="cat-6">Fire</option>
 					<option value="cat-7">...</option>
 				</select>
-				<p>Start date and time</p>
-				<input type="date" name="filter-startdate" id="filter-startdate" class="date" />
-				<input type="time" name="filter-starttime" id="filter-starttime" class="time" />
-				<p>End date and time</p>
-				<input type="date" name="filter-enddate" id="filter-enddate" class="date" />
-				<input type="time" name="filter-endtime" id="filter-endtime" class="time" />
-
 				<input type="button" value="Apply filter &nbsp; &#9658;" id="apply-filter" class="button" />
 				<input type="button" value="&#9668; &nbsp; Reset filter " id="reset-filter" class="button" />
+				<div id="timeslider"> 
+					<p id="timesliderparagraph">Timeslider</p>
+					<div id="slider"></div>
+				</div>
 			</div>
 			<div id="message-search">
 				<input type="text" name="message-search" placeholder="Search in messages ..." />

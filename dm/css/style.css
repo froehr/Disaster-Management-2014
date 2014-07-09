@@ -180,6 +180,47 @@ header nav ul li #layer:active {
 	top: 10px;
 }
 
+#timeslider {
+	margin-top: 60px;
+	border-top: 1px solid #AEADAD;
+	padding-left: 10px;
+	padding-right: 13px;
+}
+
+#leaflet-slider {
+	margin-top: 10px;
+	margin-left: -5px;
+}
+
+#timesliderparagraph {
+	margin-left: -10px;
+	margin-top: 10px;
+	margin-bottom: 13px;
+}
+
+#slider-timestamp {
+	margin-top: 15px !important;
+}
+
+.ui-slider{
+	border-radius: 0px !important;
+	width: 268px !important;
+	height: 5px !important;
+	margin-top: 3px !important;
+}
+
+.ui-corner-all {
+	border-radius: 0px !important;
+}
+
+.ui-slider .ui-slider-handle {
+	width: 7px !important;
+	margin-top: -3px !important;
+}
+
+
+
+
 .x:hover {
 	background-color: #CCCCCC;
 	color: #555555;
@@ -653,7 +694,7 @@ header nav ul li #layer:active {
 }
 
 .filter {
-	height: 250px;
+	height: 230px;
 }
 
 .utility-form h1 {
