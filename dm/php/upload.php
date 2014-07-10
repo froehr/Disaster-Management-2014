@@ -3,8 +3,6 @@
 
 	// see also http://code.tutsplus.com/tutorials/image-resizing-made-easy-with-php--net-10362
 	include('resize-class.php');
-
-	$id = $_POST['id'];
 	
 	if (isset($_FILES['datei']))
 	{
