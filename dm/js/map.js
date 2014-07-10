@@ -368,18 +368,22 @@ map.on('draw:created', function (e) {
 });
 
 
-function changeDrawFeatures(issueTag) {
-	var iconUrl = 'img/marker/marker-icon-' + issueTag + '.png';
+function changeDrawFeatures(issueTag, activeCategory) {
+	var activeCategoryString = '';
+	if ( activeCategory != '' ) {
+		activeCategoryString = '-' + activeCategory;
+	}
+	var iconUrl = 'img/marker/marker-icon-' + issueTag + activeCategoryString + '.png';
 
 	switch (issueTag) {
-	case 'need-support':
-		tagColor = '#eba259'
+		case 'need-support':
+			tagColor = '#eba259'
 			break;
-	case 'offer-support':
-		tagColor = '#468f5c'
+		case 'offer-support':
+			tagColor = '#468f5c'
 			break;
-	case 'message':
-		tagColor = '#45544a'
+		case 'message':
+			tagColor = '#45544a'
 			break;
 	}
 
@@ -407,8 +411,7 @@ function changeDrawFeatures(issueTag) {
 		marker : {
 			icon : new L.Icon({
 				iconUrl : iconUrl,
-				iconAnchor : [12, 41],
-				popupAnchor : [0, -42]
+				iconAnchor : [0, 52]
 			})
 		}
 	});
@@ -421,8 +424,7 @@ function changeDrawFeatures(issueTag) {
 		if (typeof layer.setIcon == 'function') {
 			layer.setIcon(new L.Icon({
 					iconUrl : iconUrl,
-					iconAnchor : [12, 41],
-					popupAnchor : [0, -42]
+					iconAnchor : [0, 52]
 				}));
 		}
 	});

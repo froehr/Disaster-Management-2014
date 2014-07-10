@@ -290,7 +290,7 @@ header nav ul li #layer:active {
 }
 
 /* Message form input fields */
-#message-bar #message-form input, select, textarea {
+#message-bar #message-form input, textarea {
 	border: 1px solid #a9a9a9;
 	background-color: #FFFFFF;
 	font-family: 'Noto Sans', Arial, sans-serif;
@@ -298,7 +298,7 @@ header nav ul li #layer:active {
 	padding: 5px 15px;
 }
 
-#message-bar #message-form input:hover, select:hover, textarea:hover {
+#message-bar #message-form input:hover {
 	border: 1px solid #5f5f5f;
 }
 
@@ -331,9 +331,83 @@ header nav ul li #layer:active {
 	background-color: #EEEEEE;
 }
 
-/* Message form dropdown field */
-#message-bar #message-form select {
-	width: 257px;
+#message-bar #message-form #category-select {
+	padding: 5px 15px;
+    border: 1px solid #a9a9a9;
+    width: 225px;
+	cursor: pointer;
+	background-image: url(../img/icons/arrow.png);
+	background-position: 232px 8px;
+	background-repeat: no-repeat;
+}
+
+#message-bar #message-form #category-select:hover {
+	border: 1px solid #5f5f5f;
+}
+
+#message-bar #message-form #category-select  ul {
+	display: none;
+	list-style-type: none;
+}
+
+#message-bar #message-form #category-select  ul {
+	padding: 0px;
+	border-top: 1px solid #a9a9a9;
+}
+
+#message-bar #message-form #category-select ul  li {
+	padding: 12px;
+	border-bottom: 1px solid #a9a9a9;
+	background-repeat: no-repeat;
+	background-position: 180px;
+}
+
+#message-bar #message-form #category-select ul  li:hover {
+	background-color: #EEEEEE;
+}
+
+#message-bar #message-form #category-select li#shelter {
+	background-image: url(../img/symbology/shelter-dark.png);
+}
+
+#message-bar #message-form #category-select li#transport {
+	background-image: url(../img/symbology/transport-dark.png);
+}
+
+#message-bar #message-form #category-select li#damage {
+	background-image: url(../img/symbology/damage-dark.png);
+}
+
+#message-bar #message-form #category-select li#energy {
+	background-image: url(../img/symbology/energy-dark.png);
+}
+
+#message-bar #message-form #category-select li#food {
+	background-image: url(../img/symbology/food-dark.png);
+}
+
+#message-bar #message-form #category-select li#healthcare {
+	background-image: url(../img/symbology/healthcare-dark.png);
+}
+
+#message-bar #message-form #category-select li#gathering-point {
+	background-image: url(../img/symbology/gathering-point-dark.png);
+}
+
+#message-bar #message-form #category-select li#sandbag-sandwall {
+	background-image: url(../img/symbology/sandbag-sandwall-dark.png);
+}
+
+#message-bar #message-form #category-select li#tap-water {
+	background-image: url(../img/symbology/tap-water-dark.png);
+}
+
+#message-bar #message-form #category-select li#school {
+	background-image: url(../img/symbology/school-dark.png);
+}
+
+#message-bar #message-form #category-select li#childcare {
+	background-image: url(../img/symbology/childcare-dark.png);
 }
 
 /* Message form text area */
@@ -467,6 +541,12 @@ header nav ul li #layer:active {
 #message-bar .message-offer-support {
 	background-image: url(../img/background-offer-support.png);
 }
+
+/* Message field */
+#message-bar .message-message {
+	background-image: url(../img/background-message.png);
+}
+
 /* Message field */
 #message-bar .message {
 	background-color: #FFFFFF;
@@ -649,6 +729,11 @@ header nav ul li #layer:active {
 	font-style: italic;
 	font-size: 13px;
 	margin-left: 3px;
+}
+
+#message-bar .message div.category-icon {
+	float: right;
+	margin-top: -40px;
 }
 
 /* Message field location and up/down-vote */

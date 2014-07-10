@@ -76,12 +76,23 @@
 					<textarea name="description" id="description" placeholder="Provide some details."></textarea>
 					<div id="details-message">
 						<p id="head-category">Category</p>
-						<select name="category" id="category">
-							<option value="cat-1"><img src="img/icons/edit.png" /> Category 1</option>
-							<option value="cat-2">Category 2</option>
-							<option value="cat-3">Category 3</option>
-							<option value="...">...</option>
-						</select>
+						<div id="category-select">
+							<div id="category-select-text">Select</div>
+							<ul id="category-select-options">
+								<li id="shelter">Shelter</li>
+								<li id="transport">Transport</li>
+								<li id="damage">Damage</li>
+								<li id="energy">Energy</li>
+								<li id="food">Food</li>
+								<li id="healthcare">Healthcare</li>
+								<li id="gathering-point">Gathering Point</li>
+								<li id="sandbag-sandwall">Sandbag Sandwall</li>
+								<li id="tap-water">Tap Water</li>
+								<li id="school">School</li>
+								<li id="childcare">Childcare</li>
+							</ul>
+						</div>
+						<input type="hidden" name="category" id="category" />
 						<p id="head-person-contact">Contact information</p>
 						<input type="text" name="person_contact" id="person_contact" placeholder="Telephone, E-Mail or Address, ..." />
 						<div id="details-offer-support">
@@ -123,14 +134,18 @@
 					<option value="message">Message</option>
 				</select>
 				<select name="filter-category" id="filter-category" class="select-filter">
-					<option value="cat-0">Any</option>
-					<option value="cat-1">Food and Water</option>
-					<option value="cat-2">Sand bags</option>
-					<option value="cat-3">Cloth</option>
-					<option value="cat-4">Fuel</option>
-					<option value="cat-5">Flood</option>
-					<option value="cat-6">Fire</option>
-					<option value="cat-7">...</option>
+					<option value="any">Any</option>
+					<option value="shelter">Shelter</option>
+					<option value="transport">Transport</option>
+					<option value="damage">Damage</option>
+					<option value="energy">Energy</option>
+					<option value="food">Food</option>
+					<option value="healthcare">Healthcare</option>
+					<option value="gathering-point">Gathering Point</option>
+					<option value="sandbag-sandwall">Sandbag Sandwall</option>
+					<option value="tab-water">Tab Water</option>
+					<option value="school">School</option>
+					<option value="childcare">Childcare</option>
 				</select>
 				<input type="button" value="Apply filter &nbsp; &#9658;" id="apply-filter" class="button" />
 				<input type="button" value="&#9668; &nbsp; Reset filter " id="reset-filter" class="button" />

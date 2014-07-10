@@ -9,17 +9,17 @@ function scrollToId(id) {
     $('#message-bar').animate({scrollTop: top}, 'slow');
 }
 
-
+var issueTag = '';
+var username = '';
+var activeCategory = '';
+var activeIssueTag = '';
 
 // creating clickfunktion for the headerbuttons to open the input form
 function setMessageFormButtonClickFunctions(tag, color, title) {
 	$('#' + tag + '-button').click(function() {
-		changeMessageForm(tag, color, title);
+		changeMessageForm(tag, color, title, activeCategory);
 	});
 }
-
-var issueTag = '';
-var username = '';
 
 function addRequiredStars(fields) {
 	$('#head-category-required').remove();
@@ -32,11 +32,12 @@ function addRequiredStars(fields) {
 }
 
 // change the style and content of form
-function changeMessageForm(tag, color, title) {
+function changeMessageForm(tag, color, title, activeCategory) {
+	activeIssueTag = tag;
 	issueTag = tag;
 	
 	// change options of the drawn feature corresponding to tag
-	changeDrawFeatures(tag);
+	changeDrawFeatures(tag, activeCategory);
 	
 	// message form head color and content
 	var messageFormHead = document.getElementById('message-form-head');
@@ -98,6 +99,74 @@ $('#x-form').click(function() {
 	});
 	
 	$('#error-message').fadeOut();
+});
+
+$('#category-select').click(function() {
+	if ( $('#category-select-options').css('display') != 'block' ) {
+		$('#category-select-options').css('display', 'block');
+	}
+	else {
+		$('#category-select-options').css('display', 'none');
+	}
+});
+
+var categories = ['shelter', 'transport', 'damage', 'energy', 'food', 'healthcare', 'gathering-point', 'sandbag-sandwall', 'tap-water', 'school', 'childcare'];
+
+function selectCategory(category) {
+	activeCategory = category;
+	changeDrawFeatures(activeIssueTag, activeCategory);
+	$('#category').val(category);
+	$('#' + category).css('background-color', '#DDDDDD');
+	$('#category-select-text').html(category.replace('-', ' ').replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}));
+	for ( var i = 0; i < categories.length; i++ ) {
+		if ( categories[i] != category ) {
+			$('#' + categories[i]).css('background-color', '#FFFFFF');
+		}
+	}
+}
+
+$('#shelter').click(function() {
+	selectCategory('shelter');
+});
+
+$('#transport').click(function() {
+	selectCategory('transport');
+});
+
+$('#damage').click(function() {
+	selectCategory('damage');
+});
+
+$('#energy').click(function() {
+	selectCategory('energy');
+});
+
+$('#food').click(function() {
+	selectCategory('food');
+});
+
+$('#healthcare').click(function() {
+	selectCategory('healthcare');
+});
+
+$('#gathering-point').click(function() {
+	selectCategory('gathering-point');
+});
+
+$('#sandbag-sandwall').click(function() {
+	selectCategory('sandbag-sandwall');
+});
+
+$('#tap-water').click(function() {
+	selectCategory('tap-water');
+});
+
+$('#school').click(function() {
+	selectCategory('school');
+});
+
+$('#childcare').click(function() {
+	selectCategory('childcare');
 });
 
 // popup function

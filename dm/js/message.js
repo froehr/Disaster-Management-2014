@@ -69,6 +69,13 @@ function showMessages() {
 			}
 			
 			var edit_remove_report_html = report_html + remove_html + edit_html;
+			
+			var category_html = '';
+			var category_icon_html = '';
+			if ( message['category'] != '' ) {
+				category_html = '<div class="category">Category: ' + message['category'].replace('-', ' ').replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}) + '</div>';
+				category_icon_html = '<div class="category-icon"><img src="img/symbology/' + message['category'] + '-dark.png" /></div>';
+			}
 
 			$('#messages').append(
 				'<div class="message message-' + message['message_type'] + '" id="message-' + message['message_id'] + '">' +
@@ -113,8 +120,9 @@ function showMessages() {
 							'<a href="#"><span>&#9668;</span> less</a>' +
 						'</div>' +
 					'</div>' +
-					'<div class="category">Category: ' + message['category'] + '</div>' +
+					category_html +
 					'<div class="location-name">' + message['date_of_change'] + '</div>' +
+					category_icon_html +
 				'</div>');
 		}
 		if (redrawMapFeatures) {
@@ -131,7 +139,13 @@ function showMessages() {
 						featureColor = '#45544a'
 						break;
 				}
-				var iconUrl = 'img/marker/marker-icon-' + message['message_type'] + '.png';
+				
+				var iconCategory = '';
+				if ( message['category'] != '' ) {
+					iconCategory = '-' + message['category'];
+				}
+				
+				var iconUrl = 'img/marker/marker-icon-' + message['message_type'] + iconCategory + '.png';
 				
 				var data = jQuery.parseJSON(message['location']);
 
