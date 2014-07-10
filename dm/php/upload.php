@@ -18,6 +18,6 @@
 	$resizeObj -> resizeImage(150, 150, 'landscape');
 
 	// *** 3) Save image
-	$resizeObj -> saveImage('upload/thumbnail/'.basename($_FILES['datei']['name']), 100);
+	$resizeObj -> saveImage('upload/thumb/'.basename($_FILES['datei']['name']), 100);
 
 ?>
