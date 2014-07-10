@@ -151,7 +151,7 @@
 						twitterMessage(issue, title, data);
 					}
 					console.log
-					uploadFile(data);
+					uploadFile('fileA', data);
 					}	
 				);
 			return true;
@@ -223,7 +223,7 @@
 					if ( document.getElementsByName('twitterCheckbox')[0].checked ){
 						twitterMessage(issue, title, data);
 					}					
-					uploadFile(data);
+					uploadFile('fileA', data);
 					}	
 				);
 			return true;
@@ -292,7 +292,7 @@
 					if ( document.getElementsByName('twitterCheckbox')[0].checked ){
 						twitterMessage(issue, title, data);
 					}					
-					uploadFile(data);
+					uploadFile('fileA', data);
 					}	
 				);			
 			return true;
@@ -316,16 +316,14 @@
 	}
 	
 	//  saves file on server
-	function uploadFile(name)
+	function uploadFile(htmlid, name)
 		{
-			console.log(document.getElementById('fileA').value);
-			
 			//checks if file is given.
-			if (document.getElementById('fileA').value != ''){
-				var file = document.getElementById('fileA').files[0];
+			if ($('#' + htmlid).val() != ''){
+				var file = document.getElementById(htmlid).files[0];
 				var formData = new FormData();
 				var client = new XMLHttpRequest();
-					dataType = file.type.split('/');
+				dataType = file.type.split('/');
 				
 				//Then checks if type is one of the allowed ones.
 				if ( dataType[1] == 'png' || dataType[1] == 'PNG' || dataType[1] == 'jpg' || dataType[1] == 'JPG' || dataType[1] == 'jpeg' || dataType[1] == 'JPEG' ){

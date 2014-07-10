@@ -444,30 +444,44 @@ function showMessages() {
 		var message_id = message['message_id'];
 		var hull_id = getHullId(message_id);
 		var content = $('#commentdescription-' + message['message_id']).val();
-		var name = $('#commentuser-' + message['message_id']).val();
 
-		if (name == "") {
-			fieldError('commentuser-' + message['message_id'], 'Must not be empty');
-			return false;
-		}
+		var d = new Date();
+		var n = d.getTime();
+		var image;
+		var dataType;
 
-		if (content == "") {
-			fieldError('commentdescription-' + message['message_id'], 'Must not be empty');
-			return false;
-		}
-
-		Hull.api(hull_id + '/comments', 'post', {
-			description: content,
-		}).then(function(comment) {
-				
-				Hull.api('me', 'put', {
-					name: name	
-				}).then(function() {
-					getComments(message);
+		var file = document.getElementById('file' + message['message_id']).files[0];
+		
+		if(file != undefined) {
+			image = getUserInfo().id + n;
+			dataType = file.type.split('/');
+			
+			uploadFile('file' + message['message_id'], image);
+			
+			Hull.api(hull_id + '/comments', 'post', {
+				description: content,
+				picture: image + '.' + dataType[1]
+				}).then(function(comment) {
+					getComments(message);  	
 				});
+
+			}else {
 				
-			  	
-		});
+				if (content == "") {
+					fieldError('commentdescription-' + message['message_id'], 'Must not be empty');
+					return false;
+				}else{
+					Hull.api(hull_id + '/comments', 'post', {
+						description: content
+						}).then(function(comment) {
+							getComments(message);  	
+						});
+				}	
+		}
+
+		
+		
+		
 	}
 
 
@@ -512,7 +526,7 @@ function showMessages() {
 					data[i].picture));
 
 			}					
-		
+
 			var comments_html = '<div class="less" id="less-' + message['message_id'] + '-top" style="display: block;">' +
 								'<a href="#"><span>&#9668;</span> less</a>' +
 							'</div>' +
@@ -525,8 +539,10 @@ function showMessages() {
 				var img_url_html = message['comments'][i]['file'];
 
 				if(img_url_html != null) {
+					var url = 'php/upload/thumb/' + message['comments'][i]['file'];
+
 					img_url_html = '<tr>' +
-								'<td><img src="' + message['comments'][i]['file'] + '" width="100%"></td>' +
+								'<td><img id="comment-img-' + message['comments'][i]['comment_id'] + '" src="' + url + '" ></td>' +
 								'</tr>';
 				}else{
 					img_url_html = '';
@@ -546,14 +562,7 @@ function showMessages() {
 				}
 				
 				if (isOnline()) {
-					report_comment_html = '<div id="report-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/report.png" /><div> Report</div></div>';
-					comments_fields_html = '<div class="new-comment">' +
-										   		'<p><b>New comment</b></p>' +
-												'<input type="text" id="commentuser-' + message['message_id'] + '" name="name" placeholder="Your name" />' +
-												'<textarea name="description" placeholder="Your comment" id="commentdescription-' + message['message_id'] +'"></textarea>' +
-											'<div class="submit">' +
-												'<input type="submit" value="Submit &nbsp; &#9658;" id="postcomment-' + message['message_id'] + '"/></div>' +
-											'</div>';						
+					report_comment_html = '<div id="report-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/report.png" /><div> Report</div></div>';						
 				}
 
 				edit_remove_report_comment_html	= report_comment_html + remove_comment_html + edit_comment_html; 	
@@ -575,19 +584,18 @@ function showMessages() {
 			
 			if (isOnline()) {
 				comments_fields_html = '<div class="new-comment">' +
-									   		'<p><b>New comment</b></p>' +
-											'<input type="text" id="commentuser-' + message['message_id'] + '" name="name" placeholder="Your name" />' +
-											'<textarea name="description" placeholder="Your comment" id="commentdescription-' + message['message_id'] +'"></textarea>' +
-										'<div class="submit">' +
-											'<input type="submit" value="Submit &nbsp; &#9658;" id="postcomment-' + message['message_id'] + '"/></div>' +
-										'</div>';						
+							   		'<p><b>New comment</b></p>' +
+									'<textarea name="description" placeholder="Your comment" id="commentdescription-' + message['message_id'] +'"></textarea>' +
+									'<form action="" method="post" enctype="multipart/form-data">' +
+										'<input name="file" type="file" id="file' + message['message_id'] +'" onchange="">' +
+									'</form>' +
+									'<div class="submit">' +
+									'<input type="submit" value="Submit &nbsp; &#9658;" id="postcomment-' + message['message_id'] + '"/></div>' +
+									'</div>';							
 			}
 			
-			document.getElementById('comments-' + message['message_id']).innerHTML = comments_html + comments_fields_html;
 			
-			try {
-				$('#commentuser-' + message['message_id']).val(getUserInfo().name);
-			} catch (err){}		
+			document.getElementById('comments-' + message['message_id']).innerHTML = comments_html + comments_fields_html;
 
 			$.each(message['comments'], function(i, v) {
 				var comment_id = v['comment_id'];
@@ -751,7 +759,6 @@ function increaseNumberOfComments(id, amount) {
 
 //Link messages to URLs: e.g.: host.com/?message=1
 function showMessagebyUrl() {
-
 	var host = window.location.host;
 	var path = window.location.pathname;
 	var url = host + path;
@@ -768,3 +775,5 @@ function showMessagebyUrl() {
 		return decodeURIComponent((new RegExp('[?|&]' + message + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
 	}
 }
+
+
