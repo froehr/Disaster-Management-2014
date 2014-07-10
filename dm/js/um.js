@@ -88,12 +88,17 @@ function setLoginContent() {
 }
 
 function setLogoutContent() {
+
 	$('#login').html('Account');
 	
 	var user = getUserInfo();
 	provider = 'dummy';
+	var change_password_html = '<a href="#" id="change-password">Change Password</a> &nbsp; ';
+	var delete_account_html = '<a href="#" id="delete-account">Delete Account</a>';
 	try {
     	provider = user.identities[0].provider;
+    	change_password_html = '';
+		delete_account_html = '<a href="#" id="delete-account">Remove Account</a>';
 	}
 	catch(err) {
     	
@@ -101,16 +106,19 @@ function setLogoutContent() {
 	
 	if (provider == 'dummy') {
 		provider = 'email';
+
 	}
 
 	var uppercaseProvider = provider.charAt(0).toUpperCase() + provider.substr(1, provider.length);
+	console.log(uppercaseProvider);
 	if ( uppercaseProvider == 'Email' ) uppercaseProvider = 'E-Mail';
 	content = '<div class="center">' +
 			'<img src="' + user.picture + '" class="float-left profile-img" />' +
 			'<div class="left username">Connected as <b>' + user.name + '</b> via ' + uppercaseProvider + '.</div>' +
-			'<a href="#" id="change-password">Change Password</a> &nbsp; <a href="#" id="delete-account">Delete Account</a>' +
+			change_password_html + delete_account_html +
 			'<div id="' + provider + '" class="um-button">Logout</div>' +
 		'</div>';
+
 	$('#login-popup').html(content);
 	$('#login-popup').css('height', 'auto');
 
