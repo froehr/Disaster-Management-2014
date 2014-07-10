@@ -46,6 +46,9 @@ function showMessages() {
 				tags_html += '<a href="#">' + tags[i] + '</a>, ';
 			}
 			tags_html = tags_html.substring(0, tags_html.length - 2);
+			if ( tags_html == '' ) {
+				tags_html = '-';
+			}
 			
 			var edit_html = '';
 			var remove_html = '';

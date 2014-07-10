@@ -29,11 +29,25 @@ function setLoginContent() {
 		'</div>';
 	$('#login-popup').html(defaultContent);
 	$('#login-popup').css('height', 'auto');
+	
 	$('#email-login').click(function() {
 		signIn();
 	});
+	
 	$('#login-popup').mouseover(function() {
 		setPopUpTrigger(false);
+	});
+	
+	$('#mail').keypress(function(e) {
+		if ( e.which == 13 ) {
+			signIn();
+		}
+	});
+	
+	$('#password').keypress(function(e) {
+		if ( e.which == 13 ) {
+			signIn();
+		}
 	});
 
 
