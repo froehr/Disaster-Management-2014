@@ -319,7 +319,7 @@ function showMessages() {
 		});
 		
 		$('#image-' + message['message_id']).click(function() {
-			var content = '<p class="center"><img src="php/upload/' + message['message_id'] + '.' + message['file'] + '" alt="' + message['title'] + '" class="image" /></p>';
+			var content = '<p class="center"><a href="php/upload/' + message['message_id'] + '.' + message['file'] + '" target="_blank"><img src="php/upload/' + message['message_id'] + '.' + message['file'] + '" alt="' + message['title'] + '" class="image" /></a></p>';
 			createPopUp(900, 675, content);
 		});
 		
@@ -625,7 +625,7 @@ function showMessages() {
 				});
 				
 				$('#comment-img-' + message['comments'][i]['comment_id']).click(function() {
-					var content = '<p class="center"><img src="php/upload/' + v['file'] + '" class="image" /></p>';
+					var content = '<p class="center"><a href="php/upload/' + v['file'] + '" target="_blank"><img src="php/upload/' + v['file'] + '" class="image" /></a></p>';
 					createPopUp(900, 675, content);
 				});
 			});

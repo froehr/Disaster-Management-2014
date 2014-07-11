@@ -214,7 +214,23 @@ $('#quickstart').click(function() {
 });
 
 $('#about').click(function() {
-	createPopUp(800, 300, '');
+	var content = '<h1>About FloodWatch</h1>' +
+		'<p class="justify">FloodWatch is a project, which was startet in a project seminar at the Institute for Geoinformatics of the University of Münster.</p>' +
+		'<p><b>Institute for Geoinformatics</b><br />Heisenbergstraße 2<br />48149 Münster, Germany</p><br />' +
+		'<p class="justify">FloodWatch is an interactive-map web application, which is designed to plan, ' +
+		'mitigate and assess the effects resulting from flood events as one of the commonly known natural hazards. It ' +
+		'targets to support decision makers with regard to environmental, infrastructural and health issues usually ' +
+		'followed by a flood disaster, while placing emphasis on priority issues to foster the reform efforts that ' +
+		'push the disaster risk reduction forward. <img src="img/floodwatch_logo_small.png" alt="FloodWatch Logo" style="float: right; margin-left: 20px;" />Moreover, FloodWatch strives to enhance cooperation between various ' +
+		'ministries and governmental authorities by opening communication channels with and among the public, in different ways; ' +
+		'using either various social media platforms like Facebook, Twitter and Google+, or throughout the direct message ' +
+		'submission from the message bar on the left side of the page. Using the Floodwatch system it is possible to measure, ' +
+		'inform, and exchange news about the citizen\'s needs, resources shortage, and infrastructure damages during a flood event. </p>' +
+		'<p class="justify">It also works on the electronic dissemination of up-to-date data and information such as topographical and rain forecast maps, ' +
+		'and water level diagrams, in addition to sandbags, ration supplies, and evacuation plans, in case of such severe situations. ' +
+		'FloodWatch can be applied at national, regional and local level and in different sectors to provide flood guidance on both ' +
+		'levels: public and governmental.</p>';
+	createPopUp(800, 420, content);
 });
 
 $('body').on('click', '#highchart-button', function(e) {
@@ -243,6 +259,14 @@ $('#submit').click(function() {
 		createPopUp(300, 72, content);
 		
 		$('#create-message-okay').click(function() {
+			location.reload();
+		});
+		
+		$('#x-popup').click(function() {
+			location.reload();
+		});
+		
+		$('#map').click(function() {
 			location.reload();
 		});
 		
