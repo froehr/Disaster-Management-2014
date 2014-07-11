@@ -93,6 +93,7 @@
 		var creationDate = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
 		var hulluserProfile = getUserInfo();
 		var hulluser_id;
+		var fileType = getFileType(document.getElementById('fileA').value);
 		
 		//check for wrong input and throw error-messages for the user
 		if ( hulluserProfile != null ) {
@@ -143,7 +144,8 @@
 					PeopleAttending:peopleAttending,
 					PeopleNeeded:peopleNeeded,
 					Tags:tags,
-					CreationDate: creationDate
+					CreationDate: creationDate,
+					FileType: fileType
 				},
 				function(data){
 					console.log(data);
@@ -175,6 +177,7 @@
 		var creationDate = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
 		var hulluserProfile = getUserInfo();
 		var hulluser_id = hulluserProfile.id;
+		var fileType = getFileType(document.getElementById('fileA').value);
 		console.log('Your user id: ' + hulluser_id);
 		
 		//check for wrong input and throw error-messages for the user
@@ -216,7 +219,8 @@
 					PeopleAttending:peopleAttending,
 					PeopleNeeded:peopleNeeded,
 					Tags:tags,
-					CreationDate: creationDate
+					CreationDate: creationDate,
+					FileType: fileType
 				},
 				function(data){
 					console.log(data);
@@ -248,6 +252,7 @@
 		var hulluserProfile = getUserInfo();
 		var hulluser_id = hulluserProfile.id;
 		console.log('Your user id: ' + hulluser_id);
+		var fileType = getFileType(document.getElementById('fileA').value);
 		
 		//check for wrong input and throw error-messages for the user
 		if (peopleAttending == '' && peopleAttending == ''){
@@ -285,7 +290,8 @@
 					PeopleAttending:peopleAttending,
 					PeopleNeeded:peopleNeeded,
 					Tags:tags,
-					CreationDate: creationDate
+					CreationDate: creationDate,
+					FileType: fileType
 				},
 				function(data){
 					console.log(data);
@@ -347,4 +353,23 @@
 				}
 			}	
 		}
+	
+	function getFileType(fileName){
+		var dataType;
+		if (fileName != ''){
+			temp = fileName.split('.');
+			dataType = temp[temp.length-1]
+			
+			if (dataType =='jpg'){
+					dataType = 'jpeg';
+			}
+		}
+		
+		return dataType;
+	}
+	
+	
+	
+	
+	
 	

@@ -16,6 +16,7 @@
 		$tags = $_POST['Tags'];
 		$creationDate = $_POST['CreationDate'];
 		$hulluser_id = $_POST['Hulluser_id'];
+		$dataType = $_POST['FileType'];
 
 		$feature;
 		$coords;
@@ -77,7 +78,7 @@
 			$coordinates = "null";
 		}
 		
-		$query=pg_query($dbconn,"Insert into message values (DEFAULT,'".$issue."','".$title."',".$coordinates.",TIMESTAMP '".$creationDate."',true,TIMESTAMP '".$creationDate."','".$description."',".$people_need.",".$people_attending.",'false','".$category."','".$tags."','".$person_name."','".$person_contact."','delete?','".$hulluser_id."');");
+		$query=pg_query($dbconn,"Insert into message values (DEFAULT,'".$issue."','".$title."',".$coordinates.",TIMESTAMP '".$creationDate."',true,TIMESTAMP '".$creationDate."','".$description."',".$people_need.",".$people_attending.",'".$dataType."','".$category."','".$tags."','".$person_name."','".$person_contact."','delete?','".$hulluser_id."');");
 
 		$query2=pg_query($dbconn,"Select max(message_id) from message where hulluser_id = '".$hulluser_id."';");	
 	
