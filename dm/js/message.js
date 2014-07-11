@@ -28,7 +28,19 @@ function Message(message_id, message_type, title, location, time_start, relevant
 	
 	this.comments = comments;
 }
+
 var layerGroup = L.layerGroup();
+			
+function replaceURLWithHTMLLinks(text) {
+	var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+	return text.replace(exp, '<a href="$1" target="_blank">$1</a>'); 
+}
+
+function nl2br(str, is_xhtml) {
+	var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
+	return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
+}
+			
 function showMessages() {
 			
 	/*
@@ -40,35 +52,47 @@ function showMessages() {
 	function showMessage(message, refreshMessages, redrawMapFeatures) {
 		
 		if (refreshMessages && message['relevant']) {
-			var tags_html = '';
-			var tags = message['tags'].split(',');
-			for ( var i = 0; i < tags.length; i++ ) {
-				tags_html += '<a href="#">' + tags[i] + '</a>, ';
+			var contact_html = '';
+			if ( message['person_contact'] != '' ) {
+				contact_html = '<tr>' +
+									'<td class="first">Contact:</td>' +
+									'<td>' + message['person_contact'] + '</td>' +
+								'</tr>';
 			}
-			tags_html = tags_html.substring(0, tags_html.length - 2);
-			if ( tags_html == '' ) {
-				tags_html = '-';
+			
+			var tags_html = '';
+			if ( message['tags'] != '' ) {
+				var tags = message['tags'].split(',');
+				for ( var i = 0; i < tags.length; i++ ) {
+					tags_html += '<a href="#">' + tags[i] + '</a>, ';
+				}
+				tags_html = tags_html.substring(0, tags_html.length - 2);
+				tags_html =	'<tr>' +
+								'<td class="first">Tags:</td>' +
+								'<td>' + tags_html + '</td>' +
+							'</tr>';
+			}
+			
+			var remove_html = '';
+			if ( hasAccess(message['hulluser_id']) ) {
+				remove_html = '<div id="remove-' + message['message_id'] + '" class="message-button"><img src="img/icons/remove.png" /><div> Remove</div></div>'
 			}
 			
 			var edit_html = '';
-			var remove_html = '';
 			var report_html = '';
-
-			if (hasAccess(message['hulluser_id'])) {
-				remove_html = '<div id="remove-' + message['message_id'] + '" class="message-button"><img src="img/icons/remove.png" /><div> Remove</div></div>'
-			}
-
-			if (isOnline()) {
+			if ( isOnline() ) {
 				edit_html = '<div id="edit-' + message['message_id'] + '" class="message-button"><img src="img/icons/edit.png" /><div> Edit</div></div>';
 				report_html = '<div id="report-' + message['message_id'] + '" class="message-button"><img src="img/icons/report.png" /><div> Report</div></div>';
 			}
 			
-			var file_html = '';
-			if ( message['file'] != '' ) {
-				file_html = '<div class="image-box"><img src="img/' + message['file'] + '" alt="' + message['title'] + '" class="image" /></div>';
-			}
+			var share_html = '<div class="message-button" id="share-' + message['message_id'] + '"><img src="img/icons/share.png" /><div> Share</div></div>';
 			
-			var edit_remove_report_html = report_html + remove_html + edit_html;
+			var edit_remove_report_share_html = report_html + share_html + remove_html + edit_html;
+			
+			var file_html = '';
+			if ( message['file'] != 'false' ) {
+				file_html = '<img src="php/upload/thumb/' + message['message_id'] + '.' + message['file'] + '" alt="' + message['title'] + '" id="image-' + message['message_id'] + '" class="image" /><br />';
+			}
 			
 			var category_html = '';
 			var category_icon_html = '';
@@ -80,31 +104,21 @@ function showMessages() {
 			$('#messages').append(
 				'<div class="message message-' + message['message_type'] + '" id="message-' + message['message_id'] + '">' +
 					'<h1 class="' + message['message_type'] + '-head" id="head-' + message['message_id'] + '">' + message['title'] + '</h1>' +
-					'<p id="description-' + message['message_id'] + '">' + message['description'] + '<br /><a href="#" id="more-' + message['message_id'] + '">Comments and more <span class="arrow">&#9658;</span></a></p>' +
+					'<p id="description-' + message['message_id'] + '">' + replaceURLWithHTMLLinks(nl2br(message['description'])) + '<br />' + file_html + '<a href="#" id="more-' + message['message_id'] + '">Details and Comments <span class="arrow">&#9658;</span></a></p>' +
 					'<div class="details" id="details-' + message['message_id'] + '">' +
-						edit_remove_report_html +
+						edit_remove_report_share_html +
 						'<table border="0">' +
 							'<tr>' +
 								'<td class="first">Sender:</td>' +
 								'<td>' + message['person_name'] + '</td>' +
 							'</tr>' +
-							'<tr>' +
-								'<td class="first">Contact:</td>' +
-								'<td>' + message['person_contact'] + '</td>' +
-							'</tr>' +
+							contact_html +
 							'<tr>' +
 								'<td class="first">Helpers:</td>' +
 								'<td>' + message['people_attending'] + ' attending, ' + message['people_need'] + ' needed</td>' +
 							'</tr>' +
-							'<tr>' +
-								'<td class="first">Tags:</td>' +
-								'<td>' + tags_html + '</td>' +
-							'</tr>' +
-							'<tr>' +
-								'<td class="first"><a href="#" id="share-' + message['message_id'] + '">Share Message</a></td>' +
-							'</tr>' +
-						'</table>'
-						+ file_html +
+							tags_html +
+						'</table>' +
 						'<div class="comments" id="comments-' + message['message_id'] + '">' +
 						'<div class="less" id="less-' + message['message_id'] + '-top">' +
 							'<a href="#"><span>&#9668;</span> less</a>' +
@@ -304,7 +318,10 @@ function showMessages() {
 			}
 		});
 		
-		
+		$('#image-' + message['message_id']).click(function() {
+			var content = '<p class="center"><img src="php/upload/' + message['message_id'] + '.' + message['file'] + '" alt="' + message['title'] + '" class="image" /></p>';
+			createPopUp(900, 675, content);
+		});
 		
 		$('#remove-' + message['message_id']).click(function() {
 			createRemovePopUp('message', message['message_id'], message);
@@ -313,8 +330,6 @@ function showMessages() {
 		$('#report-' + message['message_id']).click(function() {
 			createReportPopUp('message', message['message_id']);
 		});
-		
-		
 		
 		$('#description-' + message['message_id']).click(function() {
 			switchMessageDetails(message);
@@ -331,9 +346,6 @@ function showMessages() {
 		$('#share-' + message['message_id']).click(function() {
 			socialMediaShareContext(message);
 		});
-		
-		
-
 	}
 
 
@@ -542,8 +554,8 @@ function showMessages() {
 					var url = 'php/upload/thumb/' + message['comments'][i]['file'];
 
 					img_url_html = '<tr>' +
-								'<td><img id="comment-img-' + message['comments'][i]['comment_id'] + '" src="' + url + '" ></td>' +
-								'</tr>';
+										'<td colspan="2" class="center"><img id="comment-img-' + message['comments'][i]['comment_id'] + '" alt="Image" src="' + url + '" /></td>' +
+									'</tr>';
 				}else{
 					img_url_html = '';
 				}
@@ -574,7 +586,7 @@ function showMessages() {
 											'<td class="right">' + message['comments'][i]['date_time'] + '</td>' +
 										'</tr>' +
 										'<tr>' +
-											'<td colspan="2" class="justify">' + message['comments'][i]['message'] + '</td>' +
+											'<td colspan="2" class="justify">' + replaceURLWithHTMLLinks(nl2br(message['comments'][i]['message'])) + '</td>' +
 										'</tr>' +
 										img_url_html +
 									'</table>' +
@@ -584,14 +596,15 @@ function showMessages() {
 			
 			if (isOnline()) {
 				comments_fields_html = '<div class="new-comment">' +
-							   		'<p><b>New comment</b></p>' +
-									'<textarea name="description" placeholder="Your comment" id="commentdescription-' + message['message_id'] +'"></textarea>' +
-									'<form action="" method="post" enctype="multipart/form-data">' +
-										'<input name="file" type="file" id="file' + message['message_id'] +'" onchange="">' +
-									'</form>' +
-									'<div class="submit">' +
-									'<input type="submit" value="Submit &nbsp; &#9658;" id="postcomment-' + message['message_id'] + '"/></div>' +
-									'</div>';							
+											'<p><b>New comment</b></p>' +
+											'<textarea name="description" placeholder="Your comment" id="commentdescription-' + message['message_id'] +'"></textarea>' +
+											'<form action="" method="post" enctype="multipart/form-data">' +
+												'<input name="file" type="file" id="file' + message['message_id'] +'" onchange="">' +
+											'</form>' +
+											'<div class="submit">' +
+												'<input type="submit" value="Submit &nbsp; &#9658;" id="postcomment-' + message['message_id'] + '"/>'+
+											'</div>' +
+										'</div>';
 			}
 			
 			
@@ -609,6 +622,11 @@ function showMessages() {
 
 				$('#edit-comment-' + comment_id).click(function() {
 					createEditCommentPopUp(comment_id, v['message'], message);
+				});
+				
+				$('#comment-img-' + message['comments'][i]['comment_id']).click(function() {
+					var content = '<p class="center"><img src="php/upload/' + v['file'] + '" class="image" /></p>';
+					createPopUp(900, 675, content);
 				});
 			});
 
@@ -633,16 +651,16 @@ function showMessages() {
 		});
 	}
 
-	for ( var i = 0; i < messages.length; i++ ) {
+	/*for ( var i = 0; i < messages.length; i++ ) {
 		showMessage(messages[i], true, true);
 		setMessageClickFunctions(messages[i]);
-	}
+	}*/
 	
 	/*
 	File has to be done separately? At least while accessing file here ("messageFeatures.properties.file" instead of "") jquery gives me an error
 	*/
 	$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
-		parseMessages(data, true, true)
+		parseMessages(data, true, true);
 		showMessagebyUrl();
 	});
 	function spatialFilter (){
@@ -686,7 +704,7 @@ function showMessages() {
 	function parseMessages (data, refreshMessages, redrawMapFeatures) {
 		for (var i = 0, len = data.features.length; i < len; i++) {
 			var messageFeatures = data.features[i];
-			var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures.geometry), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, "", messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email, messageFeatures.properties.hulluser_id);
+			var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures.geometry), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, messageFeatures.properties.file, messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email, messageFeatures.properties.hulluser_id);
 			showMessage(msg, refreshMessages, redrawMapFeatures);
 			setMessageClickFunctions(msg);
 		}

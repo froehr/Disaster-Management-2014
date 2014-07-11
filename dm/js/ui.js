@@ -243,7 +243,7 @@ $('#submit').click(function() {
 		createPopUp(300, 72, content);
 		
 		$('#create-message-okay').click(function() {
-			closePopUp();
+			location.reload();
 		});
 		
 		$('#need-support-button').css('background-color', '#f4dec8');
