@@ -100,7 +100,7 @@ function showMessages() {
 				category_html = '<div class="category">Category: ' + message['category'].replace('-', ' ').replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}) + '</div>';
 				category_icon_html = '<div class="category-icon"><img src="img/symbology/' + message['category'] + '-dark.png" /></div>';
 			}
-
+			
 			$('#messages').append(
 				'<div class="message message-' + message['message_type'] + '" id="message-' + message['message_id'] + '">' +
 					'<h1 class="' + message['message_type'] + '-head" id="head-' + message['message_id'] + '">' + message['title'] + '</h1>' +
@@ -686,6 +686,7 @@ function showMessages() {
 		parseMessages(data, true, true, document.getElementById('filter-archive').checked);
 		showMessagebyUrl();
 	});
+	
 	function spatialFilter (){
 		northEastBoundsLat = LlocationFilter._ne.lat;
 		northEastBoundsLong = LlocationFilter._ne.lng;
@@ -705,6 +706,7 @@ function showMessages() {
 			"json"
 		);
 	}
+	
 	LlocationFilter.on("enabled", function (e) {
 		spatialFilter();
 	});
@@ -712,6 +714,7 @@ function showMessages() {
 	LlocationFilter.on("change", function (e) {
 		spatialFilter();
 	});
+	
 	LlocationFilter.on("disabled", function (e){
 		$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
 			$("#messages").empty();
@@ -728,12 +731,49 @@ function showMessages() {
 			setMessageClickFunctions(msg);
 		}
 	}
+	
 	$('#filter-issue').change(function() {
 		applyFilter();
 	})
+	
 	$('#filter-category').change(function() {
 		applyFilter();
 	})
+	
+	$('#filter-archive').change(function() {
+		$("#messages").empty();
+		layerGroup.clearLayers();
+		$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
+			parseMessages(data, true, true, document.getElementById('filter-archive').checked);
+			showMessagebyUrl();
+		});
+	})
+	
+	$('#search').keyup(function() {
+		$("#messages").empty();
+		layerGroup.clearLayers();
+		if ( $('#search').val().trim() != '' ) {
+			$.post( "php/search.php", 
+				{ 
+					KeySearch: $('#search').val()
+				},
+				function( data ) {
+					$("#messages").empty();
+					layerGroup.clearLayers();
+					parseMessages(data, true, true, document.getElementById('filter-archive').checked)
+				},
+				"json"
+			);
+		}
+		else {
+			$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
+				$("#messages").empty();
+				layerGroup.clearLayers();
+				parseMessages(data, true, true, document.getElementById('filter-archive').checked)
+				showMessagebyUrl();
+			});
+		}
+	});
 
 	function applyFilter(){
 		var filter_issue = '\'' + document.getElementById('filter-issue').value + '\'';
@@ -758,13 +798,40 @@ function showMessages() {
 			"json"
 		);
 	}
-	$('#filter-archive').change(function() {
-		$("#messages").empty();
-		layerGroup.clearLayers();
-		$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
-			parseMessages(data, true, true, document.getElementById('filter-archive').checked);
-			showMessagebyUrl();
+	
+	// Sort messages by distance
+	$('#sort-messages-distance').click(function() {
+		var coordString = latlng.lng + ',' + latlng.lat;
+		$('#map-right-click-menu').fadeOut(200, function() {
+			$('#sort-messages-distance').after('<li id="sort-messages-time"><a href="#">Use default sorting method</a></li>');
+			$('#sort-messages-time').click(function() {
+				$('#sort-messages-time').remove();
+				$('#map-right-click-menu').fadeOut(200);
+				$("#messages").empty();
+				$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
+					parseMessages(data, true, false, document.getElementById('filter-archive').checked);
+					showMessagebyUrl();
+				});
+			});
 		});
+		$.post( "php/getMessagesAsGeoJSONByDistance.php", 
+			{ 
+				Coordinate: coordString,
+			},
+			function( data ) {
+				if (data.features.length != 0) {
+					$('#messages').empty();
+					layerGroup.clearLayers();
+					parseMessages(data, true, true, document.getElementById('filter-archive').checked);
+				}
+				else {
+					$('#messages').empty();
+					$('#messages').append('<div class="no-results"><b>No filter results!</b><br />Please change the filter.</div>');
+				}
+				
+			},
+			"json"
+		);
 	})
 	
 	//end of showmessages() function	

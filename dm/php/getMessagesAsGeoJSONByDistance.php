@@ -19,7 +19,7 @@ include 'db_connect.php';
 				
 									 
 				 	$queryString = "SELECT *, ST_AsGeoJSON(location) AS geojson FROM message
-								ORDER BY ST_Distance(ST_Transform(location,26986),ST_Transform(ST_GeomFromText('Point(".$coordArray[0]." ".$coordArray[1].")',4326),26986));" ;
+								ORDER BY ST_Distance(location, ST_GeomFromText('Point(".$coordArray[0]." ".$coordArray[1].")',4326));" ;
 									 
 					$result = pg_query($con, $queryString);
 					if($result)
