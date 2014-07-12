@@ -216,7 +216,7 @@ $('#quickstart').click(function() {
 $('#about').click(function() {
 	var content = '<h1>About FloodWatch</h1>' +
 		'<p class="justify">FloodWatch is a project, which was startet in a project seminar at the Institute for Geoinformatics of the University of Münster.</p>' +
-		'<p><b>Institute for Geoinformatics</b><br />Heisenbergstraße 2<br />48149 Münster, Germany</p><br />' +
+		'<p><a href="http://ifgi.uni-muenster.de" target="_blank"><b>Institute for Geoinformatics</b></a><br />Heisenbergstraße 2<br />48149 Münster, Germany</p><br />' +
 		'<p class="justify">FloodWatch is an interactive-map web application, which is designed to plan, ' +
 		'mitigate and assess the effects resulting from flood events as one of the commonly known natural hazards. It ' +
 		'targets to support decision makers with regard to environmental, infrastructural and health issues usually ' +
