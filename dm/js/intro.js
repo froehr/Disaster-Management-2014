@@ -7,21 +7,22 @@ initIntroJS = function() {
 		{
 		  element: '#map',
 		  intro: 'On this map the location of the former messages is displayed.',
-		  tooltipClass: 'map-intro'
+		  tooltipClass: 'map-intro',
 		},
 		{
 		  element: '#message-bar',
 		  intro: 'In this menu all current messages are displayed.',
-		  position: 'right'
+		  position: 'right',
 		},
 		{
-		  element: $('#message-bar').first(),
-		  intro: 'With a click on this button you can create a new message.',
+		  element: '#' + $('#messages').children(':first').attr('id'),
+		  intro: 'A message in this bar shows current information for a specific thing.',
+		  position: 'right',
 		},
 		{
 		  element: '#filter-form',
 		  intro: 'With this form you can filter the messages.',
-		  position: 'right'
+		  position: 'right',
 		},
 		{
 		  element: '#login',
@@ -29,11 +30,16 @@ initIntroJS = function() {
 		},
 		{
 		    element: '#create-message-button',
-		    intro: 'With a click on this button you can post a new message.'
+		    intro: 'With a click on this button you can post a new message.',
 		},
 		{
 		  element: '#map-right-click-menu',
 		  intro: 'With a rightclick on any positons the map you get additional functions.',
+		},
+		{
+		  element: '#links',
+		  intro: 'Here you can get information about hotlines, this website and restart this quickstart',
+		  position: 'top',
 		},
 	    ]
 	});
@@ -56,11 +62,12 @@ initIntroJS = function() {
 			break;
 			case "message-form":
 				document.getElementById('submit-message-button').style.display = 'none';
-				document.getElementById('filter-form').style.display = 'none';
 			break;
+			case $('#messages').children(':first').attr('id'):
+				document.getElementById('filter-form').style.display = 'none';
+			break;	
 			case "filter-form":
 				document.getElementById('filter-form').style.display = 'block';
-				
 			break;
 			case "login": 
 				document.getElementById('filter-form').style.display = 'none';
@@ -77,20 +84,22 @@ initIntroJS = function() {
 				document.getElementById('map-right-click-menu').style.top = '170px';
 				document.getElementById('map-right-click-menu').style.display = 'block';
 			break;
+			case "links":
+				document.getElementById('map-right-click-menu').style.display = 'none';
+			break;
 			}
 	})
     
     // getting back to old appearence
     intro.oncomplete(function() {
 	document.getElementById('map-right-click-menu').style.display = 'none';
-	document.getElementById('message-form').style.display = 'none';
+	document.getElementById('filter-form').style.display = 'none';
 	$('#create-message-button').html('Login to Create Message');
     });
     
     intro.onexit(function() {
 	document.getElementById('map-right-click-menu').style.display = 'none';
-	document.getElementById('create-message-button').style.display = 'block';
-	document.getElementById('message-form').style.display = 'none';
+	document.getElementById('filter-form').style.display = 'none';
 	$('#create-message-button').html('Login to Create Message');
     });
 }
