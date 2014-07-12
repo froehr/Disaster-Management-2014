@@ -368,7 +368,7 @@ function socialMediaShareContext (message) {
 
 	var content = '<div id="usershare">' +
 					'<h1>Share Message</h1>' +
-					'<p>You can share on this message on these social networks.</p>' +
+					'<p>You can share this message on these social networks.</p>' +
 					'<div class="center">' +
 						hull_component_html +
 					'</div>' +

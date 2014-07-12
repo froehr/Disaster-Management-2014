@@ -43,7 +43,7 @@ L.Control.SliderControl = L.Control.extend({
         $(document).mouseup(function () {
             map.dragging.enable();
             //Only show the slider timestamp while using the slider
-            $('#slider-timestamp').html('');
+            //$('#slider-timestamp').html('');
         });
 
         var options = this.options;

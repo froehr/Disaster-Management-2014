@@ -258,6 +258,8 @@ $('#submit').click(function() {
 			'</p>';
 		createPopUp(300, 72, content);
 		
+		$('#grey').css('display', 'block');
+		
 		$('#create-message-okay').click(function() {
 			location.reload();
 		});
@@ -265,31 +267,6 @@ $('#submit').click(function() {
 		$('#x-popup').click(function() {
 			location.reload();
 		});
-		
-		$('#map').click(function() {
-			location.reload();
-		});
-		
-		$('#need-support-button').css('background-color', '#f4dec8');
-		$('#offer-support-button').css('background-color', '#c1ebce');
-		$('#message-button').css('background-color', '#d1dad4');
-		addRequiredStars([]);
-		
-		setElementDisplay('details-message', 'none');
-		setElementDisplay('details-offer-support', 'none');
-		setElementDisplay('details-need-support', 'none');
-		setElementDisplay('more-form', 'none');
-		setElementDisplay('less-form', 'none');
-		
-		$('#title').val('');
-		$('#description').val('');
-		$('#category option[value="cat-1"]').attr('selected', true);
-		$('#person_contact').val('');
-		$('#person_name').val(username);
-		$('#people_attending').val('');
-		$('#people_need').val('');
-		$('#tags').val('');
-		$('#file').val('');
 	}
 });
 

@@ -47,6 +47,7 @@
 	
 	</head>
 	<body>
+		<div id="grey"></div>
 		<div id="page">
 			<header>
 				<img src="img/floodwatch_logo_small.png" />
@@ -110,7 +111,7 @@
 								<form action="" method="post" enctype="multipart/form-data">
 									<input name="file" type="file" id="fileA" onchange=""/>
 								</form>
-								<p>Publish on Twitter?<input type="checkbox" id="TwitterCheckbox" name="twitterCheckbox" value="yes"></p>
+								<p><label>Publish on Twitter <input type="checkbox" id="TwitterCheckbox" name="twitterCheckbox" value="yes" /></label></p>
 							</div>
 						</div>
 					</div>
@@ -147,8 +148,7 @@
 					<option value="school">School</option>
 					<option value="childcare">Childcare</option>
 				</select>
-				<input type="button" value="Apply filter &nbsp; &#9658;" id="apply-filter" class="button" />
-				<input type="button" value="&#9668; &nbsp; Reset filter " id="reset-filter" class="button" />
+				<label><input type="checkbox" id="filter-archive" name="filter-archive" /> Show archived messages.</label>
 				<div id="timeslider"> 
 					<p id="timesliderparagraph">Timeslider</p>
 					<div id="slider"></div>
@@ -161,9 +161,11 @@
 			<div id="hide-message-bar-container"><div id="hide-message-bar" title="Hide message bar"></div></div>
 			<div id="map"></div>
 			<footer>
-				<a href="#" id="hotlines">Hotlines</a>
-				<a href="#" id="quickstart">Quick Start</a>
-				<a href="#" id="about">About</a>
+				<span id="links">
+					<a href="#" id="hotlines">Hotlines</a>
+					<a href="#" id="quickstart">Quick Start</a>
+					<a href="#" id="about">About</a>
+				</span>
 			</footer>
 		</div>
 		<div id="map-right-click-menu">

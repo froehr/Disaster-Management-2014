@@ -15,17 +15,17 @@
 		if ($category != '') {
 			$category = 'category =' . $category;
 		}*/
-		if ($message_type == "'any'" and $category == "'cat-0'") {
+		if ($message_type == "'any'" and $category == "'any'") {
 			$whereString = '';
 		}
-		elseif ($message_type == "'any'" and $category != "'cat-0'") {
-			$whereString = 'category =' . $category;
+		elseif ($message_type == "'any'" and $category != "'any'") {
+			$whereString = 'WHERE category =' . $category;
 		}
-		elseif ($message_type != "'any'" and $category == "'cat-0'") {
-			$whereString = 'message_type ='. $message_type;
+		elseif ($message_type != "'any'" and $category == "'any'") {
+			$whereString = 'WHERE message_type ='. $message_type;
 		}
 		else {
-			$whereString = 'message_type ='. $message_type . ' AND category =' . $category;
+			$whereString = 'WHERE message_type ='. $message_type . ' AND category =' . $category;
 		}
 
 		$con = getConnection();
@@ -34,9 +34,8 @@
 		if(!$con)
 			{die(json_encode(array(error => 'no connection to the server')));}
 			
-		$queryString = 'SELECT * , ST_AsGeoJSON(location) AS geojson FROM message 
-			WHERE 
-				' . $whereString . '
+		$queryString = 'SELECT * , ST_AsGeoJSON(location) AS geojson FROM message '
+			. $whereString . '
 			ORDER BY time_start DESC;';
 		$result = pg_query($con, $queryString);
 		

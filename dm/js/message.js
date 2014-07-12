@@ -49,9 +49,9 @@ function showMessages() {
 		@param {boolean} refreshMessages: true if the messageboard have to be refreshed
 		@param {boolean} redrawMapFeatures: ture if the features on the map have to be redrawn
 	*/
-	function showMessage(message, refreshMessages, redrawMapFeatures) {
+	function showMessage(message, refreshMessages, redrawMapFeatures, relevant) {
 		
-		if (refreshMessages && message['relevant']) {
+		if (refreshMessages && (message['relevant'] || relevant)) {
 			var contact_html = '';
 			if ( message['person_contact'] != '' ) {
 				contact_html = '<tr>' +
@@ -227,10 +227,12 @@ function showMessages() {
 						});
 					},
 					filter: function (feature, layer) {
-						if (message['relevant'] == true) {
+						if (relevant) {
 							return true;
 						}
-						
+						else if (message['relevant'] == true) {
+							return true;
+						}
 					}
 				}).addTo(layerGroup);
 
@@ -319,8 +321,22 @@ function showMessages() {
 		});
 		
 		$('#image-' + message['message_id']).click(function() {
-			var content = '<p class="center"><a href="php/upload/' + message['message_id'] + '.' + message['file'] + '" target="_blank"><img src="php/upload/' + message['message_id'] + '.' + message['file'] + '" alt="' + message['title'] + '" class="image" /></a></p>';
-			createPopUp(900, 675, content);
+			var content = '<p class="center"><img src="php/upload/' + message['message_id'] + '.' + message['file'] + '" alt="' + message['title'] + '" id="popup-image" class="image" /><br /><a href="php/upload/' + message['message_id'] + '.' + message['file'] + '" target="_blank">Show picture in original size</a></p>';
+
+			var myImage = new Image();
+			myImage.src = 'php/upload/' + message['message_id'] + '.' + message['file'];
+			myImage.onload = function() {
+				createPopUp(0, 0, content);
+				
+				var width = $('#popup-image').width();
+				var height = $('#popup-image').height() + 70;
+				
+				createPopUp(width, height, content);
+				
+				$('#popup-image').click(function() {
+					closePopUp();
+				});
+			};
 		});
 		
 		$('#remove-' + message['message_id']).click(function() {
@@ -396,7 +412,6 @@ function showMessages() {
 							message_id: id	
 						},
 						success: function(data){
-							console.log("Successfully deleted");
 						},
 						error: function(xhr, textStatus, error){
 							console.log(xhr.statusText);
@@ -564,9 +579,8 @@ function showMessages() {
 				var edit_comment_html = '';
 				var remove_comment_html = '';
 				var report_comment_html = '';
-
-
-				if (hasAccess(message['comments'][i]['name']['id'])) {
+				
+				if ( hasAccess(message['comments'][i]['name']['id']) ) {
 
 					remove_comment_html = '<div id="remove-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/remove.png" /><div> Remove</div></div>';					
 					edit_comment_html = '<div id="edit-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/edit.png" /><div> Edit</div></div><br />';											
@@ -625,8 +639,22 @@ function showMessages() {
 				});
 				
 				$('#comment-img-' + message['comments'][i]['comment_id']).click(function() {
-					var content = '<p class="center"><a href="php/upload/' + v['file'] + '" target="_blank"><img src="php/upload/' + v['file'] + '" class="image" /></a></p>';
-					createPopUp(900, 675, content);
+					var content = '<p class="center"><img src="php/upload/' + v['file'] + '" alt="Image" id="popup-image" class="image" /><br /><a href="php/upload/' + v['file'] + '" target="_blank">Show picture in original size</a></p>';
+
+					var myImage = new Image();
+					myImage.src = 'php/upload/' + v['file'];
+					myImage.onload = function() {
+						createPopUp(0, 0, content);
+						
+						var width = $('#popup-image').width();
+						var height = $('#popup-image').height() + 70;
+						
+						createPopUp(width, height, content);
+						
+						$('#popup-image').click(function() {
+							closePopUp();
+						});
+					};
 				});
 			});
 
@@ -650,17 +678,12 @@ function showMessages() {
 			});
 		});
 	}
-
-	/*for ( var i = 0; i < messages.length; i++ ) {
-		showMessage(messages[i], true, true);
-		setMessageClickFunctions(messages[i]);
-	}*/
 	
 	/*
 	File has to be done separately? At least while accessing file here ("messageFeatures.properties.file" instead of "") jquery gives me an error
 	*/
 	$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
-		parseMessages(data, true, true);
+		parseMessages(data, true, true, document.getElementById('filter-archive').checked);
 		showMessagebyUrl();
 	});
 	function spatialFilter (){
@@ -671,14 +694,13 @@ function showMessages() {
 		PointUp = new Array(LlocationFilter._ne.lat, LlocationFilter._ne.lng);
 		PointDown = new Array(LlocationFilter._sw.lat, LlocationFilter._sw.lng);
 		var bboxString = southWestBoundsLong + "," + southWestBoundsLat + "," + northEastBoundsLong + "," + northEastBoundsLat;
-		//testGroup.clearLayers();
 		$("#messages").empty();
 		$.post( "php/getMessagesAsGeoJSONByExtend.php", 
 			{ 
 				bboxString: bboxString
 			},
 			function( data ) {
-				parseMessages(data, true, false)
+				parseMessages(data, true, false, document.getElementById('filter-archive').checked)
 			},
 			"json"
 		);
@@ -693,35 +715,29 @@ function showMessages() {
 	LlocationFilter.on("disabled", function (e){
 		$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
 			$("#messages").empty();
-			parseMessages(data, true, false)
+			parseMessages(data, true, false, document.getElementById('filter-archive').checked)
 			showMessagebyUrl();
 		});
 	});
-	// messages.addData(data);
-	// messages.addTo(map)
 	
-	//end of showmessages() function
-	function parseMessages (data, refreshMessages, redrawMapFeatures) {
+	function parseMessages (data, refreshMessages, redrawMapFeatures, relevant) {
 		for (var i = 0, len = data.features.length; i < len; i++) {
 			var messageFeatures = data.features[i];
 			var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures.geometry), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, messageFeatures.properties.file, messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email, messageFeatures.properties.hulluser_id);
-			showMessage(msg, refreshMessages, redrawMapFeatures);
+			showMessage(msg, refreshMessages, redrawMapFeatures, relevant);
 			setMessageClickFunctions(msg);
 		}
 	}
 	$('#filter-issue').change(function() {
 		applyFilter();
-		console.log('issue')
 	})
 	$('#filter-category').change(function() {
 		applyFilter();
-		console.log('category')
 	})
 
 	function applyFilter(){
 		var filter_issue = '\'' + document.getElementById('filter-issue').value + '\'';
 		var filter_category = '\'' + document.getElementById('filter-category').value + '\'';
-		console.log('category: ' + filter_category + ' issue: ' + filter_issue)
 		$.post( "php/filter.php", 
 			{ 
 				message_type: filter_issue,
@@ -729,35 +745,27 @@ function showMessages() {
 			},
 			function( data ) {
 				if (data.features.length != 0) {
-					console.log(data)
-					console.log('erfolg')
-					$("#messages").empty();
+					$('#messages').empty();
 					layerGroup.clearLayers();
-					parseMessages(data, true, true);
+					parseMessages(data, true, true, document.getElementById('filter-archive').checked);
 				}
 				else {
-					console.log('nope')
-					var msg = new Message('error', 'message', 'there is no message available', '', '', 'true', '', 'please change the filter or reset the filter', '', '', '', '', '', '', '', '', '');
-					$("#messages").empty();
-					showMessage(msg, true, false);
+					$('#messages').empty();
+					$('#messages').append('<div class="no-results"><b>No filter results!</b><br />Please change the filter.</div>');
 				}
 				
 			},
 			"json"
 		);
 	}
-	$('#apply-filter').click(function() {
-		applyFilter();
-	})
-	$('#reset-filter').click(function() {
+	$('#filter-archive').change(function() {
+		$("#messages").empty();
+		layerGroup.clearLayers();
 		$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
-			$("#messages").empty();
-			parseMessages(data, true, true)
+			parseMessages(data, true, true, document.getElementById('filter-archive').checked);
 			showMessagebyUrl();
 		});
-		$('#filter-issue').val('any');
-		$('#filter-category').val('cat-0')
-	});
+	})
 	
 	//end of showmessages() function	
 }

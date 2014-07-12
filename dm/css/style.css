@@ -19,6 +19,17 @@ body {
 	margin: 0px;
 }
 
+#grey {
+	background-color: rgba(0, 0, 0, 0.4);
+	z-index: 1001;
+	display: none;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
 /* Border for the whole web page */
 #page {
 	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.55);
@@ -179,47 +190,6 @@ header nav ul li #layer:active {
 	position: relative;
 	top: 10px;
 }
-
-#timeslider {
-	margin-top: 60px;
-	border-top: 1px solid #AEADAD;
-	padding-left: 10px;
-	padding-right: 13px;
-}
-
-#leaflet-slider {
-	margin-top: 10px;
-	margin-left: -5px;
-}
-
-#timesliderparagraph {
-	margin-left: -10px;
-	margin-top: 10px;
-	margin-bottom: 13px;
-}
-
-#slider-timestamp {
-	margin-top: 15px !important;
-}
-
-.ui-slider{
-	border-radius: 0px !important;
-	width: 268px !important;
-	height: 5px !important;
-	margin-top: 3px !important;
-}
-
-.ui-corner-all {
-	border-radius: 0px !important;
-}
-
-.ui-slider .ui-slider-handle {
-	width: 7px !important;
-	margin-top: -3px !important;
-}
-
-
-
 
 .x:hover {
 	background-color: #CCCCCC;
@@ -440,6 +410,7 @@ header nav ul li #layer:active {
 /* Message form more-link */
 #message-bar #message-form div.more {
 	position: relative;
+	margin-top: 15px;
 	top: 0px;
 	left: 10px;
 	width: 120px;
@@ -545,6 +516,13 @@ header nav ul li #layer:active {
 /* Message field */
 #message-bar .message-message {
 	background-image: url(../img/background-message.png);
+}
+
+#message-bar .no-results {
+	padding: 20px;
+	font-family: 'Noto Sans', Arial, sans-serif;
+	font-size: 15px;	
+	text-align: center;
 }
 
 /* Message field */
@@ -776,7 +754,7 @@ header nav ul li #layer:active {
 }
 
 .filter {
-	height: 230px;
+	height: 200px;
 }
 
 .utility-form h1 {
@@ -798,51 +776,64 @@ header nav ul li #layer:active {
 	width: 133px;
 	padding: 3px 5px;
 	font-size: 11px;
+	cursor: pointer;
 }
 
 .utility-form select.select-filter:hover {
 	border: 1px solid #5f5f5f;
 }
 
-.utility-form input.date {
-	padding: 3px 5px;
-	width: 160px;
-	border: 1px solid #a9a9a9;
-	font-family: 'Noto Sans', Arial, sans-serif;
-}
-
-.utility-form input.time {
-	padding: 3px 5px;
-	width: 87px;
-	border: 1px solid #a9a9a9;
-	font-family: 'Noto Sans', Arial, sans-serif;
-}
-
-.utility-form input.date:hover {
-	border: 1px solid #5f5f5f;
-}
-
-.utility-form input.time:hover {
-	border: 1px solid #5f5f5f;
-}
-
-.utility-form input.button {
-	float: right;
-	margin-top: 5px;
-	margin-right: 5px;
+.utility-form input {
 	cursor: pointer;
-	background-color: #EEEEEE;
-	border: 1px solid #a9a9a9;
-	font-family: 'Noto Sans', Arial, sans-serif;
-	padding: 3px 15px;
+}
+
+.utility-form #filter-archive {
+	margin-top: 10px;
+}
+
+.utility-form label {
 	font-size: 13px;
+	cursor: pointer;
 }
 
-.utility-form input.button:hover {
-	border: 1px solid #5f5f5f;
+.utility-form #timeslider {
+	margin-top: 15px;
+	padding-left: 10px;
+	padding-right: 13px;
+	cursor: pointer;
 }
 
-.utility-form p input {
+.utility-form #leaflet-slider {
+	margin-top: 10px;
+	margin-left: -5px;
+}
+
+.utility-form #timesliderparagraph {
+	margin-left: -10px;
+	margin-top: 10px;
+	margin-bottom: 13px;
+}
+
+.utility-form #slider-timestamp {
+	margin-top: 15px !important;
+	font-family: 'Noto Sans', Arial, sans-serif !important;
+	font-size: 13px !important;
+}
+
+.utility-form .ui-slider{
+	border-radius: 0px !important;
+	width: 268px !important;
+	height: 5px !important;
+	margin-top: 3px !important;
+}
+
+.utility-form .ui-corner-all {
+	border-radius: 0px !important;
+}
+
+.utility-form .ui-slider .ui-slider-handle {
+	width: 7px !important;
+	margin-top: -3px !important;
 	cursor: pointer;
 }
 
@@ -1201,7 +1192,7 @@ div.location-filter.button-container.enabled {
 	left: 50%;
 	background-color: #FFFFFF;
 	box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.55);
-	z-index: 1001;
+	z-index: 1002;
 	padding: 15px;
 	display: none;
 }
@@ -1240,8 +1231,10 @@ div.location-filter.button-container.enabled {
 }
 
 #popup .image {
+	margin-top: 20px;
 	max-width: 900px;
 	max-height: 675px;
+	cursor: pointer;
 }
 
 #popup .left, .tab-popup .left {
