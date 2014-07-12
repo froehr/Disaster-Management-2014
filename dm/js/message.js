@@ -74,7 +74,7 @@ function showMessages() {
 			}
 			
 			var remove_html = '';
-			if ( hasAccess(message['hulluser_id']) ) {
+			if ( hasAccess(message['hulluser_id']) && message['relevant'] ) {
 				remove_html = '<div id="remove-' + message['message_id'] + '" class="message-button"><img src="img/icons/remove.png" /><div> Remove</div></div>'
 			}
 			

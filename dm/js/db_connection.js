@@ -364,6 +364,9 @@
 					dataType = 'jpeg';
 			}
 		}
+		else {
+			dataType = 'false';
+		}
 		
 		return dataType;
 	}
