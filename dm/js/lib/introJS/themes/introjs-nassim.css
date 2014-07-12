@@ -1,15 +1,4 @@
-.introjs-overlay {
-  position: absolute;
-  z-index: 10000;
-  background: #181818;
-  opacity: 0;
-  
-  -webkit-transition: all 0.3s ease-out;
-     -moz-transition: all 0.3s ease-out;
-      -ms-transition: all 0.3s ease-out;
-       -o-transition: all 0.3s ease-out;
-          transition: all 0.3s ease-out;
-}
+
 
 .introjs-fixParent {
   z-index: auto ;
@@ -27,9 +16,7 @@
 .introjs-helperLayer {
   position: absolute;
   z-index: 10002;
-  background-color: #FFF;
   background-color: rgba(255,255,255,.4);
-  border: 1px solid #777;
   border: 2px solid rgba(117, 117, 117, 1);
   border-radius: 4px;
   box-shadow: 0 5px 8px -3px rgba(0,0,0,.6);
@@ -73,46 +60,11 @@
   border-top-color:#900;
 }
 
-.introjs-arrow {
-  border: 5px solid white;
-  content:'';
-  position: absolute;
-}
-.introjs-arrow.top {
-  top: -10px;
-  border-top-color:transparent;
-  border-right-color:transparent;
-  border-bottom-color: #ecf0f1;
-  border-left-color:transparent;
-}
-.introjs-arrow.right {
-  right: -10px;
-  top: 10px;
-  border-top-color:transparent;
-  border-right-color:transparent;
-  border-bottom-color:transparent;
-  border-left-color:#ecf0f1;
-}
-.introjs-arrow.bottom {
-  bottom: -10px;
-  border-top-color:#ecf0f1;
-  border-right-color:transparent;
-  border-bottom-color:transparent;
-  border-left-color:transparent;
-}
-.introjs-arrow.left {
-  left: -10px;
-  top: 10px;
-  border-top-color:transparent;
-  border-right-color: #ecf0f1;
-  border-bottom-color:transparent;
-  border-left-color:transparent;
-}
-
 .introjs-tooltip {
   position: absolute;
   padding: 10px 10px;
   background-color: #ecf0f1;
+  border: 1px solid;
   min-width: 200px;
   max-width: 300px;
   border-radius: 3px;
@@ -156,7 +108,7 @@
   /* box-shadow: 0 2px 0px -0px #306588; */
   margin: 0;
   outline: none;
-  border: 2px solid;
+  border: 1px solid !important;
   background: transparent;
   text-decoration: none;
   font: 11px/normal sans-serif;
@@ -184,14 +136,15 @@
 
 .introjs-button:hover {
   color: #fff;
-  background: #2671A2;
+  background: #red;
   text-decoration: none; 
   border-color: #235677;
 }
 
-.introjs-button:focus,
+
 .introjs-button:active {
-    background: #23587A;  text-decoration: none;  
+    background: #23587A;
+    text-decoration: none;  
     color: #fff;
     /* bottom: -1px; */
     box-shadow: none;
@@ -207,17 +160,17 @@
 .introjs-skipbutton {
   margin-right: 5px;
   color: #c00;
-  background: transparent;
 }
 
 .introjs-skipbutton:hover {
-    background: #EB1540;  
-    border-color: #B91D0D;
+    color: white !important;
+    background: #EB1540 !important;
+    border-color: #EB1540 !important;
   
 }
 
 .introjs-skipbutton:active, .introjs-skipbutton:focus {
-    background: #C02312;  
+    background: #183C53;  
     /* box-shadow: 0 1px 0px -0px #6F1309; */
   
 }
@@ -233,6 +186,12 @@
   -webkit-border-radius: 0 0.2em 0.2em 0;
   -moz-border-radius: 0 0.2em 0.2em 0;
   border-radius: 0 0.2em 0.2em 0;
+}
+
+.introjs-prevbutton:hover, .introjs-nextbutton:hover {
+  background-color: #235677 !important;
+  border-color: #235677 !important;
+  color: #FFFFFF !important;
 }
 
 .introjs-disabled, .introjs-disabled:hover, .introjs-disabled:focus {

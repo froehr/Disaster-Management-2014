@@ -45,7 +45,7 @@ initIntroJS = function() {
 	});
     
     intro.start();
-    
+	
 	// Show and do not show explained elements
 	intro.onbeforechange(function(targetElement) {   
 		switch (targetElement.id) 
@@ -58,10 +58,11 @@ initIntroJS = function() {
 			break; 
 			case "submit-message-button": 
 				document.getElementById('submit-message-button').style.display = 'block';
-				document.getElementById('message-form').style.display = 'none'; 
+				document.getElementById('message-form').style.display = 'none';
 			break;
 			case "message-form":
 				document.getElementById('submit-message-button').style.display = 'none';
+				var newWidth = $('#introjs-helperlayer').css('width') - 25;
 			break;
 			case $('#messages').children(':first').attr('id'):
 				document.getElementById('filter-form').style.display = 'none';
