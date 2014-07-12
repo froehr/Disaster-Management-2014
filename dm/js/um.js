@@ -110,7 +110,6 @@ function setLogoutContent() {
 	}
 
 	var uppercaseProvider = provider.charAt(0).toUpperCase() + provider.substr(1, provider.length);
-	console.log(uppercaseProvider);
 	if ( uppercaseProvider == 'Email' ) uppercaseProvider = 'E-Mail';
 	content = '<div class="center">' +
 			'<img src="' + user.picture + '" class="float-left profile-img" />' +
@@ -363,16 +362,18 @@ function socialMediaShareContext (message) {
 	var facebook_html = '<a href="http://www.facebook.com/sharer.php?u=' + url + '" target="_blank"><div id="facebook-share" class="um-button">Share on Facebook</div></a> ';
 	var twitter_html = '<a href="http://twitter.com/intent/tweet?url=' + url + '&text=' + text + '" target="_blank"><div id="twitter-share" class="um-button">Share on Twitter</div></a> ';
 	var google_html = '<a href="https://plus.google.com/share?url=' + url + '" target="_blank"><div id="google-share" class="um-button">Share on Google+</div></a>';
-	var link_text_html = '<textarea readonly onfocus="this.select();">' + url + '</textarea>';
+	var link_text_html = '<textarea readonly onfocus="this.select();" class="link-textarea">' + url + '</textarea>';
 
 	var hull_component_html = facebook_html + twitter_html + google_html;
 
 	var content = '<div id="usershare">' +
-				'<h1>Share Message</h1>' +
-				'<p>Share on Social Networks:</p>' +
-				hull_component_html +
-				'</br><p>Share Link:</p>'
-				 + link_text_html +
+					'<h1>Share Message</h1>' +
+					'<p>You can share on this message on these social networks.</p>' +
+					'<div class="center">' +
+						hull_component_html +
+					'</div>' +
+					'<br /><p>Alternatively share the direct message link:</p>'
+					+ link_text_html +
 				'</div>';
 	
 	createPopUp(255, 300, content);
