@@ -4,19 +4,19 @@
 	include 'db_connect.php';
 		$dbconn = getConnection();
 	
-		$issue = $_POST['Issue'];
-		$title = $_POST['Title'];
-		$description =$_POST['Description'];
-		$category = $_POST['Category'];
-		$person_contact = $_POST['PersonContact'];
-		$feature = $_POST['Geometry'];
-		$person_name = $_POST['Name'];
-		$people_attending = $_POST['PeopleAttending'];
-		$people_need = $_POST['PeopleNeeded'];
-		$tags = $_POST['Tags'];
-		$creationDate = $_POST['CreationDate'];
-		$hulluser_id = $_POST['Hulluser_id'];
-		$dataType = $_POST['FileType'];
+		$issue = htmlentities(pg_escape_string($_POST['Issue']));
+		$title = htmlentities(pg_escape_string($_POST['Title']));
+		$description = htmlentities(pg_escape_string($_POST['Description']));
+		$category = htmlentities(pg_escape_string($_POST['Category']));
+		$person_contact = htmlentities(pg_escape_string($_POST['PersonContact']));
+		$feature = htmlentities(pg_escape_string($_POST['Geometry']));
+		$person_name = htmlentities(pg_escape_string($_POST['Name']));
+		$people_attending = htmlentities(pg_escape_string($_POST['PeopleAttending']));
+		$people_need = htmlentities(pg_escape_string($_POST['PeopleNeeded']));
+		$tags = htmlentities(pg_escape_string($_POST['Tags']));
+		$creationDate = htmlentities(pg_escape_string($_POST['CreationDate']));
+		$hulluser_id = htmlentities(pg_escape_string($_POST['Hulluser_id']));
+		$dataType = htmlentities(pg_escape_string($_POST['FileType']));
 
 		$feature;
 		$coords;

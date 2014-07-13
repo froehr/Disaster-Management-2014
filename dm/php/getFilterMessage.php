@@ -7,10 +7,10 @@
 		//clear array
 		unset($varArray);
 
-		$messageType=$_POST['MessageType'];
-		$subCategory=$_POST['SubCategory'];
-		$timeStart=$_POST['TimeStart'];
-		$timeEnd=$_POST['TimeEnd'];
+		$messageType=pg_escape_string($_POST['MessageType']);
+		$subCategory=pg_escape_string($_POST['SubCategory']);
+		$timeStart=pg_escape_string($_POST['TimeStart']);
+		$timeEnd=pg_escape_string($_POST['TimeEnd']);
 		
 		//check the values for filtir and added to one array
 		if($messageType!=null or ""){	

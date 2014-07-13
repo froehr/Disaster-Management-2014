@@ -4,8 +4,8 @@
 		
 	include 'db_connect.php';
 
-	$message_type = $_POST['message_type'];
-	$category = $_POST['category'];
+	$message_type = pg_escape_string($_POST['message_type']);
+	$category = pg_escape_string($_POST['category']);
 
 	
 		// create the 'WEHRE'-Query for the SQL Query

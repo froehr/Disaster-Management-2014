@@ -10,7 +10,7 @@
 	if($_POST["action"] == "GetAll")
   		{getAllData();}
 	else if($_POST["action"] == "ByExtent") {
-		$bboxString = $_POST["bboxString"];
+		$bboxString = pg_escape_string($_POST["bboxString"]);
 		getMsgByExtent($bboxString);
 	}
 	

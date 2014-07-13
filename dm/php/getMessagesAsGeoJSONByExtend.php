@@ -1,7 +1,7 @@
 <?php
 	
 
-	$bboxString = $_POST["bboxString"];
+	$bboxString = pg_escape_string($_POST["bboxString"]);
 	$bboxArray = explode(",", $bboxString);
 	
 	include 'db_connect.php';
