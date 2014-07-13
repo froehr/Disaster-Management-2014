@@ -103,6 +103,7 @@ function showMessages() {
 			
 			$('#messages').append(
 				'<div class="message message-' + message['message_type'] + '" id="message-' + message['message_id'] + '">' +
+					'<input type="hidden" id="status-' + message['message_id'] + '" value="closed" />' +
 					'<h1 class="' + message['message_type'] + '-head" id="head-' + message['message_id'] + '">' + message['title'] + '</h1>' +
 					'<p id="description-' + message['message_id'] + '">' + replaceURLWithHTMLLinks(nl2br(message['description'])) + '<br />' + file_html + '<a href="#" id="more-' + message['message_id'] + '">Details and Comments <span class="arrow">&#9658;</span></a></p>' +
 					'<div class="details" id="details-' + message['message_id'] + '">' +
@@ -251,8 +252,8 @@ function showMessages() {
 	function switchMessageDetails(message) {
 		
 		var message_id = message['message_id'];
-				
-		if ( ! message['display'] ) {
+		
+		if ( $('#status-' + message['message_id']).val() == 'closed' ) {
 			getComments(message);
 			setElementDisplay('more-' + message_id, 'none');
 			setElementDisplay('less-' + message_id + '-top', 'block');
@@ -260,17 +261,20 @@ function showMessages() {
 			$('#details-' + message_id).slideDown('slow', 'linear', function() {
 				scrollToId('message-' + message['message_id']);
 			});
-			message['display'] = true;
 			
-			for ( var i = 0; i < messages.length; i++ ) {
-				if ( messages[i]['message_id'] != message_id && messages[i]['display'] ) {
-					setElementDisplay('more-' + messages[i]['message_id'], 'inline');
-					setElementDisplay('less-' + messages[i]['message_id'] + '-top', 'none');
-					setElementDisplay('less-' + messages[i]['message_id'] + '-bottom', 'none');
-					$('#details-' + messages[i]['message_id']).slideUp('fast', 'linear');
-					messages[i]['display'] = false;
+			$('#messages').children('div').each(function(i) {
+				var cMessage = $('#messages').children()[i];
+				var id = cMessage.id.split('-')[1];
+				if ( $('#message-' + id) != $('#message-' + message['message_id']) && $('#status-' + id).val() == 'opened' ) {
+					$('#more-' + id).css('display', 'inline');
+					$('#less-' + id + '-top').css('display', 'none');
+					$('#less-' + id + '-bottom').css('display', 'none');
+					$('#details-' + id).slideUp('fast', 'linear');
+					$('#status-' + id).val('closed');
 				}
-			}
+			});
+			
+			$('#status-' + message['message_id']).val('opened');
 		}
 		else {
 			setElementDisplay('more-' + message_id, 'inline');
@@ -279,7 +283,7 @@ function showMessages() {
 			$('#details-' + message_id).slideUp('slow', 'linear', function() {
 				scrollToId('message-' + message['message_id']);
 			});
-			message['display'] = false;
+			$('#status-' + message['message_id']).val('closed');
 		}
 	}
 		
@@ -347,11 +351,11 @@ function showMessages() {
 			createReportPopUp('message', message['message_id']);
 		});
 		
-		$('#description-' + message['message_id']).click(function() {
+		$('#head-' + message['message_id']).click(function() {
 			switchMessageDetails(message);
 		});
 		
-		$('#head-' + message['message_id']).click(function() {
+		$('#more-' + message['message_id']).click(function() {
 			switchMessageDetails(message);
 		});
 		
