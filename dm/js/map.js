@@ -1,19 +1,19 @@
 // Create a map in the "map" div, set the view to a given place and zoom
 var map = new L.Map('map', {
-		center : [51.96, 7.61],
-		zoom : 14,
-		dragging : true,
-		touchZoom : true,
-		scrollWheelZoom : true,
-		doubleClickZoom : true,
-		boxZoom : true,
-		tap : true,
-		tapTolerance : 15,
-		trackResize : true,
-		worldCopyJump : false,
-		closePopupOnClick : true,
-		scale : true
-	});
+	center : [51.96, 7.61],
+	zoom : 14,
+	dragging : true,
+	touchZoom : true,
+	scrollWheelZoom : true,
+	doubleClickZoom : true,
+	boxZoom : true,
+	tap : true,
+	tapTolerance : 15,
+	trackResize : true,
+	worldCopyJump : false,
+	closePopupOnClick : true,
+	scale : true
+});
 
 // Global variable for position of weatherforcast
 var latlng;
@@ -24,6 +24,7 @@ var waterMeasurementData = L.layerJSON({
 	url : 'http://www.pegelonline.wsv.de/webservices/rest-api/v2/stations.json?latitude=51.9544&longitude=7.627&radius=800&includeTimeseries=true&includeCurrentMeasurement=true',
 	// Pegel Rest API Documentation: http://www.pegelonline.wsv.de/webservice/dokuRestapi
 	// propertyItems: 'timeseries',
+	attribution : '&copy; <a href="www.pegelonline.wsv.de">Pegel Online</a> WSV',
 	propertyTitle : 'shortname',
 	propertyLoc : ['latitude', 'longitude'],
 	buildIcon : function (data, shortname) {
@@ -104,8 +105,8 @@ var osm_mq = new L.tileLayer('http://{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.p
 	});
 
 var osm_mapnik = new L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-		attribution : '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-	});
+	attribution : '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+});
 
 // Orthophoto layer
 var layerOrtho = new L.tileLayer.wms('http://www.wms.nrw.de/geobasis/wms_nw_dop40', {
@@ -113,7 +114,8 @@ var layerOrtho = new L.tileLayer.wms('http://www.wms.nrw.de/geobasis/wms_nw_dop4
 	format : 'image/png',
 	version : '1.3.0',
 	transparent : true,
-	opacity : 0.4
+	opacity : 0.4,
+	attribution : '&copy; <a href="http://www.gis4.nrw.de/">GIS 4 NRW</a> IT NRW'
 });
 
 // Layers of Geobasis NRW: http://www.bezreg-koeln.nrw.de/brk_internet/organisation/abteilung07/produkte/nrwatlas/index.html
@@ -123,7 +125,8 @@ var layerDGK5 = new L.tileLayer.wms('http://www.wms.nrw.de/geobasis/wms_nw_dgk5'
 	layers : 'WMS_NW_DGK5',
 	format : 'image/png',
 	transparent : true,
-	opacity : 0.5
+	opacity : 0.5,
+	attribution : '&copy; <a href="http://www.gis4.nrw.de/">GIS 4 NRW</a> IT NRW'
 });
 
 var layerDTK10 = new L.tileLayer.wms('http://www.wms.nrw.de/geobasis/wms_nw_dtk10', {
@@ -131,27 +134,29 @@ var layerDTK10 = new L.tileLayer.wms('http://www.wms.nrw.de/geobasis/wms_nw_dtk1
 	layers : 'nw_dtk10_pan,nw_dtk10_res,NW_DTK10_col,WMS_NW_DTK10',
 	format : 'image/png',
 	transparent : true,
-	opacity : 0.5
+	opacity : 0.5,
+	attribution : '&copy; <a href="http://www.gis4.nrw.de/">GIS 4 NRW</a> IT NRW'
 });
 
 // Areas affected by flooding: See: http://www.gis4.nrw.de/DienstelisteInternet/
 var flood = new L.TileLayer.WMS("http://www.wms.nrw.de/umwelt/wasser/uesg", {
 	layers : '6',
 	format : 'image/png',
-	//crs: L.CRS.EPSG4326,
+	// crs: L.CRS.EPSG4326,
 	version : '1.3.0',
 	transparent : true,
-	opacity : 0.5
+	opacity : 0.5,
+	attribution : '&copy; <a href="http://www.gis4.nrw.de/">GIS 4 NRW</a> IT NRW'
 });
 
 // Rain layer
 var rain = new L.tileLayer('http://{s}.tile.openweathermap.org/map/rain_cls/{z}/{x}/{y}.png', {
 	options : {
-		attribution : 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
 		opacity : 0.5
 	},
 	transparent : true,
-	opacity : 0.5
+	opacity : 0.5,
+	attribution : 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>'
 });
 
 
@@ -162,6 +167,7 @@ var overviewMap = new L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/
 });
 
 
+// Rectangles, which are used within the minimap (for highlighting and selected area)
 var rect1 = {color: "#F50707", weight: 4};
 var rect2 = {color: "#F50707", weight: 4, opacity:0.8, fillOpacity:0.8};
 
@@ -207,7 +213,7 @@ var Llocater = new L.control.locate({
 	},
 	setView : true, // automatically sets the map view to the user's location
 	strings : {
-		title : "Show your location", // title of the locat control
+		title : "Show your location", // title of the Locate-Control
 		popup : "You are within {distance} {unit} from this point", // text to appear if user clicks on circle
 		outsideMapBoundsMsg : "You seem located outside the boundaries of the map" // default message for onLocationOutsideMapBounds
 	}
