@@ -64,7 +64,7 @@ function showMessages() {
 			if ( message['tags'] != '' ) {
 				var tags = message['tags'].split(',');
 				for ( var i = 0; i < tags.length; i++ ) {
-					tags_html += '<a href="#">' + tags[i] + '</a>, ';
+					tags_html += '<a href="#" class="' + tags[i] + '">' + tags[i] + '</a>, ';
 				}
 				tags_html = tags_html.substring(0, tags_html.length - 2);
 				tags_html =	'<tr>' +
@@ -356,14 +356,46 @@ function showMessages() {
 		});
 		
 		$('#edit-' + message['message_id']).click(function() {
-			// TODO: EDIT MESSAGE
+			createEditPopUp(message);
 		});
 
 		$('#share-' + message['message_id']).click(function() {
 			socialMediaShareContext(message);
 		});
+		
+		var tags = message['tags'].split(',');
+		for ( var i = 0; i < tags.length; i++ ) {
+			tags[i] = tags[i].trim();
+			if ( tags[i] != '' ) {
+				$('.' + tags[i]).click(function() {
+					$('#search').val($(this).attr('class'));
+					search();
+				});
+			}
+		}
 	}
 
+	function createEditPopUp(message) {
+		var content = '<h1>Edit Message</h1>' +
+			'<p>Title</p>' +
+			'<input type="text" id="edit_title" value="' + message['title'] + '">' +
+			'<p>Description</p>' +
+			'<textarea id="edit_description">' + message['description'] + '</textarea>' +
+			'<p>Contact information</p>' +
+			'<input type="text" id="edit_person_contact" value="' + message['person_contact'] + '">' +
+			'<p>Your name</p>' +
+			'<input type="text" id="edit_person_name" value="' + message['person_name'] + '">' +
+			'<p>Helpers / Volunteers</p>' +
+			'<input type="text" id="edit_people_attending" value="' + message['people_attending'] + '" class="small" /> of <input type="text" id="edit_people_need" value="' + message['people_need'] + '" class="small" />' +
+			'<p>Tags</p>' +
+			'<input type="text" id="edit_tags" value="' + message['tags'] + '">' +
+			'<div class="submit normalized"><input type="submit" value="Edit &nbsp; &#9658;" id="submit-edit" /></div><br />';
+		createPopUp(255, 530, content);
+		
+		$('#submit-edit').click(function() {
+			// edit stuff to do
+		});
+	}
 
 	function createReportPopUp(report, id) {
 		var content = '<h1>Report ' + report + '</h1>' +
@@ -580,32 +612,34 @@ function showMessages() {
 				var remove_comment_html = '';
 				var report_comment_html = '';
 				
-				if ( hasAccess(message['comments'][i]['name']['id']) ) {
+				if ( message['comments'][i]['name'] != null ) {
+					if ( hasAccess(message['comments'][i]['name']['id']) ) {
 
-					remove_comment_html = '<div id="remove-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/remove.png" /><div> Remove</div></div>';					
-					edit_comment_html = '<div id="edit-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/edit.png" /><div> Edit</div></div><br />';											
-				
+						remove_comment_html = '<div id="remove-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/remove.png" /><div> Remove</div></div>';					
+						edit_comment_html = '<div id="edit-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/edit.png" /><div> Edit</div></div><br />';											
+					
+					}
+					
+					if (isOnline()) {
+						report_comment_html = '<div id="report-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/report.png" /><div> Report</div></div>';						
+					}
+
+					edit_remove_report_comment_html	= report_comment_html + remove_comment_html + edit_comment_html; 	
+
+					comments_html += '<div class="comment" id="comment-' + message['comments'][i]['comment_id'] + '">' +
+										'<table border="0">' +
+											'<tr>' +
+												'<td><b>' + message['comments'][i]['name']['name'] + '</b></td>' +
+												'<td class="right">' + message['comments'][i]['date_time'] + '</td>' +
+											'</tr>' +
+											'<tr>' +
+												'<td colspan="2" class="justify">' + replaceURLWithHTMLLinks(nl2br(message['comments'][i]['message'])) + '</td>' +
+											'</tr>' +
+											img_url_html +
+										'</table>' +
+										edit_remove_report_comment_html +
+									'</div>';
 				}
-				
-				if (isOnline()) {
-					report_comment_html = '<div id="report-comment-' + message['comments'][i]['comment_id'] + '" class="message-button"><img src="img/icons/report.png" /><div> Report</div></div>';						
-				}
-
-				edit_remove_report_comment_html	= report_comment_html + remove_comment_html + edit_comment_html; 	
-
-				comments_html += '<div class="comment" id="comment-' + message['comments'][i]['comment_id'] + '">' +
-									'<table border="0">' +
-										'<tr>' +
-											'<td><b>' + message['comments'][i]['name']['name'] + '</b></td>' +
-											'<td class="right">' + message['comments'][i]['date_time'] + '</td>' +
-										'</tr>' +
-										'<tr>' +
-											'<td colspan="2" class="justify">' + replaceURLWithHTMLLinks(nl2br(message['comments'][i]['message'])) + '</td>' +
-										'</tr>' +
-										img_url_html +
-									'</table>' +
-									edit_remove_report_comment_html +
-								'</div>';
 			}
 			
 			if (isOnline()) {
@@ -749,7 +783,7 @@ function showMessages() {
 		});
 	})
 	
-	$('#search').keyup(function() {
+	function search() {
 		$("#messages").empty();
 		layerGroup.clearLayers();
 		if ( $('#search').val().trim() != '' ) {
@@ -773,6 +807,10 @@ function showMessages() {
 				showMessagebyUrl();
 			});
 		}
+	}
+	
+	$('#search').keyup(function() {
+		search();
 	});
 
 	function applyFilter(){
