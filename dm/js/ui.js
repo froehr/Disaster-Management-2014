@@ -216,12 +216,12 @@ $('#quickstart').click(function() {
 $('#about').click(function() {
 	var content = '<h1>About FloodWatch</h1>' +
 		'<p class="justify">FloodWatch is a project, which was startet in a project seminar at the Institute for Geoinformatics of the University of Münster.</p>' +
-		'<p><a href="http://ifgi.uni-muenster.de" target="_blank"><b>Institute for Geoinformatics</b></a><br />Heisenbergstraße 2<br />48149 Münster, Germany</p><br />' +
+		'<p><img src="img/floodwatch_logo_small.png" alt="FloodWatch Logo" style="float: right; margin-left: 20px; margin-bottom: 20px;" /><a href="http://ifgi.uni-muenster.de" target="_blank"><b>Institute for Geoinformatics</b></a><br />Heisenbergstraße 2<br />48149 Münster, Germany</p>' +
 		'<p class="justify">FloodWatch is an interactive-map web application, which is designed to plan, ' +
 		'mitigate and assess the effects resulting from flood events as one of the commonly known natural hazards. It ' +
 		'targets to support decision makers with regard to environmental, infrastructural and health issues usually ' +
 		'followed by a flood disaster, while placing emphasis on priority issues to foster the reform efforts that ' +
-		'push the disaster risk reduction forward. <img src="img/floodwatch_logo_small.png" alt="FloodWatch Logo" style="float: right; margin-left: 20px;" />Moreover, FloodWatch strives to enhance cooperation between various ' +
+		'push the disaster risk reduction forward.</p><p class="justify">Moreover, FloodWatch strives to enhance cooperation between various ' +
 		'ministries and governmental authorities by opening communication channels with and among the public, in different ways; ' +
 		'using either various social media platforms like Facebook, Twitter and Google+, or throughout the direct message ' +
 		'submission from the message bar on the left side of the page. Using the Floodwatch system it is possible to measure, ' +
@@ -230,7 +230,26 @@ $('#about').click(function() {
 		'and water level diagrams, in addition to sandbags, ration supplies, and evacuation plans, in case of such severe situations. ' +
 		'FloodWatch can be applied at national, regional and local level and in different sectors to provide flood guidance on both ' +
 		'levels: public and governmental.</p>';
-	createPopUp(800, 420, content);
+	createPopUp(800, 390, content);
+});
+
+$('#credits').click(function() {
+	var content = '<h1>Credits</h1>' +
+		'<p><b>Map Layers</b></p>' +
+		'<ul style="margin-right: 30px; margin-bottom: 20px;">' + 
+			'<li>OpenStreetMap Humanitarian base map provided by OpenStreetMap &copy; <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap Contributors</a>.</li>' +
+			'<li>Gauge Layer and data provided by <a href="https://www.pegelonline.wsv.de/gast/start" target="_blank">Pegel Online</a>.</li>' +
+			'<li>World Wide Rain Forecast Layer and Weather Forecast data provided by OpenWeatherMap &copy; <a href="http://openweathermap.org/" target="_blank">Extreme Electronics Ltd.</a></li>' +
+			'<li>Flood Prone areas, DGK5, and DTK10 layers provided by <a href="http://www.gis4.nrw.de/DienstelisteInternet/" target="_blank">WMS Nordrhein-Westfalen</a> (Information und Technik Nordrhein-Westfalen).</li>' +
+		'</ul>' +
+		'<p><b>Libraries</b></p>' +
+		'<ul style="margin-right: 30px; margin-bottom: 30px;">' + 
+			'<li>Web Map Client API: <a href="http://leafletjs.com/">Leaflet</a>.</li>' +
+			'<li>User Interface implemented with the help of <a href="http://jquery.com/">jQuery</a>.</li>' +
+			'<li>Quick Start Tutorial implemented with <a href="http://usablica.github.io/intro.js/" target="_blank">Intro.js</a>.</li>' +
+			'<li>Social Media Integration done with <a href="http://hull.io/" target="_blank">Hull.io</a>.</li>' +
+		'</ul>';
+	createPopUp(500, 340, content);
 });
 
 $('body').on('click', '#highchart-button', function(e) {
