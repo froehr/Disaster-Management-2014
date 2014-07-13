@@ -15,7 +15,7 @@
 	$resizeObj = new resize('upload/'.basename($_FILES['datei']['name']));
 	 
 	// *** 2) Resize image (options: exact, portrait, landscape, auto, crop)
-	$resizeObj -> resizeImage(150, 150, 'landscape');
+	$resizeObj -> resizeImage(250, 250, 'landscape');
 
 	// *** 3) Save image
 	$resizeObj -> saveImage('upload/thumb/'.basename($_FILES['datei']['name']), 100);
