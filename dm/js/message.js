@@ -725,148 +725,174 @@ var showMessages = new function () {
 	this.loadFeatures = function (refreshMessages, redrawMapFeatures) {
 		if ( refreshMessages ) { $("#messages").empty(); }
 		if ( redrawMapFeatures ) { layerGroup.clearLayers(); }
-		$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
-			parseMessages(data, refreshMessages, redrawMapFeatures, document.getElementById('filter-archive').checked);
-			showMessagebyUrl();
-		});
-	}
-	
-	
-	
-	//end of showmessages() function	
-}
-function spatialFilter (){
-		northEastBoundsLat = LlocationFilter._ne.lat;
-		northEastBoundsLong = LlocationFilter._ne.lng;
-		southWestBoundsLat = LlocationFilter._sw.lat;
-		southWestBoundsLong = LlocationFilter._sw.lng;
-		PointUp = new Array(LlocationFilter._ne.lat, LlocationFilter._ne.lng);
-		PointDown = new Array(LlocationFilter._sw.lat, LlocationFilter._sw.lng);
-		var bboxString = southWestBoundsLong + "," + southWestBoundsLat + "," + northEastBoundsLong + "," + northEastBoundsLat;
-		$("#messages").empty();
-		$.post( "php/getMessagesAsGeoJSONByExtend.php", 
-			{ 
-				bboxString: bboxString
-			},
-			function( data ) {
-				parseMessages(data, true, false, document.getElementById('filter-archive').checked)
-			},
-			"json"
-		);
-	}
-	
-	LlocationFilter.on("enabled", function (e) {
-		spatialFilter();
-	});
-
-	LlocationFilter.on("change", function (e) {
-		spatialFilter();
-	});
-	
-	LlocationFilter.on("disabled", function (e){
-		showMessages.loadFeatures(true, false);
-	});
-	
-	function parseMessages(data, refreshMessages, redrawMapFeatures, relevant) {
-		for (var i = 0, len = data.features.length; i < len; i++) {
-			var messageFeatures = data.features[i];
-			var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures.geometry), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, messageFeatures.properties.file, messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email, messageFeatures.properties.hulluser_id);
-			showMessages.showMessage(msg, refreshMessages, redrawMapFeatures, relevant);
-			showMessages.setMessageClickFunctions(msg);
-		}
-	}
-	
-	$('#filter-issue').change(function() {
-		applyFilter();
-	})
-	
-	$('#filter-category').change(function() {
-		applyFilter();
-	})
-	
-	$('#filter-archive').change(function() {
-		showMessages.loadFeatures(true, true);
-	})
-	
-	function search() {
-		$("#messages").empty();
-		layerGroup.clearLayers();
-		if ( $('#search').val().trim() != '' ) {
-			$.post( "php/search.php", 
-				{ 
-					KeySearch: $('#search').val()
-				},
-				function( data ) {
-					$("#messages").empty();
-					layerGroup.clearLayers();
-					parseMessages(data, true, true, document.getElementById('filter-archive').checked)
-				},
-				"json"
-			);
-		}
-		else {
-			showMessages.loadFeatures(true, true);
-		}
-	}
-	
-	$('#search').keyup(function() {
-		search();
-	});
-
-	function applyFilter(){
-		var filter_issue = document.getElementById('filter-issue').value;
-		var filter_category = document.getElementById('filter-category').value;
+		var bboxString = map.getBounds().toBBoxString();
+		console.log('bbox: ' + bboxString)
+		console.log('type: ' + document.getElementById('filter-issue').value)
+		console.log('category: ' + document.getElementById('filter-category').value)
 		$.post( "php/filter.php", 
 			{ 
-				message_type: filter_issue,
-				category: filter_category
+				bboxString: bboxString,
+				message_type: document.getElementById('filter-issue').value,
+				category: document.getElementById('filter-category').value
 			},
 			function( data ) {
 				if (data.features.length != 0) {
 					$('#messages').empty();
 					layerGroup.clearLayers();
-					parseMessages(data, true, true, document.getElementById('filter-archive').checked);
+					parseMessages(data, refreshMessages, redrawMapFeatures, document.getElementById('filter-archive').checked);
 				}
 				else {
 					$('#messages').empty();
-					$('#messages').append('<div class="no-results"><b>No filter results!</b><br />Please change the filter.</div>');
+					$('#messages').append('<div class="no-results"><b>No filter results!</b><br />Please change the filter <br />or the mapview.</div>');
 				}
 				
 			},
 			"json"
 		);
 	}
-	
-	// Sort messages by distance
-	$('#sort-messages-distance').click(function() {
-		var coordString = latlng.lng + ',' + latlng.lat;
-		$('#map-right-click-menu').fadeOut(200, function() {
-			$('#sort-messages-distance').after('<li id="sort-messages-time"><a href="#">Use default sorting method</a></li>');
-			$('#sort-messages-time').click(function() {
-				$('#sort-messages-time').remove();
-				$('#map-right-click-menu').fadeOut(200);
-				showMessages.loadFeatures(true, false);
-			});
-		});
-		$.post( "php/getMessagesAsGeoJSONByDistance.php", 
+
+	//end of showmessages() function	
+}
+
+map.on('moveend', function() {
+	showMessages.loadFeatures(true,true);
+})
+function spatialFilter (){
+	northEastBoundsLat = LlocationFilter._ne.lat;
+	northEastBoundsLong = LlocationFilter._ne.lng;
+	southWestBoundsLat = LlocationFilter._sw.lat;
+	southWestBoundsLong = LlocationFilter._sw.lng;
+	PointUp = new Array(LlocationFilter._ne.lat, LlocationFilter._ne.lng);
+	PointDown = new Array(LlocationFilter._sw.lat, LlocationFilter._sw.lng);
+	var bboxString = southWestBoundsLong + "," + southWestBoundsLat + "," + northEastBoundsLong + "," + northEastBoundsLat;
+	$("#messages").empty();
+	$.post( "php/getMessagesAsGeoJSONByExtend.php", 
+		{ 
+			bboxString: bboxString
+		},
+		function( data ) {
+			parseMessages(data, true, false, document.getElementById('filter-archive').checked)
+		},
+		"json"
+	);
+}
+
+LlocationFilter.on("enabled", function (e) {
+	spatialFilter();
+});
+
+LlocationFilter.on("change", function (e) {
+	spatialFilter();
+});
+
+LlocationFilter.on("disabled", function (e){
+	showMessages.loadFeatures(true, false);
+});
+
+function parseMessages(data, refreshMessages, redrawMapFeatures, relevant) {
+	for (var i = 0, len = data.features.length; i < len; i++) {
+		var messageFeatures = data.features[i];
+		var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures.geometry), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, messageFeatures.properties.file, messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email, messageFeatures.properties.hulluser_id);
+		showMessages.showMessage(msg, refreshMessages, redrawMapFeatures, relevant);
+		showMessages.setMessageClickFunctions(msg);
+	}
+}
+
+$('#filter-issue').change(function() {
+	applyFilter();
+})
+
+$('#filter-category').change(function() {
+	applyFilter();
+})
+
+$('#filter-archive').change(function() {
+	showMessages.loadFeatures(true, true);
+})
+
+function search() {
+	$("#messages").empty();
+	layerGroup.clearLayers();
+	if ( $('#search').val().trim() != '' ) {
+		$.post( "php/search.php", 
 			{ 
-				Coordinate: coordString,
+				KeySearch: $('#search').val()
 			},
 			function( data ) {
-				if (data.features.length != 0) {
-					$('#messages').empty();
-					layerGroup.clearLayers();
-					parseMessages(data, true, true, document.getElementById('filter-archive').checked);
-				}
-				else {
-					$('#messages').empty();
-					$('#messages').append('<div class="no-results"><b>No filter results!</b><br />Please change the filter.</div>');
-				}
-				
+				$("#messages").empty();
+				layerGroup.clearLayers();
+				parseMessages(data, true, true, document.getElementById('filter-archive').checked)
 			},
 			"json"
 		);
-	})
+	}
+	else {
+		showMessages.loadFeatures(true, true);
+	}
+}
+
+$('#search').keyup(function() {
+	search();
+});
+
+function applyFilter(){
+	var bboxString = map.getBounds().toBBoxString();
+	$.post( "php/filter.php", 
+		{ 
+			bboxString: bboxString,
+			message_type: document.getElementById('filter-issue').value,
+			category: document.getElementById('filter-category').value
+		},
+		function( data ) {
+			console.log(data)
+			if (data.features.length != 0) {
+				$('#messages').empty();
+				layerGroup.clearLayers();
+				parseMessages(data, true, true, document.getElementById('filter-archive').checked);
+			}
+			else {
+				$('#messages').empty();
+				$('#messages').append('<div class="no-results"><b>No filter results!</b><br />Please change the filter or the mapview.</div>');
+			}
+			
+		},
+		"json"
+	);
+}
+
+// Sort messages by distance
+$('#sort-messages-distance').click(function() {
+	var coordString = latlng.lng + ',' + latlng.lat;
+	var bboxString = map.getBounds().toBBoxString();
+	$('#map-right-click-menu').fadeOut(200, function() {
+		$('#sort-messages-distance').after('<li id="sort-messages-time"><a href="#">Use default sorting method</a></li>');
+		$('#sort-messages-time').click(function() {
+			$('#sort-messages-time').remove();
+			$('#map-right-click-menu').fadeOut(200);
+			showMessages.loadFeatures(true, false);
+		});
+	});
+	$.post( "php/getMessagesAsGeoJSONByDistance.php", 
+		{
+			bboxString: bboxString,
+			Coordinate: coordString,
+		},
+		function( data ) {
+			if (data.features.length != 0) {
+				$('#messages').empty();
+				layerGroup.clearLayers();
+				parseMessages(data, true, true, document.getElementById('filter-archive').checked);
+			}
+			else {
+				$('#messages').empty();
+				$('#messages').append('<div class="no-results"><b>No filter results!</b><br />Please change the filter or the mapview.</div>');
+			}
+			
+			
+		},
+		"json"
+	);
+})
 function decreaseNumberOfComments(id, amount) {
 	var numberOfComments = parseInt($('#number-of-comments-' + id).html());
 	numberOfComments -= amount;
@@ -898,5 +924,3 @@ function showMessagebyUrl() {
 		return decodeURIComponent((new RegExp('[?|&]' + message + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
 	}
 }
-
-

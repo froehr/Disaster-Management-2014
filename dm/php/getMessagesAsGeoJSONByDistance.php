@@ -5,6 +5,9 @@ include 'db_connect.php';
 		//get messages that are within a distance X from Point p
 	
 		$xCoordinate = $_POST["Coordinate"];
+		$bboxString = pg_escape_string($_POST["bboxString"]);
+		$bboxArray = explode(",", $bboxString);
+
 		
 		if($xCoordinate!='') {
 			$coordArray = explode(",", $xCoordinate);
@@ -19,9 +22,14 @@ include 'db_connect.php';
 				
 									 
 				 	$queryString = "SELECT *, ST_AsGeoJSON(location) AS geojson FROM message
-								ORDER BY ST_Distance(location, ST_GeomFromText('Point(".$coordArray[0]." ".$coordArray[1].")',4326));" ;
+				 	WHERE 
+				 		ST_Within(message.location, ST_SetSRID(ST_MakeBox2D(ST_Point(".$bboxArray[0].",".$bboxArray[1]."),ST_Point(".$bboxArray[2].",".$bboxArray[3].")),4326))
+						OR
+						ST_Intersects(message.location, ST_SetSRID(ST_MakeBox2D(ST_Point(".$bboxArray[0].",".$bboxArray[1]."),ST_Point(".$bboxArray[2].",".$bboxArray[3].")),4326))
+					ORDER BY ST_Distance(location, ST_GeomFromText('Point(".$coordArray[0]." ".$coordArray[1].")',4326));" ;
 									 
 					$result = pg_query($con, $queryString);
+					//echo($queryString);
 					if($result)
 					{
 						

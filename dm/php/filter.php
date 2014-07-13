@@ -6,6 +6,8 @@
 
 	$message_type = pg_escape_string($_POST['message_type']);
 	$category = pg_escape_string($_POST['category']);
+	$bboxString = pg_escape_string($_POST["bboxString"]);
+	$bboxArray = explode(",", $bboxString);
 	
 		// create the 'WEHRE'-Query for the SQL Query
 		/*if ($message_type != '') {
@@ -15,17 +17,20 @@
 			$category = 'category =' . $category;
 		}*/
 		if ($message_type == 'any' and $category == 'any') {
-			$whereString = '';
+			$whereString = 'WHERE ';
 		}
 		elseif ($message_type == 'any' and $category != 'any') {
-			$whereString = 'WHERE category =\'' . $category . '\'';
+			$whereString = 'WHERE category =\'' . $category . '\' AND ';
 		}
 		elseif ($message_type != 'any' and $category == 'any') {
-			$whereString = 'WHERE message_type =\''. $message_type . '\'';
+			$whereString = 'WHERE message_type =\''. $message_type . '\' AND ';
 		}
 		else {
-			$whereString = 'WHERE message_type =\''. $message_type . '\' AND category =\'' . $category . '\'';
+			$whereString = 'WHERE message_type =\''. $message_type . '\' AND category =\'' . $category . '\' AND';
 		}
+		$whereString .= "(ST_Within(message.location, ST_SetSRID(ST_MakeBox2D(ST_Point(".$bboxArray[0].",".$bboxArray[1]."),ST_Point(".$bboxArray[2].",".$bboxArray[3].")),4326))
+			OR
+			ST_Intersects(message.location, ST_SetSRID(ST_MakeBox2D(ST_Point(".$bboxArray[0].",".$bboxArray[1]."),ST_Point(".$bboxArray[2].",".$bboxArray[3].")),4326))) ORDER BY time_start DESC;";
 
 		$con = getConnection();
 		$data = Array();
@@ -34,9 +39,10 @@
 			{die(json_encode(array(error => 'no connection to the server')));}
 			
 		$queryString = 'SELECT * , ST_AsGeoJSON(location) AS geojson FROM message '
-			. $whereString . '
-			ORDER BY time_start DESC;';
+			. $whereString;
+		//echo($queryString);
 		$result = pg_query($con, $queryString);
+
 		
 		$FeatureCollection = array();
 		$FeatureCollection["type"] = "FeatureCollection";
