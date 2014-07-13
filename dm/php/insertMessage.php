@@ -41,7 +41,6 @@
 			$feature = json_decode($feature);
 			$coords = $feature->geometry->coordinates;
 			$geometry = $feature->geometry->type;
-			echo('coords: ' . $coords);
 		}
 
 		function buildCoords($coordinates, $type){
