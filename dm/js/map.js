@@ -279,7 +279,7 @@ var drawControl = new L.Control.Draw({
 	draw : {
 		position : 'topleft',
 		circle : false,
-		psolygon : {
+		polygon : {
 			allowIntersection : false, // Restricts shapes to simple polygons
 			drawError : {
 				color : '#FF0000', // Color the shape will turn when intersects
@@ -328,6 +328,13 @@ $(".leaflet-draw-edit-remove").click(function () {
 
 
 var tagColor;
+map.on('draw:drawstop', function () {
+	if (drawnItems.getLayers().length == 2) {
+		var leafId = drawnItems.getLayers()[0]._leaflet_id;
+		drawnItems.removeLayer(leafId);
+	}
+
+})
 map.on('draw:created', function (e) {
 	var type = e.layerType,
 	layer = e.layer;
