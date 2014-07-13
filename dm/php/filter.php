@@ -6,7 +6,6 @@
 
 	$message_type = pg_escape_string($_POST['message_type']);
 	$category = pg_escape_string($_POST['category']);
-
 	
 		// create the 'WEHRE'-Query for the SQL Query
 		/*if ($message_type != '') {
@@ -15,17 +14,17 @@
 		if ($category != '') {
 			$category = 'category =' . $category;
 		}*/
-		if ($message_type == "'any'" and $category == "'any'") {
+		if ($message_type == 'any' and $category == 'any') {
 			$whereString = '';
 		}
-		elseif ($message_type == "'any'" and $category != "'any'") {
-			$whereString = 'WHERE category =' . $category;
+		elseif ($message_type == 'any' and $category != 'any') {
+			$whereString = 'WHERE category =\'' . $category . '\'';
 		}
-		elseif ($message_type != "'any'" and $category == "'any'") {
-			$whereString = 'WHERE message_type ='. $message_type;
+		elseif ($message_type != 'any' and $category == 'any') {
+			$whereString = 'WHERE message_type =\''. $message_type . '\'';
 		}
 		else {
-			$whereString = 'WHERE message_type ='. $message_type . ' AND category =' . $category;
+			$whereString = 'WHERE message_type =\''. $message_type . '\' AND category =\'' . $category . '\'';
 		}
 
 		$con = getConnection();

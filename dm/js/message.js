@@ -41,15 +41,17 @@ function nl2br(str, is_xhtml) {
 	return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
 }
 			
-function showMessages() {
+var showMessages = new function () {
 			
 	/*
 		Function to appent messages to the messageboard and draw features to the map
 		@param {object} message: the message to appent to the message boart
 		@param {boolean} refreshMessages: true if the messageboard have to be refreshed
 		@param {boolean} redrawMapFeatures: ture if the features on the map have to be redrawn
+		@param {boolean} relevant: true if only relevant messages have to be displayed
 	*/
-	function showMessage(message, refreshMessages, redrawMapFeatures, relevant) {
+
+	this.showMessage = function (message, refreshMessages, redrawMapFeatures, relevant) {
 		
 		if (refreshMessages && (message['relevant'] || relevant)) {
 			var contact_html = '';
@@ -288,7 +290,7 @@ function showMessages() {
 	}
 		
 	// Toggler to expand or collapse messages
-	function setMessageClickFunctions(message) {
+	this.setMessageClickFunctions = function (message) {
 		var popup = new L.popup({
 			closeButton: false,
 			className: 'feature-popup',
@@ -720,12 +722,20 @@ function showMessages() {
 	/*
 	File has to be done separately? At least while accessing file here ("messageFeatures.properties.file" instead of "") jquery gives me an error
 	*/
-	$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
-		parseMessages(data, true, true, document.getElementById('filter-archive').checked);
-		showMessagebyUrl();
-	});
+	this.loadFeatures = function (refreshMessages, redrawMapFeatures) {
+		if ( refreshMessages ) { $("#messages").empty(); }
+		if ( redrawMapFeatures ) { layerGroup.clearLayers(); }
+		$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
+			parseMessages(data, refreshMessages, redrawMapFeatures, document.getElementById('filter-archive').checked);
+			showMessagebyUrl();
+		});
+	}
 	
-	function spatialFilter (){
+	
+	
+	//end of showmessages() function	
+}
+function spatialFilter (){
 		northEastBoundsLat = LlocationFilter._ne.lat;
 		northEastBoundsLong = LlocationFilter._ne.lng;
 		southWestBoundsLat = LlocationFilter._sw.lat;
@@ -754,19 +764,15 @@ function showMessages() {
 	});
 	
 	LlocationFilter.on("disabled", function (e){
-		$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
-			$("#messages").empty();
-			parseMessages(data, true, false, document.getElementById('filter-archive').checked)
-			showMessagebyUrl();
-		});
+		showMessages.loadFeatures(true, false);
 	});
 	
-	function parseMessages (data, refreshMessages, redrawMapFeatures, relevant) {
+	function parseMessages(data, refreshMessages, redrawMapFeatures, relevant) {
 		for (var i = 0, len = data.features.length; i < len; i++) {
 			var messageFeatures = data.features[i];
 			var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures.geometry), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, messageFeatures.properties.file, messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email, messageFeatures.properties.hulluser_id);
-			showMessage(msg, refreshMessages, redrawMapFeatures, relevant);
-			setMessageClickFunctions(msg);
+			showMessages.showMessage(msg, refreshMessages, redrawMapFeatures, relevant);
+			showMessages.setMessageClickFunctions(msg);
 		}
 	}
 	
@@ -779,12 +785,7 @@ function showMessages() {
 	})
 	
 	$('#filter-archive').change(function() {
-		$("#messages").empty();
-		layerGroup.clearLayers();
-		$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
-			parseMessages(data, true, true, document.getElementById('filter-archive').checked);
-			showMessagebyUrl();
-		});
+		showMessages.loadFeatures(true, true);
 	})
 	
 	function search() {
@@ -804,12 +805,7 @@ function showMessages() {
 			);
 		}
 		else {
-			$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
-				$("#messages").empty();
-				layerGroup.clearLayers();
-				parseMessages(data, true, true, document.getElementById('filter-archive').checked)
-				showMessagebyUrl();
-			});
+			showMessages.loadFeatures(true, true);
 		}
 	}
 	
@@ -818,8 +814,8 @@ function showMessages() {
 	});
 
 	function applyFilter(){
-		var filter_issue = '\'' + document.getElementById('filter-issue').value + '\'';
-		var filter_category = '\'' + document.getElementById('filter-category').value + '\'';
+		var filter_issue = document.getElementById('filter-issue').value;
+		var filter_category = document.getElementById('filter-category').value;
 		$.post( "php/filter.php", 
 			{ 
 				message_type: filter_issue,
@@ -849,11 +845,7 @@ function showMessages() {
 			$('#sort-messages-time').click(function() {
 				$('#sort-messages-time').remove();
 				$('#map-right-click-menu').fadeOut(200);
-				$("#messages").empty();
-				$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
-					parseMessages(data, true, false, document.getElementById('filter-archive').checked);
-					showMessagebyUrl();
-				});
+				showMessages.loadFeatures(true, false);
 			});
 		});
 		$.post( "php/getMessagesAsGeoJSONByDistance.php", 
@@ -875,10 +867,6 @@ function showMessages() {
 			"json"
 		);
 	})
-	
-	//end of showmessages() function	
-}
-
 function decreaseNumberOfComments(id, amount) {
 	var numberOfComments = parseInt($('#number-of-comments-' + id).html());
 	numberOfComments -= amount;
