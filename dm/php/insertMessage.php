@@ -40,20 +40,20 @@
 		if ($feature != ''){
 			$feature = json_decode($feature);
 			$coords = $feature->geometry->coordinates;
-			$geometry = $feature->geometry->type;
-		}
+			$geometry = $feature->geometry->type;		}
 
 		function buildCoords($coordinates, $type){
 			$coordString = '';
 			if ( $type == 'Point' ){
-				$coordString = $coordString.'ST_SetSRID(ST_MakePoint('.$coordinates[0].', '.$coordinates[1];
+				$coordString = $coordString.'ST_SetSRID(ST_MakePoint('.$coordinates[0].', '.$coordinates[1] . ')';
 			}
 			else if ( $type == 'LineString' ){
-				$coordString = $coordString. 'ST_SetSRID((ST_MakeLine(';
+				$coordString = $coordString. "ST_GeomFromText('LINESTRING(";
 				for ( $i = 0; $i < count($coordinates); $i++ ){
-					$coordString = $coordString . 'ST_MakePoint('.$coordinates[$i][0].' '.$coordinates[$i][1].'),';
+					$coordString = $coordString . ''.$coordinates[$i][0].' '.$coordinates[$i][1].',';
 				}
 				$coordString = substr($coordString,0,strlen($coordString)-1);
+				$coordString = $coordString . ")'";
 			}	
 			else{
 				$coordString = $coordString."ST_SetSRID((ST_MakePolygon(ST_GeomFromText('LINESTRING(";
@@ -64,9 +64,9 @@
 					}
 				}
 				$coordString = substr($coordString,0,strlen($coordString)-1);
-				$coordString = $coordString.")'))";
+				$coordString = $coordString.")')))";
 			}
-			$coordString .= '), 4326)';
+			$coordString .= ', 4326)';
 			return $coordString;
 		}
 
@@ -79,7 +79,7 @@
 		}
 		
 		$query=pg_query($dbconn,"Insert into message values (DEFAULT,'".$issue."','".$title."',".$coordinates.",TIMESTAMP '".$creationDate."',true,TIMESTAMP '".$creationDate."','".$description."',".$people_need.",".$people_attending.",'".$dataType."','".$category."','".$tags."','".$person_name."','".$person_contact."','delete?','".$hulluser_id."');");
-
+		
 		$query2=pg_query($dbconn,"Select max(message_id) from message where hulluser_id = '".$hulluser_id."';");	
 	
 		while ($line = pg_fetch_array($query2, null, PGSQL_ASSOC)) {
