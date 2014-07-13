@@ -9,7 +9,7 @@
 		$description = htmlentities(pg_escape_string($_POST['Description']));
 		$category = htmlentities(pg_escape_string($_POST['Category']));
 		$person_contact = htmlentities(pg_escape_string($_POST['PersonContact']));
-		$feature = htmlentities(pg_escape_string($_POST['Geometry']));
+		$feature = pg_escape_string($_POST['Geometry']);
 		$person_name = htmlentities(pg_escape_string($_POST['Name']));
 		$people_attending = htmlentities(pg_escape_string($_POST['PeopleAttending']));
 		$people_need = htmlentities(pg_escape_string($_POST['PeopleNeeded']));
@@ -41,6 +41,7 @@
 			$feature = json_decode($feature);
 			$coords = $feature->geometry->coordinates;
 			$geometry = $feature->geometry->type;
+			echo('coords: ' . $coords);
 		}
 
 		function buildCoords($coordinates, $type){
