@@ -726,9 +726,6 @@ var showMessages = new function () {
 		if ( refreshMessages ) { $("#messages").empty(); }
 		if ( redrawMapFeatures ) { layerGroup.clearLayers(); }
 		var bboxString = map.getBounds().toBBoxString();
-		console.log('bbox: ' + bboxString)
-		console.log('type: ' + document.getElementById('filter-issue').value)
-		console.log('category: ' + document.getElementById('filter-category').value)
 		$.post( "php/filter.php", 
 			{ 
 				bboxString: bboxString,
@@ -737,8 +734,6 @@ var showMessages = new function () {
 			},
 			function( data ) {
 				if (data.features.length != 0) {
-					$('#messages').empty();
-					layerGroup.clearLayers();
 					parseMessages(data, refreshMessages, redrawMapFeatures, document.getElementById('filter-archive').checked);
 				}
 				else {
@@ -865,12 +860,14 @@ $('#sort-messages-distance').click(function() {
 	var coordString = latlng.lng + ',' + latlng.lat;
 	var bboxString = map.getBounds().toBBoxString();
 	$('#map-right-click-menu').fadeOut(200, function() {
-		$('#sort-messages-distance').after('<li id="sort-messages-time"><a href="#">Use default sorting method</a></li>');
-		$('#sort-messages-time').click(function() {
-			$('#sort-messages-time').remove();
-			$('#map-right-click-menu').fadeOut(200);
-			showMessages.loadFeatures(true, false);
-		});
+		if ( document.getElementById('sort-messages-time') == null) {
+			$('#sort-messages-distance').after('<li id="sort-messages-time"><a href="#">Use default sorting method</a></li>');
+			$('#sort-messages-time').click(function() {
+				$('#sort-messages-time').remove();
+				$('#map-right-click-menu').fadeOut(200);
+				showMessages.loadFeatures(true, false);
+			});
+		}
 	});
 	$.post( "php/getMessagesAsGeoJSONByDistance.php", 
 		{
