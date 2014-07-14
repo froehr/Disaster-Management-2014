@@ -191,8 +191,8 @@ function signUp() {
 	  		"password": password1,
 	  		"name": name
 			}).then(function(response) {
-	 		
  				closePopUp();
+ 				createEmailSentPopUp('new-account');
  			}
  			,function(error) {
 		    	var status = error.status;
@@ -233,6 +233,7 @@ function resetPW() {
 	
 	var onSuccess = function(user) {
   		closePopUp();
+  		createEmailSentPopUp('reset-pw');
 	};
 
 	var onError = function(error) {
@@ -377,4 +378,20 @@ function socialMediaShareContext (message) {
 				'</div>';
 	
 	createPopUp(255, 300, content);
+}
+
+
+function createEmailSentPopUp(type) {
+	var content = '<h1>Please check your E-Mail</h1>';
+	switch (type) {
+	    case 'reset-pw': content += 'We have just sent you an E-Mail with further instructions for resetting your password.';
+	                   break;
+	 
+	    case "new-account": content += 'We have just sent you an E-Mail. Please confirm your account first.';
+	                     break;
+    }
+
+    createPopUp(245, 0, content);
+    $('#popup').css('height', 'auto');
+
 }
