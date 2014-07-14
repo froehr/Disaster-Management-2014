@@ -28,7 +28,7 @@ function Message(message_id, message_type, title, location, time_start, relevant
 	
 	this.comments = comments;
 }
-
+var mapPan = true;
 var layerGroup = L.layerGroup();
 			
 function replaceURLWithHTMLLinks(text) {
@@ -255,6 +255,7 @@ var showMessages = new function () {
 	function switchMessageDetails(message) {
 		
 		var message_id = message['message_id'];
+
 		
 		if ( $('#status-' + message['message_id']).val() == 'closed' ) {
 			getComments(message);
@@ -303,9 +304,8 @@ var showMessages = new function () {
 			if ( typeof message['location-json'] != 'undefined' ) {
 				var loc = message['location-json'].getBounds();
 				if ( typeof loc._southWest != 'undefined' ) {
+					mapPan = false;
 					map.fitBounds(loc);
-					map.setView(loc.getCenter());
-				
 					var featureColor;
 					switch(message['message_type']) {
 						case 'need-support':
@@ -751,7 +751,11 @@ var showMessages = new function () {
 }
 
 map.on('moveend', function() {
-	showMessages.loadFeatures(true,true);
+	if ( mapPan ) {
+		showMessages.loadFeatures(true,true);
+		console.log(mapPan)
+	}
+	mapPan = true;
 })
 function spatialFilter (){
 	northEastBoundsLat = LlocationFilter._ne.lat;
