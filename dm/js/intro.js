@@ -21,7 +21,7 @@ initIntroJS = function() {
 		},
 		{
 		  element: '#filter-form',
-		  intro: 'With this form you can filter the messages. It can be opened with the <img src="img/icons/filter-transp.png">-button',
+		  intro: 'With this form you can filter the messages. It can be opened with the<img src="img/icons/filter-transp.png">button.',
 		  position: 'right',
 		},
 		{
@@ -34,11 +34,11 @@ initIntroJS = function() {
 		},
 		{
 		  element: '#map-right-click-menu',
-		  intro: 'With a rightclick on any positons the map you get additional functions.',
+		  intro: 'With a rightclick on any positons the map you get additional functions in a contextmenu.',
 		},
 		{
 		  element: '#links',
-		  intro: 'Here you can get information about hotlines, this website and restart this quickstart',
+		  intro: 'Here you can get information about hotlines, this website and restart this quickstart.',
 		  position: 'top',
 		},
 	    ]
