@@ -78,7 +78,7 @@ L.Control.SliderControl = L.Control.extend({
         options = this.options;
         $("#leaflet-slider").slider({
             range: options.range,
-            value: options.minValue + 1,
+            value: options.maxValue + 1,
             min: options.minValue,
             max: options.maxValue +1,
             step: 1,

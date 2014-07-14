@@ -103,7 +103,7 @@ var showMessages = new function () {
 				category_icon_html = '<div class="category-icon"><img src="img/symbology/' + message['category'] + '-dark.png" /></div>';
 			}
 			
-			$('#messages').append(
+			$('#messages').prepend(
 				'<div class="message message-' + message['message_type'] + '" id="message-' + message['message_id'] + '">' +
 					'<input type="hidden" id="status-' + message['message_id'] + '" value="closed" />' +
 					'<h1 class="' + message['message_type'] + '-head" id="head-' + message['message_id'] + '">' + message['title'] + '</h1>' +
@@ -757,16 +757,26 @@ function spatialFilter (){
 	northEastBoundsLong = LlocationFilter._ne.lng;
 	southWestBoundsLat = LlocationFilter._sw.lat;
 	southWestBoundsLong = LlocationFilter._sw.lng;
+	var bboxString = map.getBounds().toBBoxString();
 	PointUp = new Array(LlocationFilter._ne.lat, LlocationFilter._ne.lng);
 	PointDown = new Array(LlocationFilter._sw.lat, LlocationFilter._sw.lng);
 	var bboxString = southWestBoundsLong + "," + southWestBoundsLat + "," + northEastBoundsLong + "," + northEastBoundsLat;
 	$("#messages").empty();
-	$.post( "php/getMessagesAsGeoJSONByExtend.php", 
+	$.post( "php/filter.php", 
 		{ 
-			bboxString: bboxString
+			bboxString: bboxString,
+			message_type: document.getElementById('filter-issue').value,
+			category: document.getElementById('filter-category').value
 		},
 		function( data ) {
-			parseMessages(data, true, false, document.getElementById('filter-archive').checked)
+			if (data.features.length != 0) {
+				parseMessages(data, true, false, document.getElementById('filter-archive').checked);
+			}
+			else {
+				$('#messages').empty();
+				$('#messages').append('<div class="no-results"><b>No filter results!</b><br />Please change the filter <br />or the mapview.</div>');
+			}
+			
 		},
 		"json"
 	);
@@ -794,11 +804,23 @@ function parseMessages(data, refreshMessages, redrawMapFeatures, relevant) {
 }
 
 $('#filter-issue').change(function() {
-	applyFilter();
+	if ( LlocationFilter.isEnabled() ) {
+		spatialFilter();
+	}
+	else {
+		applyFilter();
+	}
+	
 })
 
 $('#filter-category').change(function() {
-	applyFilter();
+	if ( LlocationFilter.isEnabled() ) {
+		spatialFilter();
+	}
+	else {
+		applyFilter();
+	}
+	
 })
 
 $('#filter-archive').change(function() {
