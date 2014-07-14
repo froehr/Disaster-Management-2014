@@ -41,15 +41,17 @@ function nl2br(str, is_xhtml) {
 	return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
 }
 			
-function showMessages() {
+var showMessages = new function () {
 			
 	/*
 		Function to appent messages to the messageboard and draw features to the map
 		@param {object} message: the message to appent to the message boart
 		@param {boolean} refreshMessages: true if the messageboard have to be refreshed
 		@param {boolean} redrawMapFeatures: ture if the features on the map have to be redrawn
+		@param {boolean} relevant: true if only relevant messages have to be displayed
 	*/
-	function showMessage(message, refreshMessages, redrawMapFeatures, relevant) {
+
+	this.showMessage = function (message, refreshMessages, redrawMapFeatures, relevant) {
 		
 		if (refreshMessages && (message['relevant'] || relevant)) {
 			var contact_html = '';
@@ -103,6 +105,7 @@ function showMessages() {
 			
 			$('#messages').append(
 				'<div class="message message-' + message['message_type'] + '" id="message-' + message['message_id'] + '">' +
+					'<input type="hidden" id="status-' + message['message_id'] + '" value="closed" />' +
 					'<h1 class="' + message['message_type'] + '-head" id="head-' + message['message_id'] + '">' + message['title'] + '</h1>' +
 					'<p id="description-' + message['message_id'] + '">' + replaceURLWithHTMLLinks(nl2br(message['description'])) + '<br />' + file_html + '<a href="#" id="more-' + message['message_id'] + '">Details and Comments <span class="arrow">&#9658;</span></a></p>' +
 					'<div class="details" id="details-' + message['message_id'] + '">' +
@@ -251,8 +254,8 @@ function showMessages() {
 	function switchMessageDetails(message) {
 		
 		var message_id = message['message_id'];
-				
-		if ( ! message['display'] ) {
+		
+		if ( $('#status-' + message['message_id']).val() == 'closed' ) {
 			getComments(message);
 			setElementDisplay('more-' + message_id, 'none');
 			setElementDisplay('less-' + message_id + '-top', 'block');
@@ -260,17 +263,20 @@ function showMessages() {
 			$('#details-' + message_id).slideDown('slow', 'linear', function() {
 				scrollToId('message-' + message['message_id']);
 			});
-			message['display'] = true;
 			
-			for ( var i = 0; i < messages.length; i++ ) {
-				if ( messages[i]['message_id'] != message_id && messages[i]['display'] ) {
-					setElementDisplay('more-' + messages[i]['message_id'], 'inline');
-					setElementDisplay('less-' + messages[i]['message_id'] + '-top', 'none');
-					setElementDisplay('less-' + messages[i]['message_id'] + '-bottom', 'none');
-					$('#details-' + messages[i]['message_id']).slideUp('fast', 'linear');
-					messages[i]['display'] = false;
+			$('#messages').children('div').each(function(i) {
+				var cMessage = $('#messages').children()[i];
+				var id = cMessage.id.split('-')[1];
+				if ( $('#message-' + id) != $('#message-' + message['message_id']) && $('#status-' + id).val() == 'opened' ) {
+					$('#more-' + id).css('display', 'inline');
+					$('#less-' + id + '-top').css('display', 'none');
+					$('#less-' + id + '-bottom').css('display', 'none');
+					$('#details-' + id).slideUp('fast', 'linear');
+					$('#status-' + id).val('closed');
 				}
-			}
+			});
+			
+			$('#status-' + message['message_id']).val('opened');
 		}
 		else {
 			setElementDisplay('more-' + message_id, 'inline');
@@ -279,12 +285,12 @@ function showMessages() {
 			$('#details-' + message_id).slideUp('slow', 'linear', function() {
 				scrollToId('message-' + message['message_id']);
 			});
-			message['display'] = false;
+			$('#status-' + message['message_id']).val('closed');
 		}
 	}
 		
 	// Toggler to expand or collapse messages
-	function setMessageClickFunctions(message) {
+	this.setMessageClickFunctions = function (message) {
 		var popup = new L.popup({
 			closeButton: false,
 			className: 'feature-popup',
@@ -347,11 +353,11 @@ function showMessages() {
 			createReportPopUp('message', message['message_id']);
 		});
 		
-		$('#description-' + message['message_id']).click(function() {
+		$('#head-' + message['message_id']).click(function() {
 			switchMessageDetails(message);
 		});
 		
-		$('#head-' + message['message_id']).click(function() {
+		$('#more-' + message['message_id']).click(function() {
 			switchMessageDetails(message);
 		});
 		
@@ -716,165 +722,177 @@ function showMessages() {
 	/*
 	File has to be done separately? At least while accessing file here ("messageFeatures.properties.file" instead of "") jquery gives me an error
 	*/
-	$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
-		parseMessages(data, true, true, document.getElementById('filter-archive').checked);
-		showMessagebyUrl();
-	});
-	
-	function spatialFilter (){
-		northEastBoundsLat = LlocationFilter._ne.lat;
-		northEastBoundsLong = LlocationFilter._ne.lng;
-		southWestBoundsLat = LlocationFilter._sw.lat;
-		southWestBoundsLong = LlocationFilter._sw.lng;
-		PointUp = new Array(LlocationFilter._ne.lat, LlocationFilter._ne.lng);
-		PointDown = new Array(LlocationFilter._sw.lat, LlocationFilter._sw.lng);
-		var bboxString = southWestBoundsLong + "," + southWestBoundsLat + "," + northEastBoundsLong + "," + northEastBoundsLat;
-		$("#messages").empty();
-		$.post( "php/getMessagesAsGeoJSONByExtend.php", 
-			{ 
-				bboxString: bboxString
-			},
-			function( data ) {
-				parseMessages(data, true, false, document.getElementById('filter-archive').checked)
-			},
-			"json"
-		);
-	}
-	
-	LlocationFilter.on("enabled", function (e) {
-		spatialFilter();
-	});
-
-	LlocationFilter.on("change", function (e) {
-		spatialFilter();
-	});
-	
-	LlocationFilter.on("disabled", function (e){
-		$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
-			$("#messages").empty();
-			parseMessages(data, true, false, document.getElementById('filter-archive').checked)
-			showMessagebyUrl();
-		});
-	});
-	
-	function parseMessages (data, refreshMessages, redrawMapFeatures, relevant) {
-		for (var i = 0, len = data.features.length; i < len; i++) {
-			var messageFeatures = data.features[i];
-			var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures.geometry), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, messageFeatures.properties.file, messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email, messageFeatures.properties.hulluser_id);
-			showMessage(msg, refreshMessages, redrawMapFeatures, relevant);
-			setMessageClickFunctions(msg);
-		}
-	}
-	
-	$('#filter-issue').change(function() {
-		applyFilter();
-	})
-	
-	$('#filter-category').change(function() {
-		applyFilter();
-	})
-	
-	$('#filter-archive').change(function() {
-		$("#messages").empty();
-		layerGroup.clearLayers();
-		$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
-			parseMessages(data, true, true, document.getElementById('filter-archive').checked);
-			showMessagebyUrl();
-		});
-	})
-	
-	function search() {
-		$("#messages").empty();
-		layerGroup.clearLayers();
-		if ( $('#search').val().trim() != '' ) {
-			$.post( "php/search.php", 
-				{ 
-					KeySearch: $('#search').val()
-				},
-				function( data ) {
-					$("#messages").empty();
-					layerGroup.clearLayers();
-					parseMessages(data, true, true, document.getElementById('filter-archive').checked)
-				},
-				"json"
-			);
-		}
-		else {
-			$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
-				$("#messages").empty();
-				layerGroup.clearLayers();
-				parseMessages(data, true, true, document.getElementById('filter-archive').checked)
-				showMessagebyUrl();
-			});
-		}
-	}
-	
-	$('#search').keyup(function() {
-		search();
-	});
-
-	function applyFilter(){
-		var filter_issue = '\'' + document.getElementById('filter-issue').value + '\'';
-		var filter_category = '\'' + document.getElementById('filter-category').value + '\'';
+	this.loadFeatures = function (refreshMessages, redrawMapFeatures) {
+		if ( refreshMessages ) { $("#messages").empty(); }
+		if ( redrawMapFeatures ) { layerGroup.clearLayers(); }
+		var bboxString = map.getBounds().toBBoxString();
+		console.log('bbox: ' + bboxString)
+		console.log('type: ' + document.getElementById('filter-issue').value)
+		console.log('category: ' + document.getElementById('filter-category').value)
 		$.post( "php/filter.php", 
 			{ 
-				message_type: filter_issue,
-				category: filter_category
+				bboxString: bboxString,
+				message_type: document.getElementById('filter-issue').value,
+				category: document.getElementById('filter-category').value
 			},
 			function( data ) {
 				if (data.features.length != 0) {
 					$('#messages').empty();
 					layerGroup.clearLayers();
-					parseMessages(data, true, true, document.getElementById('filter-archive').checked);
+					parseMessages(data, refreshMessages, redrawMapFeatures, document.getElementById('filter-archive').checked);
 				}
 				else {
 					$('#messages').empty();
-					$('#messages').append('<div class="no-results"><b>No filter results!</b><br />Please change the filter.</div>');
+					$('#messages').append('<div class="no-results"><b>No filter results!</b><br />Please change the filter <br />or the mapview.</div>');
 				}
 				
 			},
 			"json"
 		);
 	}
-	
-	// Sort messages by distance
-	$('#sort-messages-distance').click(function() {
-		var coordString = latlng.lng + ',' + latlng.lat;
-		$('#map-right-click-menu').fadeOut(200, function() {
-			$('#sort-messages-distance').after('<li id="sort-messages-time"><a href="#">Use default sorting method</a></li>');
-			$('#sort-messages-time').click(function() {
-				$('#sort-messages-time').remove();
-				$('#map-right-click-menu').fadeOut(200);
-				$("#messages").empty();
-				$.getJSON("php/getMessagesAsGeoJSON.php", function (data) {
-					parseMessages(data, true, false, document.getElementById('filter-archive').checked);
-					showMessagebyUrl();
-				});
-			});
-		});
-		$.post( "php/getMessagesAsGeoJSONByDistance.php", 
-			{ 
-				Coordinate: coordString,
-			},
-			function( data ) {
-				if (data.features.length != 0) {
-					$('#messages').empty();
-					layerGroup.clearLayers();
-					parseMessages(data, true, true, document.getElementById('filter-archive').checked);
-				}
-				else {
-					$('#messages').empty();
-					$('#messages').append('<div class="no-results"><b>No filter results!</b><br />Please change the filter.</div>');
-				}
-				
-			},
-			"json"
-		);
-	})
-	
+
 	//end of showmessages() function	
 }
 
+map.on('moveend', function() {
+	showMessages.loadFeatures(true,true);
+})
+function spatialFilter (){
+	northEastBoundsLat = LlocationFilter._ne.lat;
+	northEastBoundsLong = LlocationFilter._ne.lng;
+	southWestBoundsLat = LlocationFilter._sw.lat;
+	southWestBoundsLong = LlocationFilter._sw.lng;
+	PointUp = new Array(LlocationFilter._ne.lat, LlocationFilter._ne.lng);
+	PointDown = new Array(LlocationFilter._sw.lat, LlocationFilter._sw.lng);
+	var bboxString = southWestBoundsLong + "," + southWestBoundsLat + "," + northEastBoundsLong + "," + northEastBoundsLat;
+	$("#messages").empty();
+	$.post( "php/getMessagesAsGeoJSONByExtend.php", 
+		{ 
+			bboxString: bboxString
+		},
+		function( data ) {
+			parseMessages(data, true, false, document.getElementById('filter-archive').checked)
+		},
+		"json"
+	);
+}
+
+LlocationFilter.on("enabled", function (e) {
+	spatialFilter();
+});
+
+LlocationFilter.on("change", function (e) {
+	spatialFilter();
+});
+
+LlocationFilter.on("disabled", function (e){
+	showMessages.loadFeatures(true, false);
+});
+
+function parseMessages(data, refreshMessages, redrawMapFeatures, relevant) {
+	for (var i = 0, len = data.features.length; i < len; i++) {
+		var messageFeatures = data.features[i];
+		var msg = new Message(messageFeatures.properties.message_id, messageFeatures.properties.message_type, messageFeatures.properties.title, JSON.stringify(messageFeatures.geometry), messageFeatures.properties.time_start, messageFeatures.properties.relevant, messageFeatures.properties.date_of_change, messageFeatures.properties.description, messageFeatures.properties.people_needed, messageFeatures.properties.people_attending, messageFeatures.properties.file, messageFeatures.properties.category, messageFeatures.properties.tags, messageFeatures.properties.person_name, messageFeatures.properties.person_contact, messageFeatures.properties.person_email, messageFeatures.properties.hulluser_id);
+		showMessages.showMessage(msg, refreshMessages, redrawMapFeatures, relevant);
+		showMessages.setMessageClickFunctions(msg);
+	}
+}
+
+$('#filter-issue').change(function() {
+	applyFilter();
+})
+
+$('#filter-category').change(function() {
+	applyFilter();
+})
+
+$('#filter-archive').change(function() {
+	showMessages.loadFeatures(true, true);
+})
+
+function search() {
+	$("#messages").empty();
+	layerGroup.clearLayers();
+	if ( $('#search').val().trim() != '' ) {
+		$.post( "php/search.php", 
+			{ 
+				KeySearch: $('#search').val()
+			},
+			function( data ) {
+				$("#messages").empty();
+				layerGroup.clearLayers();
+				parseMessages(data, true, true, document.getElementById('filter-archive').checked)
+			},
+			"json"
+		);
+	}
+	else {
+		showMessages.loadFeatures(true, true);
+	}
+}
+
+$('#search').keyup(function() {
+	search();
+});
+
+function applyFilter(){
+	var bboxString = map.getBounds().toBBoxString();
+	$.post( "php/filter.php", 
+		{ 
+			bboxString: bboxString,
+			message_type: document.getElementById('filter-issue').value,
+			category: document.getElementById('filter-category').value
+		},
+		function( data ) {
+			console.log(data)
+			if (data.features.length != 0) {
+				$('#messages').empty();
+				layerGroup.clearLayers();
+				parseMessages(data, true, true, document.getElementById('filter-archive').checked);
+			}
+			else {
+				$('#messages').empty();
+				$('#messages').append('<div class="no-results"><b>No filter results!</b><br />Please change the filter or the mapview.</div>');
+			}
+			
+		},
+		"json"
+	);
+}
+
+// Sort messages by distance
+$('#sort-messages-distance').click(function() {
+	var coordString = latlng.lng + ',' + latlng.lat;
+	var bboxString = map.getBounds().toBBoxString();
+	$('#map-right-click-menu').fadeOut(200, function() {
+		$('#sort-messages-distance').after('<li id="sort-messages-time"><a href="#">Use default sorting method</a></li>');
+		$('#sort-messages-time').click(function() {
+			$('#sort-messages-time').remove();
+			$('#map-right-click-menu').fadeOut(200);
+			showMessages.loadFeatures(true, false);
+		});
+	});
+	$.post( "php/getMessagesAsGeoJSONByDistance.php", 
+		{
+			bboxString: bboxString,
+			Coordinate: coordString,
+		},
+		function( data ) {
+			if (data.features.length != 0) {
+				$('#messages').empty();
+				layerGroup.clearLayers();
+				parseMessages(data, true, true, document.getElementById('filter-archive').checked);
+			}
+			else {
+				$('#messages').empty();
+				$('#messages').append('<div class="no-results"><b>No filter results!</b><br />Please change the filter or the mapview.</div>');
+			}
+			
+			
+		},
+		"json"
+	);
+})
 function decreaseNumberOfComments(id, amount) {
 	var numberOfComments = parseInt($('#number-of-comments-' + id).html());
 	numberOfComments -= amount;
@@ -906,5 +924,3 @@ function showMessagebyUrl() {
 		return decodeURIComponent((new RegExp('[?|&]' + message + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
 	}
 }
-
-

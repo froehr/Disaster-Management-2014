@@ -139,7 +139,7 @@ var content = '';
 
 // Event for Initalization of Hull.io - Include every function that needs to be called on start
 Hull.on('hull.init', function() {
-	showMessages();
+	showMessages.loadFeatures(true, true);
 	switchCreateMessageStatus();
 		if ( isOnline() ) {
 		username = getUserInfo().name;
