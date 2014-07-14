@@ -248,6 +248,7 @@ var showMessages = new function () {
 		map.addControl(sliderControl);
 		sliderControl.startSlider();
 		$('#slider').append($("#leaflet-slider"));
+		$('#slider-timestamp').html(message['time_start'].substr(0, 19));
 		// end of function showMessage(message, refreshMessages, redrawMapFeatures)
 	}
 	
