@@ -21,7 +21,7 @@ initIntroJS = function() {
 		},
 		{
 		  element: '#filter-form',
-		  intro: 'With this form you can filter the messages.',
+		  intro: 'With this form you can filter the messages. It can be opened with the <img src="img/icons/filter-transp.png">-button',
 		  position: 'right',
 		},
 		{
