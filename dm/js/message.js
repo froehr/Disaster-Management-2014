@@ -400,7 +400,22 @@ var showMessages = new function () {
 		createPopUp(255, 530, content);
 		
 		$('#submit-edit').click(function() {
-			// edit stuff to do
+			$.post(
+				'php/updateMessage.php?',
+				{	
+					ID:document.getElementById('edit_id').value,
+					Title:document.getElementById('edit_title').value,
+					Description:document.getElementById('edit_description').value,
+					PersonContact:document.getElementById('edit_person_contact').value,
+					Name:document.getElementById('edit_person_name').value,
+					PeopleAttending:document.getElementById('edit_people_attending').value,
+					PeopleNeeded:document.getElementById('edit_people_need').value,
+					Tags:document.getElementById('edit_tags').value
+				},
+				function(data){
+					console.log(data);
+				}	
+			);
 		});
 	}
 
