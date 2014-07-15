@@ -383,7 +383,7 @@ var showMessages = new function () {
 
 	function createEditPopUp(message) {
 		var content = '<h1>Edit Message</h1>' +
-			'<input type="hiffen" id="edit_id" value="' + message['message_id'] + '">' +
+			'<input type="hidden" id="edit_id" value="' + message['message_id'] + '">' +
 			'<p>Title</p>' +
 			'<input type="text" id="edit_title" value="' + message['title'] + '">' +
 			'<p>Description</p>' +
