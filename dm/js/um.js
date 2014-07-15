@@ -191,7 +191,6 @@ function signUp() {
 	  		"password": password1,
 	  		"name": name
 			}).then(function(response) {
- 				closePopUp();
  				createEmailSentPopUp('new-account');
  			}
  			,function(error) {
@@ -232,7 +231,6 @@ function signIn() {
 function resetPW() {
 	
 	var onSuccess = function(user) {
-  		closePopUp();
   		createEmailSentPopUp('reset-pw');
 	};
 
