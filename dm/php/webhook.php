@@ -5,9 +5,8 @@
 	require 'Hull/Connection.php';
 	require 'Hull/Client.php';
 	require 'Hull/Cache.php';
-	require 'PHPmailer/PHPMailerAutoload.php';
-	require 'PHPmailer/class.phpmailer.php';
-	require 'PHPmailer/class.smtp.php';
+	require 'sendMail.php';
+	
 
 	$hull = new Hull_Client(array( 'hull' => array(
 	    'host' => '*',
@@ -30,46 +29,22 @@
 	if ( $type == 'comment' && $event == 'activity.create' ) {
 
 		$message_id = $target->encoded_uid;
-
 		$message_id = base64_decode($message_id);
-		
-
 		$message_owner_id = getHullUserId($message_id); 
-		var_dump($message_owner_id);   
+		  
 		$credentials = $hull->asUser($message_owner_id)->get('me');
 		$credentials = array($credentials)[0];
 
 		$name = $credentials->name;
 		$email = $credentials->email;
-		
-		//Mail Setup
-		$mail = new PHPMailer;
-	    $mail->isSMTP();                                     
-	    $mail->Host = '*';
-	    $mail->Port = 587;  
-	    $mail->SMTPAuth = true;           
-	    $mail->Username = '*';  
-	    $mail->Password = '*';  
-	    $mail->SMTPSecure = 'tls';
-	    $mail->From = '*';
-	    $mail->FromName = 'Floodwatch';
-		$mail->isHTML(true);
-
-	    $mail->addAddress($email);
 
 		$message_url = 'http://giv-disastermanagement.uni-muenster.de?message='.$message_id;                                  
-		$mail->Subject = 'New Comment to your Message';
-		$mail->Body    = 'Hello '.$name.', </br></br>'.$object->user->name.' commented on your Message:</br></br><a href="'.$message_url.'">'.$message_url.'</a></br></br>Floodwatch';
-		$mail->AltBody = 'TODO';
+		$Subject = 'New Comment to your Message';
+		$content    = 'Hello '.$name.', </br></br>'.$object->user->name.' commented on your Message:</br></br><a href="'.$message_url.'">'.$message_url.'</a></br></br>Floodwatch';
+		
+		sendMail($email, $content, $subject)
 
-		echo $mail->Body;
-
-		if( !$mail->send() ) {
-		    echo 'Message could not be sent.';
-		    echo 'Mailer Error: ' . $mail->ErrorInfo;
-		} else {
-		    echo 'Message has been sent';
-		}
+		
 		
 	}
 
