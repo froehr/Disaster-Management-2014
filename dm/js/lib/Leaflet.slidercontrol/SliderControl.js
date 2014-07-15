@@ -35,8 +35,9 @@ L.Control.SliderControl = L.Control.extend({
 
         // Create a control sliderContainer with a jquery ui slider
         var sliderContainer = L.DomUtil.create('div', 'slider', this._container);
-        $(sliderContainer).append('<div id="leaflet-slider" style="width:200px" title="Move the slider to set the timefilter"><div class="ui-slider-handle"></div><div id="slider-timestamp" style="width:200px; margin-top:10px;background-color:#FFFFFF"></div></div>');
+        $(sliderContainer).append('<div id="leaflet-slider" style="width:200px" title="Move the slider to set the timefilter"><div class="ui-slider-handle"></div><div id="slider-timestamp" style="width:200px; margin-top:10px;background-color:#FFFFFF"></div><div id="slider-timestamp2" style="width:200px; margin-top:10px;background-color:#FFFFFF"></div></div>');
         //Prevent map panning/zooming while using the slider
+        
         $(sliderContainer).mousedown(function () {
             map.dragging.disable();
         });
@@ -64,6 +65,7 @@ L.Control.SliderControl = L.Control.extend({
             console.log("Error: You have to specify a layer via new SliderControl({layer: your_layer});");
         }
         return sliderContainer;
+
     },
 
     onRemove: function (map) {
@@ -76,19 +78,30 @@ L.Control.SliderControl = L.Control.extend({
 
     startSlider: function () {
         options = this.options;
+        var minHelper = options.minValue;
+        $('#slider-timestamp').html(options.markers[options.minValue].options.time.substr(0, 19));
+        $('#slider-timestamp2').html(options.markers[options.maxValue].options.time.substr(0, 19));
         $("#leaflet-slider").slider({
             range: options.range,
-            value: options.maxValue + 1,
+            values: [options.minValue, options.maxValue+1],
             min: options.minValue,
             max: options.maxValue +1,
             step: 1,
             slide: function (e, ui) {
                 var map = options.map;
                 if(!!options.markers[ui.value]) {
+                    
                     //If there is no time property, this line has to be removed (or exchanged with a different property)
                    // if(options.markers[ui.value].feature.properties.time_start){
                         // for the Disaster Management System, this line got changed for our proposes
-                        if(options.markers[ui.value]) $('#slider-timestamp').html(options.markers[ui.value].options.time.substr(0, 19));
+                        if(minHelper != ui.values[0]) {
+                            $('#slider-timestamp').html(options.markers[ui.values[0]].options.time.substr(0, 19));
+                            minHelper = ui.values[0];
+                            console.log(ui.values[0])
+                        }
+                        else{
+                            $('#slider-timestamp2').html(options.markers[ui.values[1]].options.time.substr(0, 19));
+                        }
                     //}
                     if(options.range){
                         for (var i = ui.values[0]; i< ui.values[1]; i++){

@@ -244,11 +244,10 @@ var showMessages = new function () {
 			}
 		}
 		layerGroup.addTo(map);
-		var sliderControl = L.control.sliderControl({position: 'topright', layer:layerGroup});
+		var sliderControl = L.control.sliderControl({position: 'topright', layer:layerGroup, range: true});
 		map.addControl(sliderControl);
 		sliderControl.startSlider();
 		$('#slider').append($("#leaflet-slider"));
-		$('#slider-timestamp').html(message['time_start'].substr(0, 19));
 		// end of function showMessage(message, refreshMessages, redrawMapFeatures)
 	}
 	
@@ -753,7 +752,6 @@ var showMessages = new function () {
 map.on('moveend', function() {
 	if ( mapPan ) {
 		showMessages.loadFeatures(true,true);
-		console.log(mapPan)
 	}
 	mapPan = true;
 })
