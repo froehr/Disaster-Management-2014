@@ -40,7 +40,7 @@
 
 		$message_url = 'http://giv-disastermanagement.uni-muenster.de?message='.$message_id;                                  
 		$Subject = 'New Comment to your Message';
-		$content    = 'Hello '.$name.', </br></br>'.$object->user->name.' commented on your Message:</br></br><a href="'.$message_url.'">'.$message_url.'</a></br></br>Floodwatch';
+		$content    = 'Hello '.$name.', </br></br>'.$object->user->name.' commented on your Message:</br></br><a href="'.$message_url.'">VIEW</a></br></br>Floodwatch';
 		
 		sendMail($email, $content, $subject)
 

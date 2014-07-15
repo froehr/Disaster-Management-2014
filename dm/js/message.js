@@ -350,7 +350,14 @@ var showMessages = new function () {
 		});
 		
 		$('#report-' + message['message_id']).click(function() {
-			createReportPopUp('message', message['message_id']);
+			var host = window.location.host;
+			var path = window.location.pathname;
+			var url = host + path;
+			var file_html = '';
+			if ( message['file'] != 'false' ) {
+				file_html = '<img src="' + url + 'php/upload/thumb/' + message['message_id'] + '.' + message['file'] + '"/>';
+			}
+			createReportPopUp('message', message['message_id'], message['description'], file_html);
 		});
 		
 		$('#head-' + message['message_id']).click(function() {
@@ -419,7 +426,7 @@ var showMessages = new function () {
 		});
 	}
 
-	function createReportPopUp(report, id) {
+	function createReportPopUp(report, id, description, image) {
 		var content = '<h1>Report ' + report + '</h1>' +
 			'<p>Why do you want to report this ' + report + '?</p>' +
 			'<input type="hidden" id="report-report" value="' + report + '" />' +
@@ -439,7 +446,21 @@ var showMessages = new function () {
 			var report = $('#report-report').val();
 			var id = $('#report-id').val();
 			var reason = $('.report-reason:checked').val();
-			// TODO: SUBMIT REPORT
+			var content = decodeURIComponent(description + '</br></br>' + image );
+			
+			$.post(
+				'php/report.php?',
+				{	
+					report:report,
+					id:id,
+					reason:reason,
+					content:content
+				},
+				function(data){
+					
+				}		
+			);
+
 			closePopUp();
 		});
 		
@@ -583,12 +604,6 @@ var showMessages = new function () {
 	}
 
 
-	function reportComment(comment_id, message) {
-		
-		//TODO
-	}
-
-
 	//get Comments from Hull.io
 	function getComments(message) {
 		
@@ -683,7 +698,24 @@ var showMessages = new function () {
 			$.each(message['comments'], function(i, v) {
 				var comment_id = v['comment_id'];
 				$('#report-comment-' + comment_id).click(function() {
-					createReportPopUp('comment', comment_id);
+					
+					var msg = v['message'];
+					var id = message['message_id'];
+
+					msg = 'Comment by ' + v['name']['name'] + ':</br>' + msg;
+
+					var host = window.location.host;
+					var path = window.location.pathname;
+					var url = host + path;
+					var file_html = '';
+					if(v['file'] != null) {
+						var file_html = 'php/upload/thumb/' + message['comments'][i]['file'];
+					}	
+					if ( message['file'] != 'false' ) {
+						file_html = '<img src="' + url + 'php/upload/thumb/' + v['file'] + '"/>';
+					}
+					createReportPopUp('comment', id, msg, file_html);
+					
 				});
 
 				$('#remove-comment-' + comment_id).click(function() {
