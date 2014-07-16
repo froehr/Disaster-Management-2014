@@ -299,7 +299,8 @@ var showMessages = new function () {
 		});
 		
 		// center the map on the message location
-		$('#message-' + message['message_id']).click(function() {
+		$('#marker-' + message['message_id']).click(function() {
+
 			if ( typeof message['location-json'] != 'undefined' ) {
 				var loc = message['location-json'].getBounds();
 				if ( typeof loc._southWest != 'undefined' ) {
@@ -360,10 +361,6 @@ var showMessages = new function () {
 			createReportPopUp('message', message['message_id'], message['description'], file_html);
 		});
 		
-		$('#head-' + message['message_id']).click(function() {
-			switchMessageDetails(message);
-		});
-		
 		$('#more-' + message['message_id']).click(function() {
 			switchMessageDetails(message);
 		});
@@ -387,6 +384,10 @@ var showMessages = new function () {
 			}
 		}
 	}
+	
+	function isInt(value) {
+		return ! isNaN(value) && parseInt(Number(value)) == value;
+	}
 
 	function createEditPopUp(message) {
 		var content = '<h1>Edit Message</h1>' +
@@ -407,22 +408,53 @@ var showMessages = new function () {
 		createPopUp(255, 530, content);
 		
 		$('#submit-edit').click(function() {
-			$.post(
-				'php/updateMessage.php?',
-				{	
-					ID:document.getElementById('edit_id').value,
-					Title:document.getElementById('edit_title').value,
-					Description:document.getElementById('edit_description').value,
-					PersonContact:document.getElementById('edit_person_contact').value,
-					Name:document.getElementById('edit_person_name').value,
-					PeopleAttending:document.getElementById('edit_people_attending').value,
-					PeopleNeeded:document.getElementById('edit_people_need').value,
-					Tags:document.getElementById('edit_tags').value
-				},
-				function(data){
-					console.log(data);
-				}	
-			);
+			if ( ! isInt($('#edit_people_attending').val()) || ! isInt($('#edit_people_need').val()) ) {
+				var content = '<h1>Error</h1>' +
+					'<p>Please fill in number for helpers / volunteers.</p>' +
+					'<p class="right">' +
+						'<a href="#" id="error-okay">Okay</a>' +
+					'</p>';
+				createPopUp(300, 72, content);
+				
+				$('#error-okay').click(function() {
+					createEditPopUp(message);
+				});
+			}
+			else {
+				$.post(
+					'php/updateMessage.php?',
+					{	
+						ID: $('#edit_id').val(),
+						Title: $('#edit_title').val(),
+						Description: $('#edit_description').val(),
+						PersonContact: $('#edit_person_contact').val(),
+						Name: $('#edit_person_name').val(),
+						PeopleAttending: $('#edit_people_attending').val(),
+						PeopleNeeded: $('#edit_people_need').val(),
+						Tags: $('#edit_tags').val()
+					},
+					function(data){
+						console.log(data);
+					}	
+				);
+				
+				var content = '<h1>Message edited</h1>' +
+					'<p>Thank you for your participation!</p>' +
+					'<p class="right">' +
+						'<a href="#" id="edit-message-okay">Okay</a>' +
+					'</p>';
+				createPopUp(300, 72, content);
+			
+				$('#grey').css('display', 'block');
+				
+				$('#edit-message-okay').click(function() {
+					location.reload();
+				});
+				
+				$('#x-popup').click(function() {
+					location.reload();
+				});
+			}
 		});
 	}
 

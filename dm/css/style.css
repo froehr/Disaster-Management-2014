@@ -91,6 +91,20 @@ header nav ul li a:hover {
 	text-decoration: none;
 }
 
+/* Header Twitter Feed Button */
+header nav ul li #twitter-feeds {
+	background-color: #55acee;
+	width: 150px;
+}
+
+header nav ul li #twitter-feeds:hover {
+	background-color: #6cb8f3;
+}
+
+header nav ul li #twitter-feeds:active {
+	background-color: #81c1f3;
+}
+
 /* Header Login Button */
 header nav ul li #login {
 	background-color: #54825a;
@@ -194,6 +208,13 @@ header nav ul li #layer:active {
 .x:hover {
 	background-color: #CCCCCC;
 	color: #555555;
+}
+
+#message-bar  a .load-tweets {
+	color: #000000;
+	text-decoration: none;
+	font-family: 'Noto Sans', Arial, sans-serif;
+	padding: 15px;
 }
 
 /* Message form headline */
@@ -532,13 +553,8 @@ header nav ul li #layer:active {
 	padding: 12px;
 	min-height: 70px;
 	margin-bottom: 5px;
-	cursor: pointer;
 	background-repeat: no-repeat;
 	background-position: left bottom;
-}
-
-#message-bar .message:hover {
-	background-color: #f7f7f7;
 }
 
 /* Message field headline */
@@ -1037,6 +1053,14 @@ div.location-filter.button-container.enabled {
 	padding: 10px;
 	display: none;
 	box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.5);
+}
+
+#twitter-popup {
+	right: 548px;
+	top: 93px;
+	width: 530px;
+	height: auto;
+	overflow: auto;
 }
 
 #layer-popup {

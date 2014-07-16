@@ -192,6 +192,14 @@ function closePopUp() {
 	});
 }
 
+$('#twitter-feeds').click(function() {
+	var twitter_feed = '<a class="twitter-timeline" lang="EN" href="https://twitter.com/search?q=%23flood+%23disaster" data-widget-id="486936680578813952">Tweets about "#flood #disaster"</a>' +
+		'<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>' +
+		'<a class="twitter-timeline" href="https://twitter.com/DisasterCourse" data-widget-id="486937052965920772">Tweets from @DisasterCourse</a>' +
+		'<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>';
+	$('#message-bar').html(twitter_feed);
+});
+
 // click functions to open popups
 $('#hotlines').click(function() {
 	$('#popup-content').html('');
@@ -366,7 +374,6 @@ function setAutoHeight(id) {
 }
 
 function switchCreateMessageStatus() {
-
 	if (isOnline()) {
 		$('#create-message-button').text('Create New Message');
 		$('#create-message-button').unbind('click');
@@ -387,12 +394,17 @@ function switchCreateMessageStatus() {
 	}
 }
 
+$('#twitter-feeds').mouseover(function() {
+	setAutoHeight('twitter-popup');
+	closeLoginPopUp();
+	closeLayerPopUp();
+});
+
 $('#layer').mouseover(function() {
 	setAutoHeight('layer-popup');
 	closeLoginPopUp();
+	closeTwitterPopUp();
 });
-
-
 
 function setPopUpTrigger(value) {
 	popUpTrigger = value;
@@ -407,6 +419,7 @@ $('#layer').click(function() {
 $('#login').mouseover(function() {
 	setAutoHeight('login-popup');
 	closeLayerPopUp();
+	closeTwitterPopUp();
 	popUpTrigger = false;
 });
 
@@ -417,6 +430,10 @@ $('#login').click(function() {
 $('#login-popup').click(function() {
 	popUpTrigger = true;
 });
+
+function closeTwitterPopUp() {
+	$('#twitter-popup').fadeOut();
+}
 
 function closeLayerPopUp() {
 	$('#layer-popup').fadeOut();
@@ -441,6 +458,7 @@ $('#map').mouseover(function() {
 	if ( popUpTrigger == false ) {
 		closeLoginPopUp();
 		closeLayerPopUp();
+		closeTwitterPopUp();
 	}
 });
 

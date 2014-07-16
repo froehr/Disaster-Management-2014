@@ -16,6 +16,6 @@
 
 		
 		$query=pg_query($dbconn,"UPDATE message SET title='".$title."',description='".$description."',person_contact='".$person_contact."',person_name='".$person_name."',
-									people_attending='".$people_attending."',people_needed='".$people_need."',tags='".$tags."' WHERE message_id=".$id.";");
+									people_attending=".$people_attending.",people_needed=".$people_need.",tags='".$tags."' WHERE message_id=".$id.";");
 	
 ?>
