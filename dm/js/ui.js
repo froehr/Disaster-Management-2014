@@ -192,14 +192,6 @@ function closePopUp() {
 	});
 }
 
-$('#twitter-feeds').click(function() {
-	var twitter_feed = '<a class="twitter-timeline" lang="EN" href="https://twitter.com/search?q=%23flood+%23disaster" data-widget-id="486936680578813952">Tweets about "#flood #disaster"</a>' +
-		'<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>' +
-		'<a class="twitter-timeline" href="https://twitter.com/DisasterCourse" data-widget-id="486937052965920772">Tweets from @DisasterCourse</a>' +
-		'<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>';
-	$('#message-bar').html(twitter_feed);
-});
-
 // click functions to open popups
 $('#hotlines').click(function() {
 	$('#popup-content').html('');
