@@ -23,7 +23,7 @@
 	$requestMethod = 'POST';
 	//Post something in Twitter, e.g. $getfield = array('status'=>'another funtweet','screen_name'=>'MarkusKonkol');
 	//Originally $getfield = array('status'=>'New Message: '$issue.', '.$description,'screen_name'=>'DisasterManagement');   but this gave me an error. Switched to something differnt for testing purposes.
-	$getfield = array('status'=>'New: '.$issue. ': ' .$title. ' http://giv-disastermanagement.uni-muenster.de/dm/?message='.$id);
+	$getfield = array('status'=>'New: '.$issue. ': ' .$title. ' http://giv-disastermanagement.uni-muenster.de/?message='.$id);
 
 	$twitter = new TwitterAPIExchange($settings);
 	echo $twitter->buildOauth($url, $requestMethod)
