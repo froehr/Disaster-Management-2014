@@ -820,7 +820,7 @@ var showMessages = new function () {
 					$('#messages').empty();
 					$('#messages').append('<div class="no-results"><b>No filter results!</b><br />Please change the filter <br />or the mapview.</div>');
 				}
-				
+				showMessagebyUrl();
 			},
 			"json"
 		);
