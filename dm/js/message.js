@@ -1009,17 +1009,19 @@ function increaseNumberOfComments(id, amount) {
 }
 
 //Link messages to URLs: e.g.: host.com/?message=1
+var new_session = true;
 function showMessagebyUrl() {
 	var host = window.location.host;
 	var path = window.location.pathname;
 	var url = host + path;
 
-	if (url != host) {
+	if (new_session) {
 		var message_id = getURLParameter('message');
-		var message_element_id = '#head-' + message_id;
+		var message_element_id = '#more-' + message_id;
 
 		//show message details & show on map
 		$(message_element_id).trigger("click");
+		new_session = false;
 	}
 
 	function getURLParameter(message) {
