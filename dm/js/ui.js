@@ -194,8 +194,14 @@ function closePopUp() {
 
 // click functions to open popups
 $('#hotlines').click(function() {
-	$('#popup-content').html('');
-	createPopUp(800, 300, '');
+	var content = '<h1>Important hotlines</h1>' +
+		'<p><b>General Hotlines</b></p>' +
+		'<ul style="margin-right: 30px; margin-bottom: 20px;">' + 
+			'<li>Fire Brigade: 112</li>' +
+			'<li>Police: 110</li>' +
+			'<li>For your local help and information, please check the B&uuml;rgertelefon.</li>' +
+		'</ul>'
+	createPopUp(500, 340, content);
 });
 
 $('#weatherforcast').click(function() {
